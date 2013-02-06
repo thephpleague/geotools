@@ -185,6 +185,12 @@ Once installed, just launch the following command:
 ```
 
 
+Contributing
+------------
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+
 Credits
 -------
 
@@ -199,6 +205,12 @@ Changelog
 ---------
 
 [See the changelog file](CHANGELOG.md)
+
+
+Support
+-------
+
+[Please open an issues in github](https://github.com/toin0u/Geotools/issues)
 
 
 License
