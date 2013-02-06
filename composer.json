@@ -19,7 +19,7 @@
     "require": {
         "php": ">=5.3.0",
         "willdurand/geocoder": "1.2.*",
-        "react/async": "dev-master"
+        "react/async": "1.*"
     },
     "require-dev": {
         "react/react": "0.2.*"
