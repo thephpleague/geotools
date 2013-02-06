@@ -197,7 +197,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
             case AbstractGeotools::KILOMETER_UNIT:
                 return $meters / 1000;
             case AbstractGeotools::MILE_UNIT:
-                return $meters * AbstractGeotools::METERS_PER_MILE;
+                return $meters / AbstractGeotools::METERS_PER_MILE;
             default:
                 return $meters;
         }

@@ -11,9 +11,9 @@ Geotools
 Features
 --------
 
-* Batch geocode & reverse process in **serie** / in **parallel**.
+* Batch geocode & reverse geocoding requests in **serie** / in **parallel**.
 * Calcul the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
-**haversine** or **vincenty** algorythms.
+**haversine** or **vincenty** algorithms.
 * Calcul the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
 * Calcul the **caridnal point** (direction) from the origin coordinate to the destination coordinate.
 * Calcul the **half-way point** (coordinate) between the origin and the destination coordinates.
@@ -57,7 +57,7 @@ Usage & API
 ### Coordinate ###
 
 **Geotools** is built atop [Geocoder](https://github.com/willdurand/Geocoder). It means it's possible to use the
-`/Geocoder/Result/ResultInterface` directly but it's also possible to use a simple array with its latitude and
+`/Geocoder/Result/ResultInterface` directly but it's also possible to use a simple *array* with its latitude and
 longitude.
 
 ``` php
@@ -66,12 +66,13 @@ longitude.
 $coordinate = new \Geotools\Coordinate\Coordinate($geocoderResult);
 // or
 $coordinate = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-// ...
+printf('Latitude: %F\n', $coordinate->getLatitude()); // 48.8234055
+printf('Longitude: %F\n', $coordinate->getLongitude()); // 2.3072664
 ```
 
 ### Batch ###
 
-It provides a very handy way to batch geocode and reverse in serie and in parallel.
+It provides a very handy way to batch geocode and reverse geocoding in *serie* or in *parallel*.
 Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https://github.com/reactphp/react) libraries.
 
 ```php
@@ -120,7 +121,7 @@ Batch reverse geocoding is something like:
 ``` php
 <?php
 
-// ...
+// ... like previous exemple ...
 $coordinate = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $results = $geotools->batch($geocoder)->reverse($coordinate)->parallel();
 // ...
@@ -128,8 +129,8 @@ $results = $geotools->batch($geocoder)->reverse($coordinate)->parallel();
 
 ### Distance ###
 
-It provides tools to calculate the distance in meter (by default), km or mile between two coordinates
-using flat (most performant), haversine or vincenty (most accurate) algorythms.
+It provides tools to calculate the distance in *meter* (by default), *km* or *mile* between two coordinates
+using *flat* (most performant), *haversine* or *vincenty* (most accurate) algorithms.
 
 ``` php
 <?php
@@ -138,15 +139,15 @@ $geotools = new \Geotools\Geotools();
 $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 
-echo $geotools->from($coordA)->to($coordB)->distance()->in('km')->flat(); // 659.16650524477
-echo $geotools->from($coordA)->to($coordB)->distance()->in('m')->haversine(); // 659.02191298475
-echo $geotools->from($coordA)->to($coordB)->distance()->in('mile')->vincenty(); // 658.30753717626
+echo $geotools->from($coordA)->to($coordB)->distance()->flat(); // 661220.36979254 (meters)
+echo $geotools->from($coordA)->to($coordB)->distance()->in('km')->haversine(); // 659.16650524477
+echo $geotools->from($coordA)->to($coordB)->distance()->in('mile')->vincenty(); // 410.41281759044
 ```
 
 ### Point ###
 
-It provides tools to calculate the initial bearing in degrees, the cardinal direction, the middle point
-and the destination point. The middle and the destination points returns a `\Geotools\Coordinate\Coordinate` object.
+It provides tools to calculate the *initial bearing* in degrees, the *cardinal direction*, the *middle point*
+and the *destination point*. The middle and the destination points returns a `\Geotools\Coordinate\Coordinate` object.
 
 ``` php
 <?php
