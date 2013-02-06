@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 0.1.2 (xxxx-xx-xx) ###
+
+n/a
+
 ### 0.1.1 (2013-02-06) ###
 
 Fixed: the minimum-stability of React/Async
