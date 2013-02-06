@@ -12,6 +12,8 @@
 namespace Geotools\Exception;
 
 /**
+ * InvalidArgumentException class
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface

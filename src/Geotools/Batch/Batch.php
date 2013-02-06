@@ -17,6 +17,8 @@ use Geocoder\Result\Geocoded;
 use React\Async\Util as Async;
 
 /**
+ * Batch class
+ *
 * @author Antoine Corcy <contact@sbin.dk>
 */
 class Batch implements BatchInterface

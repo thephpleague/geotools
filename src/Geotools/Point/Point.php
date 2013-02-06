@@ -16,6 +16,8 @@ use Geotools\Coordinate\Coordinate;
 use Geotools\Coordinate\CoordinateInterface;
 
 /**
+ * Point class
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class Point extends AbstractGeotools implements PointInterface
@@ -99,11 +101,11 @@ class Point extends AbstractGeotools implements PointInterface
         $latB = deg2rad($this->to->getLatitude());
         $lngB = deg2rad($this->to->getLongitude());
 
-        $Bx = cos($latB) * cos($lngB - $lngA);
-        $By = cos($latB) * sin($lngB - $lngA);
+        $bx = cos($latB) * cos($lngB - $lngA);
+        $by = cos($latB) * sin($lngB - $lngA);
 
-        $lat3 = rad2deg(atan2(sin($latA) + sin($latB), sqrt((cos($latA) + $Bx) * (cos($latA) + $Bx) + $By * $By)));
-        $lng3 = rad2deg($lngA + atan2($By, cos($latA) + $Bx));
+        $lat3 = rad2deg(atan2(sin($latA) + sin($latB), sqrt((cos($latA) + $bx) * (cos($latA) + $bx) + $by * $by)));
+        $lng3 = rad2deg($lngA + atan2($by, cos($latA) + $bx));
 
         return new Coordinate(array($lat3, $lng3));
     }
@@ -112,8 +114,8 @@ class Point extends AbstractGeotools implements PointInterface
      * Returns the destination point with a given bearing in degrees travelling along a
      * (shortest distance) great circle arc and a distance in meters.
      *
-     * @param  integer   $bearing  The bearing of the origin in degrees.
-     * @param  $distance $distance The distance from the origin in meters.
+     * @param integer   $bearing  The bearing of the origin in degrees.
+     * @param $distance $distance The distance from the origin in meters.
      *
      * @return CoordinateInterface
      */
@@ -125,9 +127,9 @@ class Point extends AbstractGeotools implements PointInterface
         $bearing = deg2rad($bearing);
 
         $endLat = asin(sin($lat) * cos($distance / AbstractGeotools::EARTH_RADIUS) + cos($lat) *
-                  sin($distance / AbstractGeotools::EARTH_RADIUS) * cos($bearing));
+            sin($distance / AbstractGeotools::EARTH_RADIUS) * cos($bearing));
         $endLon = $lng + atan2(sin($bearing) * sin($distance / AbstractGeotools::EARTH_RADIUS) * cos($lat),
-                  cos($distance / AbstractGeotools::EARTH_RADIUS) - sin($lat) * sin($endLat));
+            cos($distance / AbstractGeotools::EARTH_RADIUS) - sin($lat) * sin($endLat));
 
         return new Coordinate(array(rad2deg($endLat), rad2deg($endLon)));
     }

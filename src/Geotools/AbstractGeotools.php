@@ -12,6 +12,8 @@
 namespace Geotools;
 
 /**
+ * Geotools abstract class
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 abstract class AbstractGeotools

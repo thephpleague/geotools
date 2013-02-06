@@ -19,6 +19,8 @@ use Geotools\Batch\Batch;
 use Geocoder\GeocoderInterface;
 
 /**
+ * Geotools class
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class Geotools extends AbstractGeotools implements GeotoolsInterface
@@ -77,7 +79,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     /**
      * return an instance of Batch.
      *
-     * @param  GeocoderInterface $geocoder The Geocoder instance to use.
+     * @param GeocoderInterface $geocoder The Geocoder instance to use.
      *
      * @return BatchInterface
      */

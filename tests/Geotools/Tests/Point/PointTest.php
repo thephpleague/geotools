@@ -14,10 +14,16 @@ namespace Geotools\Tests\Point;
 use Geotools\Tests\TestCase;
 
 /**
+ * Point test class
+ *
 * @author Antoine Corcy <contact@sbin.dk>
 */
 class PointTest extends TestCase
 {
+    /**
+     * Test point method
+     * @return [type] [description]
+     */
     public function testPoint()
     {
         $this->markTestIncomplete('TODO');

@@ -14,6 +14,8 @@ namespace Geotools;
 use Geotools\Coordinate\CoordinateInterface;
 
 /**
+ * Geotools interface
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 interface GeotoolsInterface
@@ -21,7 +23,7 @@ interface GeotoolsInterface
     /**
      * Set the origin coordinate.
      *
-     * @param  CoordinateInterface $from The origin coordinate.
+     * @param CoordinateInterface $from The origin coordinate.
      *
      * @return GeotoolsInterface
      */
@@ -30,7 +32,7 @@ interface GeotoolsInterface
     /**
      * Set the destination coordinate.
      *
-     * @param  CoordinateInterface $to The destination coordinate.
+     * @param CoordinateInterface $to The destination coordinate.
      *
      * @return GeotoolsInterface
      */

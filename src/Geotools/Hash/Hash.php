@@ -12,6 +12,8 @@
 namespace Geotools\Hash;
 
 /**
+ * Hash class
+ *
 * @author Antoine Corcy <contact@sbin.dk>
 */
 class Hash implements HashInterface

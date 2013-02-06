@@ -14,6 +14,8 @@ namespace Geotools\Point;
 use Geotools\Coordinate\CoordinateInterface;
 
 /**
+ * Point interface
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 interface PointInterface

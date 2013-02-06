@@ -12,10 +12,15 @@
 namespace Geotools\Tests;
 
 /**
+ * Geotools test class
+ *
 * @author Antoine Corcy <contact@sbin.dk>
 */
 class GeotoolsTest extends TestCase
 {
+    /**
+     * Test geotools method
+     */
     public function testGeotools()
     {
         $this->markTestIncomplete('TODO');

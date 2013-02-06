@@ -12,6 +12,8 @@
 namespace Geotools\Coordinate;
 
 /**
+ * Coordinate Interface
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 interface CoordinateInterface

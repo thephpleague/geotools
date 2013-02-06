@@ -12,6 +12,8 @@
 namespace Geotools\Tests;
 
 /**
+ * TestCase class
+ *
 * @author Antoine Corcy <contact@sbin.dk>
 */
 class TestCase extends \PHPUnit_Framework_TestCase

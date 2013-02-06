@@ -14,6 +14,8 @@ namespace Geotools\Distance;
 use Geotools\Coordinate\CoordinateInterface;
 
 /**
+ * Distance interface
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 interface DistanceInterface

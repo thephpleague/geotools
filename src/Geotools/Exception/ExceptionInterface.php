@@ -12,6 +12,8 @@
 namespace Geotools\Exception;
 
 /**
+ * Exception interface
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 interface ExceptionInterface

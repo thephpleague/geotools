@@ -15,6 +15,8 @@ use Geotools\Exception\InvalidArgumentException;
 use Geocoder\Result\ResultInterface;
 
 /**
+ * Coordinate class
+ *
 * @author Antoine Corcy <contact@sbin.dk>
 */
 class Coordinate implements CoordinateInterface
