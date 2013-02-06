@@ -1,0 +1,35 @@
+{
+    "name": "toin0u/geotools",
+    "type": "library",
+    "description": "Geo-related tools PHP 5.3 library",
+    "keywords": ["geotools", "geometry", "geocoder", "geocoding", "geoip", "bounds", "distance", "batch"],
+    "homepage": "https://github.com/toin0u/Geotools",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Antoine Corcy",
+            "email": "contact@sbin.dk",
+            "homepage": "http://sbin.dk"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/toin0u/Geotools/issues",
+        "source": "https://github.com/toin0u/Geotools"
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "willdurand/geocoder": "1.2.*",
+        "react/async": "dev-master"
+    },
+    "require-dev": {
+        "react/react": "0.2.*"
+    },
+    "autoload": {
+        "psr-0": { "Geotools": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
