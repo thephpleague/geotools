@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 0.1.3 (xxxx-xx-xx) ###
+
+n/a
+
 ### 0.1.2 (2013-02-08) ###
 
 * Fixed: test to be compatible with PHP 5.3.x
