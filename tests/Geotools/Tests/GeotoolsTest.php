@@ -20,7 +20,7 @@ use Geocoder\Geocoder;
  *
 * @author Antoine Corcy <contact@sbin.dk>
 */
-class GeotoolsTest extends TestCase
+class GeotoolsTest
 {
     protected $geotools;
     protected $from;
@@ -36,43 +36,73 @@ class GeotoolsTest extends TestCase
     public function testFromValueShouldBeACoordinateInterface()
     {
         $this->geotools->from($this->from);
-        $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $this->geotools->getFrom());
+        $from = $this->geotools->getFrom();
+
+        $this->assertTrue(is_object($from));
+        $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $from);
+        $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $from);
     }
 
     public function testFromShouldReturnTheSameGeotoolsInstance()
     {
-        $this->assertSame($this->geotools, $this->geotools->from($this->from));
+        $geotools = $this->geotools->from($this->from);
+
+        $this->assertTrue(is_object($geotools));
+        $this->assertInstanceOf('Geotools\Geotools', $geotools);
+        $this->assertInstanceOf('Geotools\GeotoolsInterface', $geotools);
+        $this->assertSame($this->geotools, $geotools);
     }
 
     public function testToValueShouldBeACoordinateInterface()
     {
         $this->geotools->to($this->to);
-        $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $this->geotools->getTo());
+        $to = $this->geotools->getTo();
+
+        $this->assertTrue(is_object($to));
+        $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $to);
+        $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $to);
     }
 
     public function testToShouldReturnTheSameGeotoolsInstance()
     {
-        $this->assertSame($this->geotools, $this->geotools->to($this->to));
+        $geotools = $this->geotools->to($this->to);
+
+        $this->assertTrue(is_object($geotools));
+        $this->assertInstanceOf('Geotools\Geotools', $geotools);
+        $this->assertInstanceOf('Geotools\GeotoolsInterface', $geotools);
+        $this->assertSame($this->geotools, $geotools);
     }
 
     public function testDistanceShouldReturnANewDistanceInstance()
     {
         $this->geotools->from($this->from);
         $this->geotools->to($this->to);
-        $this->assertInstanceOf('Geotools\Distance\DistanceInterface', $this->geotools->distance());
+        $distance = $this->geotools->distance();
+
+        $this->assertTrue(is_object($distance));
+        $this->assertInstanceOf('Geotools\Distance\Distance', $distance);
+        $this->assertInstanceOf('Geotools\Distance\DistanceInterface', $distance);
     }
 
     public function testPointShouldReturnANewPointInstance()
     {
         $this->geotools->from($this->from);
         $this->geotools->to($this->to);
-        $this->assertInstanceOf('Geotools\Point\PointInterface', $this->geotools->point());
+        $point = $this->geotools->point();
+
+        $this->assertTrue(is_object($point));
+        $this->assertInstanceOf('Geotools\Point\Point', $point);
+        $this->assertInstanceOf('Geotools\Point\PointInterface', $point);
     }
 
     public function testBatchShouldReturnANewBatchInstance()
     {
         $geocoder = new Geocoder();
-        $this->assertInstanceOf('Geotools\Batch\BatchInterface', $this->geotools->batch($geocoder));
+        $batch = $this->geotools->batch($geocoder);
+
+        $this->assertTrue(is_object($batch));
+        $this->assertInstanceOf('Geotools\Batch\Batch', $batch);
+        $this->assertInstanceOf('Geotools\Batch\BatchInterface', $batch);
     }
 }
 
