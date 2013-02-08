@@ -34,6 +34,24 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return CoordinateInterface
+     */
+    protected function getMockCoordinateReturns(array $coordinate)
+    {
+        $mock = $this->getMock('\Geotools\Coordinate\CoordinateInterface');
+        $mock
+            ->expects($this->any())
+            ->method('getLatitude')
+            ->will($this->returnValue($coordinate[0]));
+        $mock
+            ->expects($this->any())
+            ->method('getLongitude')
+            ->will($this->returnValue($coordinate[1]));
+
+        return $mock;
+    }
+
+    /**
      * @return ResultInterface
      */
     protected function getMockGeocoded($expects = null)
