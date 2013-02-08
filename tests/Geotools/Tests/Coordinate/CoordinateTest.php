@@ -15,10 +15,8 @@ use Geotools\Tests\TestCase;
 use Geotools\Coordinate\Coordinate;
 
 /**
- * Coordinate test class
- *
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class CoordinateTest extends TestCase
 {
     /**

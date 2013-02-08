@@ -14,8 +14,8 @@ namespace Geotools\Hash;
 /**
  * Hash interface
  *
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 interface HashInterface
 {
     // TODO

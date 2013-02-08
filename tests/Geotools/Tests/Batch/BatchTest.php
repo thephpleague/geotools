@@ -14,10 +14,8 @@ namespace Geotools\Tests\Batch;
 use Geotools\Tests\TestCase;
 
 /**
- * Batch test class
- *
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class BatchTest extends TestCase
 {
     /**

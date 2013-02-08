@@ -15,10 +15,8 @@ use Geotools\Geotools;
 use Geocoder\Geocoder;
 
 /**
- * Geotools test class
- *
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class GeotoolsTest extends TestCase
 {
     protected $geotools;

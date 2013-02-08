@@ -14,10 +14,8 @@ namespace Geotools\Tests\Hash;
 use Geotools\Tests\TestCase;
 
 /**
- * Hash test class
- *
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class HashTest extends TestCase
 {
     /**

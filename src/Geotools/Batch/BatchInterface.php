@@ -16,8 +16,8 @@ use Geotools\Coordinate\CoordinateInterface;
 /**
  * Batch interface
  *
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 interface BatchInterface
 {
     /**
