@@ -37,13 +37,6 @@ class Batch implements BatchInterface
      */
     protected $tasks;
 
-    /**
-     * An array of ResultInterface.
-     *
-     * @var array
-     */
-    protected $providerResults;
-
 
     /**
      * Set the Geocoder instance to use.
@@ -60,10 +53,12 @@ class Batch implements BatchInterface
      */
     public function geocode($value)
     {
+        $geocoder = $this->geocoder;
+
         foreach ($this->geocoder->getProviders() as $provider) {
-            $this->tasks[$provider->getName()] = function ($callback) use ($provider, $value) {
+            $this->tasks[$provider->getName()] = function ($callback) use ($geocoder, $provider, $value) {
                 try {
-                    $callback($this->geocoder->using($provider->getName())->geocode(
+                    $callback($geocoder->using($provider->getName())->geocode(
                         $value
                     ));
                 } catch (\Exception $e) {
@@ -81,10 +76,12 @@ class Batch implements BatchInterface
      */
     public function reverse(CoordinateInterface $coordinate)
     {
+        $geocoder = $this->geocoder;
+
         foreach ($this->geocoder->getProviders() as $provider) {
-            $this->tasks[$provider->getName()] = function ($callback) use ($provider, $coordinate) {
+            $this->tasks[$provider->getName()] = function ($callback) use ($geocoder, $provider, $coordinate) {
                 try {
-                    $callback($this->geocoder->using($provider->getName())->reverse(
+                    $callback($geocoder->using($provider->getName())->reverse(
                         $coordinate->getLatitude(),
                         $coordinate->getLongitude()
                     ));
@@ -100,15 +97,20 @@ class Batch implements BatchInterface
     /**
      * {@inheritDoc}
      *
+     * $this cannot be used in anonymous function in PHP 5.3.x
+     * @see http://php.net/manual/en/functions.anonymous.php
+     *
      * @todo Make a patch to React/Async to return the provider name form the callback
      */
     public function serie()
     {
+        $computedInParallel = array();
+
         Async::series(
             $this->tasks,
-            function (array $providerResults) {
+            function (array $providerResults) use (&$computedInSerie) {
                 foreach ($providerResults as $providerName => $providerResult) {
-                    $this->providerResults[$providerName] = $providerResult;
+                    $computedInSerie[$providerName] = $providerResult;
                 }
             },
             function (\Exception $e) {
@@ -116,19 +118,24 @@ class Batch implements BatchInterface
             }
         );
 
-        return $this->providerResults;
+        return $computedInSerie;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * $this cannot be used in anonymous function in PHP 5.3.x
+     * @see http://php.net/manual/en/functions.anonymous.php
      */
     public function parallel()
     {
+        $computedInParallel = array();
+
         Async::parallel(
             $this->tasks,
-            function (array $providerResults) {
+            function (array $providerResults) use (&$computedInParallel) {
                 foreach ($providerResults as $providerName => $providerResult) {
-                    $this->providerResults[$providerName] = $providerResult;
+                    $computedInParallel[$providerName] = $providerResult;
                 }
             },
             function (\Exception $e) {
@@ -136,6 +143,6 @@ class Batch implements BatchInterface
             }
         );
 
-        return $this->providerResults;
+        return $computedInParallel;
     }
 }
