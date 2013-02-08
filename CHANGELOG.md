@@ -1,13 +1,23 @@
 CHANGELOG
 =========
 
-### 0.1.2 (xxxx-xx-xx) ###
+### 0.1.2 (2013-02-08) ###
 
-n/a
+* Fixed: test to be compatible with PHP 5.3.x
+* Added: test to Distance class
+* Added: test to Batch class
+* Added: test to Point class
+* Fixed: CS
+* Updated: test to Getools class with a CoordinateInterface stub
+* Updated: doc
+* Updated: Contributing doc
+* Updated: test to Geotools class
+* Added: test to Coordinate class
+* Added: test to Geotools class
 
 ### 0.1.1 (2013-02-06) ###
 
-Fixed: the minimum-stability of React/Async
+* Fixed: the minimum-stability of React/Async
 
 ### 0.1.0 (2013-02-06) ###
 
