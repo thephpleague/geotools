@@ -135,7 +135,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
         $b = 6356752.314245;
         $f = 1/298.257223563;
 
-        $dL = deg2rad($this->to->getLongitude() - $this->from->getLongitude());
+        $lL = deg2rad($this->to->getLongitude() - $this->from->getLongitude());
         $u1 = atan((1 - $f) * tan(deg2rad($this->from->getLatitude())));
         $u2 = atan((1 - $f) * tan(deg2rad($this->to->getLatitude())));
 
@@ -144,7 +144,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
         $sinU2 = sin($u2);
         $cosU2 = cos($u2);
 
-        $lambda    = $dL;
+        $lambda    = $lL;
         $lambdaP   = 2 * pi();
         $iterLimit = 100;
 
@@ -154,7 +154,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
             $sinSigma  = sqrt(($cosU2 * $sinLambda) * ($cosU2 * $sinLambda) +
                 ($cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda) * ($cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda));
 
-            if ($sinSigma == 0) {
+            if (0 === $sinSigma) {
               return 0; // co-incident points
             }
 
@@ -164,10 +164,10 @@ class Distance extends AbstractGeotools implements DistanceInterface
             $cosSqAlpha = 1 - $sinAlpha * $sinAlpha;
             $cos2SigmaM = $cosSigma - 2 * $sinU1 * $sinU2 / $cosSqAlpha;
 
-            $c       = $f / 16 * $cosSqAlpha * (4 + $f * (4 - 3 * $cosSqAlpha));
+            $cC      = $f / 16 * $cosSqAlpha * (4 + $f * (4 - 3 * $cosSqAlpha));
             $lambdaP = $lambda;
-            $lambda  = $dL + (1 - $c) * $f * $sinAlpha *  ($sigma + $c * $sinSigma *
-                ($cos2SigmaM + $c * $cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM)));
+            $lambda  = $lL + (1 - $cC) * $f * $sinAlpha * ($sigma + $cC * $sinSigma *
+                ($cos2SigmaM + $cC * $cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM)));
         } while (abs($lambda - $lambdaP) > 1e-12 && --$iterLimit > 0);
 
         if ($iterLimit == 0) {
@@ -175,11 +175,11 @@ class Distance extends AbstractGeotools implements DistanceInterface
         }
 
         $uSq        = $cosSqAlpha * ($a * $a - $b * $b) / ($b * $b);
-        $a          = 1 + $uSq / 16384 * (4096 + $uSq * (-768 + $uSq * (320 - 175 * $uSq)));
-        $b          = $uSq / 1024 * (256 + $uSq * (-128 + $uSq * (74 - 47 * $uSq)));
-        $deltaSigma = $b * $sinSigma * ($cos2SigmaM + $b / 4 * ($cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM) -
-            $b / 6 * $cos2SigmaM * (-3 + 4 * $sinSigma * $sinSigma) * (-3 + 4 * $cos2SigmaM * $cos2SigmaM)));
-        $s          = $b * $a * ($sigma - $deltaSigma);
+        $aA         = 1 + $uSq / 16384 * (4096 + $uSq * (-768 + $uSq * (320 - 175 * $uSq)));
+        $bB         = $uSq / 1024 * (256 + $uSq * (-128 + $uSq * (74 - 47 * $uSq)));
+        $deltaSigma = $bB * $sinSigma * ($cos2SigmaM + $bB / 4 * ($cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM) -
+            $bB / 6 * $cos2SigmaM * (-3 + 4 * $sinSigma * $sinSigma) * (-3 + 4 * $cos2SigmaM * $cos2SigmaM)));
+        $s          = $b * $aA * ($sigma - $deltaSigma);
 
         return $this->convertToUserUnit($s);
     }
