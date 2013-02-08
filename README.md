@@ -97,8 +97,8 @@ $results  = $geotools->batch($geocoder)->geocode('10 rue Gambetta, Paris, France
 $dumper = new \Geocoder\Dumper\WktDumper();
 foreach ($results as $providerName => $providerResult) {
     // if a provider throws an exception (UnsupportedException, InvalidCredentialsException ...)
-    // an empty /Geocoder/Result/Geocoded instance is returned so we can easily use a dumper
-    // and/or formatter from the Geocoder library
+    // an empty /Geocoder/Result/Geocoded instance is returned. It's possible to use dumpers
+    // and/or formatters from the Geocoder library
     printf("%s: %s\n", $providerName, $dumper->dump($providerResult));
 }
 ```
@@ -106,14 +106,13 @@ foreach ($results as $providerName => $providerResult) {
 You should get something like:
 
 ```
-google_maps: POINT(2.307266 48.823405)
-openstreetmaps: POINT(2.391636 48.863936)
-bing_maps: POINT(0.000000 0.000000)
-yahoo: POINT(2.389020 48.863281)
-yandex: POINT(2.225684 48.874010)
-free_geo_ip: POINT(0.000000 0.000000)
-host_ip: POINT(0.000000 0.000000)
-geoip: POINT(0.000000 0.000000)
+google_maps: POINT(2.307266 48.823405) // ok
+openstreetmaps: POINT(2.391636 48.863936) // ok
+bing_maps: POINT(0.000000 0.000000) // InvalidCredentialsException thrown
+yandex: POINT(2.225684 48.874010) // ok
+free_geo_ip: POINT(0.000000 0.000000) // UnsupportedException thrown
+host_ip: POINT(0.000000 0.000000) // UnsupportedException thrown
+geoip: POINT(0.000000 0.000000) // UnsupportedException thrown
 ```
 
 Batch reverse geocoding is something like:
@@ -121,11 +120,13 @@ Batch reverse geocoding is something like:
 ``` php
 <?php
 
-// ... like previous exemple ...
+// ... like the previous exemple ...
 $coordinate = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $results = $geotools->batch($geocoder)->reverse($coordinate)->parallel();
 // ...
 ```
+
+If you want to batch it in serie, replace the method `parallel()` to `serie()`.
 
 ### Distance ###
 
