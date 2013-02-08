@@ -7,6 +7,8 @@ Contributions are **welcome** and be fully **credited** :)
 The easiest way to apply these conventions is to install [PHP_CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer)
 and the [Opensky Symfony2 Coding Standard](https://github.com/opensky/Symfony2-coding-standard).
 
+You may be insterested in [PHP Coding Standards Fixer](https://github.com/fabpot/PHP-CS-Fixer).
+
 Installation
 ------------
 
@@ -22,7 +24,6 @@ Usage
 
 ``` bash
 % phpcs src/
-% phpcs tests/
 ```
 
 **Happy coding** !
