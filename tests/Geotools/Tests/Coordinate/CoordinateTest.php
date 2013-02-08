@@ -12,6 +12,7 @@
 namespace Geotools\Tests\Coordinate;
 
 use Geotools\Tests\TestCase;
+use Geotools\Coordinate\Coordinate;
 
 /**
  * Coordinate test class
@@ -21,10 +22,153 @@ use Geotools\Tests\TestCase;
 class CoordinateTest extends TestCase
 {
     /**
-     * Test coordinate method
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage It should be an array or a class which implements Geocoder\Result\ResultInterface !
+     * @dataProvider invalidCoordinatesProvider
      */
-    public function testCoordinate()
+    public function testConstructorWithInvalidCoordinatesShouldThrowAnException($coordinates)
     {
-        $this->markTestIncomplete('TODO');
+        new Coordinate($coordinates);
+    }
+
+    public function invalidCoordinatesProvider()
+    {
+        return array(
+            array(null),
+            array('foo'),
+            array(123456),
+            array(
+                array()
+            ),
+            array(
+                array('foo', 'bar', 'baz', 'qux')
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider validCoordinatesProvider
+     */
+    public function testConstructorWithValidCoordinatesShouldBeValid($coordinates)
+    {
+        $coordinate = new Coordinate($coordinates);
+
+        $this->assertSame((double) $coordinates[0], $coordinate->getLatitude());
+        $this->assertSame((double) $coordinates[1], $coordinate->getLongitude());
+    }
+
+    public function validCoordinatesProvider()
+    {
+        return array(
+            array(
+                array(1, 2)
+            ),
+            array(
+                array(-1, -2)
+            ),
+            array(
+                array('1', '2')
+            ),
+            array(
+                array('-1', '-2')
+            ),
+        );
+    }
+
+    public function testConstructorWithResultInterfaceArgumentShouldBeValid()
+    {
+        new Coordinate($this->getMockGeocoded($this->never()));
+    }
+
+    /**
+     * @dataProvider resultsProvider
+     */
+    public function testConstructorShouldReturnsLatitudeAndLongitude($result)
+    {
+        $geocoded = $this->getMockGeocodedReturns($result);
+        $coordinate = new Coordinate($geocoded);
+
+        $this->assertSame((double) $result['latitude'], $coordinate->getLatitude());
+        $this->assertSame((double) $result['longitude'], $coordinate->getLongitude());
+    }
+
+    public function resultsProvider()
+    {
+        return array(
+            array(
+                array(
+                    'latitude'  => 0.001,
+                    'longitude' => 1,
+                )
+            ),
+            array(
+                array(
+                    'latitude'  => -0.001,
+                    'longitude' => -1,
+                )
+            ),
+            array(
+                array(
+                    'latitude'  => '0.001',
+                    'longitude' => '1',
+                )
+            ),
+            array(
+                array(
+                    'latitude'  => '-0.001',
+                    'longitude' => '-1',
+                )
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider latitudesProvider
+     */
+    public function testSetLatitude($latitude)
+    {
+        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate->setLatitude($latitude);
+
+        $this->assertSame((double) $latitude, $coordinate->getLatitude());
+    }
+
+    public function latitudesProvider()
+    {
+        return array(
+            array(1),
+            array(-1),
+            array('1'),
+            array('-1'),
+            array(0.0001),
+            array(-0.0001),
+            array('0.0001'),
+            array('-0.0001'),
+        );
+    }
+
+    /**
+     * @dataProvider longitudesProvider
+     */
+    public function testSetLongitude($longitude)
+    {
+        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate->setLongitude($longitude);
+
+        $this->assertSame((double) $longitude, $coordinate->getLongitude());
+    }
+
+    public function longitudesProvider()
+    {
+        return array(
+            array(1),
+            array(-1),
+            array('1'),
+            array('-1'),
+            array(0.0001),
+            array(-0.0001),
+            array('0.0001'),
+            array('-0.0001'),
+        );
     }
 }

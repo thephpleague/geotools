@@ -63,7 +63,7 @@ class Coordinate implements CoordinateInterface
      */
     public function setLatitude($latitude)
     {
-        $this->latitude = $latitude;
+        $this->latitude = (double) $latitude;
     }
 
     /**
@@ -79,7 +79,7 @@ class Coordinate implements CoordinateInterface
      */
     public function setLongitude($longitude)
     {
-        $this->longitude = $longitude;
+        $this->longitude = (double) $longitude;
     }
 
     /**

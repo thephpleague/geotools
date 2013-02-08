@@ -12,11 +12,45 @@
 namespace Geotools\Tests;
 
 /**
- * TestCase class
- *
 * @author Antoine Corcy <contact@sbin.dk>
 */
 class TestCase extends \PHPUnit_Framework_TestCase
 {
-    // TODO
+    /**
+     * @return ResultInterface
+     */
+    protected function getMockGeocoded($expects = null)
+    {
+        if (null === $expects) {
+            $expects = $this->once();
+        }
+
+        $mock = $this->getMock('\Geocoder\Result\ResultInterface');
+        $mock
+            ->expects($expects)
+            ->method('getCoordinates')
+            ->will($this->returnArgument(0));
+
+        return $mock;
+    }
+
+    /**
+     * @param array $coordinate An array of latitude and longitude
+     *
+     * @return ResultInterface
+     */
+    protected function getMockGeocodedReturns(array $coordinate)
+    {
+        $mock = $this->getMock('\Geocoder\Result\ResultInterface');
+        $mock
+            ->expects($this->any())
+            ->method('getLatitude')
+            ->will($this->returnValue($coordinate['latitude']));
+        $mock
+            ->expects($this->any())
+            ->method('getLongitude')
+            ->will($this->returnValue($coordinate['longitude']));
+
+        return $mock;
+    }
 }
