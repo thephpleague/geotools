@@ -14,10 +14,8 @@ namespace Geotools\Tests\Point;
 use Geotools\Tests\TestCase;
 
 /**
- * Point test class
- *
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class PointTest extends TestCase
 {
     /**

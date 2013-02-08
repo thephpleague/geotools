@@ -17,6 +17,23 @@ namespace Geotools\Tests;
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @return CoordinateInterface
+     */
+    protected function getStubCoordinate()
+    {
+        $stub = $this
+            ->getMockBuilder('\Geotools\Coordinate\CoordinateInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $stub
+            ->expects($this->any())
+            ->method('getLatitude')
+            ->will($this->returnSelf());
+
+        return $stub;
+    }
+
+    /**
      * @return ResultInterface
      */
     protected function getMockGeocoded($expects = null)

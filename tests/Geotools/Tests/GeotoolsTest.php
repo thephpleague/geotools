@@ -12,7 +12,6 @@
 namespace Geotools\Tests;
 
 use Geotools\Geotools;
-use Geotools\Coordinate\Coordinate;
 use Geocoder\Geocoder;
 
 /**
@@ -20,7 +19,7 @@ use Geocoder\Geocoder;
  *
 * @author Antoine Corcy <contact@sbin.dk>
 */
-class GeotoolsTest
+class GeotoolsTest extends TestCase
 {
     protected $geotools;
     protected $from;
@@ -29,8 +28,8 @@ class GeotoolsTest
     protected function setUp()
     {
         $this->geotools = new TestableGeotools();
-        $this->from = new MockCoordinate();
-        $this->to = new MockCoordinate();
+        $this->from = $this->getStubCoordinate();
+        $this->to = $this->getStubCoordinate();
     }
 
     public function testFromValueShouldBeACoordinateInterface()
@@ -39,7 +38,6 @@ class GeotoolsTest
         $from = $this->geotools->getFrom();
 
         $this->assertTrue(is_object($from));
-        $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $from);
         $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $from);
     }
 
@@ -59,7 +57,6 @@ class GeotoolsTest
         $to = $this->geotools->getTo();
 
         $this->assertTrue(is_object($to));
-        $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $to);
         $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $to);
     }
 
@@ -116,12 +113,5 @@ class TestableGeotools extends Geotools
     public function getTo()
     {
         return $this->to;
-    }
-}
-
-class MockCoordinate extends Coordinate
-{
-    public function __construct()
-    {
     }
 }
