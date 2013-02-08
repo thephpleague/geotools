@@ -11,11 +11,62 @@
 
 namespace Geotools\Tests;
 
+use Geocoder\Result\Geocoded;
+
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class TestCase extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @return GeocoderInterface
+     */
+    protected function getStubGeocoder()
+    {
+        $stub = $this
+            ->getMockBuilder('\Geocoder\GeocoderInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $stub
+            ->expects($this->any())
+            ->method('geocode')
+            ->will($this->returnSelf());
+
+        return $stub;
+    }
+
+    /**
+     * @return GeocoderInterface
+     */
+    protected function getMockGeocoderReturns(array $providers, array $data = array())
+    {
+        $geocoded = new Geocoded();
+
+        if (!empty($data)) {
+            $geocoded->fromArray($data);
+        }
+
+        $mock = $this->getMock('Geocoder\Geocoder');
+        $mock
+            ->expects($this->any())
+            ->method('getProviders')
+            ->will($this->returnValue($providers));
+        $mock
+            ->expects($this->any())
+            ->method('using')
+            ->will($this->returnSelf());
+        $mock
+            ->expects($this->any())
+            ->method('geocode')
+            ->will($this->returnValue($geocoded));
+        $mock
+            ->expects($this->any())
+            ->method('reverse')
+            ->will($this->returnValue($geocoded));
+
+        return $mock;
+    }
+
     /**
      * @return CoordinateInterface
      */
@@ -70,8 +121,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param array $coordinate An array of latitude and longitude
-     *
      * @return ResultInterface
      */
     protected function getMockGeocodedReturns(array $coordinate)
