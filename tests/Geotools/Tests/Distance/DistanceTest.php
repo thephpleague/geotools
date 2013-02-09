@@ -22,12 +22,16 @@ class DistanceTest extends TestCase
     protected $distance;
     protected $from;
     protected $to;
+    protected $coordA;
+    protected $coordB;
 
     protected function setUp()
     {
         $this->distance = new TestableDistance();
-        $this->from = $this->getStubCoordinate();
-        $this->to = $this->getStubCoordinate();
+        $this->from     = $this->getStubCoordinate();
+        $this->to       = $this->getStubCoordinate();
+        $this->coordA   = array(48.8234055, 2.3072664);
+        $this->coordB   = array(43.296482, 5.36978);
     }
 
     public function testSetFromValueShouldBeACoordinateInterface()
@@ -87,46 +91,46 @@ class DistanceTest extends TestCase
 
     public function testFlatDistance()
     {
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(659166.50524477, $this->distance->flat(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(659.16650524477, $this->distance->in('km')->flat(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(409.58707724686, $this->distance->in('mile')->flat(), '', 0.00001);
     }
 
     public function testHaversineDistance()
     {
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(659021.91298475, $this->distance->haversine(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(659.02191298475, $this->distance->in('km')->haversine(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(409.49723178186, $this->distance->in('mile')->haversine(), '', 0.00001);
     }
 
     public function testVincentyDistance()
     {
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(658307.53717626, $this->distance->vincenty(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(658.30753717626, $this->distance->in('km')->vincenty(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns(array(48.8234055, 2.3072664)));
-        $this->distance->setTo($this->getMockCoordinateReturns(array(43.296482, 5.36978)));
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
         $this->assertEquals(409.05333923404, $this->distance->in('mile')->vincenty(), '', 0.00001);
     }
 }

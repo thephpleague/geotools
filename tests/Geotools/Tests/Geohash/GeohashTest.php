@@ -42,6 +42,7 @@ class GeohashTest extends TestCase
             array(-1),
             array(0),
             array(''),
+            array(' '),
             array('foo'),
             array(array()),
             array(13),
@@ -112,6 +113,7 @@ class GeohashTest extends TestCase
     public function invalidCharGeoHashesProvider()
     {
         return array(
+            array(' '),
             array('a'),
             array('i'),
             array('l'),
