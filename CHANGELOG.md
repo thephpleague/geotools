@@ -1,9 +1,18 @@
 CHANGELOG
 =========
 
-### 0.1.3 (xxxx-xx-xx) ###
+### 0.1.3 (2013-02-09) ###
 
-n/a
+Fixed: typo
+Added: geohash ref to the doc
+Refactored: tests
+Added: Geohash class, tests and doc
+Added: normalize methods to Coordinate class
+Updated: Coordinate support string in its constructor
+Updated: Testcase's expects methods
+Updated: test to Batch class
+Refactored: Batch test class
+Updated: TestCase stub clases
 
 ### 0.1.2 (2013-02-08) ###
 
