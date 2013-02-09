@@ -27,10 +27,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
             ->getMockBuilder('\Geocoder\GeocoderInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $stub
-            ->expects($this->any())
-            ->method('geocode')
-            ->will($this->returnSelf());
 
         return $stub;
     }
@@ -76,10 +72,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
             ->getMockBuilder('\Geotools\Coordinate\CoordinateInterface')
             ->disableOriginalConstructor()
             ->getMock();
-        $stub
-            ->expects($this->any())
-            ->method('getLatitude')
-            ->will($this->returnSelf());
 
         return $stub;
     }
