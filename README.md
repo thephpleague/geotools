@@ -57,8 +57,11 @@ Usage & API
 ### Coordinate ###
 
 **Geotools** is built atop [Geocoder](https://github.com/willdurand/Geocoder). It means it's possible to use the
-`/Geocoder/Result/ResultInterface` directly but it's also possible to use a string or a simple *array* with its
+`/Geocoder/Result/ResultInterface` directly but it's also possible to use a *string* or a simple *array* with its
 latitude and longitude.
+
+Latitudes below -90.0 or above 90.0 degrees are capped through `\Geotools\Coordinate\Coordinate::normalizeLatitude()`.
+Longitudes below -180.0 or abode 180.0 degrees are wrapped through `\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
 
 ``` php
 <?php
@@ -161,7 +164,7 @@ $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 
 echo $geotools->from($coordA)->to($coordB)->point()->bearing(); // 157 (degrees)
-echo $geotools->from($coordA)->to($coordB)->point()->cardinal(); // SSE (SouthEastEast)
+echo $geotools->from($coordA)->to($coordB)->point()->cardinal(); // SSE (SouthSouthEast)
 
 $middlePoint = $geotools->from($coordA)->to($coordB)->point()->middle(); // \Geotools\Coordinate\Coordinate
 echo $middlePoint->getLatitude(); // 46.070143125815

@@ -135,6 +135,50 @@ class CoordinateTest extends TestCase
     }
 
     /**
+     * @dataProvider latitudesWithExpectedLatitudesProvider
+     */
+    public function testNormalizeLatitude($latitude, $expectedLatitude)
+    {
+        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+
+        $this->assertSame($expectedLatitude, $coordinate->normalizeLatitude($latitude));
+    }
+
+    public function latitudesWithExpectedLatitudesProvider()
+    {
+        return array(
+            array(-180, -90.0),
+            array('0', 0.0),
+            array(180, 90.0),
+        );
+    }
+
+    /**
+     * @dataProvider longitudesWithExpectedLatitudesProvider
+     */
+    public function testNormalizeLongitude($longitude, $expectedLongitude)
+    {
+        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+
+        $this->assertSame($expectedLongitude, $coordinate->normalizeLongitude($longitude));
+    }
+
+    public function longitudesWithExpectedLatitudesProvider()
+    {
+        return array(
+            array(-500, -140.0),
+            array(-360, 0.0),
+            array(-190, 170.0),
+            array(-180, -180.0),
+            array('0', 0.0),
+            array(180, 180.0),
+            array(190, -170.0),
+            array(360, 0.0),
+            array(500, 140.0),
+        );
+    }
+
+    /**
      * @dataProvider latitudesProvider
      */
     public function testSetLatitude($latitude)
