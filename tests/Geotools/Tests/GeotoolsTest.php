@@ -99,6 +99,15 @@ class GeotoolsTest extends TestCase
         $this->assertInstanceOf('Geotools\Batch\Batch', $batch);
         $this->assertInstanceOf('Geotools\Batch\BatchInterface', $batch);
     }
+
+    public function testGeohashShouldReturnANewGeohashInstance()
+    {
+        $geohash = $this->geotools->geohash();
+
+        $this->assertTrue(is_object($geohash));
+        $this->assertInstanceOf('Geotools\Geohash\Geohash', $geohash);
+        $this->assertInstanceOf('Geotools\Geohash\GeohashInterface', $geohash);
+    }
 }
 
 class TestableGeotools extends Geotools

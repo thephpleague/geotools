@@ -9,14 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Geotools\Hash;
+namespace Geotools\Exception;
 
 /**
- * Hash interface
+ * RuntimeException class
  *
- * @author Antoine Corcy <contact@sbin.dk>
- */
-interface HashInterface
+* @author Antoine Corcy <contact@sbin.dk>
+*/
+class RuntimeException extends \RuntimeException implements ExceptionInterface
 {
-    // TODO
 }

@@ -32,7 +32,7 @@ interface CoordinateInterface
      * Normalizes a longitude to the (-180, 180) range.
      * Longitudes below -180.0 or abode 180.0 degrees are wrapped.
      *
-     * @param double $lontitude The longitude to normalize
+     * @param double $longitude The longitude to normalize
      *
      * @return double
      */

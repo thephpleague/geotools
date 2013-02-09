@@ -109,11 +109,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMock('\Geotools\Coordinate\CoordinateInterface');
         $mock
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('getLatitude')
             ->will($this->returnValue($coordinate[0]));
         $mock
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('getLongitude')
             ->will($this->returnValue($coordinate[1]));
 

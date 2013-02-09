@@ -18,6 +18,7 @@ Features
 * Calcul the **caridnal point** (direction) from the origin coordinate to the destination coordinate.
 * Calcul the **half-way point** (coordinate) between the origin and the destination coordinates.
 * Calcul the **destination point** with given bearing in degrees and a distance in meters.
+* Encode a coordinate to a **geo hash** string and decode it to a coordinate.
 * ... more to come ...
 
 
@@ -57,11 +58,11 @@ Usage & API
 ### Coordinate ###
 
 **Geotools** is built atop [Geocoder](https://github.com/willdurand/Geocoder). It means it's possible to use the
-`/Geocoder/Result/ResultInterface` directly but it's also possible to use a *string* or a simple *array* with its
+`\Geocoder\Result\ResultInterface` directly but it's also possible to use a *string* or a simple *array* with its
 latitude and longitude.
 
-Latitudes below -90.0 or above 90.0 degrees are capped through `\Geotools\Coordinate\Coordinate::normalizeLatitude()`.
-Longitudes below -180.0 or abode 180.0 degrees are wrapped through `\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
+Latitudes below -90.0 or above 90.0 degrees are *capped* through `\Geotools\Coordinate\Coordinate::normalizeLatitude()`.  
+Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\Geotools\coordinaterdinate\Coordinate::normalizeLongitude()`.
 
 ``` php
 <?php
@@ -153,7 +154,7 @@ echo $geotools->from($coordA)->to($coordB)->distance()->in('mile')->vincenty(); 
 
 ### Point ###
 
-It provides tools to calculate the *initial bearing* in degrees, the *cardinal direction*, the *middle point*
+It provides methods to calculate the *initial bearing* in degrees, the *cardinal direction*, the *middle point*
 and the *destination point*. The middle and the destination points returns a `\Geotools\Coordinate\Coordinate` object.
 
 ``` php
@@ -173,6 +174,31 @@ echo $middlePoint->getLongitude(); // 3.9152401085931
 $destinationPoint = $geotools->from($coordA)->point()->destination(180, 200000); // \Geotools\Coordinate\Coordinate
 echo $destinationPoint->getLatitude(); // 47.026774663314
 echo $destinationPoint->getLongitude(); // 2.3072664
+```
+
+
+### Geohash ###
+
+It provides methods to get the *geo hash* and its *bounding box's coordinates* of a coordinate and the
+*coordinate* and its *bounding box's coordinates* of a geo hash.
+
+``` php
+<?php
+
+$geotools       = new \Geotools\Geotools();
+$coordToGeohash = new \Geotools\Coordinate\Coordinate('43.296482, 5.36978');
+
+// encoding
+$geotools->geohash()->encode($coordToGeohash, 3)->getGeohash(); // spe
+$encoded = $geotools->geohash()->encode($coordToGeohash); // 12 is the default length
+echo $encoded->getGeohash(); // spey61yhkcnp
+$boundingBox = $encoded->getBoundingBox(); // returns an array of \Geotools\Coordinate\CordinateInterface
+
+// decoding
+$decoded = $geotools->geohash()->decode('spey61y');
+echo $decoded->getCoordinate()->getLatitude(); // 43.296432495117
+echo $decoded->getCoordinate()->getLongitude(); // 5.3702545166016
+$boundingBox = $decoded->getBoundingBox(); // returns an array of \Geotools\Coordinate\CordinateInterface
 ```
 
 

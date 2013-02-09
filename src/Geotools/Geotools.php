@@ -16,6 +16,7 @@ use Geotools\Coordinate\Coordinate;
 use Geotools\Distance\Distance;
 use Geotools\Point\Point;
 use Geotools\Batch\Batch;
+use Geotools\Geohash\Geohash;
 use Geocoder\GeocoderInterface;
 
 /**
@@ -86,5 +87,15 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     public function batch(GeocoderInterface $geocoder)
     {
         return new Batch($geocoder);
+    }
+
+    /**
+     * return an instance of Geohash.
+     *
+     * @return GeohashInterface
+     */
+    public function geohash()
+    {
+        return new Geohash();
     }
 }
