@@ -18,7 +18,8 @@ Features
 * Calcul the **caridnal point** (direction) from the origin coordinate to the destination coordinate.
 * Calcul the **half-way point** (coordinate) between the origin and the destination coordinates.
 * Calcul the **destination point** with given bearing in degrees and a distance in meters.
-* Encode a coordinate to a **geo hash** string and decode it to a coordinate.
+* Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
+[wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/).
 * ... more to come ...
 
 
@@ -137,7 +138,7 @@ If you want to batch it in serie, replace the method `parallel()` to `serie()`.
 
 ### Distance ###
 
-It provides tools to calculate the distance in *meter* (by default), *km* or *mile* between two coordinates
+It provides methods to calculate the distance in *meter* (by default), *km* or *mile* between two coordinates
 using *flat* (most performant), *haversine* or *vincenty* (most accurate) algorithms.
 
 ``` php
