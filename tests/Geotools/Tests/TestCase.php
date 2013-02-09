@@ -70,11 +70,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMock('Geocoder\Geocoder');
         $mock
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('getProviders')
             ->will($this->returnValue($providers));
         $mock
-            ->expects($this->any())
+            ->expects($this->atLeastOnce())
             ->method('using')
             ->will($this->returnSelf());
         $mock
@@ -109,11 +109,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMock('\Geotools\Coordinate\CoordinateInterface');
         $mock
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('getLatitude')
             ->will($this->returnValue($coordinate[0]));
         $mock
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('getLongitude')
             ->will($this->returnValue($coordinate[1]));
 
@@ -145,11 +145,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMock('\Geocoder\Result\ResultInterface');
         $mock
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('getLatitude')
             ->will($this->returnValue($coordinate['latitude']));
         $mock
-            ->expects($this->any())
+            ->expects($this->once())
             ->method('getLongitude')
             ->will($this->returnValue($coordinate['longitude']));
 
