@@ -64,6 +64,32 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @return GeocoderInterface
+     */
+    protected function getMockGeocoderThrowException(array $providers, array $data = array())
+    {
+        $mock = $this->getMock('Geocoder\Geocoder');
+        $mock
+            ->expects($this->any())
+            ->method('getProviders')
+            ->will($this->returnValue($providers));
+        $mock
+            ->expects($this->any())
+            ->method('using')
+            ->will($this->returnSelf());
+        $mock
+            ->expects($this->any())
+            ->method('geocode')
+            ->will($this->throwException(new \Exception()));
+        $mock
+            ->expects($this->any())
+            ->method('reverse')
+            ->will($this->throwException(new \Exception()));
+
+        return $mock;
+    }
+
+    /**
      * @return CoordinateInterface
      */
     protected function getStubCoordinate()
