@@ -11,7 +11,7 @@ Geotools
 Features
 --------
 
-* Batch geocode & reverse geocoding requests in **serie** / in **parallel**.
+* **Batch** geocode & reverse geocoding requests in **serie** / in **parallel** againts a **set of providers**.
 * Calcul the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms.
 * Calcul the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
@@ -63,25 +63,25 @@ Usage & API
 latitude and longitude.
 
 Latitudes below -90.0 or above 90.0 degrees are *capped* through `\Geotools\Coordinate\Coordinate::normalizeLatitude()`.  
-Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\Geotools\coordinaterdinate\Coordinate::normalizeLongitude()`.
+Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
 
 ``` php
 <?php
 
-$coordinate = new \Geotools\Coordinate\Coordinate($geocoderResult);
+$coordinate = new \Geotools\Coordinate\Coordinate($geocoderResult); // \Geocoder\Result\ResultInterface
 // or
 $coordinate = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 // or
 $coordinate = new \Geotools\Coordinate\Coordinate('48.8234055, 2.3072664');
-// result will be:
+// the result will be:
 printf('Latitude: %F\n', $coordinate->getLatitude()); // 48.8234055
 printf('Longitude: %F\n', $coordinate->getLongitude()); // 2.3072664
 ```
 
 ### Batch ###
 
-It provides a very handy way to batch geocode and reverse geocoding in *serie* or in *parallel*.
-Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https://github.com/reactphp/react) libraries.
+It provides a very handy way to batch geocode and reverse geocoding in *serie* or in *parallel* against a set of
+providers. Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https://github.com/reactphp/react) libraries.
 
 ```php
 <?php

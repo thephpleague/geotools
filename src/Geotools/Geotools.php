@@ -78,7 +78,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     }
 
     /**
-     * return an instance of Batch.
+     * Returns an instance of Batch.
      *
      * @param GeocoderInterface $geocoder The Geocoder instance to use.
      *
@@ -90,7 +90,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     }
 
     /**
-     * return an instance of Geohash.
+     * Returns an instance of Geohash.
      *
      * @return GeohashInterface
      */

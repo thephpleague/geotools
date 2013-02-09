@@ -1,7 +1,7 @@
 CONTRIBUTING
 ============
 
-Contributions are **welcome** and be fully **credited** :)
+Contributions are **welcome** and be fully **credited** <3
 
 **Geotools** will use the [Symfony2 Coding Standard](http://symfony.com/doc/current/contributing/code/standards.html).
 The easiest way to apply these conventions is to install [PHP_CodeSniffer](http://pear.php.net/package/PHP_CodeSniffer)
