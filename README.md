@@ -57,8 +57,8 @@ Usage & API
 ### Coordinate ###
 
 **Geotools** is built atop [Geocoder](https://github.com/willdurand/Geocoder). It means it's possible to use the
-`/Geocoder/Result/ResultInterface` directly but it's also possible to use a simple *array* with its latitude and
-longitude.
+`/Geocoder/Result/ResultInterface` directly but it's also possible to use a string or a simple *array* with its
+latitude and longitude.
 
 ``` php
 <?php
@@ -66,6 +66,9 @@ longitude.
 $coordinate = new \Geotools\Coordinate\Coordinate($geocoderResult);
 // or
 $coordinate = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
+// or
+$coordinate = new \Geotools\Coordinate\Coordinate('48.8234055, 2.3072664');
+// result will be:
 printf('Latitude: %F\n', $coordinate->getLatitude()); // 48.8234055
 printf('Longitude: %F\n', $coordinate->getLongitude()); // 2.3072664
 ```

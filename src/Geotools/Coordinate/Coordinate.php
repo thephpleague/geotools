@@ -51,6 +51,9 @@ class Coordinate implements CoordinateInterface
         } elseif (is_array($coordinates) && 2 === count($coordinates)) {
             $this->setLatitude($coordinates[0]);
             $this->setLongitude($coordinates[1]);
+        } elseif (is_string($coordinates) && preg_match('/(\-?\d+\.?\d*)[, ] ?(\-?\d+\.?\d*)$/', $coordinates, $match)) {
+            $this->setLatitude($match[1]);
+            $this->setLongitude($match[2]);
         } else {
             throw new InvalidArgumentException(sprintf(
                 '%s', 'It should be an array or a class which implements Geocoder\Result\ResultInterface !'

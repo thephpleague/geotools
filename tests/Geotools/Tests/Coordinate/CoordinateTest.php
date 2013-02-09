@@ -34,7 +34,9 @@ class CoordinateTest extends TestCase
         return array(
             array(null),
             array('foo'),
+            array('45.0'),
             array(123456),
+            array(45.0),
             array(
                 array()
             ),
@@ -45,30 +47,42 @@ class CoordinateTest extends TestCase
     }
 
     /**
-     * @dataProvider validCoordinatesProvider
+     * @dataProvider validCoordinatesAndExpectedCoordinatesProvider
      */
-    public function testConstructorWithValidCoordinatesShouldBeValid($coordinates)
+    public function testConstructorWithValidCoordinatesShouldBeValid($coordinates, $expectedCoordinates)
     {
         $coordinate = new Coordinate($coordinates);
 
-        $this->assertSame((double) $coordinates[0], $coordinate->getLatitude());
-        $this->assertSame((double) $coordinates[1], $coordinate->getLongitude());
+        $this->assertSame($expectedCoordinates[0], $coordinate->getLatitude());
+        $this->assertSame($expectedCoordinates[1], $coordinate->getLongitude());
     }
 
-    public function validCoordinatesProvider()
+    public function validCoordinatesAndExpectedCoordinatesProvider()
     {
         return array(
             array(
-                array(1, 2)
+                array(1, 2),
+                array(1.0, 2.0)
             ),
             array(
-                array(-1, -2)
+                array(-1, -2),
+                array(-1.0, -2.0)
             ),
             array(
-                array('1', '2')
+                array('1', '2'),
+                array(1.0, 2.0),
             ),
             array(
-                array('-1', '-2')
+                array('-1', '-2'),
+                array(-1.0, -2.0)
+            ),
+            array(
+                '10.0, 20.0',
+                array(10.0, 20.0)
+            ),
+            array(
+                '-10.0,-20.0',
+                array(-10.0, -20.0)
             ),
         );
     }
