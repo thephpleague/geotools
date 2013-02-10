@@ -15,8 +15,8 @@ use Geotools\Tests\TestCase;
 use Geotools\Distance\Distance;
 
 /**
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class DistanceTest extends TestCase
 {
     protected $distance;

@@ -14,8 +14,8 @@ namespace Geotools\Exception;
 /**
  * RuntimeException class
  *
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 class RuntimeException extends \RuntimeException implements ExceptionInterface
 {
 }
