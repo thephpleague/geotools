@@ -1,9 +1,15 @@
 CHANGELOG
 =========
 
-### 0.1.4 (xxxx-xx-xx) ###
+### 0.1.4 (2013-02-10) ###
 
-n/a
+* Updated: Batch class test
+* Fixed: typo
+* Added: test to AbstractGeotools class
+* Refactored: Batch tests
+* Updated: doc with a better batch exemple
+* Added: batch a set of values/coordinates againt a set of providers + tests
+* Fixed: changelog list
 
 ### 0.1.3 (2013-02-09) ###
 
