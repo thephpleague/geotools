@@ -11,7 +11,7 @@ Geotools
 Features
 --------
 
-* **Batch** geocode & reverse geocoding requests in **serie** / in **parallel** against a **set of providers**.
+* **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a **set of providers**.
 * Calcul the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms.
 * Calcul the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
@@ -81,8 +81,8 @@ printf('Longitude: %F\n', $coordinate->getLongitude()); // 2.3072664
 ### Batch ###
 
 It provides a very handy way to batch geocode and reverse geocoding requests in *serie* or in *parallel* against
-a set of providers. Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and
-[React](https://github.com/reactphp/react) libraries.
+a set of providers.  
+Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https://github.com/reactphp/react) libraries.
 
 It's possible to batch *one request* (a string) or a *set of request* (an array) against *one provider* or
 *set of providers*.
@@ -106,7 +106,8 @@ $geotools = new \Geotools\Geotools();
 $results  = $geotools->batch($geocoder)->geocode(array(
     'Paris, France',
     'Copenhagen, Denmark',
-    'New York, USA',
+    '74.200.247.59',
+    '::ffff:66.147.244.214'
 ))->parallel();
 
 $dumper = new \Geocoder\Dumper\WktDumper();
@@ -118,27 +119,33 @@ foreach ($results as $result) {
 }
 ```
 
-You should get something like:
+You should get 24 results something like (6 providers against 4 values to geocode):
 
 ```
-POINT(2.307266 48.823405) // GoogleMapsProvider, ok
-POINT(12.568337 55.676097) // GoogleMapsProvider, ok
-POINT(-74.005973 40.714353) // GoogleMapsProvider, ok
-POINT(2.320035 48.858841) // OpenStreetMapsProvider, ok
-POINT(12.570069 55.686724) // OpenStreetMapsProvider, ok
-POINT(-73.986581 40.730599) // OpenStreetMapsProvider, ok
+POINT(2.352222 48.856614) // GoogleMapsProvider, OK! Street address supported
+POINT(12.568337 55.676097) // GoogleMapsProvider, OK! Street address supported
+POINT(0.000000 0.000000) // GoogleMapsProvider, IPv4 UnsupportedException thrown
+POINT(0.000000 0.000000) // GoogleMapsProvider, IPv6 UnsupportedException thrown
+POINT(2.320035 48.858841) // OpenStreetMapsProvider, OK! Street address supported
+POINT(12.570069 55.686724) // OpenStreetMapsProvider, OK! Street address supported
+POINT(0.000000 0.000000) // OpenStreetMapsProvider, IPv4 UnsupportedException thrown
+POINT(0.000000 0.000000) // OpenStreetMapsProvider, IPv6 UnsupportedException thrown
 POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
 POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
 POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(2.225684 48.874010) // YandexProvider, ok
-POINT(12.567602 55.675682) // YandexProvider, ok
-POINT(-74.007121 40.714551) // YandexProvider, ok
-POINT(0.000000 0.000000) // FreeGeoIpProvider, UnsupportedException thrown
-POINT(0.000000 0.000000) // FreeGeoIpProvider, UnsupportedException thrown
-POINT(0.000000 0.000000) // FreeGeoIpProvider, UnsupportedException thrown
-POINT(0.000000 0.000000) // GeoipProvider, UnsupportedException thrown
-POINT(0.000000 0.000000) // GeoipProvider, UnsupportedException thrown
-POINT(0.000000 0.000000) // GeoipProvider, UnsupportedException thrown
+POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
+POINT(2.341198 48.856929) // YandexProvider, OK! Street address supported
+POINT(12.567602 55.675682) // YandexProvider, OK! Street address supported
+POINT(0.000000 0.000000) // YandexProvider, IPv4 UnsupportedException thrown
+POINT(0.000000 0.000000) // YandexProvider, IPv6 UnsupportedException thrown
+POINT(0.000000 0.000000) // FreeGeoIpProvider, Street address UnsupportedException thrown
+POINT(0.000000 0.000000) // FreeGeoIpProvider, Street address UnsupportedException thrown
+POINT(-122.415600 37.748400) // FreeGeoIpProvider, OK! IPv4 supported
+POINT(-111.613300 40.218100) // FreeGeoIpProvider, OK! IPv6 supported
+POINT(0.000000 0.000000) // GeoipProvider, Street address UnsupportedException thrown
+POINT(0.000000 0.000000) // GeoipProvider, Street address UnsupportedException thrown
+POINT(-122.415604 37.748402) // GeoipProvider, OK! IPv4 supported
+POINT(0.000000 0.000000) // GeoipProvider, IPv6 UnsupportedException thrown
 ```
 
 Batch reverse geocoding is something like:
@@ -157,6 +164,10 @@ $results = $geotools->batch($geocoder)->reverse($coordinates)->parallel();
 ```
 
 If you want to batch it in serie, replace the method `parallel()` to `serie()`.
+
+To optimize batch requests you need to register providers according to their **capabilities** and what you're
+**looking for** (gecode street addresses, geocode IPv4, geocode IPv6 or reverse geocoding),
+please read more at the [Geocoder library doc](https://github.com/willdurand/Geocoder#freegeoipprovider).
 
 ### Distance ###
 
