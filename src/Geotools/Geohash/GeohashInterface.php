@@ -33,7 +33,7 @@ interface GeohashInterface
     public function encode(CoordinateInterface $coordinate, $length = self::MAX_LENGTH);
 
     /**
-     * Retunrs the decoed geo hash to it's center.
+     * Returns the decoded geo hash to it's center.
      * Note that the coordinate that you used to generate the geo hash may be
      * anywhere in the geo hash's bounding box and therefore you should not expect
      * them to be identical.

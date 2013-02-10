@@ -24,7 +24,7 @@ use Geotools\Coordinate\Coordinate;
 class Geohash implements GeohashInterface
 {
     /**
-     * The minimum lenth of the geo hash.
+     * The minimum length of the geo hash.
      *
      * @var integer
      */

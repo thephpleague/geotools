@@ -12,7 +12,7 @@
 namespace Geotools\Tests\Geohash;
 
 use Geotools\Tests\TestCase;
-use Geotools\Geohash\Geohash;;
+use Geotools\Geohash\Geohash;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
