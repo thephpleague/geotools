@@ -26,8 +26,8 @@ Features
 Installation
 ------------
 
-Geotools can be found on [Packagist](https://packagist.org/packages/toin0u/geotools) but
-the recommended way to install Geotools is through [composer](http://getcomposer.org).
+Geotools can be found on [Packagist](https://packagist.org/packages/toin0u/geotools).
+The recommended way to install Geotools is through [composer](http://getcomposer.org).
 
 Run these commands to install composer, Geotools and its dependencies:
 
@@ -123,30 +123,30 @@ foreach ($results as $result) {
 You should get 24 results something like (6 providers against 4 values to geocode):
 
 ```
-POINT(2.352222 48.856614) // GoogleMapsProvider, OK! Street address supported
-POINT(12.568337 55.676097) // GoogleMapsProvider, OK! Street address supported
+POINT(2.352222 48.856614) // GoogleMapsProvider, OK! Address-based supported
+POINT(12.568337 55.676097) // GoogleMapsProvider, OK! Address-based supported
 POINT(0.000000 0.000000) // GoogleMapsProvider, IPv4 UnsupportedException thrown
 POINT(0.000000 0.000000) // GoogleMapsProvider, IPv6 UnsupportedException thrown
-POINT(2.320035 48.858841) // OpenStreetMapsProvider, OK! Street address supported
-POINT(12.570069 55.686724) // OpenStreetMapsProvider, OK! Street address supported
+POINT(2.320035 48.858841) // OpenStreetMapsProvider, OK! Address-based supported
+POINT(12.570069 55.686724) // OpenStreetMapsProvider, OK! Address-based supported
 POINT(0.000000 0.000000) // OpenStreetMapsProvider, IPv4 UnsupportedException thrown
 POINT(0.000000 0.000000) // OpenStreetMapsProvider, IPv6 UnsupportedException thrown
 POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
 POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
 POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
 POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(2.341198 48.856929) // YandexProvider, OK! Street address supported
-POINT(12.567602 55.675682) // YandexProvider, OK! Street address supported
+POINT(2.341198 48.856929) // YandexProvider, OK! Address-based supported
+POINT(12.567602 55.675682) // YandexProvider, OK! Address-based supported
 POINT(0.000000 0.000000) // YandexProvider, IPv4 UnsupportedException thrown
 POINT(0.000000 0.000000) // YandexProvider, IPv6 UnsupportedException thrown
-POINT(0.000000 0.000000) // FreeGeoIpProvider, Street address UnsupportedException thrown
-POINT(0.000000 0.000000) // FreeGeoIpProvider, Street address UnsupportedException thrown
+POINT(0.000000 0.000000) // FreeGeoIpProvider, Address-based UnsupportedException thrown
+POINT(0.000000 0.000000) // FreeGeoIpProvider, Address-based UnsupportedException thrown
 POINT(-122.415600 37.748400) // FreeGeoIpProvider, OK! IPv4 supported
 POINT(-111.613300 40.218100) // FreeGeoIpProvider, OK! IPv6 supported
-POINT(0.000000 0.000000) // GeoipProvider, Street address UnsupportedException thrown
-POINT(0.000000 0.000000) // GeoipProvider, Street address UnsupportedException thrown
+POINT(0.000000 0.000000) // GeoipProvider, Address-based UnsupportedException thrown
+POINT(0.000000 0.000000) // GeoipProvider, Address-based UnsupportedException thrown
 POINT(-122.415604 37.748402) // GeoipProvider, OK! IPv4 supported
-POINT(0.000000 0.000000) // GeoipProvider, IPv6 UnsupportedException thrown
+POINT(0.000000 0.000000) // GeoipProvider, NoResultException thrown but IPv6 is supported
 ```
 
 Batch reverse geocoding is something like:
@@ -154,7 +154,12 @@ Batch reverse geocoding is something like:
 ``` php
 <?php
 
-// ... like the previous exemple ...
+// ... $geocoder like the previous exemple ...
+// If you want to reverse one coordinate
+$results = $geotools->batch($geocoder)->reverse(
+    new \Geotools\Coordinate\Coordinate(array(2.307266 48.823405))
+)->parallel();
+// Or if you want to reverse geocoding 3 coordinates
 $coordinates = array(
     new \Geotools\Coordinate\Coordinate(array(2.307266 48.823405)),
     new \Geotools\Coordinate\Coordinate(array(12.568337 55.676097)),
