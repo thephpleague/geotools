@@ -436,6 +436,51 @@ class BatchTest extends TestCase
             $this->assertEmpty($providerResult->getLongitude());
         }
     }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage booooooooooo!
+     */
+    public function testSeriesShouldThrowException()
+    {
+        $batch = new TestableBatch($this->geocoder);
+        $batch->setTasks($tasks = array(
+            function ($callback, $errback) {
+                $callback('foo');
+            },
+            function ($callback, $errback) {
+                $errback(new \RuntimeException('booooooooooo!'));
+            },
+            function ($callback, $errback) {
+                $callback('bar');
+            },
+        ))->geocode('foo')->serie();
+    }
+
+    public function testParallelShouldThrowException()
+    {
+        $called = 0;
+
+        $batch = new TestableBatch($this->geocoder);
+        $batch->setTasks(array(
+            function ($callback, $errback) {
+                $errback(new \RuntimeException('booooooooooo!'));
+            },
+            function ($callback, $errback) use (&$called) {
+                $callback('foo');
+                $called++;
+            },
+            function ($callback, $errback) {
+                $errback(new \RuntimeException('booooooooooo!'));
+            },
+            function ($callback, $errback) use (&$called) {
+                $callback('bar');
+                $called++;
+            },
+        ))->geocode('foo')->parallel();
+
+        $this->assertSame(2, $called);
+    }
 }
 
 class TestableBatch extends Batch
@@ -448,6 +493,13 @@ class TestableBatch extends Batch
     public function getTasks()
     {
         return $this->tasks;
+    }
+
+    public function setTasks(array $tasks)
+    {
+        $this->tasks = $tasks;
+
+        return $this;
     }
 }
 

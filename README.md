@@ -26,7 +26,8 @@ Features
 Installation
 ------------
 
-The recommended way to install Geotools is through [composer](http://getcomposer.org).
+Geotools can be found on [Packagist](https://packagist.org/packages/toin0u/geotools) but
+the recommended way to install Geotools is through [composer](http://getcomposer.org).
 
 Run these commands to install composer, Geotools and its dependencies:
 
