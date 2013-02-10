@@ -12,6 +12,7 @@
 namespace Geotools\Batch;
 
 use Geotools\Coordinate\CoordinateInterface;
+use Geotools\Exception\InvalidArgumentException;
 use Geocoder\GeocoderInterface;
 use Geocoder\Result\Geocoded;
 use React\Async\Util as Async;
@@ -51,44 +52,80 @@ class Batch implements BatchInterface
     /**
      * {@inheritDoc}
      */
-    public function geocode($value)
+    public function geocode($values)
     {
         $geocoder = $this->geocoder;
 
         foreach ($this->geocoder->getProviders() as $provider) {
-            $this->tasks[$provider->getName()] = function ($callback) use ($geocoder, $provider, $value) {
-                try {
-                    $callback($geocoder->using($provider->getName())->geocode(
-                        $value
-                    ));
-                } catch (\Exception $e) {
-                    $callback(new Geocoded());
+            if (is_array($values) && 0 !== count($values)) {
+                foreach ($values as $value) {
+                    $this->tasks[] = function ($callback) use ($geocoder, $provider, $value) {
+                        try {
+                            $callback($geocoder->using($provider->getName())->geocode(
+                                $value
+                            ));
+                        } catch (\Exception $e) {
+                            $callback(new Geocoded());
+                        }
+                    };
                 }
-            };
+            } elseif (is_string($values) && '' !== trim($values)) {
+                $this->tasks[] = function ($callback) use ($geocoder, $provider, $values) {
+                    try {
+                        $callback($geocoder->using($provider->getName())->geocode(
+                            $values
+                        ));
+                    } catch (\Exception $e) {
+                        $callback(new Geocoded());
+                    }
+                };
+            } else {
+                throw new InvalidArgumentException(
+                    'The argument should be a string or an array of strings to geocode.'
+                );
+            }
         }
 
         return $this;
     }
 
-
     /**
      * {@inheritDoc}
      */
-    public function reverse(CoordinateInterface $coordinate)
+    public function reverse($coordinates)
     {
         $geocoder = $this->geocoder;
 
         foreach ($this->geocoder->getProviders() as $provider) {
-            $this->tasks[$provider->getName()] = function ($callback) use ($geocoder, $provider, $coordinate) {
-                try {
-                    $callback($geocoder->using($provider->getName())->reverse(
-                        $coordinate->getLatitude(),
-                        $coordinate->getLongitude()
-                    ));
-                } catch (\Exception $e) {
-                    $callback(new Geocoded());
+            if (is_array($coordinates) && 0 !== count($coordinates)) {
+                foreach ($coordinates as $coordinate) {
+                    $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinate) {
+                        try {
+                            $callback($geocoder->using($provider->getName())->reverse(
+                                $coordinate->getLatitude(),
+                                $coordinate->getLongitude()
+                            ));
+                        } catch (\Exception $e) {
+                            $callback(new Geocoded());
+                        }
+                    };
                 }
-            };
+            } elseif ($coordinates instanceOf CoordinateInterface) {
+                $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinates) {
+                    try {
+                        $callback($geocoder->using($provider->getName())->reverse(
+                            $coordinates->getLatitude(),
+                            $coordinates->getLongitude()
+                        ));
+                    } catch (\Exception $e) {
+                        $callback(new Geocoded());
+                    }
+                };
+            } else {
+                throw new InvalidArgumentException(
+                    'The argument should be a Coordinate instance or an array of Coordinate instances to reverse.'
+                );
+            }
         }
 
         return $this;
@@ -99,8 +136,6 @@ class Batch implements BatchInterface
      *
      * $this cannot be used in anonymous function in PHP 5.3.x
      * @see http://php.net/manual/en/functions.anonymous.php
-     *
-     * @todo Make a patch to React/Async to return the provider name form the callback
      */
     public function serie()
     {
@@ -109,8 +144,8 @@ class Batch implements BatchInterface
         Async::series(
             $this->tasks,
             function (array $providerResults) use (&$computedInSerie) {
-                foreach ($providerResults as $providerName => $providerResult) {
-                    $computedInSerie[$providerName] = $providerResult;
+                foreach ($providerResults as $providerResult) {
+                    $computedInSerie[] = $providerResult;
                 }
             },
             function (\Exception $e) {
@@ -134,8 +169,8 @@ class Batch implements BatchInterface
         Async::parallel(
             $this->tasks,
             function (array $providerResults) use (&$computedInParallel) {
-                foreach ($providerResults as $providerName => $providerResult) {
-                    $computedInParallel[$providerName] = $providerResult;
+                foreach ($providerResults as $providerResult) {
+                    $computedInParallel[] = $providerResult;
                 }
             },
             function (\Exception $e) {

@@ -11,8 +11,6 @@
 
 namespace Geotools\Batch;
 
-use Geotools\Coordinate\CoordinateInterface;
-
 /**
  * Batch interface
  *
@@ -24,37 +22,41 @@ interface BatchInterface
      * Set an array of closures to geocode.
      * If a provider throws an exception it will return an empty ResultInterface.
      *
-     * @param string $value A value to geocode.
+     * @param string|array $values A value or an array of values to geocode.
      *
      * @return BatchInterface
+     *
+     * @throws InvalidArgumentException
      */
-    public function geocode($value);
+    public function geocode($values);
 
     /**
      * Set an array of closures to reverse geocode.
      * If a provider throws an exception it will return an empty ResultInterface.
      *
-     * @param CoordinateInterface $coordinate A coordinate to reverse.
+     * @param CoordinateInterface|array $coordinates A coordinate or an array of coordinates to reverse.
      *
      * @return BatchInterface
+     *
+     * @throws InvalidArgumentException
      */
-    public function reverse(CoordinateInterface $coordinate);
+    public function reverse($coordinates);
 
     /**
      * Returns an array of ResultInterface processed in serie.
      *
-     * @throws \Exception
-     *
      * @return ResultInterface[]
+     *
+     * @throws \Exception
      */
     public function serie();
 
     /**
      * Returns an array of ResultInterface processed in parallel.
      *
-     * @throws \Exception
-     *
      * @return ResultInterface[]
+     *
+     * @throws \Exception
      */
     public function parallel();
 }

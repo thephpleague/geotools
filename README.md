@@ -11,7 +11,7 @@ Geotools
 Features
 --------
 
-* **Batch** geocode & reverse geocoding requests in **serie** / in **parallel** againts a **set of providers**.
+* **Batch** geocode & reverse geocoding requests in **serie** / in **parallel** against a **set of providers**.
 * Calcul the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms.
 * Calcul the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
@@ -80,8 +80,12 @@ printf('Longitude: %F\n', $coordinate->getLongitude()); // 2.3072664
 
 ### Batch ###
 
-It provides a very handy way to batch geocode and reverse geocoding in *serie* or in *parallel* against a set of
-providers. Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https://github.com/reactphp/react) libraries.
+It provides a very handy way to batch geocode and reverse geocoding requests in *serie* or in *parallel* against
+a set of providers. Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and
+[React](https://github.com/reactphp/react) libraries.
+
+It's possible to batch *one request* (a string) or a *set of request* (an array) against *one provider* or
+*set of providers*.
 
 ```php
 <?php
@@ -95,32 +99,46 @@ $geocoder->registerProviders(array(
     new \Geocoder\Provider\BingMapsProvider($adapter, '<FAKE_API_KEY>'), // throws InvalidCredentialsException
     new \Geocoder\Provider\YandexProvider($adapter), // ok
     new \Geocoder\Provider\FreeGeoIpProvider($adapter), // throws UnsupportedException
-    new \Geocoder\Provider\HostIpProvider($adapter), // throws UnsupportedException
     new \Geocoder\Provider\GeoipProvider(), // throws UnsupportedException
 ));
 
 $geotools = new \Geotools\Geotools();
-$results  = $geotools->batch($geocoder)->geocode('10 rue Gambetta, Paris, France')->parallel();
+$results  = $geotools->batch($geocoder)->geocode(array(
+    'Paris, France',
+    'Copenhagen, Denmark',
+    'New York, USA',
+))->parallel();
 
 $dumper = new \Geocoder\Dumper\WktDumper();
-foreach ($results as $providerName => $providerResult) {
+foreach ($results as $result) {
     // if a provider throws an exception (UnsupportedException, InvalidCredentialsException ...)
     // an empty /Geocoder/Result/Geocoded instance is returned. It's possible to use dumpers
     // and/or formatters from the Geocoder library
-    printf("%s: %s\n", $providerName, $dumper->dump($providerResult));
+    printf("%s\n", $dumper->dump($result));
 }
 ```
 
 You should get something like:
 
 ```
-google_maps: POINT(2.307266 48.823405) // ok
-openstreetmaps: POINT(2.391636 48.863936) // ok
-bing_maps: POINT(0.000000 0.000000) // InvalidCredentialsException thrown
-yandex: POINT(2.225684 48.874010) // ok
-free_geo_ip: POINT(0.000000 0.000000) // UnsupportedException thrown
-host_ip: POINT(0.000000 0.000000) // UnsupportedException thrown
-geoip: POINT(0.000000 0.000000) // UnsupportedException thrown
+POINT(2.307266 48.823405) // GoogleMapsProvider, ok
+POINT(12.568337 55.676097) // GoogleMapsProvider, ok
+POINT(-74.005973 40.714353) // GoogleMapsProvider, ok
+POINT(2.320035 48.858841) // OpenStreetMapsProvider, ok
+POINT(12.570069 55.686724) // OpenStreetMapsProvider, ok
+POINT(-73.986581 40.730599) // OpenStreetMapsProvider, ok
+POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
+POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
+POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
+POINT(2.225684 48.874010) // YandexProvider, ok
+POINT(12.567602 55.675682) // YandexProvider, ok
+POINT(-74.007121 40.714551) // YandexProvider, ok
+POINT(0.000000 0.000000) // FreeGeoIpProvider, UnsupportedException thrown
+POINT(0.000000 0.000000) // FreeGeoIpProvider, UnsupportedException thrown
+POINT(0.000000 0.000000) // FreeGeoIpProvider, UnsupportedException thrown
+POINT(0.000000 0.000000) // GeoipProvider, UnsupportedException thrown
+POINT(0.000000 0.000000) // GeoipProvider, UnsupportedException thrown
+POINT(0.000000 0.000000) // GeoipProvider, UnsupportedException thrown
 ```
 
 Batch reverse geocoding is something like:
@@ -129,8 +147,12 @@ Batch reverse geocoding is something like:
 <?php
 
 // ... like the previous exemple ...
-$coordinate = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-$results = $geotools->batch($geocoder)->reverse($coordinate)->parallel();
+$coordinates = array(
+    new \Geotools\Coordinate\Coordinate(array(2.307266 48.823405)),
+    new \Geotools\Coordinate\Coordinate(array(12.568337 55.676097)),
+    new \Geotools\Coordinate\Coordinate('-74.005973 40.714353')),
+);
+$results = $geotools->batch($geocoder)->reverse($coordinates)->parallel();
 // ...
 ```
 
