@@ -100,7 +100,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
 
     /**
     * Returns the approximate sea level great circle (Earth) distance between
-    * two cordinates using the Haversine formula which is accurate to around 0.3%.
+    * two coordinates using the Haversine formula which is accurate to around 0.3%.
     * @see http://www.movable-type.co.uk/scripts/latlong.html
     *
     * @return double The distance in meters
@@ -122,7 +122,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
     }
 
     /**
-    * Returns geodetic distance between between two cordinates using Vincenty inverse
+    * Returns geodetic distance between between two coordinates using Vincenty inverse
     * formula for ellipsoids which is accurate to within 0.5mm.
     * @see http://www.movable-type.co.uk/scripts/latlong-vincenty.html
     *

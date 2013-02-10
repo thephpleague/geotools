@@ -12,12 +12,12 @@ Features
 --------
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a **set of providers**.
-* Calcul the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
+* Calculate the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms.
-* Calcul the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
-* Calcul the **caridnal point** (direction) from the origin coordinate to the destination coordinate.
-* Calcul the **half-way point** (coordinate) between the origin and the destination coordinates.
-* Calcul the **destination point** with given bearing in degrees and a distance in meters.
+* Calculate the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
+* Calculate the **cardinal point** (direction) from the origin coordinate to the destination coordinate.
+* Calculate the **half-way point** (coordinate) between the origin and the destination coordinates.
+* Calculate the **destination point** with given bearing in degrees and a distance in meters.
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/).
 * ... more to come ...
@@ -154,7 +154,7 @@ Batch reverse geocoding is something like:
 ``` php
 <?php
 
-// ... $geocoder like the previous exemple ...
+// ... $geocoder like the previous example ...
 // If you want to reverse one coordinate
 $results = $geotools->batch($geocoder)->reverse(
     new \Geotools\Coordinate\Coordinate(array(2.307266 48.823405))
@@ -172,7 +172,7 @@ $results = $geotools->batch($geocoder)->reverse($coordinates)->parallel();
 If you want to batch it in serie, replace the method `parallel()` to `serie()`.
 
 To optimize batch requests you need to register providers according to their **capabilities** and what you're
-**looking for** (gecode street addresses, geocode IPv4, geocode IPv6 or reverse geocoding),
+**looking for** (geocode street addresses, geocode IPv4, geocode IPv6 or reverse geocoding),
 please read more at the [Geocoder library doc](https://github.com/willdurand/Geocoder#freegeoipprovider).
 
 ### Distance ###

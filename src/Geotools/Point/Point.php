@@ -77,7 +77,7 @@ class Point extends AbstractGeotools implements PointInterface
     }
 
     /**
-     * Returns the caridnal point / direction from the origin coordinate to
+     * Returns the cardinal point / direction from the origin coordinate to
      * the destination coordinate.
      * @see http://en.wikipedia.org/wiki/Cardinal_direction
      *
