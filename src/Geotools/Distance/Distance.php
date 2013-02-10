@@ -155,7 +155,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
                 ($cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda) * ($cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda));
 
             if (0 === $sinSigma) {
-              return 0; // co-incident points
+                return 0; // co-incident points
             }
 
             $cosSigma   = $sinU1 * $sinU2 + $cosU1 * $cosU2 * $cosLambda;
