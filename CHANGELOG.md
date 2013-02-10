@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+### 0.1.5 (xxxx-xx-xx) ###
+
+n/a
+
 ### 0.1.4 (2013-02-10) ###
 
 * Updated: Batch class test
