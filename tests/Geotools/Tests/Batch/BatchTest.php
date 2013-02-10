@@ -23,11 +23,13 @@ class BatchTest extends TestCase
     protected $geocoder;
     protected $providers;
     protected $data;
+    protected $values;
+    protected $coordinates;
 
     protected function setUp()
     {
         $this->data = array(
-            'latitude' => 48.8234055,
+            'latitude'  => 48.8234055,
             'longitude' => '2.3072664',
         );
 
@@ -35,6 +37,21 @@ class BatchTest extends TestCase
             new MockProvider('provider1'),
             new MockProvider('provider2'),
             new MockProvider('provider3'),
+            new MockProvider('provider4'),
+        );
+
+        $this->values = array(
+            'foo',
+            'bar',
+            'baz',
+            'qux',
+        );
+
+        $this->coordinates = array(
+            $this->getStubCoordinate(),
+            $this->getStubCoordinate(),
+            $this->getStubCoordinate(),
+            $this->getStubCoordinate(),
         );
 
         $this->geocoder = $this->getMockGeocoderReturns($this->providers);
@@ -72,17 +89,17 @@ class BatchTest extends TestCase
         $tasks = $batch->getTasks();
 
         $this->assertTrue(is_array($tasks));
-        $this->assertCount(3, $tasks);
+        $this->assertCount(count($this->providers), $tasks);
     }
 
     public function testGeocodeShouldMadeCorrectTasksArrayToComputeWithManyValues()
     {
         $batch = new TestableBatch($this->geocoder);
-        $batch->geocode(array('foo', 'bar', 'baz'));
+        $batch->geocode($this->values);
         $tasks = $batch->getTasks();
 
         $this->assertTrue(is_array($tasks));
-        $this->assertCount(9, $tasks);
+        $this->assertCount(count($this->providers) * count($this->values), $tasks);
     }
 
     /**
@@ -127,21 +144,17 @@ class BatchTest extends TestCase
         $tasks = $batch->getTasks();
 
         $this->assertTrue(is_array($tasks));
-        $this->assertCount(3, $tasks);
+        $this->assertCount(count($this->providers), $tasks);
     }
 
     public function testReverseShouldMadeCorrectTasksArrayToComputeWithManyCoordinates()
     {
         $batch = new TestableBatch($this->geocoder);
-        $batch->reverse(array(
-            $this->getStubCoordinate(),
-            $this->getStubCoordinate(),
-            $this->getStubCoordinate(),
-        ));
+        $batch->reverse($this->coordinates);
         $tasks = $batch->getTasks();
 
         $this->assertTrue(is_array($tasks));
-        $this->assertCount(9, $tasks);
+        $this->assertCount(count($this->providers) * count($this->coordinates), $tasks);
     }
 
     /**
@@ -186,16 +199,11 @@ class BatchTest extends TestCase
 
     public function testBatchGeocodeInSerieWithManyValues()
     {
-        $values = array(
-            'foo',
-            'bar',
-            'baz',
-        );
         $geocoder = $this->getMockGeocoderReturns($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
-        $resultComputedInSerie = $batch->geocode($values)->serie();
+        $resultComputedInSerie = $batch->geocode($this->values)->serie();
 
-        $this->assertCount(count($this->providers) * count($values), $resultComputedInSerie);
+        $this->assertCount(count($this->providers) * count($this->values), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
@@ -223,16 +231,11 @@ class BatchTest extends TestCase
 
     public function testBatchReverseGeocodingInSerieWithManyCoordinates()
     {
-        $coordinates = array(
-            $this->getStubCoordinate(),
-            $this->getStubCoordinate(),
-            $this->getStubCoordinate(),
-        );
         $geocoder = $this->getMockGeocoderReturns($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
-        $resultComputedInSerie = $batch->reverse($coordinates)->serie();
+        $resultComputedInSerie = $batch->reverse($this->coordinates)->serie();
 
-        $this->assertCount(count($this->providers) * count($coordinates), $resultComputedInSerie);
+        $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
@@ -260,16 +263,11 @@ class BatchTest extends TestCase
 
     public function testBatchGeocodeInParallelWithManyValues()
     {
-        $values = array(
-            'foo',
-            'bar',
-            'baz',
-        );
         $geocoder = $this->getMockGeocoderReturns($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
-        $resultComputedInParallel = $batch->geocode($values)->parallel();
+        $resultComputedInParallel = $batch->geocode($this->values)->parallel();
 
-        $this->assertCount(count($this->providers) * count($values), $resultComputedInParallel);
+        $this->assertCount(count($this->providers) * count($this->values), $resultComputedInParallel);
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
@@ -297,16 +295,11 @@ class BatchTest extends TestCase
 
     public function testBatchReverseGeocodingInParallelWithManyCoordinates()
     {
-        $coordinates = array(
-            $this->getStubCoordinate(),
-            $this->getStubCoordinate(),
-            $this->getStubCoordinate(),
-        );
         $geocoder = $this->getMockGeocoderReturns($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
-        $resultComputedInSerie = $batch->reverse($coordinates)->parallel();
+        $resultComputedInSerie = $batch->reverse($this->coordinates)->parallel();
 
-        $this->assertCount(count($this->providers) * count($coordinates), $resultComputedInSerie);
+        $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
@@ -316,7 +309,7 @@ class BatchTest extends TestCase
         }
     }
 
-    public function testBatchGeocodeInSerieOrParallelReturnNewGeocodedInstance()
+    public function testBatchGeocodeInSerieReturnNewGeocodedInstance()
     {
         $geocoder = $this->getMockGeocoderThrowException($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
@@ -332,18 +325,29 @@ class BatchTest extends TestCase
         }
     }
 
-    public function testBatchGeocodeInSerieOrParallelReturnNewGeocodedInstanceWithManyValues()
+    public function testBatchGeocodeInParallelReturnNewGeocodedInstance()
     {
-        $values = array(
-            'foo',
-            'bar',
-            'baz',
-        );
         $geocoder = $this->getMockGeocoderThrowException($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
-        $resultComputedInSerie = $batch->geocode($values)->serie();
+        $resultComputedInParallel = $batch->geocode('foo')->parallel();
 
-        $this->assertCount(count($this->providers) * count($values), $resultComputedInSerie);
+        $this->assertCount(count($this->providers), $resultComputedInParallel);
+        foreach ($resultComputedInParallel as $providerResult) {
+            $this->assertTrue(is_object($providerResult));
+            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
+            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertEmpty($providerResult->getLatitude());
+            $this->assertEmpty($providerResult->getLongitude());
+        }
+    }
+
+    public function testBatchGeocodeInSerieReturnNewGeocodedInstanceWithManyValues()
+    {
+        $geocoder = $this->getMockGeocoderThrowException($this->providers, $this->data);
+        $batch = new TestableBatch($geocoder);
+        $resultComputedInSerie = $batch->geocode($this->values)->serie();
+
+        $this->assertCount(count($this->providers) * count($this->values), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
@@ -353,7 +357,23 @@ class BatchTest extends TestCase
         }
     }
 
-    public function testBatchReverseGeocodingInSerieOrParallelReturnNewGeocodedInstance()
+    public function testBatchGeocodeInParallelReturnNewGeocodedInstanceWithManyValues()
+    {
+        $geocoder = $this->getMockGeocoderThrowException($this->providers, $this->data);
+        $batch = new TestableBatch($geocoder);
+        $resultComputedInParallel = $batch->geocode($this->values)->parallel();
+
+        $this->assertCount(count($this->providers) * count($this->values), $resultComputedInParallel);
+        foreach ($resultComputedInParallel as $providerResult) {
+            $this->assertTrue(is_object($providerResult));
+            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
+            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertEmpty($providerResult->getLatitude());
+            $this->assertEmpty($providerResult->getLongitude());
+        }
+    }
+
+    public function testBatchReverseGeocodingInSerieReturnNewGeocodedInstance()
     {
         $geocoder = $this->getMockGeocoderThrowException($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
@@ -369,19 +389,46 @@ class BatchTest extends TestCase
         }
     }
 
-    public function testBatchReverseGeocodingInSerieOrParallelReturnNewGeocodedInstanceWithManyCoordinates()
+    public function testBatchReverseGeocodingInParallelReturnNewGeocodedInstance()
     {
-        $coordinates = array(
-            $this->getStubCoordinate(),
-            $this->getStubCoordinate(),
-            $this->getStubCoordinate(),
-        );
         $geocoder = $this->getMockGeocoderThrowException($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
-        $resultComputedInSerie = $batch->reverse($coordinates)->serie();
+        $resultComputedInParallel = $batch->reverse($this->getStubCoordinate())->parallel();
 
-        $this->assertCount(count($this->providers) * count($coordinates), $resultComputedInSerie);
+        $this->assertCount(count($this->providers), $resultComputedInParallel);
+        foreach ($resultComputedInParallel as $providerResult) {
+            $this->assertTrue(is_object($providerResult));
+            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
+            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertEmpty($providerResult->getLatitude());
+            $this->assertEmpty($providerResult->getLongitude());
+        }
+    }
+
+    public function testBatchReverseGeocodingInSerieReturnNewGeocodedInstanceWithManyCoordinates()
+    {
+        $geocoder = $this->getMockGeocoderThrowException($this->providers, $this->data);
+        $batch = new TestableBatch($geocoder);
+        $resultComputedInSerie = $batch->reverse($this->coordinates)->serie();
+
+        $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
+            $this->assertTrue(is_object($providerResult));
+            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
+            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertEmpty($providerResult->getLatitude());
+            $this->assertEmpty($providerResult->getLongitude());
+        }
+    }
+
+    public function testBatchReverseGeocodingInParallelReturnNewGeocodedInstanceWithManyCoordinates()
+    {
+        $geocoder = $this->getMockGeocoderThrowException($this->providers, $this->data);
+        $batch = new TestableBatch($geocoder);
+        $resultComputedInParallel = $batch->reverse($this->coordinates)->parallel();
+
+        $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInParallel);
+        foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
             $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);

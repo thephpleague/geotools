@@ -94,12 +94,12 @@ $geocoder = new \Geocoder\Geocoder();
 $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
 
 $geocoder->registerProviders(array(
-    new \Geocoder\Provider\GoogleMapsProvider($adapter), // ok
-    new \Geocoder\Provider\OpenStreetMapsProvider($adapter), // ok
+    new \Geocoder\Provider\GoogleMapsProvider($adapter),
+    new \Geocoder\Provider\OpenStreetMapsProvider($adapter),
     new \Geocoder\Provider\BingMapsProvider($adapter, '<FAKE_API_KEY>'), // throws InvalidCredentialsException
-    new \Geocoder\Provider\YandexProvider($adapter), // ok
-    new \Geocoder\Provider\FreeGeoIpProvider($adapter), // throws UnsupportedException
-    new \Geocoder\Provider\GeoipProvider(), // throws UnsupportedException
+    new \Geocoder\Provider\YandexProvider($adapter),
+    new \Geocoder\Provider\FreeGeoIpProvider($adapter),
+    new \Geocoder\Provider\GeoipProvider(),
 ));
 
 $geotools = new \Geotools\Geotools();
