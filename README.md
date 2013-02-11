@@ -12,12 +12,12 @@ Features
 --------
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a **set of providers**.
-* Calculate the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
+* Compute the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms.
-* Calculate the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
-* Calculate the **cardinal point** (direction) from the origin coordinate to the destination coordinate.
-* Calculate the **half-way point** (coordinate) between the origin and the destination coordinates.
-* Calculate the **destination point** with given bearing in degrees and a distance in meters.
+* Compute the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
+* Compute the **cardinal point** (direction) from the origin coordinate to the destination coordinate.
+* Compute the **half-way point** (coordinate) between the origin and the destination coordinates.
+* Compute the **destination point** with given bearing in degrees and a distance in meters.
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/).
 * ... more to come ...
@@ -177,7 +177,7 @@ please read more at the [Geocoder library doc](https://github.com/willdurand/Geo
 
 ### Distance ###
 
-It provides methods to calculate the distance in *meter* (by default), *km* or *mile* between two coordinates
+It provides methods to compute the distance in *meter* (by default), *km* or *mile* between two coordinates
 using *flat* (most performant), *haversine* or *vincenty* (most accurate) algorithms.
 
 ``` php
@@ -194,7 +194,7 @@ echo $geotools->from($coordA)->to($coordB)->distance()->in('mile')->vincenty(); 
 
 ### Point ###
 
-It provides methods to calculate the *initial bearing* in degrees, the *cardinal direction*, the *middle point*
+It provides methods to compute the *initial bearing* in degrees, the *cardinal direction*, the *middle point*
 and the *destination point*. The middle and the destination points returns a `\Geotools\Coordinate\Coordinate` object.
 
 ``` php
