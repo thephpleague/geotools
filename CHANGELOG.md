@@ -1,9 +1,16 @@
 CHANGELOG
 =========
 
-### 0.1.5 (xxxx-xx-xx) ###
+### 0.1.5 (2013-02-13) ###
 
-n/a
+* Fixed: CS
+* Added: Convert class, tests and doc
+* Updated: doc about Coordinate class
+* Updated: method visibility in Coordinate class
+* Added: Coordinate class support different DMS coordinates
+* Fixed: thrown message on invalid coordinate
+* Fixed: typo calculate to compute
+* Fixed typos
 
 ### 0.1.4 (2013-02-10) ###
 
