@@ -12,6 +12,8 @@ Features
 --------
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a **set of providers**.
+* Accept **almost** all kind of [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion)
+as coordinates.
 * Compute the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms.
 * Compute the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
@@ -79,11 +81,16 @@ Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\Geotools\
 ``` php
 <?php
 
-$coordinate = new \Geotools\Coordinate\Coordinate($geocoderResult); // \Geocoder\Result\ResultInterface
-// or
+// from an \Geocoder\Result\ResultInterface instance
+$coordinate = new \Geotools\Coordinate\Coordinate($geocoderResult);
+// or in an array of latitude/longitude coordinate
 $coordinate = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-// or
+// or in latitude/longitude coordinate
 $coordinate = new \Geotools\Coordinate\Coordinate('48.8234055, 2.3072664');
+// or in degrees minutes seconds coordinate
+$coordinate = new \Geotools\Coordinate\Coordinate('48°49′24″N, 2°18′26″E');
+// or in decimal minutes cordinate
+$coordinate = new \Geotools\Coordinate\Coordinate('48 49.4N, 2 18.43333E');
 // the result will be:
 printf('Latitude: %F\n', $coordinate->getLatitude()); // 48.8234055
 printf('Longitude: %F\n', $coordinate->getLongitude()); // 2.3072664
