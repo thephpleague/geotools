@@ -12,8 +12,10 @@
 namespace Geotools\Convert;
 
 /**
-* @author Antoine Corcy <contact@sbin.dk>
-*/
+ * Convert interface
+ *
+ * @author Antoine Corcy <contact@sbin.dk>
+ */
 interface ConvertInterface
 {
     /**
@@ -131,7 +133,7 @@ interface ConvertInterface
     /**
      * Convert and format a decimal degree coordinate to degrees minutes seconds coordinate.
      *
-     * @param string The way to format the DMS coordinate.
+     * @param string $format The way to format the DMS coordinate.
      *
      * @return string Converted and formatted string.
      */
@@ -140,7 +142,7 @@ interface ConvertInterface
     /**
      * Convert and format a decimal degree coordinate to decimal minutes coordinate.
      *
-     * @param string The way to format the DMS coordinate.
+     * @param string $format The way to format the DMS coordinate.
      *
      * @return string Converted and formatted string.
      */

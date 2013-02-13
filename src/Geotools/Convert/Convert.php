@@ -14,6 +14,8 @@ namespace Geotools\Convert;
 use Geotools\Coordinate\CoordinateInterface;
 
 /**
+ * Convert class
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class Convert implements ConvertInterface
@@ -84,7 +86,7 @@ class Convert implements ConvertInterface
     /**
      * Alias of toDegreesMinutesSeconds function.
      *
-     * @param string The way to format the DMS coordinate.
+     * @param string $format The way to format the DMS coordinate.
      *
      * @return string Converted and formatted string.
      */
@@ -116,7 +118,7 @@ class Convert implements ConvertInterface
     /**
      * Alias of toDecimalMinutes function.
      *
-     * @param string The way to format the DMS coordinate.
+     * @param string $format The way to format the DMS coordinate.
      *
      * @return string Converted and formatted string.
      */

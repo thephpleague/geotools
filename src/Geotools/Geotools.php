@@ -101,7 +101,9 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     }
 
     /**
-     * Returns an instance of Convert
+     * Returns an instance of Convert.
+     *
+     * @param CoordinateInterface $coordinates The coordinates to convert.
      *
      * @return ConvertInterface
      */
