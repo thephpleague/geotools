@@ -65,4 +65,17 @@ interface CoordinateInterface
      * @return double
      */
     public function getLongitude();
+
+    /**
+     * Converts a valid and acceptable geographic coordinates to decimal degrees coordinate.
+     *
+     * @param string $coordinates A valid and acceptable geographic coordinates.
+     *
+     * @return array An array of coordinate in decimal degree.
+     *
+     * @throws InvalidArgumentException
+     *
+     * @see http://en.wikipedia.org/wiki/Geographic_coordinate_conversion
+     */
+    public function toDecimalDegree($coordinates);
 }

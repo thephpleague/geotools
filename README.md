@@ -63,6 +63,16 @@ Usage & API
 `\Geocoder\Result\ResultInterface` directly but it's also possible to use a *string* or a simple *array* with its
 latitude and longitude.
 
+It supports [valid and acceptable geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion)
+like:
+* 40:26:46N,079:56:55W
+* 40:26:46.302N 079:56:55.903W
+* 40°26′47″N 079°58′36″W
+* 40d 26′ 47″ N 079d 58′ 36″ W
+* 40.446195N 79.948862W
+* 40.446195, -79.948862
+* 40° 26.7717, -79° 56.93172
+
 Latitudes below -90.0 or above 90.0 degrees are *capped* through `\Geotools\Coordinate\Coordinate::normalizeLatitude()`.  
 Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
 

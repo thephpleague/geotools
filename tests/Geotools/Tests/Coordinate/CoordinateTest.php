@@ -33,8 +33,6 @@ class CoordinateTest extends TestCase
     {
         return array(
             array(null),
-            array('foo'),
-            array('45.0'),
             array(123456),
             array(45.0),
             array(
@@ -43,6 +41,32 @@ class CoordinateTest extends TestCase
             array(
                 array('foo', 'bar', 'baz', 'qux')
             ),
+        );
+    }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
+     * @dataProvider invalidStringCoordinatesProvider
+     */
+    public function testConstructorWithInvalidStringCoordinatesShouldThrowAnException($coordinates)
+    {
+        new Coordinate($coordinates);
+    }
+
+    public function invalidStringCoordinatesProvider()
+    {
+        return array(
+            array(''),
+            array(' '),
+            array('_'),
+            array('foo'),
+            array('10.0'),
+            array('10°, 20°'),
+            array('10.0°, 20.0°'),
+            array('47.0267747°, 002.3072664°'),
+            array('47°01.60648\', 002°18.43598\''),
+            array('47°01\'36.3888\", 002°18\'26.1590\"'),
         );
     }
 
@@ -83,6 +107,58 @@ class CoordinateTest extends TestCase
             array(
                 '-10.0,-20.0',
                 array(-10.0, -20.0)
+            ),
+            array(
+                '40° 26.7717, -79° 56.93172',
+                array(40.446195, -79.948862)
+            ),
+            array(
+                '40°26.7717 -79°56.93172',
+                array(40.446195, -79.948862)
+            ),
+            array(
+                '40°26.7717S, 79°56.93172E',
+                array(-40.446195, 79.948862)
+            ),
+            array(
+                '40°26.7717N 79°56.93172W',
+                array(40.446195, -79.948862)
+            ),
+            array(
+                '40.446195N,79.948862W',
+                array(40.446195, -79.948862)
+            ),
+            array(
+                '40.446195S 79.948862E',
+                array(-40.446195, 79.948862)
+            ),
+            array(
+                '40:26:46N, 079:56:55W',
+                array(40.446111111111, -79.948611111111)
+            ),
+            array(
+                '40:26:46.302N, 079:56:55.903W',
+                array(40.446195, -79.948861944444)
+            ),
+            array(
+                '40:26:46.302s 079:56:55.903e',
+                array(-40.446195, 79.948861944444)
+            ),
+            array(
+                '40°26′47″N 079°58′36″W',
+                array(40.446388888889, -79.976666666667)
+            ),
+            array(
+                '40 26 47 n 079 58 36 w',
+                array(40.446388888889, -79.976666666667)
+            ),
+            array(
+                '40d 26 47 n 079d 58 36 w',
+                array(40.446388888889, -79.976666666667)
+            ),
+            array(
+                '40d 26′ 47″ N 079d 58′ 36″ W',
+                array(40.446388888889, -79.976666666667)
             ),
         );
     }
