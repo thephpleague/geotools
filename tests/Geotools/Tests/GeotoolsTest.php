@@ -22,12 +22,14 @@ class GeotoolsTest extends TestCase
     protected $geotools;
     protected $from;
     protected $to;
+    protected $coordinates;
 
     protected function setUp()
     {
-        $this->geotools = new TestableGeotools();
-        $this->from = $this->getStubCoordinate();
-        $this->to = $this->getStubCoordinate();
+        $this->geotools    = new TestableGeotools();
+        $this->from        = $this->getStubCoordinate();
+        $this->to          = $this->getStubCoordinate();
+        $this->coordinates = $this->getStubCoordinate();
     }
 
     public function testFromValueShouldBeACoordinateInterface()
@@ -107,6 +109,15 @@ class GeotoolsTest extends TestCase
         $this->assertTrue(is_object($geohash));
         $this->assertInstanceOf('Geotools\Geohash\Geohash', $geohash);
         $this->assertInstanceOf('Geotools\Geohash\GeohashInterface', $geohash);
+    }
+
+    public function testConvertShouldReturnsANewConvertInstance()
+    {
+        $convert = $this->geotools->convert($this->coordinates);
+
+        $this->assertTrue(is_object($convert));
+        $this->assertInstanceOf('Geotools\Convert\Convert', $convert);
+        $this->assertInstanceOf('Geotools\Convert\ConvertInterface', $convert);
     }
 }
 

@@ -17,6 +17,7 @@ use Geotools\Distance\Distance;
 use Geotools\Point\Point;
 use Geotools\Batch\Batch;
 use Geotools\Geohash\Geohash;
+use Geotools\Convert\Convert;
 use Geocoder\GeocoderInterface;
 
 /**
@@ -97,5 +98,15 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     public function geohash()
     {
         return new Geohash();
+    }
+
+    /**
+     * Returns an instance of Convert
+     *
+     * @return ConvertInterface
+     */
+    public function convert(CoordinateInterface $coordinates)
+    {
+        return new Convert($coordinates);
     }
 }

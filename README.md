@@ -92,9 +92,44 @@ $coordinate = new \Geotools\Coordinate\Coordinate('48°49′24″N, 2°18′26�
 // or in decimal minutes cordinate
 $coordinate = new \Geotools\Coordinate\Coordinate('48 49.4N, 2 18.43333E');
 // the result will be:
-printf('Latitude: %F\n', $coordinate->getLatitude()); // 48.8234055
-printf('Longitude: %F\n', $coordinate->getLongitude()); // 2.3072664
+printf("Latitude: %F\n", $coordinate->getLatitude()); // 48.8234055
+printf("Longitude: %F\n", $coordinate->getLongitude()); // 2.3072664
 ```
+
+### Convert ###
+
+It provides two methods (and two aliases) to convert *decimal degrees* coordinates to *degrees minutes seconds*
+or *decimal minutes* coordinates.
+
+``` php
+<?php
+
+$geotools = new \Geotools\Geotools();
+$coordinate = new \Geotools\Coordinate\Coordinate('40.446195, -79.948862');
+// convert to decimal degrees without and with format
+printf("%s\n", $geotools->convert($coordinate)->toDecimalMinutes()); // 40 26.7717N, -79 56.93172W
+printf("%s\n", $geotools->convert($coordinate)->toDM('%P%D°%N %p%d°%n')); // 40°26.7717 -79°56.93172
+// convert to decimal degrees without and with format
+printf("%s\n", $geotools->convert($coordinate)->toDegreesMinutesSeconds()); // 40°26′46″N, 79°56′56″W
+printf("%s\n", $geotools->convert($coordinate)->toDMS('<p>%P%D:%M:%S, %p%d:%m:%s</p>')); // <p>40:26:46, -79:56:56</p>
+```
+
+Here is the mapping:
+
+Decimal minutes | Latitude | Longitude
+--- | --- | ---
+Positive or negative sign | `%P` | `%p`
+Direction | `%L` | `%l`
+Degrees | `%D` | `%d`
+Decimal minutes | `%N` | `%n`
+
+Degrees minutes seconds | Latitude | Longitude
+--- | --- | ---
+Positive or negative sign | `%P` | `%p`
+Direction | `%L` | `%l`
+Degrees | `%D` | `%d`
+Minutes | `%M` | `%m`
+Seconds | `%s` | `%s`
 
 ### Batch ###
 
@@ -105,7 +140,7 @@ Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https:/
 It's possible to batch *one request* (a string) or a *set of request* (an array) against *one provider* or
 *set of providers*.
 
-```php
+``` php
 <?php
 
 $geocoder = new \Geocoder\Geocoder();
