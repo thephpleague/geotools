@@ -52,7 +52,7 @@ class Coordinate implements CoordinateInterface
             $this->setLatitude($coordinates[0]);
             $this->setLongitude($coordinates[1]);
         } elseif (is_string($coordinates)) {
-            $inDecimalDegree = $this->toDecimalDegree($coordinates);
+            $inDecimalDegree = $this->toDecimalDegrees($coordinates);
             $this->setLatitude($inDecimalDegree[0]);
             $this->setLongitude($inDecimalDegree[1]);
         } else {
@@ -118,9 +118,17 @@ class Coordinate implements CoordinateInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Converts a valid and acceptable geographic coordinates to decimal degrees coordinate.
+     *
+     * @param string $coordinates A valid and acceptable geographic coordinates.
+     *
+     * @return array An array of coordinate in decimal degree.
+     *
+     * @throws InvalidArgumentException
+     *
+     * @see http://en.wikipedia.org/wiki/Geographic_coordinate_conversion
      */
-    public function toDecimalDegree($coordinates)
+    private function toDecimalDegrees($coordinates)
     {
         // 40.446195, -79.948862
         if (preg_match('/(\-?[0-9]{1,2}\.?\d*)[, ] ?(\-?[0-9]{1,3}\.?\d*)$/', $coordinates, $match)) {
