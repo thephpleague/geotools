@@ -56,7 +56,7 @@ class Coordinate implements CoordinateInterface
             $this->setLongitude($match[2]);
         } else {
             throw new InvalidArgumentException(sprintf(
-                '%s', 'It should be an array or a class which implements Geocoder\Result\ResultInterface !'
+                '%s', 'It should be a string, an array or a class which implements Geocoder\Result\ResultInterface !'
             ));
         }
     }

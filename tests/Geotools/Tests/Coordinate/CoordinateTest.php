@@ -21,7 +21,7 @@ class CoordinateTest extends TestCase
 {
     /**
      * @expectedException Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage It should be an array or a class which implements Geocoder\Result\ResultInterface !
+     * @expectedExceptionMessage It should be a string, an array or a class which implements Geocoder\Result\ResultInterface !
      * @dataProvider invalidCoordinatesProvider
      */
     public function testConstructorWithInvalidCoordinatesShouldThrowAnException($coordinates)
