@@ -12,7 +12,7 @@ Features
 --------
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a **set of providers**.
-* Accept **almost** all kind of [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion)
+* Accept **almost** all kind of WGS84 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion)
 as coordinates.
 * **Convert** and **format** decimal degrees coordinates to decimal minutes or degrees minutes seconds coordinates.
 * Compute the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
@@ -62,6 +62,8 @@ Usage & API
 
 ### Coordinate ###
 
+Geodetic datum is [WGS84](http://en.wikipedia.org/wiki/World_Geodetic_System) and coordinates are in decimal degrees.
+
 **Geotools** is built atop [Geocoder](https://github.com/willdurand/Geocoder). It means it's possible to use the
 `\Geocoder\Result\ResultInterface` directly but it's also possible to use a *string* or a simple *array* with its
 latitude and longitude.
@@ -99,20 +101,21 @@ printf("Longitude: %F\n", $coordinate->getLongitude()); // 2.3072664
 
 ### Convert ###
 
-It provides two methods (and two aliases) to convert *decimal degrees* coordinates to *degrees minutes seconds*
-or *decimal minutes* coordinates. You can format the output string easily.
+It provides two methods (and two aliases) to convert *decimal degrees* WGS84 coordinates to *degrees minutes seconds*
+or *decimal minutes* WGS84 coordinates. You can format the output string easily.
 
 ``` php
 <?php
 
 $geotools = new \Geotools\Geotools();
 $coordinate = new \Geotools\Coordinate\Coordinate('40.446195, -79.948862');
+$convert = $geotools->convert($coordinate);
 // convert to decimal degrees without and with format string
-printf("%s\n", $geotools->convert($coordinate)->toDecimalMinutes()); // 40 26.7717N, -79 56.93172W
-printf("%s\n", $geotools->convert($coordinate)->toDM('%P%D°%N %p%d°%n')); // 40°26.7717 -79°56.93172
+printf("%s\n", $convert->toDecimalMinutes()); // 40 26.7717N, -79 56.93172W
+printf("%s\n", $convert->toDM('%P%D°%N %p%d°%n')); // 40°26.7717 -79°56.93172
 // convert to degrees minutes seconds without and with format string
-printf("%s\n", $geotools->convert($coordinate)->toDegreesMinutesSeconds()); // 40°26′46″N, 79°56′56″W
-printf("%s\n", $geotools->convert($coordinate)->toDMS('<p>%P%D:%M:%S, %p%d:%m:%s</p>')); // <p>40:26:46, -79:56:56</p>
+printf("%s\n", $convert->toDegreesMinutesSeconds('<p>%P%D:%M:%S, %p%d:%m:%s</p>')); // <p>40:26:46, -79:56:56</p>
+printf("%s\n", $convert->toDMS()); // 40°26′46″N, 79°56′56″W
 ```
 
 Here is the mapping:
