@@ -19,12 +19,30 @@ namespace Geotools;
 abstract class AbstractGeotools
 {
     /**
-    * The radius of the Earth in meters.
+    * The major radius of the Earth in meters.
+    * Ellipsoid model constants (actual values here are for WGS84).
     * @see http://en.wikipedia.org/wiki/Earth_radius
     *
     * @var double
     */
-    const EARTH_RADIUS = 6378136.047;
+    const EARTH_RADIUS_MAJOR = 6378136.047;
+
+    /**
+    * The minor radius of the Earth in meters.
+    * Ellipsoid model constants (actual values here are for WGS84).
+    * @see http://en.wikipedia.org/wiki/Earth_radius
+    *
+    * @var double
+    */
+    const EARTH_RADIUS_MINOR = 6356752.314;
+
+    /**
+     * Transverse Mercator is not the same as UTM.
+     * A scale factor is required to convert between them.
+     *
+     * @var double
+     */
+    const UTM_SCALE_FACTOR = 0.9996;
 
     /**
      * The ratio meters per mile.
@@ -59,6 +77,16 @@ abstract class AbstractGeotools
         'S', 'SSW', 'SW', 'WSW',
         'W', 'WNW', 'NW', 'NNW',
         'N'
+    );
+
+    /**
+     * Latitude bands in the UTM cordinate system.
+     * @see http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system
+     *
+     * @var array
+     */
+    protected $latitudeBands = array(
+        'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'X'
     );
 
     /**

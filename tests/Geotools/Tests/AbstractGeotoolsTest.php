@@ -28,7 +28,9 @@ class AbstractGeotoolsTest extends TestCase
 
     public function testConsts()
     {
-        $this->assertSame(6378136.047, AbstractGeotools::EARTH_RADIUS);
+        $this->assertSame(6378136.047, AbstractGeotools::EARTH_RADIUS_MAJOR);
+        $this->assertSame(6356752.314, AbstractGeotools::EARTH_RADIUS_MINOR);
+        $this->assertSame(0.9996, AbstractGeotools::UTM_SCALE_FACTOR);
         $this->assertSame(1609.344, AbstractGeotools::METERS_PER_MILE);
         $this->assertSame('km', AbstractGeotools::KILOMETER_UNIT);
         $this->assertSame('mile', AbstractGeotools::MILE_UNIT);
@@ -38,6 +40,12 @@ class AbstractGeotoolsTest extends TestCase
     {
         $this->assertTrue(is_array($this->geotools->getCardinalPoints()));
         $this->assertCount(17, $this->geotools->getCardinalPoints());
+    }
+
+    public function testLatitudeBands()
+    {
+        $this->assertTrue(is_array($this->geotools->getLatitudeBands()));
+        $this->assertCount(21, $this->geotools->getLatitudeBands());
     }
 
     public function testFrom()
@@ -66,5 +74,10 @@ class MockGeotools extends AbstractGeotools
     public function getCardinalPoints()
     {
         return $this->cardinalPoints;
+    }
+
+    public function getLatitudeBands()
+    {
+        return $this->latitudeBands;
     }
 }

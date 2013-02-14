@@ -12,9 +12,12 @@ Features
 --------
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a **set of providers**.
-* Accept **almost** all kind of WGS84 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion)
-as coordinates.
+* Accept **almost** all kind of WGS84
+[geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates.
 * **Convert** and **format** decimal degrees coordinates to decimal minutes or degrees minutes seconds coordinates.
+* **Convert** decimal degrees coordinates in the
+[Universal Transverse Mercator](http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
+(UTM) projection.
 * Compute the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms.
 * Compute the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
@@ -104,6 +107,8 @@ printf("Longitude: %F\n", $coordinate->getLongitude()); // 2.3072664
 It provides two methods (and two aliases) to convert *decimal degrees* WGS84 coordinates to *degrees minutes seconds*
 or *decimal minutes* WGS84 coordinates. You can format the output string easily.
 
+You can also convert them in the Universal Transverse Mercator (UTM) projection.
+
 ``` php
 <?php
 
@@ -116,6 +121,9 @@ printf("%s\n", $convert->toDM('%P%D°%N %p%d°%n')); // 40°26.7717 -79°56.9317
 // convert to degrees minutes seconds without and with format string
 printf("%s\n", $convert->toDegreesMinutesSeconds('<p>%P%D:%M:%S, %p%d:%m:%s</p>')); // <p>40:26:46, -79:56:56</p>
 printf("%s\n", $convert->toDMS()); // 40°26′46″N, 79°56′56″W
+// convert in the UTM projection
+printf("%s\n", $convert->toUniversalTransverseMercator()); // 17T 589138 4477813
+printf("%s\n", $convert->toUTM()); // 17T 589138 4477813 (alias)
 ```
 
 Here is the mapping:

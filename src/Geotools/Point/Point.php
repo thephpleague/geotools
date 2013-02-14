@@ -126,10 +126,10 @@ class Point extends AbstractGeotools implements PointInterface
 
         $bearing = deg2rad($bearing);
 
-        $endLat = asin(sin($lat) * cos($distance / AbstractGeotools::EARTH_RADIUS) + cos($lat) *
-            sin($distance / AbstractGeotools::EARTH_RADIUS) * cos($bearing));
-        $endLon = $lng + atan2(sin($bearing) * sin($distance / AbstractGeotools::EARTH_RADIUS) * cos($lat),
-            cos($distance / AbstractGeotools::EARTH_RADIUS) - sin($lat) * sin($endLat));
+        $endLat = asin(sin($lat) * cos($distance / AbstractGeotools::EARTH_RADIUS_MAJOR) + cos($lat) *
+            sin($distance / AbstractGeotools::EARTH_RADIUS_MAJOR) * cos($bearing));
+        $endLon = $lng + atan2(sin($bearing) * sin($distance / AbstractGeotools::EARTH_RADIUS_MAJOR) * cos($lat),
+            cos($distance / AbstractGeotools::EARTH_RADIUS_MAJOR) - sin($lat) * sin($endLat));
 
         return new Coordinate(array(rad2deg($endLat), rad2deg($endLon)));
     }

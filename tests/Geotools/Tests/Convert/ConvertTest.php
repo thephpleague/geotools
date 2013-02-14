@@ -158,6 +158,68 @@ class ConvertTest extends TestCase
             ),
         );
     }
+
+    /**
+     * @dataProvider coordinatesToUTMrovider
+     */
+    public function testToUniversalTransverseMercator($coordinates, $expectedResult)
+    {
+        $convert = new TestableConvert(new Coordinate($coordinates));
+        $converted = $convert->toUniversalTransverseMercator();
+
+        $this->assertTrue(is_string($converted));
+        $this->assertSame($expectedResult, $converted);
+    }
+
+    /**
+     * @dataProvider coordinatesToUTMrovider
+     */
+    public function testToUTM($coordinates, $expectedResult)
+    {
+        $convert = new TestableConvert(new Coordinate($coordinates));
+        $converted = $convert->toUTM();
+
+        $this->assertTrue(is_string($converted));
+        $this->assertSame($expectedResult, $converted);
+    }
+
+    public function coordinatesToUTMrovider()
+    {
+        return array(
+            array(
+                '-40.446195 -79.948862',
+                '17G 589138 5522186'
+            ),
+            array(
+                '40.446195 79.948862',
+                '44T 410861 4477813'
+            ),
+            array(
+                '48°49′24″N, 2°18′26″E',
+                '31U 449149 5408048'
+            ),
+            array(
+                '40d 26′ 47″ N 079d 58′ 36″ W',
+                '17T 586780 4477807'
+            ),
+            array(
+                '80, 180',
+                '61X 441867 8883084'
+            ),
+            array(
+                '84, 184',
+                '1X 511669 9328194'
+            ),
+            array(
+                '84, -176',
+                '1X 511669 9328194'
+            ),
+            array(
+                '0, 0',
+                '31N 166021 0'
+            ),
+        );
+    }
 }
 
 class TestableConvert extends Convert

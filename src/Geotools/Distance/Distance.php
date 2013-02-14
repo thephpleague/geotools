@@ -93,7 +93,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
         $x = ($lngB - $lngA) * cos(($latA + $latB) / 2);
         $y = $latB - $latA;
 
-        $d = sqrt(($x * $x) + ($y * $y)) * AbstractGeotools::EARTH_RADIUS;
+        $d = sqrt(($x * $x) + ($y * $y)) * AbstractGeotools::EARTH_RADIUS_MAJOR;
 
         return $this->convertToUserUnit($d);
     }
@@ -118,7 +118,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
         $a = sin($dLat / 2) * sin($dLat / 2) + cos($latA) * cos($latB) * sin($dLon / 2) * sin($dLon / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        return $this->convertToUserUnit(AbstractGeotools::EARTH_RADIUS * $c);
+        return $this->convertToUserUnit(AbstractGeotools::EARTH_RADIUS_MAJOR * $c);
     }
 
     /**
@@ -131,7 +131,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
     public function vincenty()
     {
         // WGS-84 ellipsoid params
-        $a = AbstractGeotools::EARTH_RADIUS;
+        $a = AbstractGeotools::EARTH_RADIUS_MAJOR;
         $b = 6356752.314245;
         $f = 1/298.257223563;
 
