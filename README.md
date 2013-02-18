@@ -251,9 +251,9 @@ $geotools = new \Geotools\Geotools();
 $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 
-echo $geotools->from($coordA)->to($coordB)->distance()->flat(); // 661220.36979254 (meters)
-echo $geotools->from($coordA)->to($coordB)->distance()->in('km')->haversine(); // 659.16650524477
-echo $geotools->from($coordA)->to($coordB)->distance()->in('mile')->vincenty(); // 410.41281759044
+echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->flat(); // 661220.36979254 (meters)
+echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('km')->haversine(); // 659.16650524477
+echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('mile')->vincenty(); // 410.41281759044
 ```
 
 ### Point ###
@@ -268,14 +268,14 @@ $geotools = new \Geotools\Geotools();
 $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 
-echo $geotools->from($coordA)->to($coordB)->point()->bearing(); // 157 (degrees)
-echo $geotools->from($coordA)->to($coordB)->point()->cardinal(); // SSE (SouthSouthEast)
+echo $geotools->point()->setFrom($coordA)->setTo($coordB)->bearing(); // 157 (degrees)
+echo $geotools->point()->setFrom($coordA)->setTo($coordB)->cardinal(); // SSE (SouthSouthEast)
 
-$middlePoint = $geotools->from($coordA)->to($coordB)->point()->middle(); // \Geotools\Coordinate\Coordinate
+$middlePoint = $geotools->point()->setFrom($coordA)->setTo($coordB)->middle(); // \Geotools\Coordinate\Coordinate
 echo $middlePoint->getLatitude(); // 46.070143125815
 echo $middlePoint->getLongitude(); // 3.9152401085931
 
-$destinationPoint = $geotools->from($coordA)->point()->destination(180, 200000); // \Geotools\Coordinate\Coordinate
+$destinationPoint = $geotools->point()->setFrom($coordA)->destination(180, 200000); // \Geotools\Coordinate\Coordinate
 echo $destinationPoint->getLatitude(); // 47.026774663314
 echo $destinationPoint->getLongitude(); // 2.3072664
 ```

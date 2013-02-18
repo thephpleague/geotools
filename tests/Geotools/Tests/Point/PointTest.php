@@ -27,9 +27,9 @@ class PointTest extends TestCase
     protected function setUp()
     {
         $this->point = new Point();
-        $this->from = $this->getStubCoordinate();
-        $this->to = $this->getStubCoordinate();
-    }
+        $this->from  = $this->getStubCoordinate();
+        $this->to    = $this->getStubCoordinate();
+        }
 
     public function testSetFromValueShouldBeACoordinateInterface()
     {

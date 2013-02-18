@@ -12,6 +12,7 @@
 namespace Geotools;
 
 use Geotools\Coordinate\CoordinateInterface;
+use Geocoder\GeocoderInterface;
 
 /**
  * Geotools interface
@@ -21,20 +22,41 @@ use Geotools\Coordinate\CoordinateInterface;
 interface GeotoolsInterface
 {
     /**
-     * Set the origin coordinate.
+     * Returns an instance of Distance.
      *
-     * @param CoordinateInterface $from The origin coordinate.
-     *
-     * @return GeotoolsInterface
+     * @return DistanceInterface
      */
-    public function from(CoordinateInterface $from);
+    public function distance();
 
     /**
-     * Set the destination coordinate.
+     * Returns an instance of Point.
      *
-     * @param CoordinateInterface $to The destination coordinate.
-     *
-     * @return GeotoolsInterface
+     * @return PointInterface
      */
-    public function to(CoordinateInterface $to);
+    public function point();
+
+    /**
+     * Returns an instance of Batch.
+     *
+     * @param GeocoderInterface $geocoder The Geocoder instance to use.
+     *
+     * @return BatchInterface
+     */
+    public function batch(GeocoderInterface $geocoder);
+
+    /**
+     * Returns an instance of Geohash.
+     *
+     * @return GeohashInterface
+     */
+    public function geohash();
+
+    /**
+     * Returns an instance of Convert.
+     *
+     * @param CoordinateInterface $coordinates The coordinates to convert.
+     *
+     * @return ConvertInterface
+     */
+    public function convert(CoordinateInterface $coordinates);
 }

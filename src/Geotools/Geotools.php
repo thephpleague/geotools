@@ -37,53 +37,21 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     /**
      * {@inheritDoc}
      */
-    public function from(CoordinateInterface $from)
+    public function distance()
     {
-        $this->from = $from;
-
-        return $this;
+        return new Distance();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function to(CoordinateInterface $to)
-    {
-        $this->to = $to;
-
-        return $this;
-    }
-
-    /**
-     * Returns an instance of Distance.
-     *
-     * @return DistanceInterface
-     */
-    public function distance()
-    {
-        $distance = new Distance();
-
-        return $distance->setFrom($this->from)->setTo($this->to);
-    }
-
-    /**
-     * Returns an instance of Point.
-     *
-     * @return PointInterface
-     */
     public function point()
     {
-        $point = new Point();
-
-        return $point->setFrom($this->from)->setTo($this->to);
+        return new Point();
     }
 
     /**
-     * Returns an instance of Batch.
-     *
-     * @param GeocoderInterface $geocoder The Geocoder instance to use.
-     *
-     * @return BatchInterface
+     * {@inheritDoc}
      */
     public function batch(GeocoderInterface $geocoder)
     {
@@ -91,9 +59,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     }
 
     /**
-     * Returns an instance of Geohash.
-     *
-     * @return GeohashInterface
+     * {@inheritDoc}
      */
     public function geohash()
     {
@@ -101,11 +67,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     }
 
     /**
-     * Returns an instance of Convert.
-     *
-     * @param CoordinateInterface $coordinates The coordinates to convert.
-     *
-     * @return ConvertInterface
+     * {@inheritDoc}
      */
     public function convert(CoordinateInterface $coordinates)
     {
