@@ -104,10 +104,11 @@ printf("Longitude: %F\n", $coordinate->getLongitude()); // 2.3072664
 
 ### Convert ###
 
-It provides two methods (and two aliases) to convert *decimal degrees* WGS84 coordinates to *degrees minutes seconds*
+It provides methods (and aliases) to convert *decimal degrees* WGS84 coordinates to *degrees minutes seconds*
 or *decimal minutes* WGS84 coordinates. You can format the output string easily.
 
-You can also convert them in the Universal Transverse Mercator (UTM) projection.
+You can also convert them in the Universal Transverse Mercator (UTM) projection (Southwest coast of Norway and the
+region of Svalbard are covered).
 
 ``` php
 <?php
@@ -121,21 +122,21 @@ printf("%s\n", $convert->toDM('%P%D°%N %p%d°%n')); // 40°26.7717 -79°56.9317
 // convert to degrees minutes seconds without and with format string
 printf("%s\n", $convert->toDegreesMinutesSeconds('<p>%P%D:%M:%S, %p%d:%m:%s</p>')); // <p>40:26:46, -79:56:56</p>
 printf("%s\n", $convert->toDMS()); // 40°26′46″N, 79°56′56″W
-// convert in the UTM projection
+// convert in the UTM projection (standard format)
 printf("%s\n", $convert->toUniversalTransverseMercator()); // 17T 589138 4477813
 printf("%s\n", $convert->toUTM()); // 17T 589138 4477813 (alias)
 ```
 
 Here is the mapping:
 
-Decimal minutes | Latitude | Longitude
+**Decimal minutes** | Latitude | Longitude
 --- | --- | ---
 Positive or negative sign | `%P` | `%p`
 Direction | `%L` | `%l`
 Degrees | `%D` | `%d`
 Decimal minutes | `%N` | `%n`
 
-Degrees minutes seconds | Latitude | Longitude
+**Degrees minutes seconds** | Latitude | Longitude
 --- | --- | ---
 Positive or negative sign | `%P` | `%p`
 Direction | `%L` | `%l`

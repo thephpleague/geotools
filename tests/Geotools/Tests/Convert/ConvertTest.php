@@ -218,6 +218,32 @@ class ConvertTest extends TestCase
                 '0, 0',
                 '31N 166021 0'
             ),
+            // Special zone for South Norway. Ex: Bergen.
+            array(
+                '60.3912628, 5.3220544',
+                '32V 297351 6700644'
+            ),
+            array(
+                '60.3912628, -5.3220544',
+                '30V 372031 6697241'
+            ),
+            // Special zone for Svalbard. 4 cases.
+            array(
+                '72.0, 0',
+                '31X 396566 7991508'
+            ),
+            array(
+                '72.0, 9.0',
+                '33X 293363 7999233'
+            ),
+            array(
+                '72.0, 21.0',
+                '35X 293363 7999233'
+            ),
+            array(
+                '72.0, 41.999999',
+                '37X 603432 7991508'
+            ),
         );
     }
 }

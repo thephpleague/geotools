@@ -153,9 +153,6 @@ interface ConvertInterface
      *
      * @return string The converted UTM coordinate in meters.
      *
-     * @todo Special zone for South Norway
-     * @todo Special zones for Svalbard
-     *
      * @see http://www.uwgb.edu/dutchs/UsefulData/UTMFormulas.HTM
      * @see http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system
      */

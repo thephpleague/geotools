@@ -140,12 +140,39 @@ class Convert extends AbstractGeotools implements ConvertInterface
         // Compute the zone UTM zone.
         $zone = (int) (($this->coordinates->getLongitude() + 180.0) / 6) + 1;
 
+        // Special zone for South Norway.
+        // On the southwest coast of Norway, grid zone 32V (9° of longitude in width) is extended further west,
+        // and grid zone 31V (3° of longitude in width) is correspondingly shrunk to cover only open water.
+        if ($this->coordinates->getLatitude() >= 56.0 && $this->coordinates->getLatitude() < 64.0
+            && $this->coordinates->getLongitude() >= 3.0 && $this->coordinates->getLongitude() < 12.0) {
+            $zone = 32;
+        }
+
+        // Special zone for Svalbard.
+        // In the region around Svalbard, the four grid zones 31X (9° of longitude in width),
+        // 33X (12° of longitude in width), 35X (12° of longitude in width), and 37X (9° of longitude in width)
+        // are extended to cover what would otherwise have been covered by the seven grid zones 31X to 37X.
+        // The three grid zones 32X, 34X and 36X are not used.
+        if ($this->coordinates->getLatitude() >= 72.0 && $this->coordinates->getLatitude() < 84.0) {
+            if ($this->coordinates->getLongitude() >= 0.0 && $this->coordinates->getLongitude() < 9.0) {
+                $zone = 31;
+            } elseif ($this->coordinates->getLongitude() >= 9.0 && $this->coordinates->getLongitude() < 21.0) {
+                $zone = 33;
+            } elseif ($this->coordinates->getLongitude() >= 21.0 && $this->coordinates->getLongitude() < 33.0) {
+                $zone = 35;
+            } elseif ($this->coordinates->getLongitude() >= 33.0 && $this->coordinates->getLongitude() < 42.0) {
+                $zone = 37;
+            }
+        }
+
         // Determines the central meridian for the given UTM zone.
         $lambda0 = deg2rad(-183.0 + ($zone * 6.0));
 
-        $ep2 = (pow(AbstractGeotools::EARTH_RADIUS_MAJOR, 2.0) - pow(AbstractGeotools::EARTH_RADIUS_MINOR, 2.0)) / pow(AbstractGeotools::EARTH_RADIUS_MINOR, 2.0);
+        $ep2 = (pow(AbstractGeotools::EARTH_RADIUS_MAJOR, 2.0) -
+            pow(AbstractGeotools::EARTH_RADIUS_MINOR, 2.0)) / pow(AbstractGeotools::EARTH_RADIUS_MINOR, 2.0);
         $nu2 = $ep2 * pow(cos($phi), 2.0);
-        $nN   = pow(AbstractGeotools::EARTH_RADIUS_MAJOR, 2.0) / (AbstractGeotools::EARTH_RADIUS_MINOR * sqrt(1 + $nu2));
+        $nN  = pow(AbstractGeotools::EARTH_RADIUS_MAJOR, 2.0) /
+            (AbstractGeotools::EARTH_RADIUS_MINOR * sqrt(1 + $nu2));
         $t   = tan($phi);
         $t2  = $t * $t;
         $tmp = ($t2 * $t2 * $t2) - pow($t, 6.0);
@@ -165,8 +192,10 @@ class Convert extends AbstractGeotools implements ConvertInterface
             + ($nN / 5040.0 * pow(cos($phi), 7.0) * $l7coef * pow($l, 7.0));
 
         // Calculate northing.
-        $n = (AbstractGeotools::EARTH_RADIUS_MAJOR - AbstractGeotools::EARTH_RADIUS_MINOR) / (AbstractGeotools::EARTH_RADIUS_MAJOR + AbstractGeotools::EARTH_RADIUS_MINOR);
-        $alpha = ((AbstractGeotools::EARTH_RADIUS_MAJOR + AbstractGeotools::EARTH_RADIUS_MINOR) / 2.0) * (1.0 + (pow($n, 2.0) / 4.0) + (pow($n, 4.0) / 64.0));
+        $n = (AbstractGeotools::EARTH_RADIUS_MAJOR - AbstractGeotools::EARTH_RADIUS_MINOR) /
+            (AbstractGeotools::EARTH_RADIUS_MAJOR + AbstractGeotools::EARTH_RADIUS_MINOR);
+        $alpha = ((AbstractGeotools::EARTH_RADIUS_MAJOR + AbstractGeotools::EARTH_RADIUS_MINOR) / 2.0) *
+            (1.0 + (pow($n, 2.0) / 4.0) + (pow($n, 4.0) / 64.0));
         $beta = (-3.0 * $n / 2.0) + (9.0 * pow($n, 3.0) / 16.0) + (-3.0 * pow($n, 5.0) / 32.0);
         $gamma = (15.0 * pow($n, 2.0) / 16.0) + (-15.0 * pow($n, 4.0) / 32.0);
         $delta = (-35.0 * pow($n, 3.0) / 48.0) + (105.0 * pow($n, 5.0) / 256.0);
