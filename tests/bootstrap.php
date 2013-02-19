@@ -1,11 +1,17 @@
 <?php
 
-if (!($loader = @include __DIR__ . '/../vendor/autoload.php')) {
+function includeIfExists($file) {
+    if (file_exists($file)) {
+        return include $file;
+    }
+}
+
+if ((!$loader = includeIfExists(__DIR__ . '/../vendor/autoload.php'))) {
     die(<<<EOT
 You need to install the project dependencies using Composer:
 $ wget http://getcomposer.org/composer.phar
 OR
-$ curl -s https://getcomposer.org/installer | php
+$ curl -sS https://getcomposer.org/installer | php
 $ php composer.phar install --dev
 $ phpunit
 EOT
