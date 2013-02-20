@@ -11,22 +11,25 @@ Geotools
 Features
 --------
 
-* **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a **set of providers**.
+* **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
+**set of providers**. [»](#batch)
 * Accept **almost** all kind of WGS84
-[geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates.
+[geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates. [»](#coordinate)
 * **Convert** and **format** decimal degrees coordinates to decimal minutes or degrees minutes seconds coordinates.
+[»](#convert)
 * **Convert** decimal degrees coordinates in the
 [Universal Transverse Mercator](http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
-(UTM) projection.
+(UTM) projection. [»](#convert)
 * Compute the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
-**haversine** or **vincenty** algorithms.
-* Compute the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
-* Compute the **cardinal point** (direction) from the origin coordinate to the destination coordinate.
-* Compute the **half-way point** (coordinate) between the origin and the destination coordinates.
-* Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters.
+**haversine** or **vincenty** algorithms. [»](#distance)
+* Compute the **initial bearing** from the origin coordinate to the destination coordinate in degrees. [»](#point)
+* Compute the **cardinal point** (direction) from the origin coordinate to the destination coordinate. [»](#point)
+* Compute the **half-way point** (coordinate) between the origin and the destination coordinates. [»](#point)
+* Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
-[wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/).
-* A command-line interface (CLI) - thanks to the [Symfony Console Component](https://github.com/symfony/Console).
+[wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
+* A **command-line interface** (CLI) - thanks to the
+[Symfony Console Component](https://github.com/symfony/Console). [»](#cli)
 * ... more to come ...
 
 
