@@ -70,7 +70,7 @@ class PointTest extends TestCase
     }
 
     /**
-     * @dataProvider coordinatesAndExpectedDegreeProvider
+     * @dataProvider coordinatesAndExpectedDegreeForInitialBearingProvider
      */
     public function testInitialBearing($from, $to, $expectedDegree)
     {
@@ -80,7 +80,7 @@ class PointTest extends TestCase
         $this->assertEquals($expectedDegree[0], $this->point->initialBearing());
     }
 
-    public function coordinatesAndExpectedDegreeProvider()
+    public function coordinatesAndExpectedDegreeForInitialBearingProvider()
     {
         return array(
             array(
@@ -102,6 +102,43 @@ class PointTest extends TestCase
                 array(-43.296482, -5.36978),
                 array(-48.8234055, -2.3072664),
                 array(160)
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider coordinatesAndExpectedDegreeForFinalBearingProvider
+     */
+    public function testFinalBearing($from, $to, $expectedDegree)
+    {
+        $this->point->setFrom($this->getMockCoordinateReturns($from));
+        $this->point->setTo($this->getMockCoordinateReturns($to));
+
+        $this->assertEquals($expectedDegree[0], $this->point->finalBearing());
+    }
+
+    public function coordinatesAndExpectedDegreeForFinalBearingProvider()
+    {
+        return array(
+            array(
+                array(48.8234055, 2.3072664),
+                array(43.296482, 5.36978),
+                array(160)
+            ),
+            array(
+                array('48.8234055', '2.3072664'),
+                array('43.296482', '5.36978'),
+                array('160')
+            ),
+            array(
+                array(43.296482, 5.36978),
+                array(48.8234055, 2.3072664),
+                array(337)
+            ),
+            array(
+                array(-43.296482, -5.36978),
+                array(-48.8234055, -2.3072664),
+                array(157)
             ),
         );
     }

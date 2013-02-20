@@ -62,7 +62,7 @@ class Point extends AbstractGeotools implements PointInterface
      * Returns the initial bearing from the origin coordinate
      * to the destination coordinate in degrees.
      *
-     * @return float The bearing in degrees
+     * @return float The initial bearing in degrees
      */
     public function initialBearing()
     {
@@ -74,6 +74,24 @@ class Point extends AbstractGeotools implements PointInterface
         $x = cos($latA) * sin($latB) - sin($latA) * cos($latB) * cos($dLng);
 
         return (float) (rad2deg(atan2($y, $x)) + 360) % 360;
+    }
+
+    /**
+     * Returns the final bearing from the origin coordinate
+     * to the destination coordinate in degrees.
+     *
+     * @return float The final bearing in degrees
+     */
+    public function finalBearing()
+    {
+        $latA = deg2rad($this->to->getLatitude());
+        $latB = deg2rad($this->from->getLatitude());
+        $dLng = deg2rad($this->from->getLongitude() - $this->to->getLongitude());
+
+        $y = sin($dLng) * cos($latB);
+        $x = cos($latA) * sin($latB) - sin($latA) * cos($latB) * cos($dLng);
+
+        return (float) ((rad2deg(atan2($y, $x)) + 360) % 360 + 180 ) % 360;
     }
 
     /**
