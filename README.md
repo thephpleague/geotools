@@ -312,13 +312,16 @@ $boundingBox = $decoded->getBoundingBox(); // returns an array of \Geotools\Coor
 
 ### CLI ###
 
-It provides command lines to compute methods provided by **Distance**, **Point** and **Geohash**.
+It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert**.
 
 ``` bash
 % php geotools list // list of available commands
 % php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" // returns 4690203.1048522
 % php geotools point:cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // returns NE (NordEst)
 % php geotools geohash:encode "40° 26.7717, -79° 56.93172" --length=3 // returns dpp
+% php geotools convert:dm "40.446195, -79.948862" --format="%P%D°%N %p%d°%n" // returns 40°26.7717 -79°56.93172
+% php geotools convert:dms "40.446195, -79.948862" --format="%P%D:%M:%S, %p%d:%m:%s" // returns 40:26:46, -79:56:56
+% php geotools convert:utm "60.3912628, 5.3220544" // returns 32V 297351 6700644
 ...
 ```
 

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Geotools\CLI\Geohash;
+namespace Geotools\CLI\Convert;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,25 +17,23 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Geotools\Geotools;
-use Geotools\Geohash\Geohash;
 use Geotools\Coordinate\Coordinate;
 
 /**
- * Command-line geohash:encode class
+ * Command-line convert:dm class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Encode extends Command
+class DM extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('geohash:encode')
-            ->setDescription('Encode a coordinate to a geo hash string')
-            ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate to encode')
-            ->addOption('length', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_OPTIONAL,
-                sprintf('If set, the length between %s and %s of the encoded coordinate', Geohash::MIN_LENGTH,
-                    Geohash::MAX_LENGTH));
+            ->setName('convert:dm')
+            ->setDescription('Convert and format decimal degrees coordinates to decimal minutes coordinate')
+            ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate')
+            ->addOption('format', null, InputOption::VALUE_REQUIRED,
+                'If set, the format of the converted decimal minutes coordinate');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -43,14 +41,14 @@ class Encode extends Command
         $coordinate = new Coordinate($input->getArgument('coordinate'));
 
         $geotools = new Geotools();
-        $geohash  = $geotools->geohash();
+        $convert  = $geotools->convert($coordinate);
 
-        if ($input->getOption('length')) {
-            $geohash = $geohash->encode($coordinate, $input->getOption('length'));
+        if ($input->getOption('format')) {
+            $convert = $convert->toDM($input->getOption('format'));
         } else {
-            $geohash = $geohash->encode($coordinate);
+            $convert = $convert->toDM();
         }
 
-        $output->writeln(sprintf('<info>%s</info>', $geohash->getGeohash()));
+        $output->writeln(sprintf('<info>%s</info>', $convert));
     }
 }

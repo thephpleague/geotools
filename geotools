@@ -25,6 +25,7 @@ use Geotools\Geotools;
 use Geotools\CLI\Distance;
 use Geotools\CLI\Point;
 use Geotools\CLI\Geohash;
+use Geotools\CLI\Convert;
 
 $geotools = new Geotools();
 
@@ -41,4 +42,7 @@ $console->add(new Point\Middle());
 $console->add(new Point\Destination());
 $console->add(new Geohash\Encode());
 $console->add(new Geohash\Decode());
+$console->add(new Convert\DM());
+$console->add(new Convert\DMS());
+$console->add(new Convert\UTM());
 $console->run();
