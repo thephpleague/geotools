@@ -23,9 +23,10 @@ Features
 * Compute the **initial bearing** from the origin coordinate to the destination coordinate in degrees.
 * Compute the **cardinal point** (direction) from the origin coordinate to the destination coordinate.
 * Compute the **half-way point** (coordinate) between the origin and the destination coordinates.
-* Compute the **destination point** with given bearing in degrees and a distance in meters.
+* Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters.
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/).
+* A command-line interface (CLI) - thanks to the [Symfony Console Component](https://github.com/symfony/Console).
 * ... more to come ...
 
 
@@ -304,6 +305,15 @@ $decoded = $geotools->geohash()->decode('spey61y');
 echo $decoded->getCoordinate()->getLatitude(); // 43.296432495117
 echo $decoded->getCoordinate()->getLongitude(); // 5.3702545166016
 $boundingBox = $decoded->getBoundingBox(); // returns an array of \Geotools\Coordinate\CordinateInterface
+```
+
+### CLI ###
+
+It provides command lines to compute methods provided by **Distance** and **Point** for now.
+
+``` bash
+% php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" // returns 4690203.1048522
+% php geotools list // list of available commands
 ```
 
 

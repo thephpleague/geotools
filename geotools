@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+function includeIfExists($file)
+{
+    if (file_exists($file)) {
+        return include $file;
+    }
+}
+
+if ((!$loader = includeIfExists(__DIR__ . '/../vendor/autoload.php')) &&
+    (!$loader = includeIfExists(__DIR__ . '/../../../autoload.php'))) {
+        die(<<<EOT
+You must set up the project dependencies, run the following commands:
+$ wget http://getcomposer.org/composer.phar
+OR
+$ curl -sS https://getcomposer.org/installer | php
+$ php composer.phar install --dev
+EOT
+    );
+}
+
+use Symfony\Component\Console\Application;
+use Geotools\Geotools;
+use Geotools\CLI\Distance;
+use Geotools\CLI\Point;
+
+$geotools = new Geotools();
+
+$console = new Application();
+$console->setName('Geotools :: Geo-related tools PHP 5.3+ library');
+$console->setVersion($geotools::VERSION);
+$console->add(new Distance\All());
+$console->add(new Distance\Flat());
+$console->add(new Distance\Haversine());
+$console->add(new Distance\Vincenty());
+$console->add(new Point\InitialBearing());
+$console->add(new Point\Cardinal());
+$console->add(new Point\Middle());
+$console->add(new Point\Destination());
+$console->run();
