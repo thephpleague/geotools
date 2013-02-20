@@ -1,11 +1,19 @@
 CHANGELOG
 =========
 
-### 0.1.6 (xxxx-xx-xx) ###
+0.1.6 (2013-02-20)
+------------------
 
-n/a
+* Added: CLI for Distance and Point classes + tests
+* Updated: phpunit bootstrap
+* Updated: composer installation info
+* Updated: Convert UTM zone exceptions are covered
+* Updated: Point and Distance chainable logic and refactoring [BC break]
+* Added: UTM conversion + tests + doc
+* Updated: geodetic datum into doc
 
-### 0.1.5 (2013-02-13) ###
+0.1.5 (2013-02-13)
+------------------
 
 * Fixed: CS
 * Added: Convert class, tests and doc
@@ -16,7 +24,8 @@ n/a
 * Fixed: typo calculate to compute
 * Fixed typos
 
-### 0.1.4 (2013-02-10) ###
+0.1.4 (2013-02-10)
+------------------
 
 * Updated: Batch class test
 * Fixed: typo
@@ -26,7 +35,8 @@ n/a
 * Added: batch a set of values/coordinates againt a set of providers + tests
 * Fixed: changelog list
 
-### 0.1.3 (2013-02-09) ###
+0.1.3 (2013-02-09)
+------------------
 
 * Fixed: typo
 * Added: geohash ref to the doc
@@ -39,7 +49,8 @@ n/a
 * Refactored: Batch test class
 * Updated: TestCase stub clases
 
-### 0.1.2 (2013-02-08) ###
+0.1.2 (2013-02-08)
+------------------
 
 * Fixed: test to be compatible with PHP 5.3.x
 * Added: test to Distance class
@@ -53,11 +64,13 @@ n/a
 * Added: test to Coordinate class
 * Added: test to Geotools class
 
-### 0.1.1 (2013-02-06) ###
+0.1.1 (2013-02-06)
+------------------
 
 * Fixed: the minimum-stability of React/Async
 
-### 0.1.0 (2013-02-06) ###
+0.1.0 (2013-02-06)
+------------------
 
 * Added: Contributing doc
 * Fixed: CS
