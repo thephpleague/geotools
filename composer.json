@@ -18,12 +18,12 @@
     },
     "require": {
         "php": ">=5.3.0",
-        "willdurand/geocoder": "1.2.*",
-        "react/async": "1.0.*",
+        "willdurand/geocoder": "~1.0",
+        "react/async": "~1.0",
         "symfony/console": "~2.0"
     },
     "require-dev": {
-        "react/react": "0.2.*"
+        "react/react": "0.2.*@dev"
     },
     "autoload": {
         "psr-0": { "Geotools": "src/" }
