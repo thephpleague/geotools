@@ -64,7 +64,7 @@ class Point extends AbstractGeotools implements PointInterface
      *
      * @return float The bearing in degrees
      */
-    public function bearing()
+    public function initialBearing()
     {
         $latA = deg2rad($this->from->getLatitude());
         $latB = deg2rad($this->to->getLatitude());
@@ -85,7 +85,7 @@ class Point extends AbstractGeotools implements PointInterface
      */
     public function cardinal()
     {
-        return $this->cardinalPoints[round($this->bearing($this->from, $this->to) / 22.5)];
+        return $this->cardinalPoints[round($this->initialBearing($this->from, $this->to) / 22.5)];
     }
 
     /**

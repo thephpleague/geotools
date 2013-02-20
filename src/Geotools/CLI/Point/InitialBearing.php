@@ -42,6 +42,6 @@ class InitialBearing extends Command
 
         $geotools = new Geotools();
 
-        $output->writeln(sprintf('<info>%s</info>', $geotools->point()->setFrom($from)->setTo($to)->bearing()));
+        $output->writeln(sprintf('<info>%s</info>', $geotools->point()->setFrom($from)->setTo($to)->initialBearing()));
     }
 }

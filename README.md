@@ -273,7 +273,7 @@ $geotools = new \Geotools\Geotools();
 $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 
-echo $geotools->point()->setFrom($coordA)->setTo($coordB)->bearing(); // 157 (degrees)
+echo $geotools->point()->setFrom($coordA)->setTo($coordB)->initialBearing(); // 157 (degrees)
 echo $geotools->point()->setFrom($coordA)->setTo($coordB)->cardinal(); // SSE (SouthSouthEast)
 
 $middlePoint = $geotools->point()->setFrom($coordA)->setTo($coordB)->middle(); // \Geotools\Coordinate\Coordinate

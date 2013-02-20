@@ -72,12 +72,12 @@ class PointTest extends TestCase
     /**
      * @dataProvider coordinatesAndExpectedDegreeProvider
      */
-    public function testBearing($from, $to, $expectedDegree)
+    public function testInitialBearing($from, $to, $expectedDegree)
     {
         $this->point->setFrom($this->getMockCoordinateReturns($from));
         $this->point->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedDegree[0], $this->point->bearing());
+        $this->assertEquals($expectedDegree[0], $this->point->initialBearing());
     }
 
     public function coordinatesAndExpectedDegreeProvider()
