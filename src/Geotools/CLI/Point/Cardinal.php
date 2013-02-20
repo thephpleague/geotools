@@ -30,7 +30,7 @@ class Cardinal extends Command
     {
         $this
             ->setName('point:cardinal')
-            ->setDescription('Compute the cardinal point (direction) between 2 coordinates')
+            ->setDescription('Compute the initial cardinal point (direction) between 2 coordinates')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate');
     }
@@ -42,6 +42,6 @@ class Cardinal extends Command
 
         $geotools = new Geotools();
 
-        $output->writeln(sprintf('<info>%s</info>', $geotools->point()->setFrom($from)->setTo($to)->cardinal()));
+        $output->writeln(sprintf('<info>%s</info>', $geotools->point()->setFrom($from)->setTo($to)->initialCardinal()));
     }
 }

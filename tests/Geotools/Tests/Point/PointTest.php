@@ -151,7 +151,7 @@ class PointTest extends TestCase
         $this->point->setFrom($this->getMockCoordinateReturns($from));
         $this->point->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedCardinal[0], $this->point->cardinal());
+        $this->assertEquals($expectedCardinal[0], $this->point->initialCardinal());
     }
 
     public function coordinatesAndExpectedCardinalProvider()

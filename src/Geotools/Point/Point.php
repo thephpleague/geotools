@@ -101,7 +101,7 @@ class Point extends AbstractGeotools implements PointInterface
      *
      * @return string The cardinal point / direction
      */
-    public function cardinal()
+    public function initialCardinal()
     {
         return $this->cardinalPoints[round($this->initialBearing($this->from, $this->to) / 22.5)];
     }
