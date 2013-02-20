@@ -103,6 +103,11 @@ class PointTest extends TestCase
                 array(-48.8234055, -2.3072664),
                 array(160)
             ),
+            array(
+                array(35, 45),
+                array(35, 135),
+                array(60)
+            ),
         );
     }
 
@@ -140,13 +145,18 @@ class PointTest extends TestCase
                 array(-48.8234055, -2.3072664),
                 array(157)
             ),
+            array(
+                array(35, 45),
+                array(35, 135),
+                array(119)
+            ),
         );
     }
 
     /**
-     * @dataProvider coordinatesAndExpectedCardinalProvider
+     * @dataProvider coordinatesAndExpectedInitialCardinalProvider
      */
-    public function testCardinal($from, $to, $expectedCardinal)
+    public function testInitialCardinal($from, $to, $expectedCardinal)
     {
         $this->point->setFrom($this->getMockCoordinateReturns($from));
         $this->point->setTo($this->getMockCoordinateReturns($to));
@@ -154,7 +164,7 @@ class PointTest extends TestCase
         $this->assertEquals($expectedCardinal[0], $this->point->initialCardinal());
     }
 
-    public function coordinatesAndExpectedCardinalProvider()
+    public function coordinatesAndExpectedInitialCardinalProvider()
     {
         return array(
             array(
@@ -176,6 +186,53 @@ class PointTest extends TestCase
                 array(-13.296482, -5.36978),
                 array(-38.8234055, -4.3072664),
                 array('S')
+            ),
+            array(
+                array(35, 45),
+                array(35, 135),
+                array('ENE')
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider coordinatesAndExpectedFinalCardinalProvider
+     */
+    public function testFinalCardinal($from, $to, $expectedCardinal)
+    {
+        $this->point->setFrom($this->getMockCoordinateReturns($from));
+        $this->point->setTo($this->getMockCoordinateReturns($to));
+
+        $this->assertEquals($expectedCardinal[0], $this->point->finalCardinal());
+    }
+
+    public function coordinatesAndExpectedFinalCardinalProvider()
+    {
+        return array(
+            array(
+                array(48.8234055, 2.3072664),
+                array(43.296482, 5.36978),
+                array('SSE')
+            ),
+            array(
+                array('28.8234055', '1.3072664'),
+                array('43.296482', '5.36978'),
+                array('NNE')
+            ),
+            array(
+                array(43.296482, 5.36978),
+                array(48.8234055, 2.3072664),
+                array('NNW')
+            ),
+            array(
+                array(-13.296482, -5.36978),
+                array(-38.8234055, -4.3072664),
+                array('S')
+            ),
+            array(
+                array(35, 45),
+                array(35, 135),
+                array('ESE')
             ),
         );
     }

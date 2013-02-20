@@ -95,15 +95,27 @@ class Point extends AbstractGeotools implements PointInterface
     }
 
     /**
-     * Returns the cardinal point / direction from the origin coordinate to
+     * Returns the initial cardinal point / direction from the origin coordinate to
      * the destination coordinate.
      * @see http://en.wikipedia.org/wiki/Cardinal_direction
      *
-     * @return string The cardinal point / direction
+     * @return string The initial cardinal point / direction
      */
     public function initialCardinal()
     {
         return $this->cardinalPoints[round($this->initialBearing($this->from, $this->to) / 22.5)];
+    }
+
+    /**
+     * Returns the final cardinal point / direction from the origin coordinate to
+     * the destination coordinate.
+     * @see http://en.wikipedia.org/wiki/Cardinal_direction
+     *
+     * @return string The final cardinal point / direction
+     */
+    public function finalCardinal()
+    {
+        return $this->cardinalPoints[round($this->finalBearing($this->from, $this->to) / 22.5)];
     }
 
     /**

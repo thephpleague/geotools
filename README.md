@@ -22,8 +22,9 @@ Features
 (UTM) projection. [»](#convert)
 * Compute the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms. [»](#distance)
-* Compute the **initial bearing** from the origin coordinate to the destination coordinate in degrees. [»](#point)
-* Compute the **cardinal point** (direction) from the origin coordinate to the destination coordinate. [»](#point)
+* Compute the initial and final **bearing** from the origin coordinate to the destination coordinate in degrees. [»](#point)
+* Compute the initial and final **cardinal point** (direction) from the origin coordinate to the destination
+coordinate. [»](#point)
 * Compute the **half-way point** (coordinate) between the origin and the destination coordinates. [»](#point)
 * Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
@@ -263,8 +264,9 @@ echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('mile')->vincen
 
 ### Point ###
 
-It provides methods to compute the *initial bearing* in degrees, the *cardinal direction*, the *middle point*
-and the *destination point*. The middle and the destination points returns a `\Geotools\Coordinate\Coordinate` object.
+It provides methods to compute the initial and final *bearing* in degrees, the initial and final *cardinal direction*,
+the *middle point* and the *destination point*. The middle and the destination points returns a
+`\Geotools\Coordinate\Coordinate` object.
 
 ``` php
 <?php
@@ -275,6 +277,8 @@ $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 
 echo $geotools->point()->setFrom($coordA)->setTo($coordB)->initialBearing(); // 157 (degrees)
 echo $geotools->point()->setFrom($coordA)->setTo($coordB)->initialCardinal(); // SSE (SouthSouthEast)
+echo $geotools->point()->setFrom($coordA)->setTo($coordB)->finalBearing(); // 160 (degrees)
+echo $geotools->point()->setFrom($coordA)->setTo($coordB)->finalCardinal(); // SSE (SouthSouthEast)
 
 $middlePoint = $geotools->point()->setFrom($coordA)->setTo($coordB)->middle(); // \Geotools\Coordinate\Coordinate
 echo $middlePoint->getLatitude(); // 46.070143125815
