@@ -1,10 +1,13 @@
 CHANGELOG
 =========
 
-0.1.6 (xxxx-xx-xx)
+0.1.7 (2013-02-20)
 ------------------
 
-n/a
+* Added: CLI for Convert class + tests
+* Added: CLI for Geohash class + tests
+* Updated: doc with internal links
+* Fixed: CLI include paths
 
 0.1.6 (2013-02-20)
 ------------------
