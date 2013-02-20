@@ -37,6 +37,7 @@ $console->add(new Distance\Flat());
 $console->add(new Distance\Haversine());
 $console->add(new Distance\Vincenty());
 $console->add(new Point\InitialBearing());
+$console->add(new Point\FinalBearing());
 $console->add(new Point\Cardinal());
 $console->add(new Point\Middle());
 $console->add(new Point\Destination());
