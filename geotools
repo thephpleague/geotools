@@ -24,6 +24,7 @@ use Symfony\Component\Console\Application;
 use Geotools\Geotools;
 use Geotools\CLI\Distance;
 use Geotools\CLI\Point;
+use Geotools\CLI\Geohash;
 
 $geotools = new Geotools();
 
@@ -38,4 +39,6 @@ $console->add(new Point\InitialBearing());
 $console->add(new Point\Cardinal());
 $console->add(new Point\Middle());
 $console->add(new Point\Destination());
+$console->add(new Geohash\Encode());
+$console->add(new Geohash\Decode());
 $console->run();
