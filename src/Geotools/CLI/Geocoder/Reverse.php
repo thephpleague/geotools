@@ -11,7 +11,6 @@
 
 namespace Geotools\CLI\Geocoder;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -19,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Geocoder\Geocoder;
 use Geocoder\Formatter\Formatter;
 use Geotools\Coordinate\Coordinate;
+use Geotools\CLI\Command;
 
 /**
  * Command-line geocoder:revese class
@@ -71,69 +71,5 @@ class Reverse extends Command
         }
 
         $output->writeln(sprintf('<info>%s</info>', $formatted));
-    }
-
-    /**
-     * Returns the adapter class name.
-     * The default adapter is curl.
-     *
-     * @param string $adapter The name of the adapter.
-     *
-     * @return string The name of the adapter class.
-     */
-    private function getAdapter($adapter)
-    {
-        $adapter  = strtolower($adapter);
-        $adapters = array(
-            'buzz'   => 'BuzzHttpAdapter',
-            'curl'   => 'CurlHttpAdapter',
-            'guzzle' => 'GuzzleHttpAdapter',
-            'socket' => 'SocketHttpAdapter',
-            'zend'   => 'ZendHttpAdapter',
-        );
-
-        $adapter = array_key_exists($adapter, $adapters) ? $adapters[$adapter] : $adapters['curl'];
-
-        return '\\Geocoder\\HttpAdapter\\' . $adapter;
-    }
-
-    /**
-     * Returns the provider class name.
-     * The default provider is Google Maps.
-     *
-     * @param string $provider The name of the provider to use.
-     *
-     * @return string The name of the provider class name to use.
-     */
-    private function getProvider($provider)
-    {
-        $provider = strtolower($provider);
-        $providers = array(
-            'free_geo_ip'          => 'FreeGeoIpProvider',
-            'host_ip'              => 'HostIpProvider',
-            'ip_info_db'           => 'IpInfoDbProvider',
-            'yahoo'                => 'YahooProvider',
-            'google_maps'          => 'GoogleMapsProvider',
-            'google_maps_business' => 'GoogleMapsBusinessProvider',
-            'bing_maps'            => 'BingMapsProvider',
-            'openstreetmaps'       => 'OpenStreetMapsProvider',
-            'cloudmade'            => 'CloudMadeProvider',
-            'geoip'                => 'GeoipProvider',
-            'map_quest'            => 'MapQuestProvider',
-            'oio_rest'             => 'OIORestProvider',
-            'geocoder_ca'          => 'GeocoderCaProvider',
-            'geocoder_us'          => 'GeocoderUsProvider',
-            'ign_openls'           => 'IGNOpenLSProvider',
-            'data_science_toolkit' => 'DataScienceToolkitProvider',
-            'yandex'               => 'YandexProvider',
-            'geo_plugin'           => 'GeoPluginProvider',
-            'geo_ips'              => 'GeoIPsProvider',
-            'maxmind'              => 'MaxMindProvider',
-            'geonames'             => 'GeonamesProvider',
-        );
-
-        $provider = array_key_exists($provider, $providers) ? $providers[$provider] : $providers['google_maps'];
-
-        return '\\Geocoder\\Provider\\' . $provider;
     }
 }
