@@ -35,6 +35,17 @@ class GeocodeTest extends TestCase
         $this->commandTester = new CommandTester($this->command);
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Not enough arguments.
+     */
+    public function testExecuteWithoutArguments()
+    {
+        $this->commandTester->execute(array(
+            'command' => $this->command->getName(),
+        ));
+    }
+
     public function testExecuteStreetAddressWithDefaultProviderAndAdapter()
     {
         $this->commandTester->execute(array(

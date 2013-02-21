@@ -29,21 +29,21 @@ class Geocode extends Command
     {
         $this
             ->setName('geocoder:geocode')
-            ->setDescription('Geocode a street-address, IPv4 or IPv4 against a provider with an adapter')
+            ->setDescription('Geocode a street-address, IPv4 or IPv6 against a provider with an adapter')
             ->addArgument('value', InputArgument::REQUIRED, 'The street-address, IPv4 or IPv6 to geocode')
             ->addOption('provider', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the provider to use, Google Maps by default')
             ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
-                'If set, the name of the adapter to use, cUrl by default')
+                'If set, the name of the adapter to use, cURL by default')
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'If set, the provider constructor arguments like api, locale, region, ssl, toponym and service');
+                'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $geocoder = new Geocoder();
         $adapter  = $this->getAdapter($input->getOption('adapter'));
-        $provider =  $this->getProvider($input->getOption('provider'));
+        $provider = $this->getProvider($input->getOption('provider'));
 
         if ($input->getOption('args')) {
             $args = is_array($input->getOption('args'))
