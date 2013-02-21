@@ -13,6 +13,7 @@ Features
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
 **set of providers**. [»](#batch)
+* Compute geocode & reverse geocoding in the **command-line interface** (CLI). [»](#cli)
 * Accept **almost** all kind of WGS84
 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates. [»](#coordinate)
 * **Convert** and **format** decimal degrees coordinates to decimal minutes or degrees minutes seconds coordinates.
@@ -29,8 +30,7 @@ coordinate. [»](#point)
 * Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
-* A **command-line interface** (CLI) - thanks to the
-[Symfony Console Component](https://github.com/symfony/Console). [»](#cli)
+* A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert**. [»](#cli)
 * ... more to come ...
 
 
@@ -320,6 +320,7 @@ $boundingBox = $decoded->getBoundingBox(); // returns an array of \Geotools\Coor
 ### CLI ###
 
 It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert**.
+Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
 
 ``` bash
 % php geotools list // list of available commands
@@ -332,6 +333,20 @@ It provides command lines to compute methods provided by **Distance**, **Point**
 ...
 ```
 
+Compute street addresses, IPv4s or IPv6s geocoding right in your console.
+
+It's possible to define and precise your request through:
+* `--adapter`: `socket`, `buzz`, `zend`, `guzzle` or `cURL` by default
+* `--provider`: `bing_maps`, `yahoo`, `maxmind` and so on... `google_maps` is the default one.
+* `--args`: this option accepts multiple values (e.g. --args="API_KEY" --args="LOCALE") if your provider needs or
+can have arguments.
+
+``` bash
+% php geotools geocoder:geocode "Copenhagen, Denmark" // 55.6760968, 12.5683371
+% php geotools geocoder:geocode "74.200.247.59" --provider="free_geo_ip" --adapter="socket" // 37.7484, -122.4156
+% php geotools geocoder:geocode Paris --args="fr_FR" --args="France" --args="true" // 48.856614, 2.3522219
+...
+```
 
 Unit Tests
 ----------

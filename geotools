@@ -26,6 +26,7 @@ use Geotools\CLI\Distance;
 use Geotools\CLI\Point;
 use Geotools\CLI\Geohash;
 use Geotools\CLI\Convert;
+use Geotools\CLI\Geocoder;
 
 class Application extends BaseApplication
 {
@@ -63,4 +64,5 @@ $console->add(new Geohash\Decode());
 $console->add(new Convert\DM());
 $console->add(new Convert\DMS());
 $console->add(new Convert\UTM());
+$console->add(new Geocoder\Geocode());
 $console->run();
