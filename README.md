@@ -43,7 +43,10 @@ The recommended way to install Geotools is through [composer](http://getcomposer
 Run these commands to install composer, Geotools and its dependencies:
 
 ``` bash
+% curl -sS https://getcomposer.org/installer | php
+// or
 % wget http://getcomposer.org/composer.phar
+// then
 % php composer.phar init --require="toin0u/geotools:@stable" -n
 % php composer.phar install
 ```
