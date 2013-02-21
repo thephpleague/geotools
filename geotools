@@ -65,4 +65,5 @@ $console->add(new Convert\DM());
 $console->add(new Convert\DMS());
 $console->add(new Convert\UTM());
 $console->add(new Geocoder\Geocode());
+$console->add(new Geocoder\Reverse());
 $console->run();

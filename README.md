@@ -333,19 +333,25 @@ Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
 ...
 ```
 
-Compute street addresses, IPv4s or IPv6s geocoding right in your console.
+Compute street addresses, IPv4s or IPv6s geocoding and reverse geocoding right in your console.
 
-It's possible to define and precise your request through:
+It's possible to define and precise your request through these options:
 * `--adapter`: `socket`, `buzz`, `zend`, `guzzle` or `cURL` by default
 * `--provider`: `bing_maps`, `yahoo`, `maxmind` and so on... `google_maps` is the default one.
 * `--args`: this option accepts multiple values (e.g. --args="API_KEY" --args="LOCALE") if your provider needs or
 can have arguments.
+* `--format`: this option is available for reverse geocoding, see the mapping
+[here](https://github.com/willdurand/Geocoder#formatter).
 
 ``` bash
 % php geotools geocoder:geocode "Copenhagen, Denmark" // 55.6760968, 12.5683371
 % php geotools geocoder:geocode "74.200.247.59" --provider="free_geo_ip" --adapter="socket" // 37.7484, -122.4156
 % php geotools geocoder:geocode Paris --args="fr_FR" --args="France" --args="true" // 48.856614, 2.3522219
 ...
+% php geotools geocoder:reverse "48.8631507, 2.388911" // Avenue Gambetta 10, 75020 Paris
+% php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" // Paris, Île-De-France, France
+% php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" --provider="openstreetmaps"
+// Paris, Île-De-France, France Métropolitaine
 ```
 
 Unit Tests
