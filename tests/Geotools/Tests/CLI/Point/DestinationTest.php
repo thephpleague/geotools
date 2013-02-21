@@ -56,7 +56,7 @@ class DestinationTest extends TestCase
             'command'  => $this->command->getName(),
             'origin'   => 'foo, bar',
             'bearing'  => ' ',
-            'distance' => ''
+            'distance' => '',
         ));
     }
 
@@ -66,10 +66,10 @@ class DestinationTest extends TestCase
             'command'  => $this->command->getName(),
             'origin'   => '48.8234055, 2.3072664',
             'bearing'  => 180,
-            'distance' => 200000
+            'distance' => 200000,
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/47.026774663314, 2.3072664/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/47\.026774663314, 2\.3072664/', $this->commandTester->getDisplay());
     }
 }

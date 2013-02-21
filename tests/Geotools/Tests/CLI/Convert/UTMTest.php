@@ -62,7 +62,7 @@ class UTMTest extends TestCase
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
-            'coordinate' => '48.8234055, 2.3072664'
+            'coordinate' => '48.8234055, 2.3072664',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));

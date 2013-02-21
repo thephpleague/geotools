@@ -55,7 +55,7 @@ class MiddleTest extends TestCase
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => 'foo, bar',
-            'destination' => ' '
+            'destination' => ' ',
         ));
     }
 
@@ -64,10 +64,10 @@ class MiddleTest extends TestCase
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
-            'destination' => '30°16′57″N 029°48′32″W'
+            'destination' => '30°16′57″N 029°48′32″W',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/38.068139209793, -53.187718854545/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/38\.068139209793, -53\.187718854545/', $this->commandTester->getDisplay());
     }
 }

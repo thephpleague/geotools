@@ -38,9 +38,9 @@ class Reverse extends Command
             ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the adapter to use, cURL by default')
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'If set, the provider constructor arguments like api, locale, region, ssl, toponym and service')
+                'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service')
             ->addOption('format', null, InputOption::VALUE_REQUIRED,
-                'If set, the format of the reversed geocoding');
+                'If set, the format of the revers geocoding result');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

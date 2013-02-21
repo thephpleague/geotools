@@ -55,7 +55,7 @@ class FinalBearingTest extends TestCase
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => 'foo, bar',
-            'destination' => ' '
+            'destination' => ' ',
         ));
     }
 
@@ -64,7 +64,7 @@ class FinalBearingTest extends TestCase
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
-            'destination' => '30°16′57″N 029°48′32″W'
+            'destination' => '30°16′57″N 029°48′32″W',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));

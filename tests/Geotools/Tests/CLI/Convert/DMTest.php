@@ -55,7 +55,7 @@ class DMTest extends TestCase
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => 'foo, bar',
-            '--format'   => ' '
+            '--format'   => ' ',
         ));
     }
 
@@ -63,11 +63,11 @@ class DMTest extends TestCase
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
-            'coordinate' => '48.8234055, 2.3072664'
+            'coordinate' => '48.8234055, 2.3072664',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/48 49.40433N, 2 18.43598E/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/48 49\.40433N, 2 18\.43598E/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithFormatOption()
@@ -75,11 +75,11 @@ class DMTest extends TestCase
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '40° 26.7717, -79° 56.93172',
-            '--format'   => '%P%D°%N %p%d°%n'
+            '--format'   => '%P%D°%N %p%d°%n',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40°26.7717 -79°56.93172/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/40°26\.7717 -79°56\.93172/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyFormatOption()
@@ -87,7 +87,7 @@ class DMTest extends TestCase
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '40° 26.7717, -79° 56.93172',
-            '--format'   => ' '
+            '--format'   => ' ',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));

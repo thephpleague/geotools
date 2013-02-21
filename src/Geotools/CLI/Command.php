@@ -14,6 +14,8 @@ namespace Geotools\CLI;
 use Symfony\Component\Console\Command\Command as BaseCommand;
 
 /**
+ * Command class
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class Command extends BaseCommand

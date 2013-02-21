@@ -55,7 +55,7 @@ class VincentyTest extends TestCase
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => 'foo, bar',
-            'destination' => ' '
+            'destination' => ' ',
         ));
     }
 
@@ -64,11 +64,11 @@ class VincentyTest extends TestCase
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
-            'destination' => '30°16′57″N 029°48′32″W'
+            'destination' => '30°16′57″N 029°48′32″W',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4629759.2704927/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4629759\.2704927/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -77,11 +77,11 @@ class VincentyTest extends TestCase
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
             'destination' => '30°16′57″N 029°48′32″W',
-            '--km'        => true
+            '--km'        => true,
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4629.7592704927/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4629\.7592704927/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -90,10 +90,10 @@ class VincentyTest extends TestCase
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
             'destination' => '30°16′57″N 029°48′32″W',
-            '--mile'      => true
+            '--mile'      => 'true',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2876.7990376779/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/2876\.7990376779/', $this->commandTester->getDisplay());
     }
 }

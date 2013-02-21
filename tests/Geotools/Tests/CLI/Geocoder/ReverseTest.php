@@ -69,7 +69,7 @@ class ReverseTest extends TestCase
         $this->assertRegExp('/Avenue Gambetta 10, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteReverseWithDefaultProviderAndSoketAdapterAndArguments()
+    public function testExecuteReverseWithDefaultProviderAndSocketAdapterAndArguments()
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
@@ -78,7 +78,7 @@ class ReverseTest extends TestCase
             '--args'     => array(
                 'da_DK',    // locale
                 'Denmark',  // region
-                'true'      // useSsl
+                'true',     // useSsl
             ),
         ));
 
@@ -86,7 +86,7 @@ class ReverseTest extends TestCase
         $this->assertRegExp('/Avenue Gambetta 10, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteReverseAgainsOpenStreetMapsProviderWithDefaultAdapter()
+    public function testExecuteReverseAgainsOpenStreetMapsProviderWithDefaultAdapterAndDefaultFormatter()
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),

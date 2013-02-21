@@ -54,7 +54,7 @@ class DecodeTest extends TestCase
     {
         $this->commandTester->execute(array(
             'command' => $this->command->getName(),
-            'geohash' => 'foo, bar'
+            'geohash' => 'foo, bar',
         ));
     }
 
@@ -62,21 +62,21 @@ class DecodeTest extends TestCase
     {
         $this->commandTester->execute(array(
             'command' => $this->command->getName(),
-            'geohash' => 'dp'
+            'geohash' => 'dp',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/42.1875, -84.375/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/42\.1875, -84\.375/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteLongGeohash()
     {
         $this->commandTester->execute(array(
             'command' => $this->command->getName(),
-            'geohash' => 'dppnhep00mpx'
+            'geohash' => 'dppnhep00mpx',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40.446195071563, -79.948862101883/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/40\.446195071563, -79\.948862101883/', $this->commandTester->getDisplay());
     }
 }

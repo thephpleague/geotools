@@ -54,7 +54,7 @@ class GeocodeTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/55.6760968, 12.5683371/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/55\.6760968, 12\.5683371/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteStreetAddressWithDefaultProviderAndAdapterAndArguments()
@@ -65,12 +65,12 @@ class GeocodeTest extends TestCase
             '--args'  => array(
                 'da_DK',    // locale
                 'Denmark',  // region
-                'true'      // useSsl
+                'true',     // useSsl
             ),
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/55.6760968, 12.5683371/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/55\.6760968, 12\.5683371/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteIPv4AgainsFreeGeoIpProviderWithSocketAdapter()
@@ -83,7 +83,7 @@ class GeocodeTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/37.7484, -122.4156/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/37\.7484, -122\.4156/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteIPv6AgainsFreeGeoIpProviderWithDefaultAdapter()
@@ -95,6 +95,6 @@ class GeocodeTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/37.7484, -122.4156/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/37\.7484, -122\.4156/', $this->commandTester->getDisplay());
     }
 }

@@ -55,7 +55,7 @@ class DMSTest extends TestCase
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => 'foo, bar',
-            '--format'   => ' '
+            '--format'   => ' ',
         ));
     }
 
@@ -63,7 +63,7 @@ class DMSTest extends TestCase
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
-            'coordinate' => '48.8234055, 2.3072664'
+            'coordinate' => '48.8234055, 2.3072664',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
@@ -75,7 +75,7 @@ class DMSTest extends TestCase
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '40° 26.7717, -79° 56.93172',
-            '--format'   => '%P%D:%M:%S, %p%d:%m:%s'
+            '--format'   => '%P%D:%M:%S, %p%d:%m:%s',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
@@ -87,7 +87,7 @@ class DMSTest extends TestCase
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '40° 26.7717, -79° 56.93172',
-            '--format'   => ' '
+            '--format'   => ' ',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
