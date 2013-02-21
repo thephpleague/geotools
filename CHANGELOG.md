@@ -1,10 +1,22 @@
 CHANGELOG
 =========
 
-0.1.8 (xxxx-xx-xx)
+0.1.8 (2012-02-21)
 ------------------
 
-n/a
+* Fixed: typo
+* Refactored: getAdapter and getProvider in CLI
+* Added: CLI for Geocoder class + tests
+* Fixed: typo
+* Added: CLI for Geocoder class + tests
+* Updated: composer installation info
+* Added: logo to CLI
+* Fixed: travis-ci config
+* Added: finalBearing() to CLI + test
+* Added: finalCardinal() method + test
+* Updated: cardinal() method to initialCardinal() [BC break]
+* Added: finalBearing() + test
+* Renamed: bearing() method to initialBearing() [BC break]
 
 0.1.7 (2013-02-20)
 ------------------
