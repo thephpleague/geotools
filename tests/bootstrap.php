@@ -6,6 +6,13 @@ function includeIfExists($file) {
     }
 }
 
+if (!extension_loaded('curl') || !function_exists('curl_init')) {
+    die(<<<EOT
+cURL has to be enabled!
+EOT
+    );
+}
+
 if ((!$loader = includeIfExists(__DIR__ . '/../vendor/autoload.php'))) {
     die(<<<EOT
 You need to install the project dependencies using Composer:

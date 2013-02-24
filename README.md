@@ -359,7 +359,7 @@ can have arguments.
 Unit Tests
 ----------
 
-Rename the `phpunit.xml.dist` file to `phpunit.xml`.
+Rename the `phpunit.xml.dist` file to `phpunit.xml` and enable `cURL` extention.
 
 ``` bash
 % php composer.phar install --dev
