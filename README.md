@@ -44,9 +44,9 @@ Run these commands to install composer, Geotools and its dependencies:
 
 ``` bash
 % curl -sS https://getcomposer.org/installer | php
-// or
+or
 % wget http://getcomposer.org/composer.phar
-// then
+then
 % php composer.phar init --require="toin0u/geotools:@stable" -n
 % php composer.phar install
 ```
@@ -324,12 +324,14 @@ Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
 
 ``` bash
 % php geotools list // list of available commands
-% php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" // returns 4690203.1048522
-% php geotools point:cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // returns NE (NordEst)
+% php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" // 4690203.1048522
+% php geotools distance:vincenty "35,45" "45,35" --km  // 1398.4080717661
+% php geotools point:initial-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // NE (NordEast)
+% php geotools point:final-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // ESE (EastNorthEast)
 % php geotools geohash:encode "40° 26.7717, -79° 56.93172" --length=3 // returns dpp
-% php geotools convert:dm "40.446195, -79.948862" --format="%P%D°%N %p%d°%n" // returns 40°26.7717 -79°56.93172
-% php geotools convert:dms "40.446195, -79.948862" --format="%P%D:%M:%S, %p%d:%m:%s" // returns 40:26:46, -79:56:56
-% php geotools convert:utm "60.3912628, 5.3220544" // returns 32V 297351 6700644
+% php geotools convert:dm "40.446195, -79.948862" --format="%P%D°%N %p%d°%n" // 40°26.7717 -79°56.93172
+% php geotools convert:dms "40.446195, -79.948862" --format="%P%D:%M:%S, %p%d:%m:%s" // 40:26:46, -79:56:56
+% php geotools convert:utm "60.3912628, 5.3220544" // 32V 297351 6700644
 ...
 ```
 
