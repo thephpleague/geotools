@@ -13,7 +13,7 @@ Features
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
 **set of providers**. [»](#batch)
-* Compute geocode & reverse geocoding in the **command-line interface** (CLI). [»](#cli)
+* Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates. [»](#coordinate)
 * **Convert** and **format** decimal degrees coordinates to decimal minutes or degrees minutes seconds coordinates.
@@ -25,12 +25,12 @@ Features
 **haversine** or **vincenty** algorithms. [»](#distance)
 * Compute the initial and final **bearing** from the origin coordinate to the destination coordinate in degrees. [»](#point)
 * Compute the initial and final **cardinal point** (direction) from the origin coordinate to the destination
-coordinate. [»](#point)
+coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direction) [»](#point)
 * Compute the **half-way point** (coordinate) between the origin and the destination coordinates. [»](#point)
 * Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
-* A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert**. [»](#cli)
+* A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert** classes. [»](#cli)
 * ... more to come ...
 
 
@@ -319,7 +319,7 @@ $boundingBox = $decoded->getBoundingBox(); // returns an array of \Geotools\Coor
 
 ### CLI ###
 
-It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert**.
+It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert** classes.
 Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
 
 ``` bash
@@ -343,7 +343,7 @@ It's possible to define and precise your request through these options:
 * `--args`: this option accepts multiple values (e.g. --args="API_KEY" --args="LOCALE") if your provider needs or
 can have arguments.
 * `--dumper`: this option is available for geocoding, `gpx`, `geojson`, `kml`, `wkb` and `wkt` by default.
-Read mode [here](https://github.com/willdurand/Geocoder#dumpers).
+Read more [here](https://github.com/willdurand/Geocoder#dumpers).
 * `--format`: this option is available for reverse geocoding, see the mapping
 [here](https://github.com/willdurand/Geocoder#formatter).
 
@@ -371,7 +371,7 @@ Rename the `phpunit.xml.dist` file to `phpunit.xml` and enable `cURL` extension.
 Once installed, just launch the following command:
 
 ``` bash
-% phpunit
+% phpunit --coverage-text
 ```
 
 
