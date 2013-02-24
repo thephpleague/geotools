@@ -25,7 +25,7 @@ Features
 **haversine** or **vincenty** algorithms. [»](#distance)
 * Compute the initial and final **bearing** from the origin coordinate to the destination coordinate in degrees. [»](#point)
 * Compute the initial and final **cardinal point** (direction) from the origin coordinate to the destination
-coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direction) [»](#point)
+coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direction). [»](#point)
 * Compute the **half-way point** (coordinate) between the origin and the destination coordinates. [»](#point)
 * Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
@@ -193,7 +193,7 @@ foreach ($results as $result) {
 }
 ```
 
-You should get 24 results something like (6 providers against 4 values to geocode):
+You should get 24 results (4 values to geocode against 6 providers) something like:
 
 ```
 POINT(2.352222 48.856614) // GoogleMapsProvider, OK! Address-based supported
@@ -362,7 +362,7 @@ Read more [here](https://github.com/willdurand/Geocoder#dumpers).
 Unit Tests
 ----------
 
-Rename the `phpunit.xml.dist` file to `phpunit.xml` and enable `cURL` extension.
+To run unit tests, you'll need the `cURL` extension and a set of dependencies, you can install them using Composer:
 
 ``` bash
 % php composer.phar install --dev
@@ -386,9 +386,16 @@ Credits
 
 * Antoine Corcy <contact@sbin.dk>
 * [All contributors](https://github.com/toin0u/Geotools/contributors)
-* **Geotools** is influenced by [Geokit](https://github.com/jsor/Geokit),
+
+
+Acknowledgments
+---------------
+* [Geocoder](http://geocoder-php.org/)
+* [ReactPHP](http://reactphp.org/)
+* [Symfony Console Component](https://github.com/symfony/Console)
+* [Geokit](https://github.com/jsor/Geokit),
 [Geotools-for-CodeIgniter](https://github.com/weejames/Geotools-for-CodeIgniter),
-[geotools-php](https://github.com/jillesvangurp/geotools-php) and so on...
+[geotools-php](https://github.com/jillesvangurp/geotools-php) ...
 
 
 Changelog
