@@ -1,10 +1,15 @@
 CHANGELOG
 =========
 
-0.1.9 (xxxx-xx-xx)
+0.1.9 (2012-02-24)
 ------------------
 
-n/a
+* Fixed: typo
+* Added: dumper option to geocoder:geocode CLI + test
+* Fixed: composer.json
+* Added: cURL requirement for tests and CLI
+* Removed: old files
+* Fixed: finalCardinal() into CLI + test
 
 0.1.8 (2012-02-21)
 ------------------
