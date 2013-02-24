@@ -97,4 +97,43 @@ class GeocodeTest extends TestCase
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertRegExp('/37\.7484, -122\.4156/', $this->commandTester->getDisplay());
     }
+
+    public function testExecuteStreetAddressWithDefaultDumper()
+    {
+        $this->commandTester->execute(array(
+            'command'  => $this->command->getName(),
+            'value'    => 'Copenhagen, Denmark',
+            '--dumper' => ' foo ',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame('POINT(12.568337 55.676097)', trim($this->commandTester->getDisplay()));
+    }
+
+    public function testExecuteStreetAddressWithKmlDumper()
+    {
+        $this->commandTester->execute(array(
+            'command'  => $this->command->getName(),
+            'value'    => 'Copenhagen, Denmark',
+            '--dumper' => 'KML',
+        ));
+
+        $expected = <<<KML
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+    <Document>
+        <Placemark>
+            <name><![CDATA[Copenhagen, København, Capital Region Of Denmark, Denmark]]></name>
+            <description><![CDATA[Copenhagen, København, Capital Region Of Denmark, Denmark]]></description>
+            <Point>
+                <coordinates>12.5683371,55.6760968,0</coordinates>
+            </Point>
+        </Placemark>
+    </Document>
+</kml>
+KML;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, trim($this->commandTester->getDisplay()));
+    }
 }

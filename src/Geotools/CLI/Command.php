@@ -24,22 +24,23 @@ class Command extends BaseCommand
      * Returns the adapter class name.
      * The default adapter is cURL.
      *
-     * @param string $adapter The name of the adapter.
+     * @param string $adapter The name of the adapter to use.
      *
-     * @return string The name of the adapter class.
+     * @return string The name of the adapter class to use.
      */
     protected function getAdapter($adapter)
     {
-        $adapter  = strtolower($adapter);
+        $adapter  = strtolower(trim($adapter));
         $adapters = array(
-            'buzz'   => 'BuzzHttpAdapter',
-            'curl'   => 'CurlHttpAdapter',
-            'guzzle' => 'GuzzleHttpAdapter',
-            'socket' => 'SocketHttpAdapter',
-            'zend'   => 'ZendHttpAdapter',
+            'buzz'    => 'BuzzHttpAdapter',
+            'curl'    => 'CurlHttpAdapter',
+            'guzzle'  => 'GuzzleHttpAdapter',
+            'socket'  => 'SocketHttpAdapter',
+            'zend'    => 'ZendHttpAdapter',
+            'default' => 'CurlHttpAdapter',
         );
 
-        $adapter = array_key_exists($adapter, $adapters) ? $adapters[$adapter] : $adapters['curl'];
+        $adapter = array_key_exists($adapter, $adapters) ? $adapters[$adapter] : $adapters['default'];
 
         return '\\Geocoder\\HttpAdapter\\' . $adapter;
     }
@@ -50,11 +51,11 @@ class Command extends BaseCommand
      *
      * @param string $provider The name of the provider to use.
      *
-     * @return string The name of the provider class name to use.
+     * @return string The name of the provider class to use.
      */
     protected function getProvider($provider)
     {
-        $provider = strtolower($provider);
+        $provider = strtolower(trim($provider));
         $providers = array(
             'free_geo_ip'          => 'FreeGeoIpProvider',
             'host_ip'              => 'HostIpProvider',
@@ -77,10 +78,36 @@ class Command extends BaseCommand
             'geo_ips'              => 'GeoIPsProvider',
             'maxmind'              => 'MaxMindProvider',
             'geonames'             => 'GeonamesProvider',
+            'default'              => 'GoogleMapsProvider',
         );
 
-        $provider = array_key_exists($provider, $providers) ? $providers[$provider] : $providers['google_maps'];
+        $provider = array_key_exists($provider, $providers) ? $providers[$provider] : $providers['default'];
 
         return '\\Geocoder\\Provider\\' . $provider;
+    }
+
+    /**
+     * Retunrs the dumper class name.
+     * The default dumper is WktDumper.
+     *
+     * @param string $dumper The name of the dumper to use.
+     *
+     * @return string The name of the dumper class to use.
+     */
+    protected function getDumper($dumper)
+    {
+        $dumper = strtolower(trim($dumper));
+        $dumpers = array(
+            'gpx'     => 'GpxDumper',
+            'geojson' => 'GeoJsonDumper',
+            'kml'     => 'KmlDumper',
+            'wkb'     => 'WkbDumper',
+            'wkt'     => 'WktDumper',
+            'default' => 'WktDumper',
+        );
+
+        $dumper = array_key_exists($dumper, $dumpers) ? $dumpers[$dumper] : $dumpers['default'];
+
+        return '\\Geocoder\\Dumper\\' . $dumper;
     }
 }

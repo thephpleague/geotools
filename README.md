@@ -342,6 +342,8 @@ It's possible to define and precise your request through these options:
 * `--provider`: `bing_maps`, `yahoo`, `maxmind` and so on... `google_maps` is the default one.
 * `--args`: this option accepts multiple values (e.g. --args="API_KEY" --args="LOCALE") if your provider needs or
 can have arguments.
+* `--dumper`: this option is available for geocoding, `gpx`, `geojson`, `kml`, `wkb` and `wkt` by default.
+Read mode [here](https://github.com/willdurand/Geocoder#dumpers).
 * `--format`: this option is available for reverse geocoding, see the mapping
 [here](https://github.com/willdurand/Geocoder#formatter).
 
@@ -349,6 +351,7 @@ can have arguments.
 % php geotools geocoder:geocode "Copenhagen, Denmark" // 55.6760968, 12.5683371
 % php geotools geocoder:geocode "74.200.247.59" --provider="free_geo_ip" --adapter="socket" // 37.7484, -122.4156
 % php geotools geocoder:geocode Paris --args="fr_FR" --args="France" --args="true" // 48.856614, 2.3522219
+% php geotools geocoder:geocode Paris --dumper=wkt // POINT(2.352222 48.856614)
 ...
 % php geotools geocoder:reverse "48.8631507, 2.388911" // Avenue Gambetta 10, 75020 Paris
 % php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" // Paris, Île-De-France, France

@@ -35,6 +35,8 @@ class Geocode extends Command
                 'If set, the name of the provider to use, Google Maps by default')
             ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the adapter to use, cURL by default')
+            ->addOption('dumper', null, InputOption::VALUE_REQUIRED,
+                'If set, the name of the dumper to use, no dumper by default')
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service');
     }
@@ -56,6 +58,14 @@ class Geocode extends Command
 
         $geocoded = $geocoder->geocode($input->getArgument('value'));
 
-        $output->writeln(sprintf('<info>%s, %s</info>', $geocoded->getLatitude(), $geocoded->getLongitude()));
+        if ($input->getOption('dumper')) {
+            $dumper = $this->getDumper($input->getOption('dumper'));
+            $dumper = new $dumper();
+            $result = sprintf('<info>%s</info>', $dumper->dump($geocoded));
+        } else {
+            $result = sprintf('<info>%s, %s</info>', $geocoded->getLatitude(), $geocoded->getLongitude());
+        }
+
+        $output->writeln($result);
     }
 }
