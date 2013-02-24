@@ -23,7 +23,14 @@
         "symfony/console": "~2.0"
     },
     "require-dev": {
-        "react/react": "0.2.*@dev"
+        "kriswallsmith/buzz": "@stable",
+        "guzzle/guzzle": "@stable",
+        "zendframework/zendframework": "~2.1"
+    },
+    "suggest": {
+        "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
+        "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
+        "zendframework/zendframework": "Enabling Zend Framework allows you to use the ZendHttpAdapter."
     },
     "autoload": {
         "psr-0": { "Geotools": "src/" }
