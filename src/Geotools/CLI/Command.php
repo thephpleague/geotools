@@ -30,7 +30,7 @@ class Command extends BaseCommand
      */
     protected function getAdapter($adapter)
     {
-        $adapter  = strtolower(trim($adapter));
+        $adapter  = $this->lowerize((trim($adapter)));
         $adapters = array(
             'buzz'    => 'BuzzHttpAdapter',
             'curl'    => 'CurlHttpAdapter',
@@ -55,7 +55,7 @@ class Command extends BaseCommand
      */
     protected function getProvider($provider)
     {
-        $provider = strtolower(trim($provider));
+        $provider = $this->lowerize((trim($provider)));
         $providers = array(
             'free_geo_ip'          => 'FreeGeoIpProvider',
             'host_ip'              => 'HostIpProvider',
@@ -96,7 +96,7 @@ class Command extends BaseCommand
      */
     protected function getDumper($dumper)
     {
-        $dumper = strtolower(trim($dumper));
+        $dumper = $this->lowerize((trim($dumper)));
         $dumpers = array(
             'gpx'     => 'GpxDumper',
             'geojson' => 'GeoJsonDumper',
@@ -109,5 +109,17 @@ class Command extends BaseCommand
         $dumper = array_key_exists($dumper, $dumpers) ? $dumpers[$dumper] : $dumpers['default'];
 
         return '\\Geocoder\\Dumper\\' . $dumper;
+    }
+
+    /**
+     * Make a string lowercase.
+     *
+     * @param string $string A string to lowercase.
+     *
+     * @return string The lowercased string.
+     */
+    private function lowerize($string)
+    {
+        return extension_loaded('mbstring') ? mb_strtolower($string, 'UTF-8') : strtolower($string);
     }
 }
