@@ -230,12 +230,12 @@ Batch reverse geocoding is something like:
 // ... $geocoder like the previous example ...
 // If you want to reverse one coordinate
 $results = $geotools->batch($geocoder)->reverse(
-    new \Geotools\Coordinate\Coordinate(array(2.307266 48.823405))
+    new \Geotools\Coordinate\Coordinate(array(2.307266, 48.823405))
 )->parallel();
 // Or if you want to reverse geocoding 3 coordinates
 $coordinates = array(
-    new \Geotools\Coordinate\Coordinate(array(2.307266 48.823405)),
-    new \Geotools\Coordinate\Coordinate(array(12.568337 55.676097)),
+    new \Geotools\Coordinate\Coordinate(array(2.307266, 48.823405)),
+    new \Geotools\Coordinate\Coordinate(array(12.568337, 55.676097)),
     new \Geotools\Coordinate\Coordinate('-74.005973 40.714353')),
 );
 $results = $geotools->batch($geocoder)->reverse($coordinates)->parallel();
@@ -338,8 +338,11 @@ Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
 Compute street addresses, IPv4s or IPv6s geocoding and reverse geocoding right in your console.
 
 It's possible to define and precise your request through these options:
-* `--adapter`: `socket`, `buzz`, `zend`, `guzzle` or `cURL` by default
-* `--provider`: `bing_maps`, `yahoo`, `maxmind` and so on... `google_maps` is the default one.
+* `--adapter`: `socket`, `buzz`, `zend`, `guzzle` or `curl` by default.
+* `--provider`: `bing_maps`, `yahoo`, `maxmind`... `google_maps` is the default one. See the full list
+[here](https://github.com/willdurand/Geocoder#providers).
+* `--raw`: the result output in RAW format, shows Adapter, Provider and Arguments if any.
+* `--json`: the result output in JSON string format.
 * `--args`: this option accepts multiple values (e.g. --args="API_KEY" --args="LOCALE") if your provider needs or
 can have arguments.
 * `--dumper`: this option is available for geocoding, `gpx`, `geojson`, `kml`, `wkb` and `wkt` by default.
@@ -357,6 +360,31 @@ Read more [here](https://github.com/willdurand/Geocoder#dumpers).
 % php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" // Paris, Île-De-France, France
 % php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" --provider="openstreetmaps"
 // Paris, Île-De-France, France Métropolitaine
+...
+% php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket
+Adapter:       \Geocoder\HttpAdapter\SocketHttpAdapter
+Provider:      \Geocoder\Provider\GoogleMapsProvider
+Arguments:     da_DK,Denmark
+---
+Latitude:      55.699953
+Longitude:     12.552736
+Bounds
+ L South: 55.699953
+ L West:  12.552736
+ L North: 55.699953
+ L East:  12.552736
+Street Number: 47
+Street Name:   Tagensvej
+Zipcode:       2200
+City:          Copenhagen
+City District: København N
+County:        København
+County Code:   KØBENHAVN
+Region:        Capital Region Of Denmark
+Region Code:   CAPITAL REGION OF DENMARK
+Country:       Denmark
+Country Code:  DK
+Timezone:
 ```
 
 Unit Tests

@@ -136,4 +136,62 @@ KML;
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertSame($expected, trim($this->commandTester->getDisplay()));
     }
+
+    public function testExecuteRawOptionAndLocalArgumentAndSocketAdapter()
+    {
+        $this->commandTester->execute(array(
+            'command'   => $this->command->getName(),
+            'value'     => 'Copenhagen, Denmark',
+            '--raw'     => true,
+            '--args'    => 'da_DK',
+            '--adapter' => 'socket',
+        ));
+
+        $expected = <<<EOF
+Adapter:       \Geocoder\HttpAdapter\SocketHttpAdapter
+Provider:      \Geocoder\Provider\GoogleMapsProvider
+Arguments:     da_DK
+---
+Latitude:      55.6760968
+Longitude:     12.5683371
+Bounds
+ L South: 55.6177647
+ L West:  12.4988635
+ L North: 55.7270937
+ L East:  12.7342654
+Street Number: 
+Street Name:   
+Zipcode:       
+City:          København
+City District: 
+County:        København
+County Code:   KØBENHAVN
+Region:        Hovedstaden
+Region Code:   HOVEDSTADEN
+Country:       Danmark
+Country Code:  DK
+Timezone:      
+
+EOF;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, $this->commandTester->getDisplay());
+    }
+
+    public function testExecuteJsonOption()
+    {
+        $this->commandTester->execute(array(
+            'command' => $this->command->getName(),
+            'value'   => 'Copenhagen, Denmark',
+            '--json'  => true,
+        ));
+
+        $expected = <<<EOF
+{"latitude":55.6760968,"longitude":12.5683371,"bounds":{"south":55.6177647,"west":12.4988635,"north":55.7270937,"east":12.7342654},"streetNumber":null,"streetName":null,"zipcode":null,"city":"Copenhagen","cityDistrict":null,"county":"K\u00f8benhavn","countyCode":"K\u00d8BENHAVN","region":"Capital Region Of Denmark","regionCode":"CAPITAL REGION OF DENMARK","country":"Denmark","countryCode":"DK","timezone":null}
+
+EOF;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, $this->commandTester->getDisplay());
+    }
 }

@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geocoder\Geocoder;
 use Geocoder\Formatter\Formatter;
 use Geotools\Coordinate\Coordinate;
@@ -34,13 +35,17 @@ class Reverse extends Command
             ->setDescription('Reverse geocode street address, IPv4 or IPv6 against a provider with an adapter')
             ->addArgument('coordinate', InputArgument::REQUIRED, 'The coordinate to reverse')
             ->addOption('provider', null, InputOption::VALUE_REQUIRED,
-                'If set, the name of the provider to use, Google Maps by default')
+                'If set, the name of the provider to use, Google Maps by default', 'google_maps')
             ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
-                'If set, the name of the adapter to use, cURL by default')
+                'If set, the name of the adapter to use, cURL by default', 'curl')
+            ->addOption('raw', null, InputOption::VALUE_NONE,
+                'If set, the raw format of the reverse geocoding result')
+            ->addOption('json', null, InputOption::VALUE_NONE,
+                'If set, the json format of the reverse geocoding result')
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service')
             ->addOption('format', null, InputOption::VALUE_REQUIRED,
-                'If set, the format of the revers geocoding result');
+                'If set, the format of the reverse geocoding result', '%S %n, %z %L');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -64,12 +69,42 @@ class Reverse extends Command
 
         $formatter = new Formatter($reversed);
 
-        if ($input->getOption('format')) {
-            $formatted = $formatter->format($input->getOption('format'));
+        if ($input->getOption('raw')) {
+            $result[] = sprintf('<label>Adapter</label>:       <value>%s</value>', $adapter);
+            $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
+            if ($input->getOption('args')) {
+                $result[] = sprintf('<label>Arguments</label>:     <value>%s</value>', $args);
+            }
+            $result[] = '---';
+            $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $reversed->getLatitude());
+            $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $reversed->getLongitude());
+            if (null !== $bounds = $reversed->getBounds()) {
+                $result[] = '<label>Bounds</label>';
+                $result[] = sprintf(' L <label>South</label>: <value>%s</value>', $bounds['south']);
+                $result[] = sprintf(' L <label>West</label>:  <value>%s</value>', $bounds['west']);
+                $result[] = sprintf(' L <label>North</label>: <value>%s</value>', $bounds['north']);
+                $result[] = sprintf(' L <label>East</label>:  <value>%s</value>', $bounds['east']);
+            }
+            $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $reversed->getStreetNumber());
+            $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $reversed->getStreetName());
+            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $reversed->getZipcode());
+            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $reversed->getCity());
+            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $reversed->getCityDistrict());
+            $result[] = sprintf('<label>County</label>:        <value>%s</value>', $reversed->getCounty());
+            $result[] = sprintf('<label>County Code</label>:   <value>%s</value>', $reversed->getCountyCode());
+            $result[] = sprintf('<label>Region</label>:        <value>%s</value>', $reversed->getRegion());
+            $result[] = sprintf('<label>Region Code</label>:   <value>%s</value>', $reversed->getRegionCode());
+            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $reversed->getCountry());
+            $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $reversed->getCountryCode());
+            $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $reversed->getTimezone());
+        } elseif ($input->getOption('json')) {
+            $result = sprintf('<value>%s</value>', json_encode($reversed->toArray()));
         } else {
-            $formatted = $formatter->format('%S %n, %z %L');
+            $result = sprintf('<value>%s</value>', $formatter->format($input->getOption('format')));
         }
 
-        $output->writeln(sprintf('<info>%s</info>', $formatted));
+        $output->getFormatter()->setStyle('label', new OutputFormatterStyle('yellow', 'black'));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln($result);
     }
 }

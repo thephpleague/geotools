@@ -110,4 +110,61 @@ class ReverseTest extends TestCase
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertRegExp('/Paris, Île-De-France, France Métropolitaine/', $this->commandTester->getDisplay());
     }
+
+    public function testExecuteRawOptionAndLocalArgument()
+    {
+        $this->commandTester->execute(array(
+            'command'    => $this->command->getName(),
+            'coordinate' => '40.689167, -74.044444',
+            '--raw'      => true,
+            '--args'     => 'us_US',
+        ));
+
+        $expected = <<<EOF
+Adapter:       \Geocoder\HttpAdapter\CurlHttpAdapter
+Provider:      \Geocoder\Provider\GoogleMapsProvider
+Arguments:     us_US
+---
+Latitude:      40.6891988
+Longitude:     -74.0445167
+Bounds
+ L South: 40.6887596
+ L West:  -74.0451881
+ L North: 40.6896417
+ L East:  -74.0439787
+Street Number: 
+Street Name:   
+Zipcode:       11231
+City:          New York
+City District: Brooklyn
+County:        New York
+County Code:   NEW YORK
+Region:        New York
+Region Code:   NY
+Country:       United States
+Country Code:  US
+Timezone:      
+
+EOF;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, $this->commandTester->getDisplay());
+    }
+
+    public function testExecuteJsonOption()
+    {
+        $this->commandTester->execute(array(
+            'command'    => $this->command->getName(),
+            'coordinate' => '40.689167, -74.044444',
+            '--json'     => true,
+        ));
+
+        $expected = <<<EOF
+{"latitude":40.6891988,"longitude":-74.0445167,"bounds":{"south":40.6887596,"west":-74.0451881,"north":40.6896417,"east":-74.0439787},"streetNumber":null,"streetName":null,"zipcode":"11231","city":"New York","cityDistrict":"Brooklyn","county":"New York","countyCode":"NEW YORK","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}
+
+EOF;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, $this->commandTester->getDisplay());
+    }
 }

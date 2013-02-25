@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geocoder\Geocoder;
 use Geotools\CLI\Command;
 
@@ -32,9 +33,13 @@ class Geocode extends Command
             ->setDescription('Geocode a street-address, IPv4 or IPv6 against a provider with an adapter')
             ->addArgument('value', InputArgument::REQUIRED, 'The street-address, IPv4 or IPv6 to geocode')
             ->addOption('provider', null, InputOption::VALUE_REQUIRED,
-                'If set, the name of the provider to use, Google Maps by default')
+                'If set, the name of the provider to use, Google Maps by default', 'google_maps')
             ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
-                'If set, the name of the adapter to use, cURL by default')
+                'If set, the name of the adapter to use, cURL by default', 'curl')
+            ->addOption('raw', null, InputOption::VALUE_NONE,
+                'If set, the raw format of the reverse geocoding result')
+            ->addOption('json', null, InputOption::VALUE_NONE,
+                'If set, the json format of the reverse geocoding result')
             ->addOption('dumper', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the dumper to use, no dumper by default')
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
@@ -58,14 +63,46 @@ class Geocode extends Command
 
         $geocoded = $geocoder->geocode($input->getArgument('value'));
 
-        if ($input->getOption('dumper')) {
+        if ($input->getOption('raw')) {
+            $result[] = sprintf('<label>Adapter</label>:       <value>%s</value>', $adapter);
+            $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
+            if ($input->getOption('args')) {
+                $result[] = sprintf('<label>Arguments</label>:     <value>%s</value>', $args);
+            }
+            $result[] = '---';
+            $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $geocoded->getLatitude());
+            $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $geocoded->getLongitude());
+            if (null !== $bounds = $geocoded->getBounds()) {
+                $result[] = '<label>Bounds</label>';
+                $result[] = sprintf(' L <label>South</label>: <value>%s</value>', $bounds['south']);
+                $result[] = sprintf(' L <label>West</label>:  <value>%s</value>', $bounds['west']);
+                $result[] = sprintf(' L <label>North</label>: <value>%s</value>', $bounds['north']);
+                $result[] = sprintf(' L <label>East</label>:  <value>%s</value>', $bounds['east']);
+            }
+            $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $geocoded->getStreetNumber());
+            $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $geocoded->getStreetName());
+            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $geocoded->getZipcode());
+            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $geocoded->getCity());
+            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $geocoded->getCityDistrict());
+            $result[] = sprintf('<label>County</label>:        <value>%s</value>', $geocoded->getCounty());
+            $result[] = sprintf('<label>County Code</label>:   <value>%s</value>', $geocoded->getCountyCode());
+            $result[] = sprintf('<label>Region</label>:        <value>%s</value>', $geocoded->getRegion());
+            $result[] = sprintf('<label>Region Code</label>:   <value>%s</value>', $geocoded->getRegionCode());
+            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $geocoded->getCountry());
+            $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $geocoded->getCountryCode());
+            $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $geocoded->getTimezone());
+        } elseif ($input->getOption('json')) {
+            $result = sprintf('<value>%s</value>', json_encode($geocoded->toArray()));
+        } elseif ($input->getOption('dumper')) {
             $dumper = $this->getDumper($input->getOption('dumper'));
             $dumper = new $dumper();
-            $result = sprintf('<info>%s</info>', $dumper->dump($geocoded));
+            $result = sprintf('<value>%s</value>', $dumper->dump($geocoded));
         } else {
-            $result = sprintf('<info>%s, %s</info>', $geocoded->getLatitude(), $geocoded->getLongitude());
+            $result = sprintf('<value>%s, %s</value>', $geocoded->getLatitude(), $geocoded->getLongitude());
         }
 
+        $output->getFormatter()->setStyle('label', new OutputFormatterStyle('yellow', 'black'));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
         $output->writeln($result);
     }
 }
