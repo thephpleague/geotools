@@ -14,8 +14,8 @@ namespace Geotools\CLI\Point;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
 
@@ -38,12 +38,16 @@ class Destination extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $from = new Coordinate($input->getArgument('origin'));
-
+        $from     = new Coordinate($input->getArgument('origin'));
         $geotools = new Geotools();
-        $destination = $geotools->point()->setFrom($from)
-            ->destination($input->getArgument('bearing'), $input->getArgument('distance'));
 
-        $output->writeln(sprintf('<info>%s, %s</info>', $destination->getLatitude(), $destination->getLongitude()));
+        $destination = $geotools->point()->setFrom($from);
+        $destination = $destination->destination($input->getArgument('bearing'), $input->getArgument('distance'));
+
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln(sprintf(
+            '<value>%s, %s</value>',
+            $destination->getLatitude(), $destination->getLongitude()
+        ));
     }
 }

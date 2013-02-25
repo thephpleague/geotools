@@ -14,8 +14,8 @@ namespace Geotools\CLI\Point;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
 
@@ -41,11 +41,12 @@ class Middle extends Command
         $to   = new Coordinate($input->getArgument('destination'));
 
         $geotools = new Geotools();
+        $middle   = $geotools->point()->setFrom($from)->setTo($to)->middle();
 
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
         $output->writeln(sprintf(
-            '<info>%s, %s</info>',
-            $geotools->point()->setFrom($from)->setTo($to)->middle()->getLatitude(),
-            $geotools->point()->setFrom($from)->setTo($to)->middle()->getLongitude()
+            '<value>%s, %s</value>',
+            $middle->getLatitude(), $middle->getLongitude()
         ));
     }
 }

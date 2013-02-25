@@ -16,8 +16,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
+use Geotools\Convert\ConvertInterface;
 
 /**
  * Command-line convert:dm class
@@ -33,22 +35,18 @@ class DM extends Command
             ->setDescription('Convert and format decimal degrees coordinates to decimal minutes coordinate')
             ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate')
             ->addOption('format', null, InputOption::VALUE_REQUIRED,
-                'If set, the format of the converted decimal minutes coordinate');
+                'If set, the format of the converted decimal minutes coordinate', ConvertInterface::DEFAULT_DM_FORMAT);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $coordinate = new Coordinate($input->getArgument('coordinate'));
+        $geotools   = new Geotools();
 
-        $geotools = new Geotools();
-        $convert  = $geotools->convert($coordinate);
-
-        if ($input->getOption('format')) {
-            $convert = $convert->toDM($input->getOption('format'));
-        } else {
-            $convert = $convert->toDM();
-        }
-
-        $output->writeln(sprintf('<info>%s</info>', $convert));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln(sprintf(
+            '<value>%s</value>',
+            $geotools->convert($coordinate)->toDM($input->getOption('format'))
+        ));
     }
 }

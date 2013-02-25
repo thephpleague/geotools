@@ -44,9 +44,13 @@ Run these commands to install composer, Geotools and its dependencies:
 
 ``` bash
 % curl -sS https://getcomposer.org/installer | php
-or
+```
+Or
+``` bash
 % wget http://getcomposer.org/composer.phar
-then
+```
+Then
+``` bash
 % php composer.phar init --require="toin0u/geotools:@stable" -n
 % php composer.phar install
 ```
@@ -242,7 +246,7 @@ $results = $geotools->batch($geocoder)->reverse($coordinates)->parallel();
 // ...
 ```
 
-If you want to batch it in serie, replace the method `parallel()` to `serie()`.
+If you want to batch it in serie, replace the method `parallel()` by `serie()`.
 
 To optimize batch requests you need to register providers according to their **capabilities** and what you're
 **looking for** (geocode street addresses, geocode IPv4, geocode IPv6 or reverse geocoding),
@@ -362,6 +366,11 @@ Read more [here](https://github.com/willdurand/Geocoder#dumpers).
 // Paris, Île-De-France, France Métropolitaine
 ...
 % php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket
+```
+
+The last command will show an output like this:
+
+```
 Adapter:       \Geocoder\HttpAdapter\SocketHttpAdapter
 Provider:      \Geocoder\Provider\GoogleMapsProvider
 Arguments:     da_DK,Denmark

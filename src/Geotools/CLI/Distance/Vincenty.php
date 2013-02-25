@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
 
@@ -30,7 +31,7 @@ class Vincenty extends Command
     {
         $this
             ->setName('distance:vincenty')
-            ->setDescription('Compute the distance between 2 coordinates using the vincenty algorithm')
+            ->setDescription('Compute the distance between 2 coordinates using the vincenty algorithm,  in meters by default')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
             ->addOption('km', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in kilometers')
@@ -53,6 +54,7 @@ class Vincenty extends Command
             $distance->in('mile');
         }
 
-        $output->writeln(sprintf('<info>%s</info>', $distance->vincenty()));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln(sprintf('<value>%s</value>', $distance->vincenty()));
     }
 }

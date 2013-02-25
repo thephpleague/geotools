@@ -14,8 +14,8 @@ namespace Geotools\CLI\Point;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
 
@@ -42,6 +42,10 @@ class FinalCardinal extends Command
 
         $geotools = new Geotools();
 
-        $output->writeln(sprintf('<info>%s</info>', $geotools->point()->setFrom($from)->setTo($to)->finalCardinal()));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln(sprintf(
+            '<value>%s</value>',
+            $geotools->point()->setFrom($from)->setTo($to)->finalCardinal()
+        ));
     }
 }

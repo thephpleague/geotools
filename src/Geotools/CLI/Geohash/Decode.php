@@ -14,8 +14,8 @@ namespace Geotools\CLI\Geohash;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 
 /**
@@ -38,6 +38,10 @@ class Decode extends Command
         $geotools   = new Geotools();
         $coordinate = $geotools->geohash()->decode($input->getArgument('geohash'))->getCoordinate();
 
-        $output->writeln(sprintf('<info>%s, %s</info>', $coordinate->getLatitude(), $coordinate->getLongitude()));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln(sprintf(
+            '<value>%s, %s</value>',
+            $coordinate->getLatitude(), $coordinate->getLongitude()
+        ));
     }
 }

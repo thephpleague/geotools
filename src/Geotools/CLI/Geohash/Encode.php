@@ -16,6 +16,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+
 use Geotools\Geotools;
 use Geotools\Geohash\Geohash;
 use Geotools\Coordinate\Coordinate;
@@ -31,26 +33,22 @@ class Encode extends Command
     {
         $this
             ->setName('geohash:encode')
-            ->setDescription('Encode a coordinate to a geo hash string')
+            ->setDescription('Encode a coordinate to a geo hash string, the length is 12 by default')
             ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate to encode')
             ->addOption('length', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_OPTIONAL,
                 sprintf('If set, the length between %s and %s of the encoded coordinate', Geohash::MIN_LENGTH,
-                    Geohash::MAX_LENGTH));
+                    Geohash::MAX_LENGTH), 12);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $coordinate = new Coordinate($input->getArgument('coordinate'));
+        $geotools   = new Geotools();
 
-        $geotools = new Geotools();
-        $geohash  = $geotools->geohash();
-
-        if ($input->getOption('length')) {
-            $geohash = $geohash->encode($coordinate, $input->getOption('length'));
-        } else {
-            $geohash = $geohash->encode($coordinate);
-        }
-
-        $output->writeln(sprintf('<info>%s</info>', $geohash->getGeohash()));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln(sprintf(
+            '<value>%s</value>',
+            $geotools->geohash()->encode($coordinate, $input->getOption('length'))->getGeohash()
+        ));
     }
 }

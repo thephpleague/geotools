@@ -99,6 +99,10 @@ class EncodeTest extends TestCase
         $this->assertRegExp('/dppn/', $this->commandTester->getDisplay());
     }
 
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage The length should be between 1 and 12.
+     */
     public function testExecuteWithEmptyLengthOption()
     {
         $this->commandTester->execute(array(
@@ -106,9 +110,5 @@ class EncodeTest extends TestCase
             'coordinate' => '40° 26.7717, -79° 56.93172',
             '--length'   => '',
         ));
-
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertEquals(Geohash::MAX_LENGTH, strlen(trim($this->commandTester->getDisplay())));
-        $this->assertRegExp('/dppn/', $this->commandTester->getDisplay());
     }
 }

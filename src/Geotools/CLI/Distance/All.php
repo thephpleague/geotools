@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
 
@@ -30,7 +31,7 @@ class All extends Command
     {
         $this
             ->setName('distance:all')
-            ->setDescription('Compute the distance between 2 coordinates using the all algorithms')
+            ->setDescription('Compute the distance between 2 coordinates using all algorithms, in meters by default')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
             ->addOption('km', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in kilometers')
@@ -53,8 +54,12 @@ class All extends Command
             $distance->in('mile');
         }
 
-        $output->writeln(sprintf('<comment>Flat:</comment> <info>%s</info>', $distance->flat()));
-        $output->writeln(sprintf('<comment>Haversine:</comment> <info>%s</info>', $distance->haversine()));
-        $output->writeln(sprintf('<comment>Vincenty:</comment> <info>%s</info>', $distance->vincenty()));
+        $result[] = sprintf('<label>Flat:</label>      <value>%s</value>', $distance->flat());
+        $result[] = sprintf('<label>Haversine:</label> <value>%s</value>', $distance->haversine());
+        $result[] = sprintf('<label>Vincenty:</label>  <value>%s</value>', $distance->vincenty());
+
+        $output->getFormatter()->setStyle('label', new OutputFormatterStyle('yellow', 'black'));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln($result);
     }
 }

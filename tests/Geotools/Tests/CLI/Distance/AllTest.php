@@ -102,4 +102,23 @@ class AllTest extends TestCase
         $this->assertRegExp('/2874\.351612877/', $this->commandTester->getDisplay());
         $this->assertRegExp('/2876\.7990376779/', $this->commandTester->getDisplay());
     }
+
+    public function testExecuteOutput()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+        ));
+
+        $expected = <<<EOF
+Flat:      4690203.1048522
+Haversine: 4625820.522074
+Vincenty:  4629759.2704927
+
+EOF;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, $this->commandTester->getDisplay());
+    }
 }

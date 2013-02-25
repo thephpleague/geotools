@@ -16,6 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
 
@@ -37,9 +38,12 @@ class UTM extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $coordinate = new Coordinate($input->getArgument('coordinate'));
+        $geotools   = new Geotools();
 
-        $geotools = new Geotools();
-
-        $output->writeln(sprintf('<info>%s</info>', $geotools->convert($coordinate)->toUTM()));
+        $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));
+        $output->writeln(sprintf(
+            '<value>%s</value>',
+            $geotools->convert($coordinate)->toUTM()
+        ));
     }
 }
