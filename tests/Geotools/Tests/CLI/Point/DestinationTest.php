@@ -70,6 +70,6 @@ class DestinationTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/47\.026774663314, 2\.3072664/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/47\.026774650075, 2\.3072664/', $this->commandTester->getDisplay());
     }
 }

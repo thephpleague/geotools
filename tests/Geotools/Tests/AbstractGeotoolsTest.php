@@ -28,8 +28,6 @@ class AbstractGeotoolsTest extends TestCase
 
     public function testConsts()
     {
-        $this->assertSame(6378136.047, AbstractGeotools::EARTH_RADIUS_MAJOR);
-        $this->assertSame(6356752.314, AbstractGeotools::EARTH_RADIUS_MINOR);
         $this->assertSame(0.9996, AbstractGeotools::UTM_SCALE_FACTOR);
         $this->assertSame(1609.344, AbstractGeotools::METERS_PER_MILE);
         $this->assertSame('km', AbstractGeotools::KILOMETER_UNIT);

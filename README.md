@@ -16,6 +16,7 @@ Features
 * Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates. [»](#coordinate)
+* Support **23 different ellipsoids** and it's easy to provide a new one if needed. [»](#coordinate)
 * **Convert** and **format** decimal degrees coordinates to decimal minutes or degrees minutes seconds coordinates.
 [»](#convert)
 * **Convert** decimal degrees coordinates in the
@@ -75,9 +76,26 @@ require_once 'src/autoload.php';
 Usage & API
 -----------
 
-### Coordinate ###
+### Coordinate & Ellipsoid ###
 
-Geodetic datum is [WGS84](http://en.wikipedia.org/wiki/World_Geodetic_System) and coordinates are in decimal degrees.
+The default geodetic datum is [WGS84](http://en.wikipedia.org/wiki/World_Geodetic_System) and coordinates are in
+decimal degrees.
+
+Here are the available ellipsoid: `AIRY`, `AUSTRALIAN_NATIONAL`, `BESSEL_1841`, `BESSEL_1841_NAMBIA`,
+`CLARKE_1866`, `CLARKE_1880`, `EVEREST`, `FISCHER_1960_MERCURY`, `FISCHER_1968`, `GRS_1967`, `GRS_1980`,
+`HELMERT_1906`, `HOUGH`, `INTERNATIONAL`, `KRASSOVSKY`, `MODIFIED_AIRY`, `MODIFIED_EVEREST`,
+`MODIFIED_FISCHER_1960`, `SOUTH_AMERICAN_1969`, `WGS60`, `WGS66`, `WGS72`, and `WGS84`.
+
+If you need to use an other ellipsoid, just create an array like this:
+``` php
+<?php
+
+$myEllipsoid = \Geotools\Coordinate\Ellipsoid::createFromArray(array(
+    'name' => 'My Ellipsoid', // The name of the Ellipsoid
+    'a'    => 123.0, // The semi-major axis (equatorial radius) in meters
+    'invF' => 456.0 // The inverse flattening
+));
+```
 
 **Geotools** is built atop [Geocoder](https://github.com/willdurand/Geocoder). It means it's possible to use the
 `\Geocoder\Result\ResultInterface` directly but it's also possible to use a *string* or a simple *array* with its
@@ -99,19 +117,27 @@ Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\Geotools\
 ``` php
 <?php
 
-// from an \Geocoder\Result\ResultInterface instance
-$coordinate = new \Geotools\Coordinate\Coordinate($geocoderResult);
-// or in an array of latitude/longitude coordinate
-$coordinate = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-// or in latitude/longitude coordinate
-$coordinate = new \Geotools\Coordinate\Coordinate('48.8234055, 2.3072664');
-// or in degrees minutes seconds coordinate
-$coordinate = new \Geotools\Coordinate\Coordinate('48°49′24″N, 2°18′26″E');
-// or in decimal minutes cordinate
-$coordinate = new \Geotools\Coordinate\Coordinate('48 49.4N, 2 18.43333E');
+use Geotools\Coordinate\Coordinate;
+use Geotools\Coordinate\Ellipsoid;
+
+// from an \Geocoder\Result\ResultInterface instance within Airy ellipsoid
+$coordinate = new Coordinate($geocoderResult, Ellipsoid::createEllipsoid(Ellipsoid::AIRY));
+// or in an array of latitude/longitude coordinate within GRS 1980 ellipsoid
+$coordinate = new Coordinate(array(48.8234055, 2.3072664), Ellipsoid::createEllipsoid(Ellipsoid::GRS_1980));
+// or in latitude/longitude coordinate within WGS84 ellipsoid
+$coordinate = new Coordinate('48.8234055, 2.3072664');
+// or in degrees minutes seconds coordinate within WGS84 ellipsoid
+$coordinate = new Coordinate('48°49′24″N, 2°18′26″E');
+// or in decimal minutes cordinate within WGS84 ellipsoid
+$coordinate = new Coordinate('48 49.4N, 2 18.43333E');
 // the result will be:
 printf("Latitude: %F\n", $coordinate->getLatitude()); // 48.8234055
 printf("Longitude: %F\n", $coordinate->getLongitude()); // 2.3072664
+printf("Ellipsoid name: %s\n", $coordinate->getEllipsoid()->getName()); // WGS 84
+printf("Equatorial radius: %F\n", $coordinate->getEllipsoid()->getA()); // 6378136.0
+printf("Polar distance: %F\n", $coordinate->getEllipsoid()->getB()); // 6356751.317598
+printf("Inverse flattening: %F\n", $coordinate->getEllipsoid()->getInvF()); // 298.257224
+printf("Mean radius: %F\n", $coordinate->getEllipsoid()->getArithmeticMeanRadius()); // 6371007.772533
 ```
 
 ### Convert ###

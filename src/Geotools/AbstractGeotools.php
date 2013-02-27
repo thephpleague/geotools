@@ -19,24 +19,6 @@ namespace Geotools;
 abstract class AbstractGeotools
 {
     /**
-    * The major radius of the Earth in meters.
-    * Ellipsoid model constants (actual values here are for WGS84).
-    * @see http://en.wikipedia.org/wiki/Earth_radius
-    *
-    * @var double
-    */
-    const EARTH_RADIUS_MAJOR = 6378136.047;
-
-    /**
-    * The minor radius of the Earth in meters.
-    * Ellipsoid model constants (actual values here are for WGS84).
-    * @see http://en.wikipedia.org/wiki/Earth_radius
-    *
-    * @var double
-    */
-    const EARTH_RADIUS_MINOR = 6356752.314;
-
-    /**
      * Transverse Mercator is not the same as UTM.
      * A scale factor is required to convert between them.
      *

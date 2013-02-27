@@ -68,7 +68,7 @@ class VincentyTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4629759\.2704927/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4629758\.7977236/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -81,7 +81,7 @@ class VincentyTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4629\.7592704927/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4629\.7587977236/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -94,6 +94,6 @@ class VincentyTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2876\.7990376779/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/2876\.7987439128/', $this->commandTester->getDisplay());
     }
 }

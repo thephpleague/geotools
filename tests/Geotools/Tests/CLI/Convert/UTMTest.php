@@ -66,6 +66,6 @@ class UTMTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/31U 449153 5408056/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/31U 449152 5408055/', $this->commandTester->getDisplay());
     }
 }

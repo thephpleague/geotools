@@ -13,6 +13,7 @@ namespace Geotools\Tests\Coordinate;
 
 use Geotools\Tests\TestCase;
 use Geotools\Coordinate\Coordinate;
+use Geotools\Coordinate\Ellipsoid;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -302,5 +303,15 @@ class CoordinateTest extends TestCase
             array('0.0001'),
             array('-0.0001'),
         );
+    }
+
+    public function testGetEllipsoid()
+    {
+        $WGS84      = Ellipsoid::createFromName(Ellipsoid::WGS84);
+        $coordinate = new Coordinate($this->getMockGeocoded($this->never()), $WGS84);
+        $ellipsoid  = $coordinate->getEllipsoid();
+
+        $this->assertTrue(is_object($ellipsoid));
+        $this->assertInstanceOf('Geotools\Coordinate\Ellipsoid', $ellipsoid);
     }
 }

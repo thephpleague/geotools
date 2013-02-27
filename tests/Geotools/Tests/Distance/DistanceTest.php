@@ -13,6 +13,7 @@ namespace Geotools\Tests\Distance;
 
 use Geotools\Tests\TestCase;
 use Geotools\Distance\Distance;
+use Geotools\Coordinate\Ellipsoid;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -89,49 +90,144 @@ class DistanceTest extends TestCase
         $this->assertSame($this->distance, $distance);
     }
 
-    public function testFlatDistance()
+    /**
+     * @dataProvider ellipsoidInstanceAndExpectedResultProvider
+     */
+    public function testFlatDistance($ellipsoid, $result)
     {
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(659166.50524477, $this->distance->flat(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['flat']['m'], $this->distance->flat(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(659.16650524477, $this->distance->in('km')->flat(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['flat']['km'], $this->distance->in('km')->flat(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(409.58707724686, $this->distance->in('mile')->flat(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['flat']['mile'], $this->distance->in('mile')->flat(), '', 0.00001);
     }
 
-    public function testHaversineDistance()
+    /**
+     * @dataProvider ellipsoidInstanceAndExpectedResultProvider
+     */
+    public function testHaversineDistance($ellipsoid, $result)
     {
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(659021.91298475, $this->distance->haversine(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['haversine']['m'], $this->distance->haversine(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(659.02191298475, $this->distance->in('km')->haversine(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['haversine']['km'], $this->distance->in('km')->haversine(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(409.49723178186, $this->distance->in('mile')->haversine(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['haversine']['mile'], $this->distance->in('mile')->haversine(), '', 0.00001);
     }
 
-    public function testVincentyDistance()
+    /**
+     * @dataProvider ellipsoidInstanceAndExpectedResultProvider
+     */
+    public function testVincentyDistance($ellipsoid, $result)
     {
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(658307.53717626, $this->distance->vincenty(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['vincenty']['m'], $this->distance->vincenty(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(658.30753717626, $this->distance->in('km')->vincenty(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['vincenty']['km'], $this->distance->in('km')->vincenty(), '', 0.00001);
 
-        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA));
-        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB));
-        $this->assertEquals(409.05333923404, $this->distance->in('mile')->vincenty(), '', 0.00001);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['vincenty']['mile'], $this->distance->in('mile')->vincenty(), '', 0.00001);
+    }
+
+    public function ellipsoidInstanceAndExpectedResultProvider()
+    {
+        return array(
+            array(
+                Ellipsoid::createFromName(Ellipsoid::WGS84),
+                array(
+                    'flat' => array(
+                        'm'    => 659166.50038742,
+                        'km'   => 659.16650524477,
+                        'mile' => 409.58707724686,
+                    ),
+                    'haversine' => array(
+                        'm'    => 659021.90812846,
+                        'km'   => 659.02190812846,
+                        'mile' => 409.49722876431,
+                    ),
+                    'vincenty' => array(
+                        'm'    => 658307.48497307,
+                        'km'   => 658.30748497307,
+                        'mile' => 409.05330679648,
+                    ),
+                ),
+            ),
+            array(
+                Ellipsoid::createFromName(Ellipsoid::GRS_1980),
+                array(
+                    'flat' => array(
+                        'm'    => 659166.60373525,
+                        'km'   => 659.16660373525,
+                        'mile' => 409.587138446,
+                    ),
+                    'haversine' => array(
+                        'm'    => 659022.01145362,
+                        'km'   => 659.02201145362,
+                        'mile' => 409.49729296758,
+                    ),
+                    'vincenty' => array(
+                        'm'    => 658307.58818269,
+                        'km'   => 658.30758818269,
+                        'mile' => 409.05337092796,
+                    ),
+                ),
+            ),
+            array(
+                Ellipsoid::createFromName(Ellipsoid::CLARKE_1880),
+                array(
+                    'flat' => array(
+                        'm'    => 659178.19367738,
+                        'km'   => 659.17819367738,
+                        'mile' => 409.59434010217,
+                    ),
+                    'haversine' => array(
+                        'm'    => 659033.59885343,
+                        'km'   => 659.03359885343,
+                        'mile' => 409.50449304402,
+                    ),
+                    'vincenty' => array(
+                        'm'    => 658307.4119689,
+                        'km'   => 658.3074119689,
+                        'mile' => 409.05326143379,
+                    ),
+                ),
+            ),
+            array(
+                Ellipsoid::createFromName(Ellipsoid::HOUGH),
+                array(
+                    'flat' => array(
+                        'm'    => 659180.34899633,
+                        'km'   => 659.18034899633,
+                        'mile' => 409.59567935527,
+                    ),
+                    'haversine' => array(
+                        'm'    => 659035.7536996,
+                        'km'   => 659.0357536996,
+                        'mile' => 409.50583200335,
+                    ),
+                    'vincenty' => array(
+                        'm'    => 658318.26962941,
+                        'km'   => 658.31826962941,
+                        'mile' => 409.06000807124,
+                    ),
+                ),
+            ),
+        );
     }
 }
 

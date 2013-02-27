@@ -11,9 +11,10 @@
 
 namespace Geotools\Point;
 
-use Geotools\AbstractGeotools;
 use Geotools\Coordinate\Coordinate;
 use Geotools\Coordinate\CoordinateInterface;
+use Geotools\Coordinate\Ellipsoid;
+use Geotools\AbstractGeotools;
 
 /**
  * Point class
@@ -66,6 +67,8 @@ class Point extends AbstractGeotools implements PointInterface
      */
     public function initialBearing()
     {
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
         $latA = deg2rad($this->from->getLatitude());
         $latB = deg2rad($this->to->getLatitude());
         $dLng = deg2rad($this->to->getLongitude() - $this->from->getLongitude());
@@ -84,6 +87,8 @@ class Point extends AbstractGeotools implements PointInterface
      */
     public function finalBearing()
     {
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
         $latA = deg2rad($this->to->getLatitude());
         $latB = deg2rad($this->from->getLatitude());
         $dLng = deg2rad($this->from->getLongitude() - $this->to->getLongitude());
@@ -103,6 +108,8 @@ class Point extends AbstractGeotools implements PointInterface
      */
     public function initialCardinal()
     {
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
         return $this->cardinalPoints[round($this->initialBearing($this->from, $this->to) / 22.5)];
     }
 
@@ -115,6 +122,8 @@ class Point extends AbstractGeotools implements PointInterface
      */
     public function finalCardinal()
     {
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
         return $this->cardinalPoints[round($this->finalBearing($this->from, $this->to) / 22.5)];
     }
 
@@ -126,6 +135,8 @@ class Point extends AbstractGeotools implements PointInterface
      */
     public function middle()
     {
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
         $latA = deg2rad($this->from->getLatitude());
         $lngA = deg2rad($this->from->getLongitude());
         $latB = deg2rad($this->to->getLatitude());
@@ -137,7 +148,7 @@ class Point extends AbstractGeotools implements PointInterface
         $lat3 = rad2deg(atan2(sin($latA) + sin($latB), sqrt((cos($latA) + $bx) * (cos($latA) + $bx) + $by * $by)));
         $lng3 = rad2deg($lngA + atan2($by, cos($latA) + $bx));
 
-        return new Coordinate(array($lat3, $lng3));
+        return new Coordinate(array($lat3, $lng3), $this->from->getEllipsoid());
     }
 
     /**
@@ -156,11 +167,11 @@ class Point extends AbstractGeotools implements PointInterface
 
         $bearing = deg2rad($bearing);
 
-        $endLat = asin(sin($lat) * cos($distance / AbstractGeotools::EARTH_RADIUS_MAJOR) + cos($lat) *
-            sin($distance / AbstractGeotools::EARTH_RADIUS_MAJOR) * cos($bearing));
-        $endLon = $lng + atan2(sin($bearing) * sin($distance / AbstractGeotools::EARTH_RADIUS_MAJOR) * cos($lat),
-            cos($distance / AbstractGeotools::EARTH_RADIUS_MAJOR) - sin($lat) * sin($endLat));
+        $endLat = asin(sin($lat) * cos($distance / $this->from->getEllipsoid()->getA()) + cos($lat) *
+            sin($distance / $this->from->getEllipsoid()->getA()) * cos($bearing));
+        $endLon = $lng + atan2(sin($bearing) * sin($distance / $this->from->getEllipsoid()->getA()) * cos($lat),
+            cos($distance / $this->from->getEllipsoid()->getA()) - sin($lat) * sin($endLat));
 
-        return new Coordinate(array(rad2deg($endLat), rad2deg($endLon)));
+        return new Coordinate(array(rad2deg($endLat), rad2deg($endLon)), $this->from->getEllipsoid());
     }
 }

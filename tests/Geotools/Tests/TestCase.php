@@ -12,6 +12,7 @@
 namespace Geotools\Tests;
 
 use Geocoder\Result\Geocoded;
+use Geotools\Coordinate\Ellipsoid;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -105,17 +106,24 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @return CoordinateInterface
      */
-    protected function getMockCoordinateReturns(array $coordinate)
+    protected function getMockCoordinateReturns(array $coordinate, Ellipsoid $ellipsoid = null)
     {
         $mock = $this->getMock('\Geotools\Coordinate\CoordinateInterface');
         $mock
-            ->expects($this->atLeastOnce())
+            ->expects($this->any())
             ->method('getLatitude')
             ->will($this->returnValue($coordinate[0]));
         $mock
-            ->expects($this->atLeastOnce())
+            ->expects($this->any())
             ->method('getLongitude')
             ->will($this->returnValue($coordinate[1]));
+
+        if ($ellipsoid) {
+            $mock
+                ->expects($this->atLeastOnce())
+                ->method('getEllipsoid')
+                ->will($this->returnValue($ellipsoid));
+        }
 
         return $mock;
     }

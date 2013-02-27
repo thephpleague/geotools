@@ -68,9 +68,9 @@ class AllTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690203\.1048522/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/4625820\.522074/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/4629759\.2704927/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4690203\.070290/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4625820\.4879867/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4629758\.7977236/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -83,9 +83,9 @@ class AllTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690\.2031048522/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/4625\.820522074/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/4629\.7592704927/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4690\.2030702905/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4625\.8204879867/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4629\.7587977236/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -98,9 +98,9 @@ class AllTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2914\.3570950973/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/2874\.351612877/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/2876\.7990376779/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/2914\.3570736216/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/2874\.3515916962/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/2876\.7987439128/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteOutput()
@@ -112,9 +112,9 @@ class AllTest extends TestCase
         ));
 
         $expected = <<<EOF
-Flat:      4690203.1048522
-Haversine: 4625820.522074
-Vincenty:  4629759.2704927
+Flat:      4690203.0702905
+Haversine: 4625820.4879867
+Vincenty:  4629758.7977236
 
 EOF;
 

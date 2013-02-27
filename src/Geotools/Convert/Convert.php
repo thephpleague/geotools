@@ -168,11 +168,11 @@ class Convert extends AbstractGeotools implements ConvertInterface
         // Determines the central meridian for the given UTM zone.
         $lambda0 = deg2rad(-183.0 + ($zone * 6.0));
 
-        $ep2 = (pow(AbstractGeotools::EARTH_RADIUS_MAJOR, 2.0) -
-            pow(AbstractGeotools::EARTH_RADIUS_MINOR, 2.0)) / pow(AbstractGeotools::EARTH_RADIUS_MINOR, 2.0);
+        $ep2 = (pow($this->coordinates->getEllipsoid()->getA(), 2.0) -
+            pow($this->coordinates->getEllipsoid()->getB(), 2.0)) / pow($this->coordinates->getEllipsoid()->getB(), 2.0);
         $nu2 = $ep2 * pow(cos($phi), 2.0);
-        $nN  = pow(AbstractGeotools::EARTH_RADIUS_MAJOR, 2.0) /
-            (AbstractGeotools::EARTH_RADIUS_MINOR * sqrt(1 + $nu2));
+        $nN  = pow($this->coordinates->getEllipsoid()->getA(), 2.0) /
+            ($this->coordinates->getEllipsoid()->getB() * sqrt(1 + $nu2));
         $t   = tan($phi);
         $t2  = $t * $t;
         $tmp = ($t2 * $t2 * $t2) - pow($t, 6.0);
@@ -192,9 +192,9 @@ class Convert extends AbstractGeotools implements ConvertInterface
             + ($nN / 5040.0 * pow(cos($phi), 7.0) * $l7coef * pow($l, 7.0));
 
         // Calculate northing.
-        $n = (AbstractGeotools::EARTH_RADIUS_MAJOR - AbstractGeotools::EARTH_RADIUS_MINOR) /
-            (AbstractGeotools::EARTH_RADIUS_MAJOR + AbstractGeotools::EARTH_RADIUS_MINOR);
-        $alpha = ((AbstractGeotools::EARTH_RADIUS_MAJOR + AbstractGeotools::EARTH_RADIUS_MINOR) / 2.0) *
+        $n = ($this->coordinates->getEllipsoid()->getA() - $this->coordinates->getEllipsoid()->getB()) /
+            ($this->coordinates->getEllipsoid()->getA() + $this->coordinates->getEllipsoid()->getB());
+        $alpha = (($this->coordinates->getEllipsoid()->getA() + $this->coordinates->getEllipsoid()->getB()) / 2.0) *
             (1.0 + (pow($n, 2.0) / 4.0) + (pow($n, 4.0) / 64.0));
         $beta = (-3.0 * $n / 2.0) + (9.0 * pow($n, 3.0) / 16.0) + (-3.0 * pow($n, 5.0) / 32.0);
         $gamma = (15.0 * pow($n, 2.0) / 16.0) + (-15.0 * pow($n, 4.0) / 32.0);

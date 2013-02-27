@@ -68,7 +68,7 @@ class FlatTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690203\.1048522/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4690203\.0702905/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -81,7 +81,7 @@ class FlatTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690\.2031048522/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4690\.2030702905/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -94,6 +94,6 @@ class FlatTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2914\.3570950973/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/2914\.3570736216/', $this->commandTester->getDisplay());
     }
 }

@@ -65,4 +65,11 @@ interface CoordinateInterface
      * @return double
      */
     public function getLongitude();
+
+    /**
+     * Get the Ellipsoid.
+     *
+     * @return Ellipsoid
+     */
+    public function getEllipsoid();
 }

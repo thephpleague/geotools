@@ -35,15 +35,23 @@ class Coordinate implements CoordinateInterface
      */
     protected $longitude;
 
+    /**
+     * The selected ellipsoid.
+     *
+    * @var Ellipsoid
+    */
+    protected $ellipsoid;
+
 
     /**
-     * Set the latitude and the longitude of the coordinates.
+     * Set the latitude and the longitude of the coordinates into an selected ellipsoid.
      *
      * @param ResultInterface|array|string $coordinates The coordinates.
+     * @param Ellipsoid                    $ellipsoid   The selected ellipsoid (WGS84 by default).
      *
      * @throws InvalidArgumentException
      */
-    public function __construct($coordinates)
+    public function __construct($coordinates, Ellipsoid $ellipsoid = null)
     {
         if ($coordinates instanceof ResultInterface) {
             $this->setLatitude($coordinates->getLatitude());
@@ -60,6 +68,8 @@ class Coordinate implements CoordinateInterface
                 '%s', 'It should be a string, an array or a class which implements Geocoder\Result\ResultInterface !'
             ));
         }
+
+        $this->ellipsoid = $ellipsoid ?: Ellipsoid::createFromName(Ellipsoid::WGS84);
     }
 
     /**
@@ -115,6 +125,14 @@ class Coordinate implements CoordinateInterface
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getEllipsoid()
+    {
+        return $this->ellipsoid;
     }
 
     /**

@@ -68,7 +68,7 @@ class HaversineTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4625820\.522074/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4625820\.4879867/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -81,7 +81,7 @@ class HaversineTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4625\.820522074/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/4625\.8204879867/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -94,6 +94,6 @@ class HaversineTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2874\.351612877/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/2874\.3515916962/', $this->commandTester->getDisplay());
     }
 }

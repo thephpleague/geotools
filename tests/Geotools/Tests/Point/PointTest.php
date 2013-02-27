@@ -14,6 +14,7 @@ namespace Geotools\Tests\Point;
 use Geotools\Tests\TestCase;
 use Geotools\Point\Point;
 use Geotools\Coordinate\Coordinate;
+use Geotools\Coordinate\Ellipsoid;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -279,12 +280,28 @@ class PointTest extends TestCase
         );
     }
 
+    public function testMiddleShouldHaveTheSameEllipsoid()
+    {
+        $FOO = Ellipsoid::createFromArray(array(
+            'name' => 'foo ellipsoid',
+            'a'    => 123.0,
+            'invF' => 456.0
+        ));
+
+        $this->point->setFrom($this->getMockCoordinateReturns(array(1, 2), $FOO));
+        $this->point->setTo($this->getMockCoordinateReturns(array(3, 4), $FOO));
+
+        $this->assertSame($this->point->middle()->getEllipsoid(), $FOO);
+    }
+
     /**
      * @dataProvider fromAndBearingAndDistanceAndExpectedDestinationPoint
      */
     public function testDestination($from, $bearing, $distance, $expectedDestinationPoint)
     {
-        $this->point->setFrom($this->getMockCoordinateReturns($from));
+        $WGS84 = Ellipsoid::createFromName(Ellipsoid::WGS84);
+
+        $this->point->setFrom($this->getMockCoordinateReturns($from, $WGS84));
         $destionationPoint = $this->point->destination($bearing[0], $distance[0]);
 
         $this->assertTrue(is_object($destionationPoint));
@@ -301,26 +318,39 @@ class PointTest extends TestCase
                 array(48.8234055, 2.3072664),
                 array(180),
                 array(200000),
-                array($this->getMockCoordinateReturns(array(47.026774663314, 2.3072664)))
+                array($this->getMockCoordinateReturns(array(47.026774650075, 2.3072664)))
             ),
             array(
                 array('28.8234055', '1.3072664'),
                 array(95),
                 array(500000),
-                array($this->getMockCoordinateReturns(array(28.336641156581, 6.3923715662673)))
+                array($this->getMockCoordinateReturns(array(28.336641152298, 6.3923716035552)))
             ),
             array(
                 array(43.296482, 5.36978),
                 array(37),
                 array(3000),
-                array($this->getMockCoordinateReturns(array('43.31800263383', '5.3920718424578')))
+                array($this->getMockCoordinateReturns(array('43.318002633989', '5.3920718426221')))
             ),
             array(
                 array(-13.296482, -5.36978),
                 array(166),
                 array(5000000),
-                array($this->getMockCoordinateReturns(array(-56.057095635851, 12.443469769829)))
+                array($this->getMockCoordinateReturns(array(-56.057095935971, 12.44347001977)))
             ),
         );
+    }
+
+    public function testDestinationShouldHaveTheSameEllipsoid()
+    {
+        $FOO = Ellipsoid::createFromArray(array(
+            'name' => 'foo ellipsoid',
+            'a'    => 123.0,
+            'invF' => 456.0
+        ));
+
+        $this->point->setFrom($this->getMockCoordinateReturns(array(1, 2), $FOO));
+
+        $this->assertSame($this->point->destination(123, 456)->getEllipsoid(), $FOO);
     }
 }

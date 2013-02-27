@@ -13,6 +13,8 @@ namespace Geotools\Distance;
 
 use Geotools\AbstractGeotools;
 use Geotools\Coordinate\CoordinateInterface;
+use Geotools\Coordinate\Ellipsoid;
+use Geootols\Exception\NotConvergingException;
 
 /**
  * Distance class
@@ -85,6 +87,8 @@ class Distance extends AbstractGeotools implements DistanceInterface
      */
     public function flat()
     {
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
         $latA = deg2rad($this->from->getLatitude());
         $lngA = deg2rad($this->from->getLongitude());
         $latB = deg2rad($this->to->getLatitude());
@@ -93,7 +97,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
         $x = ($lngB - $lngA) * cos(($latA + $latB) / 2);
         $y = $latB - $latA;
 
-        $d = sqrt(($x * $x) + ($y * $y)) * AbstractGeotools::EARTH_RADIUS_MAJOR;
+        $d = sqrt(($x * $x) + ($y * $y)) * $this->from->getEllipsoid()->getA();
 
         return $this->convertToUserUnit($d);
     }
@@ -107,6 +111,8 @@ class Distance extends AbstractGeotools implements DistanceInterface
     */
     public function haversine()
     {
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
         $latA = deg2rad($this->from->getLatitude());
         $lngA = deg2rad($this->from->getLongitude());
         $latB = deg2rad($this->to->getLatitude());
@@ -118,7 +124,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
         $a = sin($dLat / 2) * sin($dLat / 2) + cos($latA) * cos($latB) * sin($dLon / 2) * sin($dLon / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        return $this->convertToUserUnit(AbstractGeotools::EARTH_RADIUS_MAJOR * $c);
+        return $this->convertToUserUnit($this->from->getEllipsoid()->getA() * $c);
     }
 
     /**
@@ -130,10 +136,11 @@ class Distance extends AbstractGeotools implements DistanceInterface
     */
     public function vincenty()
     {
-        // WGS-84 ellipsoid params
-        $a = AbstractGeotools::EARTH_RADIUS_MAJOR;
-        $b = 6356752.314245;
-        $f = 1/298.257223563;
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
+        $a = $this->from->getEllipsoid()->getA();
+        $b = $this->from->getEllipsoid()->getB();
+        $f = 1 / $this->from->getEllipsoid()->getInvF();
 
         $lL = deg2rad($this->to->getLongitude() - $this->from->getLongitude());
         $u1 = atan((1 - $f) * tan(deg2rad($this->from->getLatitude())));
@@ -155,7 +162,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
                 ($cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda) * ($cosU1 * $sinU2 - $sinU1 * $cosU2 * $cosLambda));
 
             if (0 === $sinSigma) {
-                return 0; // co-incident points
+                return 0.0; // co-incident points
             }
 
             $cosSigma   = $sinU1 * $sinU2 + $cosU1 * $cosU2 * $cosLambda;
@@ -170,9 +177,11 @@ class Distance extends AbstractGeotools implements DistanceInterface
                 ($cos2SigmaM + $cC * $cosSigma * (-1 + 2 * $cos2SigmaM * $cos2SigmaM)));
         } while (abs($lambda - $lambdaP) > 1e-12 && --$iterLimit > 0);
 
-        if ($iterLimit == 0) {
-            return null; // formula failed to converge
+        // @codeCoverageIgnoreStart
+        if (0 === $iterLimit) {
+            throw new NotConvergingException('Vincenty formula failed to converge !');
         }
+        // @codeCoverageIgnoreEnd
 
         $uSq        = $cosSqAlpha * ($a * $a - $b * $b) / ($b * $b);
         $aA         = 1 + $uSq / 16384 * (4096 + $uSq * (-768 + $uSq * (320 - 175 * $uSq)));
