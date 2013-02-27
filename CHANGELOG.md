@@ -1,10 +1,14 @@
 CHANGELOG
 =========
 
-0.1.10 (xxx-xx-xx)
+0.1.10 (2012-02-27)
 ------------------
 
-n/a
+* Added: support of different ellipsoid + doc + tests - fix #5
+* Refactored: Doc + CLI commands + tests
+* Improved: geocoder:geocode and geocoder:reverse CLI + tests
+* Fixed: doc
+* Added: lowerize() method using mbstring extension
 
 0.1.9 (2012-02-24)
 ------------------

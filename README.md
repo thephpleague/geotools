@@ -283,6 +283,8 @@ please read more at the [Geocoder library doc](https://github.com/willdurand/Geo
 It provides methods to compute the distance in *meter* (by default), *km* or *mile* between two coordinates
 using *flat* (most performant), *haversine* or *vincenty* (most accurate) algorithms.
 
+Those coordinates should be in the same ellipsoid.
+
 ``` php
 <?php
 
