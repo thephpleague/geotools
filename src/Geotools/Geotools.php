@@ -31,7 +31,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
      * Version.
      * @see http://semver.org/
      */
-    const VERSION = '0.1.10';
+    const VERSION = '0.1.11-dev';
 
 
     /**
