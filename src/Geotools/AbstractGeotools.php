@@ -34,11 +34,11 @@ abstract class AbstractGeotools
     const METERS_PER_MILE = 1609.344;
 
     /**
-     * The ratio meters per mile.
+     * The ratio feet per meter.
      *
      * @var double
      */
-    const METERS_PER_FOOT = 3.28084;
+    const FEET_PER_METER = 0.3048;
 
     /**
      * The kilometer unit.

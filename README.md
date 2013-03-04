@@ -22,7 +22,7 @@ Features
 * **Convert** decimal degrees coordinates in the
 [Universal Transverse Mercator](http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
 (UTM) projection. [»](#convert)
-* Compute the distance in **meter** (by default), **km**  or **mile** between two coordinates using **flat**,
+* Compute the distance in **meter** (by default), **km**, **mile** or *feet* between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms. [»](#distance)
 * Compute the initial and final **bearing** from the origin coordinate to the destination coordinate in degrees. [»](#point)
 * Compute the initial and final **cardinal point** (direction) from the origin coordinate to the destination
@@ -280,7 +280,7 @@ please read more at the [Geocoder library doc](https://github.com/willdurand/Geo
 
 ### Distance ###
 
-It provides methods to compute the distance in *meter* (by default), *km* or *mile* between two coordinates
+It provides methods to compute the distance in *meter* (by default), *km*, *mile* or *ft* between two coordinates
 using *flat* (most performant), *haversine* or *vincenty* (most accurate) algorithms.
 
 Those coordinates should be in the same ellipsoid.
@@ -295,6 +295,7 @@ $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->flat(); // 661220.36979254 (meters)
 echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('km')->haversine(); // 659.16650524477
 echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('mile')->vincenty(); // 410.41281759044
+echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('ft')->flat(); // 2162619.7519272
 ```
 
 ### Point ###
