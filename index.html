@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geotools - Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries</title>
+    <title>Geotools by toin0u</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -70,7 +70,7 @@
 <a href="http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system">Universal Transverse Mercator</a>
 (UTM) projection. <a href="#convert">»</a>
 </li>
-<li>Compute the distance in <strong>meter</strong> (by default), <strong>km</strong>  or <strong>mile</strong> between two coordinates using <strong>flat</strong>,
+<li>Compute the distance in <strong>meter</strong> (by default), <strong>km</strong>, <strong>mile</strong> or <strong>ft</strong> between two coordinates using <strong>flat</strong>,
 <strong>haversine</strong> or <strong>vincenty</strong> algorithms. <a href="#distance">»</a>
 </li>
 <li>Compute the initial and final <strong>bearing</strong> from the origin coordinate to the destination coordinate in degrees. <a href="#point">»</a>
@@ -367,7 +367,7 @@ please read more at the <a href="https://github.com/willdurand/Geocoder#freegeoi
 
 <h3>Distance</h3>
 
-<p>It provides methods to compute the distance in <em>meter</em> (by default), <em>km</em> or <em>mile</em> between two coordinates
+<p>It provides methods to compute the distance in <em>meter</em> (by default), <em>km</em>, <em>mile</em> or <em>ft</em> between two coordinates
 using <em>flat</em> (most performant), <em>haversine</em> or <em>vincenty</em> (most accurate) algorithms.</p>
 
 <p>Those coordinates should be in the same ellipsoid.</p>
@@ -381,6 +381,7 @@ using <em>flat</em> (most performant), <em>haversine</em> or <em>vincenty</em> (
 <span class="k">echo</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">();</span> <span class="c1">// 661220.36979254 (meters)</span>
 <span class="k">echo</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'km'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">haversine</span><span class="p">();</span> <span class="c1">// 659.16650524477</span>
 <span class="k">echo</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'mile'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">vincenty</span><span class="p">();</span> <span class="c1">// 410.41281759044</span>
+<span class="k">echo</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'ft'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">();</span> <span class="c1">// 2162619.7519272</span>
 </pre></div>
 
 <h3>Point</h3>
@@ -554,10 +555,11 @@ Timezone:
 
 <h2>License</h2>
 
-<p>Geotools is released under the MIT License. See the bundled <a href="https://github.com/toin0u/Geotools/blob/master/LICENSE">LICENSE</a> file for details.</p>
+<p>Geotools is released under the MIT License. See the bundled
+<a href="https://github.com/toin0u/Geotools/blob/master/LICENSE">LICENSE</a> file for details.</p>
       </section>
       <footer>
-        <p>Project maintained by <a href="https://twitter.com/toin0u">toin0u</a></p>
+        <p>Project maintained by <a href="https://github.com/toin0u">toin0u</a></p>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
