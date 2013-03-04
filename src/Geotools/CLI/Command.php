@@ -78,6 +78,8 @@ class Command extends BaseCommand
             'geo_ips'              => 'GeoIPsProvider',
             'maxmind'              => 'MaxMindProvider',
             'geonames'             => 'GeonamesProvider',
+            'ip_geo_base'          => 'IpGeoBaseProvider',
+            'baidu'                => 'BaiduProvider',
             'default'              => 'GoogleMapsProvider',
         );
 

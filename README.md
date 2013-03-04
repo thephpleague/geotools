@@ -22,7 +22,7 @@ Features
 * **Convert** decimal degrees coordinates in the
 [Universal Transverse Mercator](http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
 (UTM) projection. [»](#convert)
-* Compute the distance in **meter** (by default), **km**, **mile** or *feet* between two coordinates using **flat**,
+* Compute the distance in **meter** (by default), **km**, **mile** or **ft** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms. [»](#distance)
 * Compute the initial and final **bearing** from the origin coordinate to the destination coordinate in degrees. [»](#point)
 * Compute the initial and final **cardinal point** (direction) from the origin coordinate to the destination
