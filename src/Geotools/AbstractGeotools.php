@@ -34,6 +34,13 @@ abstract class AbstractGeotools
     const METERS_PER_MILE = 1609.344;
 
     /**
+     * The ratio meters per mile.
+     *
+     * @var double
+     */
+    const METERS_PER_FOOT = 3.28084;
+
+    /**
      * The kilometer unit.
      *
      * @var string
@@ -46,6 +53,13 @@ abstract class AbstractGeotools
      * @var string
      */
     const MILE_UNIT = 'mile';
+
+    /**
+     * The feet unit.
+     *
+     * @var string
+     */
+    const FOOT_UNIT = 'ft';
 
     /**
      * The cardinal points / directions (the four cardinal directions,
