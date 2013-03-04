@@ -444,7 +444,7 @@ Once installed, just launch the following command:
 Contributing
 ------------
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/toin0u/Geotools/blob/master/CONTRIBUTING.md) for details.
 
 
 Credits
@@ -467,7 +467,7 @@ Acknowledgments
 Changelog
 ---------
 
-[See the changelog file](CHANGELOG.md)
+[See the changelog file](https://github.com/toin0u/Geotools/blob/master/CHANGELOG.md)
 
 
 Support
@@ -479,4 +479,5 @@ Support
 License
 -------
 
-Geotools is released under the MIT License. See the bundled [LICENSE](LICENSE) file for details.
+Geotools is released under the MIT License. See the bundled
+[LICENSE](https://github.com/toin0u/Geotools/blob/master/LICENSE) file for details.
