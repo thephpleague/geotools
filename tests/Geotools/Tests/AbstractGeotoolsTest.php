@@ -30,8 +30,10 @@ class AbstractGeotoolsTest extends TestCase
     {
         $this->assertSame(0.9996, AbstractGeotools::UTM_SCALE_FACTOR);
         $this->assertSame(1609.344, AbstractGeotools::METERS_PER_MILE);
+        $this->assertSame(3.28084, AbstractGeotools::METERS_PER_FOOT);
         $this->assertSame('km', AbstractGeotools::KILOMETER_UNIT);
         $this->assertSame('mile', AbstractGeotools::MILE_UNIT);
+        $this->assertSame('ft', AbstractGeotools::FOOT_UNIT);
     }
 
     public function testCardinalPoints()
