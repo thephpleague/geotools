@@ -80,10 +80,10 @@ class Reverse extends Command
             $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $reversed->getLongitude());
             if (null !== $bounds = $reversed->getBounds()) {
                 $result[] = '<label>Bounds</label>';
-                $result[] = sprintf(' L <label>South</label>: <value>%s</value>', $bounds['south']);
-                $result[] = sprintf(' L <label>West</label>:  <value>%s</value>', $bounds['west']);
-                $result[] = sprintf(' L <label>North</label>: <value>%s</value>', $bounds['north']);
-                $result[] = sprintf(' L <label>East</label>:  <value>%s</value>', $bounds['east']);
+                $result[] = sprintf(' - <label>South</label>: <value>%s</value>', $bounds['south']);
+                $result[] = sprintf(' - <label>West</label>:  <value>%s</value>', $bounds['west']);
+                $result[] = sprintf(' - <label>North</label>: <value>%s</value>', $bounds['north']);
+                $result[] = sprintf(' - <label>East</label>:  <value>%s</value>', $bounds['east']);
             }
             $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $reversed->getStreetNumber());
             $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $reversed->getStreetName());

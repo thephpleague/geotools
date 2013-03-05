@@ -285,10 +285,10 @@ $geotools = new \Geotools\Geotools();
 $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 
-echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->flat(); // 661220.36979254 (meters)
-echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('km')->haversine(); // 659.16650524477
-echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('mile')->vincenty(); // 410.41281759044
-echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('ft')->flat(); // 2162619.7519272
+printf("%s\n", $geotools->distance()->setFrom($coordA)->setTo($coordB)->flat()); // 659166.50038742 (meters)
+printf("%s\n", $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('km')->haversine()); // 659.02190812846
+printf("%s\n", $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('mile')->vincenty()); // 409.05330679648
+printf("%s\n", $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('ft')->flat()); // 2162619.7519272
 ```
 
 ### Point ###
@@ -304,18 +304,18 @@ $geotools = new \Geotools\Geotools();
 $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 
-echo $geotools->point()->setFrom($coordA)->setTo($coordB)->initialBearing(); // 157 (degrees)
-echo $geotools->point()->setFrom($coordA)->setTo($coordB)->initialCardinal(); // SSE (SouthSouthEast)
-echo $geotools->point()->setFrom($coordA)->setTo($coordB)->finalBearing(); // 160 (degrees)
-echo $geotools->point()->setFrom($coordA)->setTo($coordB)->finalCardinal(); // SSE (SouthSouthEast)
+printf("%d\n", $geotools->point()->setFrom($coordA)->setTo($coordB)->initialBearing()); // 157 (degrees)
+printf("%s\n", $geotools->point()->setFrom($coordA)->setTo($coordB)->initialCardinal()); // SSE (SouthSouthEast)
+printf("%d\n", $geotools->point()->setFrom($coordA)->setTo($coordB)->finalBearing()); // 160 (degrees)
+printf("%s\n", $geotools->point()->setFrom($coordA)->setTo($coordB)->finalCardinal()); // SSE (SouthSouthEast)
 
 $middlePoint = $geotools->point()->setFrom($coordA)->setTo($coordB)->middle(); // \Geotools\Coordinate\Coordinate
-echo $middlePoint->getLatitude(); // 46.070143125815
-echo $middlePoint->getLongitude(); // 3.9152401085931
+printf("%s\n", $middlePoint->getLatitude()); // 46.070143125815
+printf("%s\n", $middlePoint->getLongitude()); // 3.9152401085931
 
 $destinationPoint = $geotools->point()->setFrom($coordA)->destination(180, 200000); // \Geotools\Coordinate\Coordinate
-echo $destinationPoint->getLatitude(); // 47.026774663314
-echo $destinationPoint->getLongitude(); // 2.3072664
+printf("%s\n", $destinationPoint->getLatitude()); // 47.026774650075
+printf("%s\n", $destinationPoint->getLongitude()); // 2.3072664
 ```
 
 
@@ -333,13 +333,13 @@ $coordToGeohash = new \Geotools\Coordinate\Coordinate('43.296482, 5.36978');
 // encoding
 $geotools->geohash()->encode($coordToGeohash, 3)->getGeohash(); // spe
 $encoded = $geotools->geohash()->encode($coordToGeohash); // 12 is the default length
-echo $encoded->getGeohash(); // spey61yhkcnp
+printf("%s\n", $encoded->getGeohash()); // spey61yhkcnp
 $boundingBox = $encoded->getBoundingBox(); // returns an array of \Geotools\Coordinate\CordinateInterface
 
 // decoding
 $decoded = $geotools->geohash()->decode('spey61y');
-echo $decoded->getCoordinate()->getLatitude(); // 43.296432495117
-echo $decoded->getCoordinate()->getLongitude(); // 5.3702545166016
+printf("%s\n", $decoded->getCoordinate()->getLatitude()); // 43.296432495117
+printf("%s\n", $decoded->getCoordinate()->getLongitude()); // 5.3702545166016
 $boundingBox = $decoded->getBoundingBox(); // returns an array of \Geotools\Coordinate\CordinateInterface
 ```
 
@@ -388,7 +388,7 @@ $ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" // 
 $ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" --provider="openstreetmaps"
 // Paris, Île-De-France, France Métropolitaine
 ...
-% php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket
+$ php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket
 ```
 
 The last command will show an output like this:
@@ -401,10 +401,10 @@ Arguments:     da_DK,Denmark
 Latitude:      55.699953
 Longitude:     12.552736
 Bounds
- L South: 55.699953
- L West:  12.552736
- L North: 55.699953
- L East:  12.552736
+ - South: 55.699953
+ - West:  12.552736
+ - North: 55.699953
+ - East:  12.552736
 Street Number: 47
 Street Name:   Tagensvej
 Zipcode:       2200

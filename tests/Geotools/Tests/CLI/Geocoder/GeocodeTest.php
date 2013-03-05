@@ -155,10 +155,10 @@ Arguments:     da_DK
 Latitude:      55.6760968
 Longitude:     12.5683371
 Bounds
- L South: 55.6177647
- L West:  12.4988635
- L North: 55.7270937
- L East:  12.7342654
+ - South: 55.6177647
+ - West:  12.4988635
+ - North: 55.7270937
+ - East:  12.7342654
 Street Number: 
 Street Name:   
 Zipcode:       

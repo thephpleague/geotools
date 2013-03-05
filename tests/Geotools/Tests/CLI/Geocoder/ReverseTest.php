@@ -128,10 +128,10 @@ Arguments:     us_US
 Latitude:      40.6891988
 Longitude:     -74.0445167
 Bounds
- L South: 40.6887596
- L West:  -74.0451881
- L North: 40.6896417
- L East:  -74.0439787
+ - South: 40.6887596
+ - West:  -74.0451881
+ - North: 40.6896417
+ - East:  -74.0439787
 Street Number: 
 Street Name:   
 Zipcode:       11231

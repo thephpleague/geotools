@@ -74,10 +74,10 @@ class Geocode extends Command
             $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $geocoded->getLongitude());
             if (null !== $bounds = $geocoded->getBounds()) {
                 $result[] = '<label>Bounds</label>';
-                $result[] = sprintf(' L <label>South</label>: <value>%s</value>', $bounds['south']);
-                $result[] = sprintf(' L <label>West</label>:  <value>%s</value>', $bounds['west']);
-                $result[] = sprintf(' L <label>North</label>: <value>%s</value>', $bounds['north']);
-                $result[] = sprintf(' L <label>East</label>:  <value>%s</value>', $bounds['east']);
+                $result[] = sprintf(' - <label>South</label>: <value>%s</value>', $bounds['south']);
+                $result[] = sprintf(' - <label>West</label>:  <value>%s</value>', $bounds['west']);
+                $result[] = sprintf(' - <label>North</label>: <value>%s</value>', $bounds['north']);
+                $result[] = sprintf(' - <label>East</label>:  <value>%s</value>', $bounds['east']);
             }
             $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $geocoded->getStreetNumber());
             $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $geocoded->getStreetName());
