@@ -1,10 +1,17 @@
 CHANGELOG
 =========
 
-0.1.11 (xxxx-xx-xx)
+0.1.11 (2012-03-05)
 ------------------
 
-n/a
+* Fixed: typo
+* Added: international feet unit to CLI + test - fix #10
+* Updated: relative links to absolute ones
+* Added: ip_geo_base and baidu as CLI providers - fix #8
+* Fixed: feet unit + test
+* Added International Feet as a unit
+* Added a bunch of tests.
+
 
 0.1.10 (2012-02-27)
 ------------------
