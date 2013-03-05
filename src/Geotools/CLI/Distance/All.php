@@ -35,7 +35,8 @@ class All extends Command
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
             ->addOption('km', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in kilometers')
-            ->addOption('mile', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in miles');
+            ->addOption('mile', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in miles')
+            ->addOption('ft', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in feet');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -52,6 +53,10 @@ class All extends Command
 
         if ($input->getOption('mile')) {
             $distance->in('mile');
+        }
+
+        if ($input->getOption('ft')) {
+            $distance->in('ft');
         }
 
         $result[] = sprintf('<label>Flat:</label>      <value>%s</value>', $distance->flat());

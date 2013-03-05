@@ -43,22 +43,15 @@ The recommended way to install Geotools is through [composer](http://getcomposer
 
 Run these commands to install composer, Geotools and its dependencies:
 
-``` bash
-% curl -sS https://getcomposer.org/installer | php
-```
-Or
-``` bash
-% wget http://getcomposer.org/composer.phar
-```
-Then
-``` bash
-% php composer.phar init --require="toin0u/geotools:@stable" -n
-% php composer.phar install
+```bash
+$ curl -sS https://getcomposer.org/installer | php
+$ php composer.phar init --require="toin0u/geotools:@stable" -n
+$ php composer.phar install
 ```
 
 Now you can add the autoloader, and you will have access to the library:
 
-``` php
+```php
 <?php
 
 require 'vendor/autoload.php';
@@ -66,7 +59,7 @@ require 'vendor/autoload.php';
 
 If you don't use neither **Composer** nor a _ClassLoader_ in your application, just require the provided autoloader:
 
-``` php
+```php
 <?php
 
 require_once 'src/autoload.php';
@@ -114,7 +107,7 @@ like:
 Latitudes below -90.0 or above 90.0 degrees are *capped* through `\Geotools\Coordinate\Coordinate::normalizeLatitude()`.  
 Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
 
-``` php
+```php
 <?php
 
 use Geotools\Coordinate\Coordinate;
@@ -148,7 +141,7 @@ or *decimal minutes* WGS84 coordinates. You can format the output string easily.
 You can also convert them in the Universal Transverse Mercator (UTM) projection (Southwest coast of Norway and the
 region of Svalbard are covered).
 
-``` php
+```php
 <?php
 
 $geotools = new \Geotools\Geotools();
@@ -191,7 +184,7 @@ Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https:/
 It's possible to batch *one request* (a string) or a *set of request* (an array) against *one provider* or
 *set of providers*.
 
-``` php
+```php
 <?php
 
 $geocoder = new \Geocoder\Geocoder();
@@ -254,7 +247,7 @@ POINT(0.000000 0.000000) // GeoipProvider, NoResultException thrown but IPv6 is 
 
 Batch reverse geocoding is something like:
 
-``` php
+```php
 <?php
 
 // ... $geocoder like the previous example ...
@@ -285,7 +278,7 @@ using *flat* (most performant), *haversine* or *vincenty* (most accurate) algori
 
 Those coordinates should be in the same ellipsoid.
 
-``` php
+```php
 <?php
 
 $geotools = new \Geotools\Geotools();
@@ -302,9 +295,9 @@ echo $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('ft')->flat(); 
 
 It provides methods to compute the initial and final *bearing* in degrees, the initial and final *cardinal direction*,
 the *middle point* and the *destination point*. The middle and the destination points returns a
-`\Geotools\Coordinate\Coordinate` object.
+`\Geotools\Coordinate\Coordinate` object with the same ellipsoid.
 
-``` php
+```php
 <?php
 
 $geotools = new \Geotools\Geotools();
@@ -331,7 +324,7 @@ echo $destinationPoint->getLongitude(); // 2.3072664
 It provides methods to get the *geo hash* and its *bounding box's coordinates* of a coordinate and the
 *coordinate* and its *bounding box's coordinates* of a geo hash.
 
-``` php
+```php
 <?php
 
 $geotools       = new \Geotools\Geotools();
@@ -355,16 +348,17 @@ $boundingBox = $decoded->getBoundingBox(); // returns an array of \Geotools\Coor
 It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert** classes.
 Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
 
-``` bash
-% php geotools list // list of available commands
-% php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" // 4690203.1048522
-% php geotools distance:vincenty "35,45" "45,35" --km  // 1398.4080717661
-% php geotools point:initial-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // NE (NordEast)
-% php geotools point:final-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // ESE (EastNorthEast)
-% php geotools geohash:encode "40° 26.7717, -79° 56.93172" --length=3 // returns dpp
-% php geotools convert:dm "40.446195, -79.948862" --format="%P%D°%N %p%d°%n" // 40°26.7717 -79°56.93172
-% php geotools convert:dms "40.446195, -79.948862" --format="%P%D:%M:%S, %p%d:%m:%s" // 40:26:46, -79:56:56
-% php geotools convert:utm "60.3912628, 5.3220544" // 32V 297351 6700644
+```bash
+$ php geotools list // list of available commands
+$ php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" // 4690203.1048522
+$ php geotools distance:haversine "35,45" "45,35" --ft  // 4593030.9787593
+$ php geotools distance:vincenty "35,45" "45,35" --km  // 1398.4080717661
+$ php geotools point:initial-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // NE (NordEast)
+$ php geotools point:final-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // ESE (EastNorthEast)
+$ php geotools geohash:encode "40° 26.7717, -79° 56.93172" --length=3 // returns dpp
+$ php geotools convert:dm "40.446195, -79.948862" --format="%P%D°%N %p%d°%n" // 40°26.7717 -79°56.93172
+$ php geotools convert:dms "40.446195, -79.948862" --format="%P%D:%M:%S, %p%d:%m:%s" // 40:26:46, -79:56:56
+$ php geotools convert:utm "60.3912628, 5.3220544" // 32V 297351 6700644
 ...
 ```
 
@@ -383,15 +377,15 @@ Read more [here](https://github.com/willdurand/Geocoder#dumpers).
 * `--format`: this option is available for reverse geocoding, see the mapping
 [here](https://github.com/willdurand/Geocoder#formatter).
 
-``` bash
-% php geotools geocoder:geocode "Copenhagen, Denmark" // 55.6760968, 12.5683371
-% php geotools geocoder:geocode "74.200.247.59" --provider="free_geo_ip" --adapter="socket" // 37.7484, -122.4156
-% php geotools geocoder:geocode Paris --args="fr_FR" --args="France" --args="true" // 48.856614, 2.3522219
-% php geotools geocoder:geocode Paris --dumper=wkt // POINT(2.352222 48.856614)
+```bash
+$ php geotools geocoder:geocode "Copenhagen, Denmark" // 55.6760968, 12.5683371
+$ php geotools geocoder:geocode "74.200.247.59" --provider="free_geo_ip" --adapter="socket" // 37.7484, -122.4156
+$ php geotools geocoder:geocode Paris --args="fr_FR" --args="France" --args="true" // 48.856614, 2.3522219
+$ php geotools geocoder:geocode Paris --dumper=wkt // POINT(2.352222 48.856614)
 ...
-% php geotools geocoder:reverse "48.8631507, 2.388911" // Avenue Gambetta 10, 75020 Paris
-% php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" // Paris, Île-De-France, France
-% php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" --provider="openstreetmaps"
+$ php geotools geocoder:reverse "48.8631507, 2.388911" // Avenue Gambetta 10, 75020 Paris
+$ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" // Paris, Île-De-France, France
+$ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" --provider="openstreetmaps"
 // Paris, Île-De-France, France Métropolitaine
 ...
 % php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket
@@ -430,14 +424,14 @@ Unit Tests
 
 To run unit tests, you'll need the `cURL` extension and a set of dependencies, you can install them using Composer:
 
-``` bash
-% php composer.phar install --dev
+```bash
+$ php composer.phar install --dev
 ```
 
 Once installed, just launch the following command:
 
-``` bash
-% phpunit --coverage-text
+```bash
+$ phpunit --coverage-text
 ```
 
 

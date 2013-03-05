@@ -103,6 +103,21 @@ class AllTest extends TestCase
         $this->assertRegExp('/2876\.7987439128/', $this->commandTester->getDisplay());
     }
 
+    public function testExecuteWithFtOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ft'        => 'true',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertRegExp('/15387805\.348722/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/15176576\.404156/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/15189497\.36786/', $this->commandTester->getDisplay());
+    }
+
     public function testExecuteOutput()
     {
         $this->commandTester->execute(array(
