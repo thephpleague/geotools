@@ -1,44 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geotools by toin0u</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Geotools : Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Geotools</title>
   </head>
+
   <body>
 
-      <header>
-        <h1>Geotools</h1>
-        <p>Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries</p>
-      </header>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/toin0u/Geotools">View on GitHub</a>
 
-      <div id="banner">
-        <span id="logo"></span>
+          <h1 id="project_title">Geotools</h1>
+          <h2 id="project_tagline">Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries</h2>
 
-        <a href="https://github.com/toin0u/Geotools" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/toin0u/Geotools/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/toin0u/Geotools/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/toin0u/Geotools/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/toin0u/Geotools/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>Geotools</h1>
 
 <p><strong>Geotools</strong> is a PHP geo-related library, built atop <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and
@@ -121,7 +113,7 @@ The recommended way to install Geotools is through <a href="http://getcomposer.o
 <p>The default geodetic datum is <a href="http://en.wikipedia.org/wiki/World_Geodetic_System">WGS84</a> and coordinates are in
 decimal degrees.</p>
 
-<p>Here are the available ellipsoid: <code>AIRY</code>, <code>AUSTRALIAN_NATIONAL</code>, <code>BESSEL_1841</code>, <code>BESSEL_1841_NAMBIA</code>,
+<p>Here are the available ellipsoids: <code>AIRY</code>, <code>AUSTRALIAN_NATIONAL</code>, <code>BESSEL_1841</code>, <code>BESSEL_1841_NAMBIA</code>,
 <code>CLARKE_1866</code>, <code>CLARKE_1880</code>, <code>EVEREST</code>, <code>FISCHER_1960_MERCURY</code>, <code>FISCHER_1968</code>, <code>GRS_1967</code>, <code>GRS_1980</code>,
 <code>HELMERT_1906</code>, <code>HOUGH</code>, <code>INTERNATIONAL</code>, <code>KRASSOVSKY</code>, <code>MODIFIED_AIRY</code>, <code>MODIFIED_EVEREST</code>,
 <code>MODIFIED_FISCHER_1960</code>, <code>SOUTH_AMERICAN_1969</code>, <code>WGS60</code>, <code>WGS66</code>, <code>WGS72</code>, and <code>WGS84</code>.</p>
@@ -161,9 +153,9 @@ Longitudes below -180.0 or abode 180.0 degrees are <em>wrapped</em> through <cod
 <span class="k">use</span> <span class="nx">Geotools\Coordinate\Ellipsoid</span><span class="p">;</span>
 
 <span class="c1">// from an \Geocoder\Result\ResultInterface instance within Airy ellipsoid</span>
-<span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Coordinate</span><span class="p">(</span><span class="nv">$geocoderResult</span><span class="p">,</span> <span class="nx">Ellipsoid</span><span class="o">::</span><span class="na">createEllipsoid</span><span class="p">(</span><span class="nx">Ellipsoid</span><span class="o">::</span><span class="na">AIRY</span><span class="p">));</span>
+<span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Coordinate</span><span class="p">(</span><span class="nv">$geocoderResult</span><span class="p">,</span> <span class="nx">Ellipsoid</span><span class="o">::</span><span class="na">createFromName</span><span class="p">(</span><span class="nx">Ellipsoid</span><span class="o">::</span><span class="na">AIRY</span><span class="p">));</span>
 <span class="c1">// or in an array of latitude/longitude coordinate within GRS 1980 ellipsoid</span>
-<span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">48.8234055</span><span class="p">,</span> <span class="mf">2.3072664</span><span class="p">),</span> <span class="nx">Ellipsoid</span><span class="o">::</span><span class="na">createEllipsoid</span><span class="p">(</span><span class="nx">Ellipsoid</span><span class="o">::</span><span class="na">GRS_1980</span><span class="p">));</span>
+<span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">48.8234055</span><span class="p">,</span> <span class="mf">2.3072664</span><span class="p">),</span> <span class="nx">Ellipsoid</span><span class="o">::</span><span class="na">createFromName</span><span class="p">(</span><span class="nx">Ellipsoid</span><span class="o">::</span><span class="na">GRS_1980</span><span class="p">));</span>
 <span class="c1">// or in latitude/longitude coordinate within WGS84 ellipsoid</span>
 <span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Coordinate</span><span class="p">(</span><span class="s1">'48.8234055, 2.3072664'</span><span class="p">);</span>
 <span class="c1">// or in degrees minutes seconds coordinate within WGS84 ellipsoid</span>
@@ -190,18 +182,18 @@ region of Svalbard are covered).</p>
 
 <div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
 
-<span class="nv">$geotools</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Geotools</span><span class="p">();</span>
+<span class="nv">$geotools</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Geotools</span><span class="p">();</span>
 <span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="s1">'40.446195, -79.948862'</span><span class="p">);</span>
-<span class="nv">$convert</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">convert</span><span class="p">(</span><span class="nv">$coordinate</span><span class="p">);</span>
+<span class="nv">$converted</span>  <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">convert</span><span class="p">(</span><span class="nv">$coordinate</span><span class="p">);</span>
 <span class="c1">// convert to decimal degrees without and with format string</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$convert</span><span class="o">-&gt;</span><span class="na">toDecimalMinutes</span><span class="p">());</span> <span class="c1">// 40 26.7717N, -79 56.93172W</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$convert</span><span class="o">-&gt;</span><span class="na">toDM</span><span class="p">(</span><span class="s1">'%P%D°%N %p%d°%n'</span><span class="p">));</span> <span class="c1">// 40°26.7717 -79°56.93172</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$converted</span><span class="o">-&gt;</span><span class="na">toDecimalMinutes</span><span class="p">());</span> <span class="c1">// 40 26.7717N, -79 56.93172W</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$converted</span><span class="o">-&gt;</span><span class="na">toDM</span><span class="p">(</span><span class="s1">'%P%D°%N %p%d°%n'</span><span class="p">));</span> <span class="c1">// 40°26.7717 -79°56.93172</span>
 <span class="c1">// convert to degrees minutes seconds without and with format string</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$convert</span><span class="o">-&gt;</span><span class="na">toDegreesMinutesSeconds</span><span class="p">(</span><span class="s1">'&lt;p&gt;%P%D:%M:%S, %p%d:%m:%s&lt;/p&gt;'</span><span class="p">));</span> <span class="c1">// &lt;p&gt;40:26:46, -79:56:56&lt;/p&gt;</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$convert</span><span class="o">-&gt;</span><span class="na">toDMS</span><span class="p">());</span> <span class="c1">// 40°26′46″N, 79°56′56″W</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$converted</span><span class="o">-&gt;</span><span class="na">toDegreesMinutesSeconds</span><span class="p">(</span><span class="s1">'&lt;p&gt;%P%D:%M:%S, %p%d:%m:%s&lt;/p&gt;'</span><span class="p">));</span> <span class="c1">// &lt;p&gt;40:26:46, -79:56:56&lt;/p&gt;</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$converted</span><span class="o">-&gt;</span><span class="na">toDMS</span><span class="p">());</span> <span class="c1">// 40°26′46″N, 79°56′56″W</span>
 <span class="c1">// convert in the UTM projection (standard format)</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$convert</span><span class="o">-&gt;</span><span class="na">toUniversalTransverseMercator</span><span class="p">());</span> <span class="c1">// 17T 589138 4477813</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$convert</span><span class="o">-&gt;</span><span class="na">toUTM</span><span class="p">());</span> <span class="c1">// 17T 589138 4477813 (alias)</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$converted</span><span class="o">-&gt;</span><span class="na">toUniversalTransverseMercator</span><span class="p">());</span> <span class="c1">// 17T 589138 4477813</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$converted</span><span class="o">-&gt;</span><span class="na">toUTM</span><span class="p">());</span> <span class="c1">// 17T 589138 4477813 (alias)</span>
 </pre></div>
 
 <p>Here is the mapping:</p>
@@ -368,11 +360,12 @@ using <em>flat</em> (most performant), <em>haversine</em> or <em>vincenty</em> (
 <span class="nv">$geotools</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Geotools</span><span class="p">();</span>
 <span class="nv">$coordA</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">48.8234055</span><span class="p">,</span> <span class="mf">2.3072664</span><span class="p">));</span>
 <span class="nv">$coordB</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">43.296482</span><span class="p">,</span> <span class="mf">5.36978</span><span class="p">));</span>
+<span class="nv">$distance</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">);</span>
 
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">());</span> <span class="c1">// 659166.50038742 (meters)</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'km'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">haversine</span><span class="p">());</span> <span class="c1">// 659.02190812846</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'mile'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">vincenty</span><span class="p">());</span> <span class="c1">// 409.05330679648</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'ft'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">());</span> <span class="c1">// 2162619.7519272</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">());</span> <span class="c1">// 659166.50038742 (meters)</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'km'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">haversine</span><span class="p">());</span> <span class="c1">// 659.02190812846</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'mile'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">vincenty</span><span class="p">());</span> <span class="c1">// 409.05330679648</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'ft'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">());</span> <span class="c1">// 2162619.7519272</span>
 </pre></div>
 
 <h3>Point</h3>
@@ -386,13 +379,14 @@ the <em>middle point</em> and the <em>destination point</em>. The middle and the
 <span class="nv">$geotools</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Geotools</span><span class="p">();</span>
 <span class="nv">$coordA</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">48.8234055</span><span class="p">,</span> <span class="mf">2.3072664</span><span class="p">));</span>
 <span class="nv">$coordB</span>   <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">43.296482</span><span class="p">,</span> <span class="mf">5.36978</span><span class="p">));</span>
+<span class="nv">$point</span>    <span class="o">=</span>  <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">point</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">);</span>
 
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%d</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">point</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">initialBearing</span><span class="p">());</span> <span class="c1">// 157 (degrees)</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">point</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">initialCardinal</span><span class="p">());</span> <span class="c1">// SSE (SouthSouthEast)</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%d</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">point</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">finalBearing</span><span class="p">());</span> <span class="c1">// 160 (degrees)</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">point</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">finalCardinal</span><span class="p">());</span> <span class="c1">// SSE (SouthSouthEast)</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%d</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$point</span><span class="o">-&gt;</span><span class="na">initialBearing</span><span class="p">());</span> <span class="c1">// 157 (degrees)</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$point</span><span class="o">-&gt;</span><span class="na">initialCardinal</span><span class="p">());</span> <span class="c1">// SSE (SouthSouthEast)</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%d</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$point</span><span class="o">-&gt;</span><span class="na">finalBearing</span><span class="p">());</span> <span class="c1">// 160 (degrees)</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$point</span><span class="o">-&gt;</span><span class="na">finalCardinal</span><span class="p">());</span> <span class="c1">// SSE (SouthSouthEast)</span>
 
-<span class="nv">$middlePoint</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">point</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">middle</span><span class="p">();</span> <span class="c1">// \Geotools\Coordinate\Coordinate</span>
+<span class="nv">$middlePoint</span> <span class="o">=</span> <span class="nv">$point</span><span class="o">-&gt;</span><span class="na">middle</span><span class="p">();</span> <span class="c1">// \Geotools\Coordinate\Coordinate</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$middlePoint</span><span class="o">-&gt;</span><span class="na">getLatitude</span><span class="p">());</span> <span class="c1">// 46.070143125815</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$middlePoint</span><span class="o">-&gt;</span><span class="na">getLongitude</span><span class="p">());</span> <span class="c1">// 3.9152401085931</span>
 
@@ -403,8 +397,8 @@ the <em>middle point</em> and the <em>destination point</em>. The middle and the
 
 <h3>Geohash</h3>
 
-<p>It provides methods to get the <em>geo hash</em> and its <em>bounding box's coordinates</em> of a coordinate and the
-<em>coordinate</em> and its <em>bounding box's coordinates</em> of a geo hash.</p>
+<p>It provides methods to get the <em>geo hash</em> and its <em>bounding box's coordinates</em> (SouthWest &amp; NorthEast)
+of a coordinate and the <em>coordinate</em> and its <em>bounding box's coordinates</em> (SouthWest &amp; NorthEast) of a geo hash.</p>
 
 <div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
 
@@ -412,16 +406,31 @@ the <em>middle point</em> and the <em>destination point</em>. The middle and the
 <span class="nv">$coordToGeohash</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="s1">'43.296482, 5.36978'</span><span class="p">);</span>
 
 <span class="c1">// encoding</span>
-<span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">geohash</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">encode</span><span class="p">(</span><span class="nv">$coordToGeohash</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getGeohash</span><span class="p">();</span> <span class="c1">// spe</span>
-<span class="nv">$encoded</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">geohash</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">encode</span><span class="p">(</span><span class="nv">$coordToGeohash</span><span class="p">);</span> <span class="c1">// 12 is the default length</span>
-<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$encoded</span><span class="o">-&gt;</span><span class="na">getGeohash</span><span class="p">());</span> <span class="c1">// spey61yhkcnp</span>
-<span class="nv">$boundingBox</span> <span class="o">=</span> <span class="nv">$encoded</span><span class="o">-&gt;</span><span class="na">getBoundingBox</span><span class="p">();</span> <span class="c1">// returns an array of \Geotools\Coordinate\CordinateInterface</span>
+<span class="nv">$encoded</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">geohash</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">encode</span><span class="p">(</span><span class="nv">$coordToGeohash</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span> <span class="c1">// 12 is the default length / precision</span>
+<span class="c1">// encoded</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$encoded</span><span class="o">-&gt;</span><span class="na">getGeohash</span><span class="p">());</span> <span class="c1">// spey</span>
+<span class="c1">// encoded bounding box</span>
+<span class="nv">$boundingBox</span> <span class="o">=</span> <span class="nv">$encoded</span><span class="o">-&gt;</span><span class="na">getBoundingBox</span><span class="p">();</span> <span class="c1">// array of \Geotools\Coordinate\CordinateInterface</span>
+<span class="nv">$southWest</span>   <span class="o">=</span> <span class="nv">$boundingBox</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nv">$northEast</span>   <span class="o">=</span> <span class="nv">$boundingBox</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"http://www.openstreetmap.org/?minlon=%s&amp;minlat=%s&amp;maxlon=%s&amp;maxlat=%s&amp;box=yes</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>
+    <span class="nv">$southWest</span><span class="o">-&gt;</span><span class="na">getLongitude</span><span class="p">(),</span> <span class="nv">$southWest</span><span class="o">-&gt;</span><span class="na">getLatitude</span><span class="p">(),</span>
+    <span class="nv">$northEast</span><span class="o">-&gt;</span><span class="na">getLongitude</span><span class="p">(),</span> <span class="nv">$northEast</span><span class="o">-&gt;</span><span class="na">getLatitude</span><span class="p">()</span>
+<span class="p">);</span> <span class="c1">// http://www.openstreetmap.org/?minlon=5.2734375&amp;minlat=43.2421875&amp;maxlon=5.625&amp;maxlat=43.41796875&amp;box=yes</span>
 
 <span class="c1">// decoding</span>
 <span class="nv">$decoded</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">geohash</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">decode</span><span class="p">(</span><span class="s1">'spey61y'</span><span class="p">);</span>
+<span class="c1">// decoded coordinate</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$decoded</span><span class="o">-&gt;</span><span class="na">getCoordinate</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLatitude</span><span class="p">());</span> <span class="c1">// 43.296432495117</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$decoded</span><span class="o">-&gt;</span><span class="na">getCoordinate</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLongitude</span><span class="p">());</span> <span class="c1">// 5.3702545166016</span>
-<span class="nv">$boundingBox</span> <span class="o">=</span> <span class="nv">$decoded</span><span class="o">-&gt;</span><span class="na">getBoundingBox</span><span class="p">();</span> <span class="c1">// returns an array of \Geotools\Coordinate\CordinateInterface</span>
+<span class="c1">// decoded bounding box</span>
+<span class="nv">$boundingBox</span> <span class="o">=</span> <span class="nv">$decoded</span><span class="o">-&gt;</span><span class="na">getBoundingBox</span><span class="p">();</span> <span class="c1">//array of \Geotools\Coordinate\CordinateInterface</span>
+<span class="nv">$southWest</span>   <span class="o">=</span> <span class="nv">$boundingBox</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="nv">$northEast</span>   <span class="o">=</span> <span class="nv">$boundingBox</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"http://www.openstreetmap.org/?minlon=%s&amp;minlat=%s&amp;maxlon=%s&amp;maxlat=%s&amp;box=yes</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>
+    <span class="nv">$southWest</span><span class="o">-&gt;</span><span class="na">getLongitude</span><span class="p">(),</span> <span class="nv">$southWest</span><span class="o">-&gt;</span><span class="na">getLatitude</span><span class="p">(),</span>
+    <span class="nv">$northEast</span><span class="o">-&gt;</span><span class="na">getLongitude</span><span class="p">(),</span> <span class="nv">$northEast</span><span class="o">-&gt;</span><span class="na">getLatitude</span><span class="p">()</span>
+<span class="p">);</span> <span class="c1">// http://www.openstreetmap.org/?minlon=5.3695678710938&amp;minlat=43.295745849609&amp;maxlon=5.3709411621094&amp;maxlat=43.297119140625&amp;box=yes</span>
 </pre></div>
 
 <h3>CLI</h3>
@@ -434,8 +443,8 @@ Thanks to the <a href="https://github.com/symfony/Console">Symfony Console Compo
 <span class="nv">$ </span>php geotools distance:haversine <span class="s2">"35,45"</span> <span class="s2">"45,35"</span> --ft  // 4593030.9787593
 <span class="nv">$ </span>php geotools distance:vincenty <span class="s2">"35,45"</span> <span class="s2">"45,35"</span> --km  // 1398.4080717661
 <span class="nv">$ </span>php geotools point:initial-cardinal <span class="s2">"40:26:46.302N 079:56:55.903W"</span> <span class="s2">"43.296482, 5.36978"</span> // NE <span class="o">(</span>NordEast<span class="o">)</span>
-<span class="nv">$ </span>php geotools point:final-cardinal <span class="s2">"40:26:46.302N 079:56:55.903W"</span> <span class="s2">"43.296482, 5.36978"</span> // ESE <span class="o">(</span>EastNorthEast<span class="o">)</span>
-<span class="nv">$ </span>php geotools geohash:encode <span class="s2">"40° 26.7717, -79° 56.93172"</span> --length<span class="o">=</span>3 // returns dpp
+<span class="nv">$ </span>php geotools point:final-cardinal <span class="s2">"40:26:46.302N 079:56:55.903W"</span> <span class="s2">"43.296482, 5.36978"</span> // ESE <span class="o">(</span>EastSouthEast<span class="o">)</span>
+<span class="nv">$ </span>php geotools geohash:encode <span class="s2">"40° 26.7717, -79° 56.93172"</span> --length<span class="o">=</span>3 // dpp
 <span class="nv">$ </span>php geotools convert:dm <span class="s2">"40.446195, -79.948862"</span> --format<span class="o">=</span><span class="s2">"%P%D°%N %p%d°%n"</span> // 40°26.7717 -79°56.93172
 <span class="nv">$ </span>php geotools convert:dms <span class="s2">"40.446195, -79.948862"</span> --format<span class="o">=</span><span class="s2">"%P%D:%M:%S, %p%d:%m:%s"</span> // 40:26:46, -79:56:56
 <span class="nv">$ </span>php geotools convert:utm <span class="s2">"60.3912628, 5.3220544"</span> // 32V 297351 6700644
@@ -550,12 +559,16 @@ Timezone:
 <p>Geotools is released under the MIT License. See the bundled
 <a href="https://github.com/toin0u/Geotools/blob/master/LICENSE">LICENSE</a> file for details.</p>
       </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/toin0u">toin0u</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Geotools maintained by <a href="https://github.com/toin0u">toin0u</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -566,6 +579,7 @@ Timezone:
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
