@@ -57,9 +57,10 @@
 <li>Compute geocode &amp; reverse geocoding in the <strong>command-line interface</strong> (CLI) + dumpers and formatters. <a href="#cli">»</a>
 </li>
 <li>Accept <strong>almost</strong> all kind of WGS84
-<a href="http://en.wikipedia.org/wiki/Geographic_coordinate_conversion">geographic coordinates</a> as coordinates. <a href="#coordinate">»</a>
+<a href="http://en.wikipedia.org/wiki/Geographic_coordinate_conversion">geographic coordinates</a> as coordinates.
+<a href="#coordinate--ellipsoid">»</a>
 </li>
-<li>Support <strong>23 different ellipsoids</strong> and it's easy to provide a new one if needed. <a href="#coordinate">»</a>
+<li>Support <strong>23 different ellipsoids</strong> and it's easy to provide a new one if needed. <a href="#coordinate--ellipsoid">»</a>
 </li>
 <li>
 <strong>Convert</strong> and <strong>format</strong> decimal degrees coordinates to decimal minutes or degrees minutes seconds coordinates.
@@ -73,7 +74,8 @@
 <li>Compute the distance in <strong>meter</strong> (by default), <strong>km</strong>, <strong>mile</strong> or <strong>ft</strong> between two coordinates using <strong>flat</strong>,
 <strong>haversine</strong> or <strong>vincenty</strong> algorithms. <a href="#distance">»</a>
 </li>
-<li>Compute the initial and final <strong>bearing</strong> from the origin coordinate to the destination coordinate in degrees. <a href="#point">»</a>
+<li>Compute the initial and final <strong>bearing</strong> from the origin coordinate to the destination coordinate in degrees.
+<a href="#point">»</a>
 </li>
 <li>Compute the initial and final <strong>cardinal point</strong> (direction) from the origin coordinate to the destination
 coordinate, read more in <a href="http://en.wikipedia.org/wiki/Cardinal_direction">wikipedia</a>. <a href="#point">»</a>
@@ -116,7 +118,7 @@ The recommended way to install Geotools is through <a href="http://getcomposer.o
 
 <h2>Usage &amp; API</h2>
 
-<h3>Coordinate &amp; Ellipsoid</h3>
+<h2>Coordinate &amp; Ellipsoid</h2>
 
 <p>The default geodetic datum is <a href="http://en.wikipedia.org/wiki/World_Geodetic_System">WGS84</a> and coordinates are in
 decimal degrees.</p>
@@ -180,7 +182,7 @@ Longitudes below -180.0 or abode 180.0 degrees are <em>wrapped</em> through <cod
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"Mean radius: %F</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$coordinate</span><span class="o">-&gt;</span><span class="na">getEllipsoid</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getArithmeticMeanRadius</span><span class="p">());</span> <span class="c1">// 6371007.772533</span>
 </pre></div>
 
-<h3>Convert</h3>
+<h2>Convert</h2>
 
 <p>It provides methods (and aliases) to convert <em>decimal degrees</em> WGS84 coordinates to <em>degrees minutes seconds</em>
 or <em>decimal minutes</em> WGS84 coordinates. You can format the output string easily.</p>
@@ -263,7 +265,7 @@ region of Svalbard are covered).</p>
 <td><code>%S</code></td>
 <td><code>%s</code></td>
 </tr>
-</table><h3>Batch</h3>
+</table><h2>Batch</h2>
 
 <p>It provides a very handy way to batch geocode and reverse geocoding requests in <em>serie</em> or in <em>parallel</em> against
 a set of providers.<br>
@@ -376,7 +378,7 @@ using <em>flat</em> (most performant), <em>haversine</em> or <em>vincenty</em> (
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'ft'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">());</span> <span class="c1">// 2162619.7519272</span>
 </pre></div>
 
-<h3>Point</h3>
+<h2>Point</h2>
 
 <p>It provides methods to compute the initial and final <em>bearing</em> in degrees, the initial and final <em>cardinal direction</em>,
 the <em>middle point</em> and the <em>destination point</em>. The middle and the destination points returns a
@@ -403,7 +405,7 @@ the <em>middle point</em> and the <em>destination point</em>. The middle and the
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$destinationPoint</span><span class="o">-&gt;</span><span class="na">getLongitude</span><span class="p">());</span> <span class="c1">// 2.3072664</span>
 </pre></div>
 
-<h3>Geohash</h3>
+<h2>Geohash</h2>
 
 <p>It provides methods to get the <em>geo hash</em> and its <em>bounding box's coordinates</em> (SouthWest &amp; NorthEast)
 of a coordinate and the <em>coordinate</em> and its <em>bounding box's coordinates</em> (SouthWest &amp; NorthEast) of a geo hash.</p>
@@ -441,7 +443,7 @@ of a coordinate and the <em>coordinate</em> and its <em>bounding box's coordinat
 <span class="p">);</span> <span class="c1">// http://www.openstreetmap.org/?minlon=5.3695678710938&amp;minlat=43.295745849609&amp;maxlon=5.3709411621094&amp;maxlat=43.297119140625&amp;box=yes</span>
 </pre></div>
 
-<h3>CLI</h3>
+<h2>CLI</h2>
 
 <p>It provides command lines to compute methods provided by <strong>Distance</strong>, <strong>Point</strong>, <strong>Geohash</strong> and <strong>Convert</strong> classes.
 Thanks to the <a href="https://github.com/symfony/Console">Symfony Console Component</a>.</p>
