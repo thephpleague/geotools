@@ -461,7 +461,9 @@ Please see [CONTRIBUTING](https://github.com/toin0u/Geotools/blob/master/CONTRIB
 Credits
 -------
 
-* Antoine Corcy <contact@sbin.dk>
+* [Antoine Corcy](https://twitter.com/toin0u) - Owner
+* [Pascal Borreli](https://twitter.com/pborreli)
+* [Phil Sturgeon] (https://twitter.com/philsturgeon)
 * [All contributors](https://github.com/toin0u/Geotools/contributors)
 
 
