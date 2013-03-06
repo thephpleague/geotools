@@ -15,8 +15,9 @@ Features
 **set of providers**. [»](#batch)
 * Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
-[geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates. [»](#coordinate)
-* Support **23 different ellipsoids** and it's easy to provide a new one if needed. [»](#coordinate)
+[geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates.
+[»](#coordinate--ellipsoid)
+* Support **23 different ellipsoids** and it's easy to provide a new one if needed. [»](#coordinate--ellipsoid)
 * **Convert** and **format** decimal degrees coordinates to decimal minutes or degrees minutes seconds coordinates.
 [»](#convert)
 * **Convert** decimal degrees coordinates in the
@@ -24,7 +25,8 @@ Features
 (UTM) projection. [»](#convert)
 * Compute the distance in **meter** (by default), **km**, **mile** or **ft** between two coordinates using **flat**,
 **haversine** or **vincenty** algorithms. [»](#distance)
-* Compute the initial and final **bearing** from the origin coordinate to the destination coordinate in degrees. [»](#point)
+* Compute the initial and final **bearing** from the origin coordinate to the destination coordinate in degrees.
+[»](#point)
 * Compute the initial and final **cardinal point** (direction) from the origin coordinate to the destination
 coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direction). [»](#point)
 * Compute the **half-way point** (coordinate) between the origin and the destination coordinates. [»](#point)
@@ -69,7 +71,7 @@ require_once 'src/autoload.php';
 Usage & API
 -----------
 
-### Coordinate & Ellipsoid ###
+## Coordinate & Ellipsoid ##
 
 The default geodetic datum is [WGS84](http://en.wikipedia.org/wiki/World_Geodetic_System) and coordinates are in
 decimal degrees.
@@ -133,7 +135,7 @@ printf("Inverse flattening: %F\n", $coordinate->getEllipsoid()->getInvF()); // 2
 printf("Mean radius: %F\n", $coordinate->getEllipsoid()->getArithmeticMeanRadius()); // 6371007.772533
 ```
 
-### Convert ###
+## Convert ##
 
 It provides methods (and aliases) to convert *decimal degrees* WGS84 coordinates to *degrees minutes seconds*
 or *decimal minutes* WGS84 coordinates. You can format the output string easily.
@@ -175,7 +177,7 @@ Degrees | `%D` | `%d`
 Minutes | `%M` | `%m`
 Seconds | `%S` | `%s`
 
-### Batch ###
+## Batch ##
 
 It provides a very handy way to batch geocode and reverse geocoding requests in *serie* or in *parallel* against
 a set of providers.  
@@ -292,7 +294,7 @@ printf("%s\n",$distance->in('mile')->vincenty()); // 409.05330679648
 printf("%s\n",$distance->in('ft')->flat()); // 2162619.7519272
 ```
 
-### Point ###
+## Point ##
 
 It provides methods to compute the initial and final *bearing* in degrees, the initial and final *cardinal direction*,
 the *middle point* and the *destination point*. The middle and the destination points returns a
@@ -321,7 +323,7 @@ printf("%s\n", $destinationPoint->getLongitude()); // 2.3072664
 ```
 
 
-### Geohash ###
+## Geohash ##
 
 It provides methods to get the *geo hash* and its *bounding box's coordinates* (SouthWest & NorthEast)
 of a coordinate and the *coordinate* and its *bounding box's coordinates* (SouthWest & NorthEast) of a geo hash.
@@ -360,7 +362,7 @@ printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&bo
 ); // http://www.openstreetmap.org/?minlon=5.3695678710938&minlat=43.295745849609&maxlon=5.3709411621094&maxlat=43.297119140625&box=yes
 ```
 
-### CLI ###
+## CLI ##
 
 It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert** classes.
 Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
