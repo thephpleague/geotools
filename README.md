@@ -74,7 +74,7 @@ Usage & API
 The default geodetic datum is [WGS84](http://en.wikipedia.org/wiki/World_Geodetic_System) and coordinates are in
 decimal degrees.
 
-Here are the available ellipsoid: `AIRY`, `AUSTRALIAN_NATIONAL`, `BESSEL_1841`, `BESSEL_1841_NAMBIA`,
+Here are the available ellipsoids: `AIRY`, `AUSTRALIAN_NATIONAL`, `BESSEL_1841`, `BESSEL_1841_NAMBIA`,
 `CLARKE_1866`, `CLARKE_1880`, `EVEREST`, `FISCHER_1960_MERCURY`, `FISCHER_1968`, `GRS_1967`, `GRS_1980`,
 `HELMERT_1906`, `HOUGH`, `INTERNATIONAL`, `KRASSOVSKY`, `MODIFIED_AIRY`, `MODIFIED_EVEREST`,
 `MODIFIED_FISCHER_1960`, `SOUTH_AMERICAN_1969`, `WGS60`, `WGS66`, `WGS72`, and `WGS84`.
@@ -114,9 +114,9 @@ use Geotools\Coordinate\Coordinate;
 use Geotools\Coordinate\Ellipsoid;
 
 // from an \Geocoder\Result\ResultInterface instance within Airy ellipsoid
-$coordinate = new Coordinate($geocoderResult, Ellipsoid::createEllipsoid(Ellipsoid::AIRY));
+$coordinate = new Coordinate($geocoderResult, Ellipsoid::createFromName(Ellipsoid::AIRY));
 // or in an array of latitude/longitude coordinate within GRS 1980 ellipsoid
-$coordinate = new Coordinate(array(48.8234055, 2.3072664), Ellipsoid::createEllipsoid(Ellipsoid::GRS_1980));
+$coordinate = new Coordinate(array(48.8234055, 2.3072664), Ellipsoid::createFromName(Ellipsoid::GRS_1980));
 // or in latitude/longitude coordinate within WGS84 ellipsoid
 $coordinate = new Coordinate('48.8234055, 2.3072664');
 // or in degrees minutes seconds coordinate within WGS84 ellipsoid
@@ -144,18 +144,18 @@ region of Svalbard are covered).
 ```php
 <?php
 
-$geotools = new \Geotools\Geotools();
+$geotools   = new \Geotools\Geotools();
 $coordinate = new \Geotools\Coordinate\Coordinate('40.446195, -79.948862');
-$convert = $geotools->convert($coordinate);
+$converted  = $geotools->convert($coordinate);
 // convert to decimal degrees without and with format string
-printf("%s\n", $convert->toDecimalMinutes()); // 40 26.7717N, -79 56.93172W
-printf("%s\n", $convert->toDM('%P%D°%N %p%d°%n')); // 40°26.7717 -79°56.93172
+printf("%s\n", $converted->toDecimalMinutes()); // 40 26.7717N, -79 56.93172W
+printf("%s\n", $converted->toDM('%P%D°%N %p%d°%n')); // 40°26.7717 -79°56.93172
 // convert to degrees minutes seconds without and with format string
-printf("%s\n", $convert->toDegreesMinutesSeconds('<p>%P%D:%M:%S, %p%d:%m:%s</p>')); // <p>40:26:46, -79:56:56</p>
-printf("%s\n", $convert->toDMS()); // 40°26′46″N, 79°56′56″W
+printf("%s\n", $converted->toDegreesMinutesSeconds('<p>%P%D:%M:%S, %p%d:%m:%s</p>')); // <p>40:26:46, -79:56:56</p>
+printf("%s\n", $converted->toDMS()); // 40°26′46″N, 79°56′56″W
 // convert in the UTM projection (standard format)
-printf("%s\n", $convert->toUniversalTransverseMercator()); // 17T 589138 4477813
-printf("%s\n", $convert->toUTM()); // 17T 589138 4477813 (alias)
+printf("%s\n", $converted->toUniversalTransverseMercator()); // 17T 589138 4477813
+printf("%s\n", $converted->toUTM()); // 17T 589138 4477813 (alias)
 ```
 
 Here is the mapping:
@@ -284,11 +284,12 @@ Those coordinates should be in the same ellipsoid.
 $geotools = new \Geotools\Geotools();
 $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
+$distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
 
-printf("%s\n", $geotools->distance()->setFrom($coordA)->setTo($coordB)->flat()); // 659166.50038742 (meters)
-printf("%s\n", $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('km')->haversine()); // 659.02190812846
-printf("%s\n", $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('mile')->vincenty()); // 409.05330679648
-printf("%s\n", $geotools->distance()->setFrom($coordA)->setTo($coordB)->in('ft')->flat()); // 2162619.7519272
+printf("%s\n",$distance->flat()); // 659166.50038742 (meters)
+printf("%s\n",$distance->in('km')->haversine()); // 659.02190812846
+printf("%s\n",$distance->in('mile')->vincenty()); // 409.05330679648
+printf("%s\n",$distance->in('ft')->flat()); // 2162619.7519272
 ```
 
 ### Point ###
@@ -303,13 +304,14 @@ the *middle point* and the *destination point*. The middle and the destination p
 $geotools = new \Geotools\Geotools();
 $coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
 $coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
+$point    =  $geotools->point()->setFrom($coordA)->setTo($coordB);
 
-printf("%d\n", $geotools->point()->setFrom($coordA)->setTo($coordB)->initialBearing()); // 157 (degrees)
-printf("%s\n", $geotools->point()->setFrom($coordA)->setTo($coordB)->initialCardinal()); // SSE (SouthSouthEast)
-printf("%d\n", $geotools->point()->setFrom($coordA)->setTo($coordB)->finalBearing()); // 160 (degrees)
-printf("%s\n", $geotools->point()->setFrom($coordA)->setTo($coordB)->finalCardinal()); // SSE (SouthSouthEast)
+printf("%d\n", $point->initialBearing()); // 157 (degrees)
+printf("%s\n", $point->initialCardinal()); // SSE (SouthSouthEast)
+printf("%d\n", $point->finalBearing()); // 160 (degrees)
+printf("%s\n", $point->finalCardinal()); // SSE (SouthSouthEast)
 
-$middlePoint = $geotools->point()->setFrom($coordA)->setTo($coordB)->middle(); // \Geotools\Coordinate\Coordinate
+$middlePoint = $point->middle(); // \Geotools\Coordinate\Coordinate
 printf("%s\n", $middlePoint->getLatitude()); // 46.070143125815
 printf("%s\n", $middlePoint->getLongitude()); // 3.9152401085931
 
@@ -321,8 +323,8 @@ printf("%s\n", $destinationPoint->getLongitude()); // 2.3072664
 
 ### Geohash ###
 
-It provides methods to get the *geo hash* and its *bounding box's coordinates* of a coordinate and the
-*coordinate* and its *bounding box's coordinates* of a geo hash.
+It provides methods to get the *geo hash* and its *bounding box's coordinates* (SouthWest & NorthEast)
+of a coordinate and the *coordinate* and its *bounding box's coordinates* (SouthWest & NorthEast) of a geo hash.
 
 ```php
 <?php
@@ -331,16 +333,31 @@ $geotools       = new \Geotools\Geotools();
 $coordToGeohash = new \Geotools\Coordinate\Coordinate('43.296482, 5.36978');
 
 // encoding
-$geotools->geohash()->encode($coordToGeohash, 3)->getGeohash(); // spe
-$encoded = $geotools->geohash()->encode($coordToGeohash); // 12 is the default length
-printf("%s\n", $encoded->getGeohash()); // spey61yhkcnp
-$boundingBox = $encoded->getBoundingBox(); // returns an array of \Geotools\Coordinate\CordinateInterface
+$encoded = $geotools->geohash()->encode($coordToGeohash, 4); // 12 is the default length / precision
+// encoded
+printf("%s\n", $encoded->getGeohash()); // spey
+// encoded bounding box
+$boundingBox = $encoded->getBoundingBox(); // array of \Geotools\Coordinate\CordinateInterface
+$southWest   = $boundingBox[0];
+$northEast   = $boundingBox[1];
+printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&box=yes\n",
+    $southWest->getLongitude(), $southWest->getLatitude(),
+    $northEast->getLongitude(), $northEast->getLatitude()
+); // http://www.openstreetmap.org/?minlon=5.2734375&minlat=43.2421875&maxlon=5.625&maxlat=43.41796875&box=yes
 
 // decoding
 $decoded = $geotools->geohash()->decode('spey61y');
+// decoded coordinate
 printf("%s\n", $decoded->getCoordinate()->getLatitude()); // 43.296432495117
 printf("%s\n", $decoded->getCoordinate()->getLongitude()); // 5.3702545166016
-$boundingBox = $decoded->getBoundingBox(); // returns an array of \Geotools\Coordinate\CordinateInterface
+// decoded bounding box
+$boundingBox = $decoded->getBoundingBox(); //array of \Geotools\Coordinate\CordinateInterface
+$southWest   = $boundingBox[0];
+$northEast   = $boundingBox[1];
+printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&box=yes\n",
+    $southWest->getLongitude(), $southWest->getLatitude(),
+    $northEast->getLongitude(), $northEast->getLatitude()
+); // http://www.openstreetmap.org/?minlon=5.3695678710938&minlat=43.295745849609&maxlon=5.3709411621094&maxlat=43.297119140625&box=yes
 ```
 
 ### CLI ###
@@ -354,8 +371,8 @@ $ php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029
 $ php geotools distance:haversine "35,45" "45,35" --ft  // 4593030.9787593
 $ php geotools distance:vincenty "35,45" "45,35" --km  // 1398.4080717661
 $ php geotools point:initial-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // NE (NordEast)
-$ php geotools point:final-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // ESE (EastNorthEast)
-$ php geotools geohash:encode "40° 26.7717, -79° 56.93172" --length=3 // returns dpp
+$ php geotools point:final-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // ESE (EastSouthEast)
+$ php geotools geohash:encode "40° 26.7717, -79° 56.93172" --length=3 // dpp
 $ php geotools convert:dm "40.446195, -79.948862" --format="%P%D°%N %p%d°%n" // 40°26.7717 -79°56.93172
 $ php geotools convert:dms "40.446195, -79.948862" --format="%P%D:%M:%S, %p%d:%m:%s" // 40:26:46, -79:56:56
 $ php geotools convert:utm "60.3912628, 5.3220544" // 32V 297351 6700644

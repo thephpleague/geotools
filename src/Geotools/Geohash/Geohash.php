@@ -88,7 +88,7 @@ class Geohash implements GeohashInterface
     }
 
     /**
-     * Returns the decoded coordinate.
+     * Returns the decoded coordinate (The center of the bounding box).
      *
      * @return CoordinateInterface
      */
@@ -101,7 +101,7 @@ class Geohash implements GeohashInterface
     }
 
     /**
-     * Returns the bounding box which is an array of coordinates.
+     * Returns the bounding box which is an array of coordinates (SouthWest & NorthEast).
      *
      * @return CoordinateInterface[]
      */
