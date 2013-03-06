@@ -18,10 +18,11 @@ use Geotools\Exception\InvalidArgumentException;
 
 /**
  * Ellipsoid class
- * @see http://en.wikipedia.org/wiki/Reference_ellipsoid
- * @see http://www.colorado.edu/geography/gcraft/notes/datum/gif/ellipse.gif
  *
  * @author Antoine Corcy <contact@sbin.dk>
+ *
+ * @see    http://en.wikipedia.org/wiki/Reference_ellipsoid
+ * @see    http://www.colorado.edu/geography/gcraft/notes/datum/gif/ellipse.gif
  */
 class Ellipsoid
 {
