@@ -47,7 +47,7 @@ Run these commands to install composer, Geotools and its dependencies:
 
 ```bash
 $ curl -sS https://getcomposer.org/installer | php
-$ php composer.phar init --require="toin0u/geotools:@stable" -n
+$ php composer.phar require toin0u/geotools:@stable
 $ php composer.phar install
 ```
 
