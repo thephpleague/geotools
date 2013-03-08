@@ -1,15 +1,20 @@
 CHANGELOG
 =========
 
-0.1.12 (xxxx-xx-xx)
+0.1.12 (2012-03-08)
 ------------------
 
-n/a
+* Added: command exemples and refactoring
+* Added: help to geocoding and reverse geocoding CLI
+* Fixed: homepage in composer.json
+* Updated: doc and composer.json
+* Fixed: php warning in CLI on wrong providers constuction arguments
+* Updated: list of contributors
+* Updated: geohash doc
 
 0.1.11 (2012-03-05)
 ------------------
 
-* Fixed: typo
 * Added: international feet unit to CLI + test - fix #10
 * Updated: relative links to absolute ones
 * Added: ip_geo_base and baidu as CLI providers - fix #8
@@ -17,20 +22,17 @@ n/a
 * Added International Feet as a unit
 * Added a bunch of tests.
 
-
 0.1.10 (2012-02-27)
 ------------------
 
 * Added: support of different ellipsoid + doc + tests - fix #5
 * Refactored: Doc + CLI commands + tests
 * Improved: geocoder:geocode and geocoder:reverse CLI + tests
-* Fixed: doc
 * Added: lowerize() method using mbstring extension
 
 0.1.9 (2012-02-24)
 ------------------
 
-* Fixed: typo
 * Added: dumper option to geocoder:geocode CLI + test
 * Fixed: composer.json
 * Added: cURL requirement for tests and CLI
@@ -40,10 +42,8 @@ n/a
 0.1.8 (2012-02-21)
 ------------------
 
-* Fixed: typo
 * Refactored: getAdapter and getProvider in CLI
 * Added: CLI for Geocoder class + tests
-* Fixed: typo
 * Added: CLI for Geocoder class + tests
 * Updated: composer installation info
 * Added: logo to CLI
@@ -76,20 +76,17 @@ n/a
 0.1.5 (2013-02-13)
 ------------------
 
-* Fixed: CS
 * Added: Convert class, tests and doc
 * Updated: doc about Coordinate class
 * Updated: method visibility in Coordinate class
 * Added: Coordinate class support different DMS coordinates
 * Fixed: thrown message on invalid coordinate
 * Fixed: typo calculate to compute
-* Fixed typos
 
 0.1.4 (2013-02-10)
 ------------------
 
 * Updated: Batch class test
-* Fixed: typo
 * Added: test to AbstractGeotools class
 * Refactored: Batch tests
 * Updated: doc with a better batch exemple
@@ -99,7 +96,6 @@ n/a
 0.1.3 (2013-02-09)
 ------------------
 
-* Fixed: typo
 * Added: geohash ref to the doc
 * Refactored: tests
 * Added: Geohash class, tests and doc
@@ -117,9 +113,7 @@ n/a
 * Added: test to Distance class
 * Added: test to Batch class
 * Added: test to Point class
-* Fixed: CS
 * Updated: test to Getools class with a CoordinateInterface stub
-* Updated: doc
 * Updated: Contributing doc
 * Updated: test to Geotools class
 * Added: test to Coordinate class
@@ -134,8 +128,6 @@ n/a
 ------------------
 
 * Added: Contributing doc
-* Fixed: CS
-* Updated: doc
 * Added: Travis-ci to the doc
 * Added: stillmaintained.com to the doc
 * Initial import
