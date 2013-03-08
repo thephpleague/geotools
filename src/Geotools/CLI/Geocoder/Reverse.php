@@ -30,10 +30,6 @@ class Reverse extends Command
 {
     protected function configure()
     {
-        $adapters  = implode(', ', array_keys($this->adapters));
-        $providers = implode(', ', array_keys($this->providers));
-        $dumpers   = implode(', ', array_keys($this->dumpers));
-
         $this
             ->setName('geocoder:reverse')
             ->setDescription('Reverse geocode street address, IPv4 or IPv6 against a provider with an adapter')
@@ -51,9 +47,17 @@ class Reverse extends Command
             ->addOption('format', null, InputOption::VALUE_REQUIRED,
                 'If set, the format of the reverse geocoding result', '%S %n, %z %L')
             ->setHelp(<<<EOT
-<info>Available adapters</info>: $adapters
-<info>Available providers</info>: $providers
-<info>Available dumpers</info>: $dumpers
+<info>Available adapters</info>:   {$this->getAdapters()}
+<info>Available providers</info>:  {$this->getProviders()} <comment>(some providers need arguments)</comment>
+<info>Available dumpers</info>:    {$this->getDumpers()}
+
+<info>Use the default provider with the socket adapter and format the output</info>:
+
+    %command.full_name% "48.8631507, 2.388911" <comment>--format="%L, %R, %C" --adapter=socket</comment>
+
+<info>Use the OpenStreetMaps provider with the default adapter</info>:
+
+    %command.full_name% "48.8631507, 2.388911" <comment>--provider=openstreetmaps</comment>
 EOT
             );
     }

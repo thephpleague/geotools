@@ -28,10 +28,6 @@ class Geocode extends Command
 {
     protected function configure()
     {
-        $adapters  = implode(', ', array_keys($this->adapters));
-        $providers = implode(', ', array_keys($this->providers));
-        $dumpers   = implode(', ', array_keys($this->dumpers));
-
         $this
             ->setName('geocoder:geocode')
             ->setDescription('Geocode a street-address, IPv4 or IPv6 against a provider with an adapter')
@@ -49,9 +45,25 @@ class Geocode extends Command
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service')
             ->setHelp(<<<EOT
-<info>Available adapters</info>: $adapters
-<info>Available providers</info>: $providers
-<info>Available dumpers</info>: $dumpers
+<info>Available adapters</info>:   {$this->getAdapters()}
+<info>Available providers</info>:  {$this->getProviders()} <comment>(some providers need arguments)</comment>
+<info>Available dumpers</info>:    {$this->getDumpers()}
+
+<info>Use the default provider with the socket adapter and dump the output in WKT standard</info>:
+
+    %command.full_name% paris <comment>--adapter=socket --dumper=wkt</comment>
+
+<info>Use the OpenStreetMaps provider with the default adapter</info>:
+
+    %command.full_name% paris <comment>--provider=openstreetmaps</comment>
+
+<info>Use the FreeGeoIp provider with the socket adapter</info>
+
+    %command.full_name% 74.200.247.59 <comment>--provider="free_geo_ip" --adapter="socket"</comment>
+
+<info>Use the default provider with the french locale and region via SSL</info>:
+
+    %command.full_name% "Tagensvej 47, Copenhagen" <comment>--args=da_DK --args=Denmark --args="true"</comment>
 EOT
             );
     }

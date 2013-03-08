@@ -25,7 +25,7 @@ class Command extends BaseCommand
      *
      * @var array
      */
-    protected $adapters = array(
+    private $adapters = array(
         'buzz'    => 'BuzzHttpAdapter',
         'curl'    => 'CurlHttpAdapter',
         'guzzle'  => 'GuzzleHttpAdapter',
@@ -38,7 +38,7 @@ class Command extends BaseCommand
      *
      * @var array
      */
-    protected $providers = array(
+    private $providers = array(
         'free_geo_ip'          => 'FreeGeoIpProvider',
         'host_ip'              => 'HostIpProvider',
         'ip_info_db'           => 'IpInfoDbProvider',
@@ -69,7 +69,7 @@ class Command extends BaseCommand
      *
      * @var array
      */
-    protected $dumpers = array(
+    private $dumpers = array(
         'gpx'     => 'GpxDumper',
         'geojson' => 'GeoJsonDumper',
         'kml'     => 'KmlDumper',
@@ -97,6 +97,18 @@ class Command extends BaseCommand
     }
 
     /**
+     * Returns the list of available adapters sorted by alphabetical order.
+     *
+     * @return string The list of availalbe adapters comma separated.
+     */
+    protected function getAdapters()
+    {
+        ksort($this->adapters);
+
+        return implode(', ', array_keys($this->adapters));
+    }
+
+    /**
      * Returns the provider class name.
      * The default provider is Google Maps.
      *
@@ -115,6 +127,18 @@ class Command extends BaseCommand
     }
 
     /**
+     * Returns the list of available providers sorted by alphabetical order.
+     *
+     * @return string The list of availalbe providers comma separated.
+     */
+    protected function getProviders()
+    {
+        ksort($this->providers);
+
+        return implode(', ', array_keys($this->providers));
+    }
+
+    /**
      * Retunrs the dumper class name.
      * The default dumper is WktDumper.
      *
@@ -130,6 +154,18 @@ class Command extends BaseCommand
             : $this->dumpers['wkt'];
 
         return '\\Geocoder\\Dumper\\' . $dumper;
+    }
+
+    /**
+     * Returns the list of available dumpers sorted by alphabetical order.
+     *
+     * @return string The list of availalbe dumpers comma separated.
+     */
+    protected function getDumpers()
+    {
+        ksort($this->dumpers);
+
+        return implode(', ', array_keys($this->dumpers));
     }
 
     /**
