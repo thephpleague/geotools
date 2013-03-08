@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Geo-related tools PHP 5.3 library",
     "keywords": ["geotools", "geometry", "geocoder", "geocoding", "geoip", "bounds", "distance", "batch", "async"],
-    "homepage": "https://github.com/toin0u/Geotools",
+    "homepage": "http://geotools-php.org/",
     "license": "MIT",
     "authors": [
         {
