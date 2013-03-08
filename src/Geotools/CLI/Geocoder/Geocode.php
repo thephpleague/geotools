@@ -28,6 +28,10 @@ class Geocode extends Command
 {
     protected function configure()
     {
+        $adapters  = implode(', ', array_keys($this->adapters));
+        $providers = implode(', ', array_keys($this->providers));
+        $dumpers   = implode(', ', array_keys($this->dumpers));
+
         $this
             ->setName('geocoder:geocode')
             ->setDescription('Geocode a street-address, IPv4 or IPv6 against a provider with an adapter')
@@ -43,7 +47,13 @@ class Geocode extends Command
             ->addOption('dumper', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the dumper to use, no dumper by default')
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
-                'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service');
+                'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service')
+            ->setHelp(<<<EOT
+<info>Available adapters</info>: $adapters
+<info>Available providers</info>: $providers
+<info>Available dumpers</info>: $dumpers
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

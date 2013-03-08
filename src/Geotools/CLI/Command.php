@@ -21,6 +21,64 @@ use Symfony\Component\Console\Command\Command as BaseCommand;
 class Command extends BaseCommand
 {
     /**
+     * Available adapters.
+     *
+     * @var array
+     */
+    protected $adapters = array(
+        'buzz'    => 'BuzzHttpAdapter',
+        'curl'    => 'CurlHttpAdapter',
+        'guzzle'  => 'GuzzleHttpAdapter',
+        'socket'  => 'SocketHttpAdapter',
+        'zend'    => 'ZendHttpAdapter',
+    );
+
+    /**
+     * Available providers.
+     *
+     * @var array
+     */
+    protected $providers = array(
+        'free_geo_ip'          => 'FreeGeoIpProvider',
+        'host_ip'              => 'HostIpProvider',
+        'ip_info_db'           => 'IpInfoDbProvider',
+        'yahoo'                => 'YahooProvider',
+        'google_maps'          => 'GoogleMapsProvider',
+        'google_maps_business' => 'GoogleMapsBusinessProvider',
+        'bing_maps'            => 'BingMapsProvider',
+        'openstreetmaps'       => 'OpenStreetMapsProvider',
+        'cloudmade'            => 'CloudMadeProvider',
+        'geoip'                => 'GeoipProvider',
+        'map_quest'            => 'MapQuestProvider',
+        'oio_rest'             => 'OIORestProvider',
+        'geocoder_ca'          => 'GeocoderCaProvider',
+        'geocoder_us'          => 'GeocoderUsProvider',
+        'ign_openls'           => 'IGNOpenLSProvider',
+        'data_science_toolkit' => 'DataScienceToolkitProvider',
+        'yandex'               => 'YandexProvider',
+        'geo_plugin'           => 'GeoPluginProvider',
+        'geo_ips'              => 'GeoIPsProvider',
+        'maxmind'              => 'MaxMindProvider',
+        'geonames'             => 'GeonamesProvider',
+        'ip_geo_base'          => 'IpGeoBaseProvider',
+        'baidu'                => 'BaiduProvider',
+    );
+
+    /**
+     * Available dumpers.
+     *
+     * @var array
+     */
+    protected $dumpers = array(
+        'gpx'     => 'GpxDumper',
+        'geojson' => 'GeoJsonDumper',
+        'kml'     => 'KmlDumper',
+        'wkb'     => 'WkbDumper',
+        'wkt'     => 'WktDumper',
+    );
+
+
+    /**
      * Returns the adapter class name.
      * The default adapter is cURL.
      *
@@ -30,17 +88,10 @@ class Command extends BaseCommand
      */
     protected function getAdapter($adapter)
     {
-        $adapter  = $this->lowerize((trim($adapter)));
-        $adapters = array(
-            'buzz'    => 'BuzzHttpAdapter',
-            'curl'    => 'CurlHttpAdapter',
-            'guzzle'  => 'GuzzleHttpAdapter',
-            'socket'  => 'SocketHttpAdapter',
-            'zend'    => 'ZendHttpAdapter',
-            'default' => 'CurlHttpAdapter',
-        );
-
-        $adapter = array_key_exists($adapter, $adapters) ? $adapters[$adapter] : $adapters['default'];
+        $adapter = $this->lowerize((trim($adapter)));
+        $adapter = array_key_exists($adapter, $this->adapters)
+            ? $this->adapters[$adapter]
+            : $this->adapters['curl'];
 
         return '\\Geocoder\\HttpAdapter\\' . $adapter;
     }
@@ -56,34 +107,9 @@ class Command extends BaseCommand
     protected function getProvider($provider)
     {
         $provider = $this->lowerize((trim($provider)));
-        $providers = array(
-            'free_geo_ip'          => 'FreeGeoIpProvider',
-            'host_ip'              => 'HostIpProvider',
-            'ip_info_db'           => 'IpInfoDbProvider',
-            'yahoo'                => 'YahooProvider',
-            'google_maps'          => 'GoogleMapsProvider',
-            'google_maps_business' => 'GoogleMapsBusinessProvider',
-            'bing_maps'            => 'BingMapsProvider',
-            'openstreetmaps'       => 'OpenStreetMapsProvider',
-            'cloudmade'            => 'CloudMadeProvider',
-            'geoip'                => 'GeoipProvider',
-            'map_quest'            => 'MapQuestProvider',
-            'oio_rest'             => 'OIORestProvider',
-            'geocoder_ca'          => 'GeocoderCaProvider',
-            'geocoder_us'          => 'GeocoderUsProvider',
-            'ign_openls'           => 'IGNOpenLSProvider',
-            'data_science_toolkit' => 'DataScienceToolkitProvider',
-            'yandex'               => 'YandexProvider',
-            'geo_plugin'           => 'GeoPluginProvider',
-            'geo_ips'              => 'GeoIPsProvider',
-            'maxmind'              => 'MaxMindProvider',
-            'geonames'             => 'GeonamesProvider',
-            'ip_geo_base'          => 'IpGeoBaseProvider',
-            'baidu'                => 'BaiduProvider',
-            'default'              => 'GoogleMapsProvider',
-        );
-
-        $provider = array_key_exists($provider, $providers) ? $providers[$provider] : $providers['default'];
+        $provider = array_key_exists($provider, $this->providers)
+            ? $this->providers[$provider]
+            : $this->providers['google_maps'];
 
         return '\\Geocoder\\Provider\\' . $provider;
     }
@@ -99,16 +125,9 @@ class Command extends BaseCommand
     protected function getDumper($dumper)
     {
         $dumper = $this->lowerize((trim($dumper)));
-        $dumpers = array(
-            'gpx'     => 'GpxDumper',
-            'geojson' => 'GeoJsonDumper',
-            'kml'     => 'KmlDumper',
-            'wkb'     => 'WkbDumper',
-            'wkt'     => 'WktDumper',
-            'default' => 'WktDumper',
-        );
-
-        $dumper = array_key_exists($dumper, $dumpers) ? $dumpers[$dumper] : $dumpers['default'];
+        $dumper = array_key_exists($dumper, $this->dumpers)
+            ? $this->dumpers[$dumper]
+            : $this->dumpers['wkt'];
 
         return '\\Geocoder\\Dumper\\' . $dumper;
     }

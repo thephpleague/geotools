@@ -30,6 +30,10 @@ class Reverse extends Command
 {
     protected function configure()
     {
+        $adapters  = implode(', ', array_keys($this->adapters));
+        $providers = implode(', ', array_keys($this->providers));
+        $dumpers   = implode(', ', array_keys($this->dumpers));
+
         $this
             ->setName('geocoder:reverse')
             ->setDescription('Reverse geocode street address, IPv4 or IPv6 against a provider with an adapter')
@@ -45,7 +49,13 @@ class Reverse extends Command
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service')
             ->addOption('format', null, InputOption::VALUE_REQUIRED,
-                'If set, the format of the reverse geocoding result', '%S %n, %z %L');
+                'If set, the format of the reverse geocoding result', '%S %n, %z %L')
+            ->setHelp(<<<EOT
+<info>Available adapters</info>: $adapters
+<info>Available providers</info>: $providers
+<info>Available dumpers</info>: $dumpers
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
