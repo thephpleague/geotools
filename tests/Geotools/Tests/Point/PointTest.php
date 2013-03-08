@@ -78,7 +78,7 @@ class PointTest extends TestCase
         $this->point->setFrom($this->getMockCoordinateReturns($from));
         $this->point->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedDegree[0], $this->point->initialBearing());
+        $this->assertEquals($expectedDegree, $this->point->initialBearing());
     }
 
     public function coordinatesAndExpectedDegreeForInitialBearingProvider()
@@ -87,27 +87,27 @@ class PointTest extends TestCase
             array(
                 array(48.8234055, 2.3072664),
                 array(43.296482, 5.36978),
-                array(157)
+                157
             ),
             array(
                 array('48.8234055', '2.3072664'),
                 array('43.296482', '5.36978'),
-                array('157')
+                '157'
             ),
             array(
                 array(43.296482, 5.36978),
                 array(48.8234055, 2.3072664),
-                array(340)
+                340
             ),
             array(
                 array(-43.296482, -5.36978),
                 array(-48.8234055, -2.3072664),
-                array(160)
+                160
             ),
             array(
                 array(35, 45),
                 array(35, 135),
-                array(60)
+                60
             ),
         );
     }
@@ -120,7 +120,7 @@ class PointTest extends TestCase
         $this->point->setFrom($this->getMockCoordinateReturns($from));
         $this->point->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedDegree[0], $this->point->finalBearing());
+        $this->assertEquals($expectedDegree, $this->point->finalBearing());
     }
 
     public function coordinatesAndExpectedDegreeForFinalBearingProvider()
@@ -129,27 +129,27 @@ class PointTest extends TestCase
             array(
                 array(48.8234055, 2.3072664),
                 array(43.296482, 5.36978),
-                array(160)
+                160
             ),
             array(
                 array('48.8234055', '2.3072664'),
                 array('43.296482', '5.36978'),
-                array('160')
+                '160'
             ),
             array(
                 array(43.296482, 5.36978),
                 array(48.8234055, 2.3072664),
-                array(337)
+                337
             ),
             array(
                 array(-43.296482, -5.36978),
                 array(-48.8234055, -2.3072664),
-                array(157)
+                157
             ),
             array(
                 array(35, 45),
                 array(35, 135),
-                array(119)
+                119
             ),
         );
     }
@@ -162,7 +162,7 @@ class PointTest extends TestCase
         $this->point->setFrom($this->getMockCoordinateReturns($from));
         $this->point->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedCardinal[0], $this->point->initialCardinal());
+        $this->assertEquals($expectedCardinal, $this->point->initialCardinal());
     }
 
     public function coordinatesAndExpectedInitialCardinalProvider()
@@ -171,27 +171,27 @@ class PointTest extends TestCase
             array(
                 array(48.8234055, 2.3072664),
                 array(43.296482, 5.36978),
-                array('SSE')
+                'SSE'
             ),
             array(
                 array('28.8234055', '1.3072664'),
                 array('43.296482', '5.36978'),
-                array('N')
+                'N'
             ),
             array(
                 array(43.296482, 5.36978),
                 array(48.8234055, 2.3072664),
-                array('NNW')
+                'NNW'
             ),
             array(
                 array(-13.296482, -5.36978),
                 array(-38.8234055, -4.3072664),
-                array('S')
+                'S'
             ),
             array(
                 array(35, 45),
                 array(35, 135),
-                array('ENE')
+                'ENE'
             ),
         );
     }
@@ -204,7 +204,7 @@ class PointTest extends TestCase
         $this->point->setFrom($this->getMockCoordinateReturns($from));
         $this->point->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedCardinal[0], $this->point->finalCardinal());
+        $this->assertEquals($expectedCardinal, $this->point->finalCardinal());
     }
 
     public function coordinatesAndExpectedFinalCardinalProvider()
@@ -213,27 +213,27 @@ class PointTest extends TestCase
             array(
                 array(48.8234055, 2.3072664),
                 array(43.296482, 5.36978),
-                array('SSE')
+                'SSE'
             ),
             array(
                 array('28.8234055', '1.3072664'),
                 array('43.296482', '5.36978'),
-                array('NNE')
+                'NNE'
             ),
             array(
                 array(43.296482, 5.36978),
                 array(48.8234055, 2.3072664),
-                array('NNW')
+                'NNW'
             ),
             array(
                 array(-13.296482, -5.36978),
                 array(-38.8234055, -4.3072664),
-                array('S')
+                'S'
             ),
             array(
                 array(35, 45),
                 array(35, 135),
-                array('ESE')
+                'ESE'
             ),
         );
     }
@@ -302,7 +302,7 @@ class PointTest extends TestCase
         $WGS84 = Ellipsoid::createFromName(Ellipsoid::WGS84);
 
         $this->point->setFrom($this->getMockCoordinateReturns($from, $WGS84));
-        $destionationPoint = $this->point->destination($bearing[0], $distance[0]);
+        $destionationPoint = $this->point->destination($bearing, $distance);
 
         $this->assertTrue(is_object($destionationPoint));
         $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $destionationPoint);
@@ -316,26 +316,26 @@ class PointTest extends TestCase
         return array(
             array(
                 array(48.8234055, 2.3072664),
-                array(180),
-                array(200000),
+                180,
+                200000,
                 array($this->getMockCoordinateReturns(array(47.026774650075, 2.3072664)))
             ),
             array(
                 array('28.8234055', '1.3072664'),
-                array(95),
-                array(500000),
+                95,
+                500000,
                 array($this->getMockCoordinateReturns(array(28.336641152298, 6.3923716035552)))
             ),
             array(
                 array(43.296482, 5.36978),
-                array(37),
-                array(3000),
+                37,
+                3000,
                 array($this->getMockCoordinateReturns(array('43.318002633989', '5.3920718426221')))
             ),
             array(
                 array(-13.296482, -5.36978),
-                array(166),
-                array(5000000),
+                166,
+                5000000,
                 array($this->getMockCoordinateReturns(array(-56.057095935971, 12.44347001977)))
             ),
         );

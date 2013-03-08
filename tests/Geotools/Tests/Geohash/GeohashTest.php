@@ -138,10 +138,10 @@ class GeohashTest extends TestCase
      */
     public function testEncodedGetGeoHash($coordinate, $length, $expectedGeoHash)
     {
-        $geohash = $this->geohash->encode($this->getMockCoordinateReturns($coordinate), $length[0])->getGeohash();
+        $geohash = $this->geohash->encode($this->getMockCoordinateReturns($coordinate), $length)->getGeohash();
 
-        $this->assertSame($length[0], strlen($geohash));
-        $this->assertSame($expectedGeoHash[0], $geohash);
+        $this->assertSame($length, strlen($geohash));
+        $this->assertSame($expectedGeoHash, $geohash);
     }
 
     /**
@@ -149,7 +149,7 @@ class GeohashTest extends TestCase
      */
     public function testEncodedGetBoundingBox($coordinate, $length, $expectedGeoHash, $expectedBoundingBox)
     {
-        $boundingBox = $this->geohash->encode($this->getMockCoordinateReturns($coordinate), $length[0])->getBoundingBox();
+        $boundingBox = $this->geohash->encode($this->getMockCoordinateReturns($coordinate), $length)->getBoundingBox();
 
         $this->assertTrue(is_array($boundingBox));
         $this->assertTrue(is_object($boundingBox[0]));
@@ -170,8 +170,8 @@ class GeohashTest extends TestCase
         return array(
             array(
                 array(48.8234055, 2.3072664),
-                array(12),
-                array('u09tu800gnqw'),
+                12,
+                'u09tu800gnqw',
                 array(
                     array(48.8232421875, 2.28515625),
                     array(48.8671875, 2.3291015625)
@@ -179,8 +179,8 @@ class GeohashTest extends TestCase
             ),
             array(
                 array(-28.8234055, 1.3072664),
-                array(5),
-                array('k4buj'),
+                5,
+                'k4buj',
                 array(
                     array(-28.828125, 1.2744140625),
                     array(-28.7841796875, 1.318359375)
@@ -188,8 +188,8 @@ class GeohashTest extends TestCase
             ),
             array(
                 array(18.8234055, 22.3072664),
-                array(7),
-                array('s7rg5de'),
+                7,
+                's7rg5de',
                 array(
                     array(18.822326660156, 22.306365966797),
                     array(18.823699951172, 22.307739257812)
@@ -203,7 +203,7 @@ class GeohashTest extends TestCase
      */
     public function testDecodedGetCoordinate($geoHash, $expectedCoordinate)
     {
-        $coordinate = $this->geohash->decode($geoHash[0])->getCoordinate();
+        $coordinate = $this->geohash->decode($geoHash)->getCoordinate();
 
         $this->assertTrue(is_object($coordinate));
         $this->assertInstanceOf('\Geotools\Coordinate\Coordinate', $coordinate);
@@ -217,7 +217,7 @@ class GeohashTest extends TestCase
      */
     public function testDecodedGetBoundingBox($geoHash, $expectedCoordinate, $expectedBoundingBox)
     {
-        $boundingBox = $this->geohash->decode($geoHash[0])->getBoundingBox();
+        $boundingBox = $this->geohash->decode($geoHash)->getBoundingBox();
 
         $this->assertTrue(is_array($boundingBox));
         $this->assertTrue(is_object($boundingBox[0]));
@@ -237,7 +237,7 @@ class GeohashTest extends TestCase
     {
         return array(
             array(
-                array('u09tu800gnqw'),
+                'u09tu800gnqw',
                 array(48.8234055, 2.3072664),
                 array(
                     array(48.8232421875, 2.28515625),
@@ -245,7 +245,7 @@ class GeohashTest extends TestCase
                 )
             ),
             array(
-                array('k4buj'),
+                'k4buj',
                 array(-28.8234055, 1.3072664),
                 array(
                     array(-28.828125, 1.2744140625),
@@ -253,7 +253,7 @@ class GeohashTest extends TestCase
                 )
             ),
             array(
-                array('s7rg5dew'),
+                's7rg5dew',
                 array(18.8234055, 22.3072664),
                 array(
                     array(18.822326660156, 22.306365966797),
