@@ -32,7 +32,11 @@ class UTM extends Command
         $this
             ->setName('convert:utm')
             ->setDescription('Convert decimal degrees coordinates in the Universal Transverse Mercator projection')
-            ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate');
+            ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate')
+            ->setHelp(<<<EOT
+<info>Exemple</info>:              %command.full_name% "40.446195, -79.948862"
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -35,7 +35,11 @@ class DM extends Command
             ->setDescription('Convert and format decimal degrees coordinates to decimal minutes coordinate')
             ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate')
             ->addOption('format', null, InputOption::VALUE_REQUIRED,
-                'If set, the format of the converted decimal minutes coordinate', ConvertInterface::DEFAULT_DM_FORMAT);
+                'If set, the format of the converted decimal minutes coordinate', ConvertInterface::DEFAULT_DM_FORMAT)
+            ->setHelp(<<<EOT
+<info>Exemple</info>:              %command.full_name% "40.446195, -79.948862" <comment>--format="%P%D°%N %p%d°%n"</comment>
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

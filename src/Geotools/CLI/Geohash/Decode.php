@@ -30,7 +30,11 @@ class Decode extends Command
         $this
             ->setName('geohash:decode')
             ->setDescription('Decode a geo hash string to a coordinate')
-            ->addArgument('geohash', InputArgument::REQUIRED, 'The geo hash to decode to coordinate');
+            ->addArgument('geohash', InputArgument::REQUIRED, 'The geo hash to decode to coordinate')
+            ->setHelp(<<<EOT
+<info>Exemple</info>:              %command.full_name% spey61y
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

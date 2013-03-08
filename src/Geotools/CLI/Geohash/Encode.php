@@ -37,7 +37,11 @@ class Encode extends Command
             ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate to encode')
             ->addOption('length', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_OPTIONAL,
                 sprintf('If set, the length between %s and %s of the encoded coordinate', Geohash::MIN_LENGTH,
-                    Geohash::MAX_LENGTH), 12);
+                    Geohash::MAX_LENGTH), 12)
+            ->setHelp(<<<EOT
+<info>Exemple</info>:              %command.full_name% "40° 26.7717, -79° 56.93172" <comment>--length=3</comment>
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

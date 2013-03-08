@@ -36,7 +36,11 @@ class DMS extends Command
             ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate')
             ->addOption('format', null, InputOption::VALUE_REQUIRED,
                 'If set, the format of the converted degrees minutes seconds coordinate',
-                ConvertInterface::DEFAULT_DMS_FORMAT);
+                ConvertInterface::DEFAULT_DMS_FORMAT)
+            ->setHelp(<<<EOT
+<info>Exemple</info>:              %command.full_name% "40.446195, -79.948862" <comment>--format="%P%D:%M:%S, %p%d:%m:%s"</comment>
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

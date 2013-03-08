@@ -368,11 +368,13 @@ Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
 
 ```bash
 $ php geotools list // list of available commands
+$ php geotools help distance:flat // get the help
 $ php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" // 4690203.1048522
 $ php geotools distance:haversine "35,45" "45,35" --ft  // 4593030.9787593
 $ php geotools distance:vincenty "35,45" "45,35" --km  // 1398.4080717661
 $ php geotools point:initial-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // NE (NordEast)
 $ php geotools point:final-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // ESE (EastSouthEast)
+$ php geotools point:destination "40° 26.7717, -79° 56.93172" 25 10000 // 40.527599285543, -79.898914904538
 $ php geotools geohash:encode "40° 26.7717, -79° 56.93172" --length=3 // dpp
 $ php geotools convert:dm "40.446195, -79.948862" --format="%P%D°%N %p%d°%n" // 40°26.7717 -79°56.93172
 $ php geotools convert:dms "40.446195, -79.948862" --format="%P%D:%M:%S, %p%d:%m:%s" // 40:26:46, -79:56:56
@@ -396,6 +398,7 @@ Read more [here](https://github.com/willdurand/Geocoder#dumpers).
 [here](https://github.com/willdurand/Geocoder#formatter).
 
 ```bash
+$ php geotools help geocoder:geocode // get the help
 $ php geotools geocoder:geocode "Copenhagen, Denmark" // 55.6760968, 12.5683371
 $ php geotools geocoder:geocode "74.200.247.59" --provider="free_geo_ip" --adapter="socket" // 37.7484, -122.4156
 $ php geotools geocoder:geocode Paris --args="fr_FR" --args="France" --args="true" // 48.856614, 2.3522219

@@ -32,7 +32,11 @@ class FinalBearing extends Command
             ->setName('point:final-bearing')
             ->setDescription('Compute the final bearing in degrees between 2 coordinates')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
-            ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate');
+            ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
+            ->setHelp(<<<EOT
+<info>Exemple</info>:              %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W"
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

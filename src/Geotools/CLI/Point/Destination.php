@@ -33,7 +33,11 @@ class Destination extends Command
             ->setDescription('Compute the destination coordinate with given bearing in degrees and a distance in meters')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('bearing', InputArgument::REQUIRED, 'The initial bearing in degrees')
-            ->addArgument('distance', InputArgument::REQUIRED, 'The distance from the origin coordinate in meters');
+            ->addArgument('distance', InputArgument::REQUIRED, 'The distance from the origin coordinate in meters')
+            ->setHelp(<<<EOT
+<info>Exemple</info>:              %command.full_name% "40° 26.7717, -79° 56.93172" 25 10000
+EOT
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
