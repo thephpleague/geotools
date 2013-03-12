@@ -1,8 +1,13 @@
 CHANGELOG
 =========
 
+0.2.1 (xxxx-xx-xx)
+------------------
+
+n/a
+
 0.2.0 (2012-03-12)
--------------------
+------------------
 
 Fixed: empty ellipsoid name throws an exception now
 Added: Ellipsoid support to Point, Convert and Distance CLI - fix #7
@@ -13,7 +18,7 @@ Added: TomTom provier to CLI - fix #14
 Changed: mile parameter to mi in Distance to be more consistent [BC break]
 
 0.1.12 (2012-03-08)
-------------------
+-------------------
 
 * Added: command exemples and refactoring
 * Added: help to geocoding and reverse geocoding CLI
@@ -24,7 +29,7 @@ Changed: mile parameter to mi in Distance to be more consistent [BC break]
 * Updated: geohash doc
 
 0.1.11 (2012-03-05)
-------------------
+-------------------
 
 * Added: international feet unit to CLI + test - fix #10
 * Updated: relative links to absolute ones
@@ -34,7 +39,7 @@ Changed: mile parameter to mi in Distance to be more consistent [BC break]
 * Added a bunch of tests.
 
 0.1.10 (2012-02-27)
-------------------
+-------------------
 
 * Added: support of different ellipsoid + doc + tests - fix #5
 * Refactored: Doc + CLI commands + tests
