@@ -236,6 +236,12 @@ class Ellipsoid
      */
     public static function createFromName($name = self::WGS84)
     {
+        $name = trim($name);
+
+        if (empty($name)) {
+            throw new InvalidArgumentException('Please provide an ellipsoid name !');
+        }
+
         if (!array_key_exists($name, self::$referenceEllipsoids)) {
             throw new InvalidArgumentException(
                 sprintf('%s ellipsoid does not exist in selected reference ellipsoids !', $name)

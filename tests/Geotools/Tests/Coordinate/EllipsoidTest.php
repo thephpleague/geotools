@@ -70,9 +70,18 @@ class EllipsoidTest extends TestCase
      * @expectedException Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
      */
-    public function testCreateFromNameThrowsException()
+    public function testCreateFromNameUnavailableEllipsoidThrowsException()
     {
         Ellipsoid::createFromName('foo');
+    }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage Please provide an ellipsoid name !
+     */
+    public function testCreateFromNameEmptyNameThrowsException()
+    {
+        Ellipsoid::createFromName(' ');
     }
 
     public function testCreateFromName()
@@ -103,6 +112,9 @@ class EllipsoidTest extends TestCase
         return array(
             array(
                 array()
+            ),
+            array(
+                array(' ')
             ),
             array(
                 array('foo')
