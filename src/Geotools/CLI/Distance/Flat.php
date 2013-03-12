@@ -19,6 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
+use Geotools\Coordinate\Ellipsoid;
 
 /**
  * Command-line distance:flat class
@@ -29,6 +30,8 @@ class Flat extends Command
 {
     protected function configure()
     {
+        $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
+
         $this
             ->setName('distance:flat')
             ->setDescription('Compute the distance between 2 coordinates using the flat algorithm, in meters by default')
@@ -37,16 +40,23 @@ class Flat extends Command
             ->addOption('km', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in kilometers')
             ->addOption('mi', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in miles')
             ->addOption('ft', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in feet')
+            ->addOption('ellipsoid', null, InputOption::VALUE_REQUIRED,
+                'If set, the name of the ellipsoid to use', Ellipsoid::WGS84)
             ->setHelp(<<<EOT
-<info>Exemple</info>:              %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--km</comment>
+<info>Available ellipsoids</info>: $availableEllipsoids
+
+<info>Exemple with WGS60 ellipsoid and output in kilometers</info>:
+
+    %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--ellipsoid=WGS60 --km</comment>
 EOT
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $from = new Coordinate($input->getArgument('origin'));
-        $to   = new Coordinate($input->getArgument('destination'));
+        $ellipsoid = Ellipsoid::createFromName($input->getOption('ellipsoid'));
+        $from      = new Coordinate($input->getArgument('origin'), $ellipsoid);
+        $to        = new Coordinate($input->getArgument('destination'), $ellipsoid);
 
         $geotools = new Geotools();
         $distance = $geotools->distance()->setFrom($from)->setTo($to);

@@ -136,4 +136,94 @@ EOF;
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertSame($expected, $this->commandTester->getDisplay());
     }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithEmptyEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => ' ',
+        ));
+    }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithoutAvailableEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => 'foo',
+        ));
+    }
+
+    public function testExecuteWithEllipsoidOption_MODIFIED_FISCHER_1960()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => 'MODIFIED_FISCHER_1960',
+        ));
+
+        $expected = <<<EOF
+Flat:      4690217.0420619
+Haversine: 4625834.2679671
+Vincenty:  4629772.0245618
+
+EOF;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, $this->commandTester->getDisplay());
+    }
+
+    public function testExecuteWithEllipsoidOption_BESSEL_1841_NAMBIA()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => 'BESSEL_1841_NAMBIA',
+            '--mi'        => true,
+        ));
+
+        $expected = <<<EOF
+Flat:      2914.0590940473
+Haversine: 2874.0577024979
+Vincenty:  2876.4972775872
+
+EOF;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, $this->commandTester->getDisplay());
+    }
+
+    public function testExecuteWithEllipsoidOption_CLARKE_1866()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => 'CLARKE_1866',
+            '--ft'        => true,
+        ));
+
+        $expected = <<<EOF
+Flat:      15387975.194818
+Haversine: 15176743.918768
+Vincenty:  15189808.665879
+
+EOF;
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame($expected, $this->commandTester->getDisplay());
+    }
 }
