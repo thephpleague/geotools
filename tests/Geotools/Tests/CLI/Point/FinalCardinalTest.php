@@ -70,4 +70,45 @@ class FinalCardinalTest extends TestCase
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertSame('ESE', trim($this->commandTester->getDisplay()));
     }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithEmptyEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => ' ',
+        ));
+    }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithoutAvailableEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => 'foo',
+        ));
+    }
+
+    public function testExecuteWithEllipsoid()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => 'FISCHER_1968',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertSame('ESE', trim($this->commandTester->getDisplay()));
+    }
 }

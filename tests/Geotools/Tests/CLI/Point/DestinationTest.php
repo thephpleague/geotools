@@ -72,4 +72,76 @@ class DestinationTest extends TestCase
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertRegExp('/47\.026774650075, 2\.3072664/', $this->commandTester->getDisplay());
     }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithEmptyEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '48.8234055, 2.3072664',
+            'bearing'     => 180,
+            'distance'    => 200000,
+            '--ellipsoid' => ' ',
+        ));
+    }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithoutAvailableEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '48.8234055, 2.3072664',
+            'bearing'     => 180,
+            'distance'    => 200000,
+            '--ellipsoid' => 'foo',
+        ));
+    }
+
+    public function testExecuteWithEllipsoid_GRS_1980()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '48.8234055, 2.3072664',
+            'bearing'     => 110,
+            'distance'    => 2000000,
+            '--ellipsoid' => 'GRS_1980',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertRegExp('/40\.279971519453, 24\.637336894406/', $this->commandTester->getDisplay());
+    }
+
+    public function testExecuteWithEllipsoid_AUSTRALIAN_NATIONAL()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '48.8234055, 2.3072664',
+            'bearing'     => 110,
+            'distance'    => 2000000,
+            '--ellipsoid' => 'AUSTRALIAN_NATIONAL',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertRegExp('/40\.280009426711, 24\.637268024987/', $this->commandTester->getDisplay());
+    }
+
+    public function testExecuteWithEllipsoid_BESSEL_1841()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'origin'      => '48.8234055, 2.3072664',
+            'bearing'     => 110,
+            'distance'    => 2000000,
+            '--ellipsoid' => 'BESSEL_1841',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertRegExp('/40\.278751982466, 24\.639552452771/', $this->commandTester->getDisplay());
+    }
 }

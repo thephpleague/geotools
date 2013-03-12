@@ -22,7 +22,7 @@ use Geotools\Coordinate\Coordinate;
 use Geotools\CLI\Command;
 
 /**
- * Command-line geocoder:revese class
+ * Command-line geocoder:reverse class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
