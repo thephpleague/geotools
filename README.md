@@ -372,13 +372,16 @@ $ php geotools help distance:flat // get the help
 $ php geotools distance:flat "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" // 4690203.1048522
 $ php geotools distance:haversine "35,45" "45,35" --ft  // 4593030.9787593
 $ php geotools distance:vincenty "35,45" "45,35" --km  // 1398.4080717661
+$ php geotools d:v "35,45" "45,35" --km --ellipsoid=WGS60 // 1398.4145201642
 $ php geotools point:initial-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // NE (NordEast)
 $ php geotools point:final-cardinal "40:26:46.302N 079:56:55.903W" "43.296482, 5.36978" // ESE (EastSouthEast)
 $ php geotools point:destination "40° 26.7717, -79° 56.93172" 25 10000 // 40.527599285543, -79.898914904538
+$ php geotools p:d "40° 26.7717, -79° 56.93172" 25 10000 --ellipsoid=GRS_1980 // 40.527599272782, -79.898914912379
 $ php geotools geohash:encode "40° 26.7717, -79° 56.93172" --length=3 // dpp
 $ php geotools convert:dm "40.446195, -79.948862" --format="%P%D°%N %p%d°%n" // 40°26.7717 -79°56.93172
 $ php geotools convert:dms "40.446195, -79.948862" --format="%P%D:%M:%S, %p%d:%m:%s" // 40:26:46, -79:56:56
 $ php geotools convert:utm "60.3912628, 5.3220544" // 32V 297351 6700644
+$ php geotools c:u "60.3912628, 5.3220544" --ellipsoid=AIRY // 32V 297371 6700131
 ...
 ```
 
