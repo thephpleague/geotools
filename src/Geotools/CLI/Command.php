@@ -62,6 +62,7 @@ class Command extends BaseCommand
         'geonames'             => 'GeonamesProvider',
         'ip_geo_base'          => 'IpGeoBaseProvider',
         'baidu'                => 'BaiduProvider',
+        'tomtom'               => 'TomTomProvider',
     );
 
     /**
