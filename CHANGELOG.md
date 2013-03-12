@@ -1,10 +1,16 @@
 CHANGELOG
 =========
 
-0.1.13 (xxxx-xx-xx)
+0.2.0 (2012-03-12)
 -------------------
 
-n/a
+Fixed: empty ellipsoid name throws an exception now
+Added: Ellipsoid support to Point, Convert and Distance CLI - fix #7
+Added: Ellipsoid support to Point CLI
+Added: Ellipsoid support to Distance CLI
+Added: Ellipsoid support to Convert CLI
+Added: TomTom provier to CLI - fix #14
+Changed: mile parameter to mi in Distance to be more consistent [BC break]
 
 0.1.12 (2012-03-08)
 ------------------
