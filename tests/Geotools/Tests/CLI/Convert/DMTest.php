@@ -96,7 +96,7 @@ class DMTest extends TestCase
 
     /**
      * @expectedException Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage ellipsoid does not exist in selected reference ellipsoids !
+     * @expectedExceptionMessage Please provide an ellipsoid name !
      */
     public function testExecuteWithEmptyEllipsoidOption()
     {
