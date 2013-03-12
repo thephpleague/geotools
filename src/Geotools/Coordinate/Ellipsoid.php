@@ -328,4 +328,16 @@ class Ellipsoid
     {
         return (double) $this->a * (1 - 1 / $this->invF / 3);
     }
+
+    /**
+     * Returns the list of available ellipsoids sorted by alphabetical order.
+     *
+     * @return string The list of availalbe ellipsoids comma separated.
+     */
+    public static function getAvailableEllipsoidNames()
+    {
+        ksort(self::$referenceEllipsoids);
+
+        return implode(', ', array_keys(self::$referenceEllipsoids));
+    }
 }

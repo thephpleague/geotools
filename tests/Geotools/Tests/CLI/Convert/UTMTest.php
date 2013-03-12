@@ -68,4 +68,66 @@ class UTMTest extends TestCase
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertRegExp('/31U 449152 5408055/', $this->commandTester->getDisplay());
     }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithEmptyEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'coordinate'  => '40° 26.7717, -79° 56.93172',
+            '--ellipsoid' => ' ',
+        ));
+    }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithoutAvailableEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'coordinate'  => '40° 26.7717, -79° 56.93172',
+            '--ellipsoid' => 'foo',
+        ));
+    }
+
+    public function testExecuteWithEllipsoidOption_MODIFIED_FISCHER_1960()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'coordinate'  => '40° 26.7717, -79° 56.93172',
+            '--ellipsoid' => 'MODIFIED_FISCHER_1960',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertRegExp('/17T 589139 4477828/', $this->commandTester->getDisplay());
+    }
+
+    public function testExecuteWithEllipsoidOption_BESSEL_1841_NAMBIA()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'coordinate'  => '40° 26.7717, -79° 56.93172',
+            '--ellipsoid' => 'BESSEL_1841_NAMBIA',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertRegExp('/17T 589129 4477424/', $this->commandTester->getDisplay());
+    }
+
+    public function testExecuteWithEllipsoidOption_CLARKE_1866()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'coordinate'  => '40° 26.7717, -79° 56.93172',
+            '--ellipsoid' => 'CLARKE_1866',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertRegExp('/17T 589141 4477602/', $this->commandTester->getDisplay());
+    }
 }

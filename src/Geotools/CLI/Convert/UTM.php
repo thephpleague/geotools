@@ -19,6 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Geotools\Geotools;
 use Geotools\Coordinate\Coordinate;
+use Geotools\Coordinate\Ellipsoid;
 
 /**
  * Command-line convert:utm class
@@ -29,19 +30,28 @@ class UTM extends Command
 {
     protected function configure()
     {
+        $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
+
         $this
             ->setName('convert:utm')
             ->setDescription('Convert decimal degrees coordinates in the Universal Transverse Mercator projection')
             ->addArgument('coordinate', InputArgument::REQUIRED, 'The "Lat,Long" coordinate')
+            ->addOption('ellipsoid', null, InputOption::VALUE_REQUIRED,
+                'If set, the name of the ellipsoid to use', Ellipsoid::WGS84)
             ->setHelp(<<<EOT
-<info>Exemple</info>:              %command.full_name% "40.446195, -79.948862"
+<info>Available ellipsoids</info>: $availableEllipsoids
+
+<info>Exemple with CLARKE_1866 ellipsoid</info>:
+
+    %command.full_name% "40.446195, -79.948862" <comment>--ellipsoid=CLARKE_1866</comment>
 EOT
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $coordinate = new Coordinate($input->getArgument('coordinate'));
+        $ellipsoid  = Ellipsoid::createFromName($input->getOption('ellipsoid'));
+        $coordinate = new Coordinate($input->getArgument('coordinate'), $ellipsoid);
         $geotools   = new Geotools();
 
         $output->getFormatter()->setStyle('value', new OutputFormatterStyle('green', 'black'));

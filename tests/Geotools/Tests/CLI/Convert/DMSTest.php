@@ -93,4 +93,43 @@ class DMSTest extends TestCase
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertEmpty(trim($this->commandTester->getDisplay()));
     }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithEmptyEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'coordinate'  => '40° 26.7717, -79° 56.93172',
+            '--ellipsoid' => ' ',
+        ));
+    }
+
+    /**
+     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
+     */
+    public function testExecuteWithoutAvailableEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'coordinate'  => '40° 26.7717, -79° 56.93172',
+            '--ellipsoid' => 'foo',
+        ));
+    }
+
+    public function testExecuteWithEllipsoidOption()
+    {
+        $this->commandTester->execute(array(
+            'command'     => $this->command->getName(),
+            'coordinate'  => '40° 26.7717, -79° 56.93172',
+            '--format'    => '%P%D:%M:%S, %p%d:%m:%s',
+            '--ellipsoid' => 'BESSEL_1841',
+        ));
+
+        $this->assertTrue(is_string($this->commandTester->getDisplay()));
+        $this->assertRegExp('/40:26:46, -79:56:56/', $this->commandTester->getDisplay());
+    }
 }

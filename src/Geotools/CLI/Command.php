@@ -140,7 +140,7 @@ class Command extends BaseCommand
     }
 
     /**
-     * Retunrs the dumper class name.
+     * Returns the dumper class name.
      * The default dumper is WktDumper.
      *
      * @param string $dumper The name of the dumper to use.
