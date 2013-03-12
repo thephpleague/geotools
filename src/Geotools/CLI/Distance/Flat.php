@@ -35,7 +35,7 @@ class Flat extends Command
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
             ->addOption('km', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in kilometers')
-            ->addOption('mile', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in miles')
+            ->addOption('mi', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in miles')
             ->addOption('ft', null, InputOption::VALUE_NONE, 'If set, the distance will be shown in feet')
             ->setHelp(<<<EOT
 <info>Exemple</info>:              %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--km</comment>
@@ -55,8 +55,8 @@ EOT
             $distance->in('km');
         }
 
-        if ($input->getOption('mile')) {
-            $distance->in('mile');
+        if ($input->getOption('mi')) {
+            $distance->in('mi');
         }
 
         if ($input->getOption('ft')) {

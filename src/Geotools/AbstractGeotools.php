@@ -52,7 +52,7 @@ abstract class AbstractGeotools
      *
      * @var string
      */
-    const MILE_UNIT = 'mile';
+    const MILE_UNIT = 'mi';
 
     /**
      * The feet unit.

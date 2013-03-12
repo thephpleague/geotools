@@ -105,7 +105,7 @@ class DistanceTest extends TestCase
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['flat']['mile'], $this->distance->in('mile')->flat(), '', 0.00001);
+        $this->assertEquals($result['flat']['mi'], $this->distance->in('mi')->flat(), '', 0.00001);
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
@@ -127,7 +127,7 @@ class DistanceTest extends TestCase
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['haversine']['mile'], $this->distance->in('mile')->haversine(), '', 0.00001);
+        $this->assertEquals($result['haversine']['mi'], $this->distance->in('mi')->haversine(), '', 0.00001);
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
@@ -149,7 +149,7 @@ class DistanceTest extends TestCase
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['vincenty']['mile'], $this->distance->in('mile')->vincenty(), '', 0.00001);
+        $this->assertEquals($result['vincenty']['mi'], $this->distance->in('mi')->vincenty(), '', 0.00001);
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
@@ -163,22 +163,22 @@ class DistanceTest extends TestCase
                 Ellipsoid::createFromName(Ellipsoid::WGS84),
                 array(
                     'flat' => array(
-                        'm'    => 659166.50038742,
-                        'km'   => 659.16650524477,
-                        'mile' => 409.58707724686,
-                        'ft'   => 2162619.7519272,
+                        'm'  => 659166.50038742,
+                        'km' => 659.16650524477,
+                        'mi' => 409.58707724686,
+                        'ft' => 2162619.7519272,
                     ),
                     'haversine' => array(
-                        'm'    => 659021.90812846,
-                        'km'   => 659.02190812846,
-                        'mile' => 409.49722876431,
-                        'ft'   => 2162145.3678755,
+                        'm'  => 659021.90812846,
+                        'km' => 659.02190812846,
+                        'mi' => 409.49722876431,
+                        'ft' => 2162145.3678755,
                     ),
                     'vincenty' => array(
-                        'm'    => 658307.48497307,
-                        'km'   => 658.30748497307,
-                        'mile' => 409.05330679648,
-                        'ft'   => 2159801.4598854,
+                        'm'  => 658307.48497307,
+                        'km' => 658.30748497307,
+                        'mi' => 409.05330679648,
+                        'ft' => 2159801.4598854,
                     ),
                 ),
             ),
@@ -186,22 +186,22 @@ class DistanceTest extends TestCase
                 Ellipsoid::createFromName(Ellipsoid::GRS_1980),
                 array(
                     'flat' => array(
-                        'm'    => 659166.60373525,
-                        'km'   => 659.16660373525,
-                        'mile' => 409.587138446,
-                        'ft'   => 2162620.0909949,
+                        'm'  => 659166.60373525,
+                        'km' => 659.16660373525,
+                        'mi' => 409.587138446,
+                        'ft' => 2162620.0909949,
                     ),
                     'haversine' => array(
-                        'm'    => 659022.01145362,
-                        'km'   => 659.02201145362,
-                        'mile' => 409.49729296758,
-                        'ft'   => 2162145.7068688,
+                        'm'  => 659022.01145362,
+                        'km' => 659.02201145362,
+                        'mi' => 409.49729296758,
+                        'ft' => 2162145.7068688,
                     ),
                     'vincenty' => array(
-                        'm'    => 658307.58818269,
-                        'km'   => 658.30758818269,
-                        'mile' => 409.05337092796,
-                        'ft'   => 2159801.7984996,
+                        'm'  => 658307.58818269,
+                        'km' => 658.30758818269,
+                        'mi' => 409.05337092796,
+                        'ft' => 2159801.7984996,
                     ),
                 ),
             ),
@@ -209,22 +209,22 @@ class DistanceTest extends TestCase
                 Ellipsoid::createFromName(Ellipsoid::CLARKE_1880),
                 array(
                     'flat' => array(
-                        'm'    => 659178.19367738,
-                        'km'   => 659.17819367738,
-                        'mile' => 409.59434010217,
-                        'ft'   => 2162658.1157394,
+                        'm'  => 659178.19367738,
+                        'km' => 659.17819367738,
+                        'mi' => 409.59434010217,
+                        'ft' => 2162658.1157394,
                     ),
                     'haversine' => array(
-                        'm'    => 659033.59885343,
-                        'km'   => 659.03359885343,
-                        'mile' => 409.50449304402,
-                        'ft'   => 2162183.7232724,
+                        'm'  => 659033.59885343,
+                        'km' => 659.03359885343,
+                        'mi' => 409.50449304402,
+                        'ft' => 2162183.7232724,
                     ),
                     'vincenty' => array(
-                        'm'    => 658307.4119689,
-                        'km'   => 658.3074119689,
-                        'mile' => 409.05326143379,
-                        'ft'   => 2159801.2203704,
+                        'm'  => 658307.4119689,
+                        'km' => 658.3074119689,
+                        'mi' => 409.05326143379,
+                        'ft' => 2159801.2203704,
                     ),
                 ),
             ),
@@ -232,22 +232,22 @@ class DistanceTest extends TestCase
                 Ellipsoid::createFromName(Ellipsoid::HOUGH),
                 array(
                     'flat' => array(
-                        'm'    => 659180.34899633,
-                        'km'   => 659.18034899633,
-                        'mile' => 409.59567935527,
-                        'ft'   => 2162665.1869958,
+                        'm'  => 659180.34899633,
+                        'km' => 659.18034899633,
+                        'mi' => 409.59567935527,
+                        'ft' => 2162665.1869958,
                     ),
                     'haversine' => array(
-                        'm'    => 659035.7536996,
-                        'km'   => 659.0357536996,
-                        'mile' => 409.50583200335,
-                        'ft'   => 2162190.7929777,
+                        'm'  => 659035.7536996,
+                        'km' => 659.0357536996,
+                        'mi' => 409.50583200335,
+                        'ft' => 2162190.7929777,
                     ),
                     'vincenty' => array(
-                        'm'    => 658318.26962941,
-                        'km'   => 658.31826962941,
-                        'mile' => 409.06000807124,
-                        'ft'   => 2159836.8426162,
+                        'm'  => 658318.26962941,
+                        'km' => 658.31826962941,
+                        'mi' => 409.06000807124,
+                        'ft' => 2159836.8426162,
                     ),
                 ),
             ),
