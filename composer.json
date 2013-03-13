@@ -25,6 +25,7 @@
         "symfony/console": "~2.0"
     },
     "require-dev": {
+        "willdurand/geocoder": "dev-master",
         "kriswallsmith/buzz": "@stable",
         "guzzle/guzzle": "@stable",
         "zendframework/zendframework": "~2.1",
