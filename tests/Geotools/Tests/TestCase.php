@@ -11,7 +11,7 @@
 
 namespace Geotools\Tests;
 
-use Geocoder\Result\Geocoded;
+use Geotools\Batch\BatchGeocoded;
 use Geotools\Coordinate\Ellipsoid;
 
 /**
@@ -37,13 +37,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocoderReturns(array $providers, array $data = array())
     {
-        $geocoded = new Geocoded();
+        $batchGeocoded = new BatchGeocoded();
 
         if (!empty($data)) {
-            $geocoded->fromArray($data);
+            $batchGeocoded->fromArray($data);
         }
 
-        $mock = $this->getMock('Geocoder\Geocoder');
+        $mock = $this->getMock('\Geocoder\Geocoder');
         $mock
             ->expects($this->any())
             ->method('getProviders')
@@ -55,11 +55,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $mock
             ->expects($this->any())
             ->method('geocode')
-            ->will($this->returnValue($geocoded));
+            ->will($this->returnValue($batchGeocoded));
         $mock
             ->expects($this->any())
             ->method('reverse')
-            ->will($this->returnValue($geocoded));
+            ->will($this->returnValue($batchGeocoded));
 
         return $mock;
     }
@@ -67,9 +67,9 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @return GeocoderInterface
      */
-    protected function getMockGeocoderThrowException(array $providers, array $data = array())
+    protected function getMockGeocoderThrowException(array $providers)
     {
-        $mock = $this->getMock('Geocoder\Geocoder');
+        $mock = $this->getMock('\Geocoder\Geocoder');
         $mock
             ->expects($this->once())
             ->method('getProviders')
