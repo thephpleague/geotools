@@ -1,44 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Geotools by toin0u</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/main.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Geotools : Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Geotools</title>
   </head>
+
   <body>
 
-      <header>
-        <h1>Geotools</h1>
-        <p>Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries</p>
-      </header>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/toin0u/Geotools">View on GitHub</a>
 
-      <div id="banner">
-        <span id="logo"></span>
+          <h1 id="project_title">Geotools</h1>
+          <h2 id="project_tagline">Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries</h2>
 
-        <a href="https://github.com/toin0u/Geotools" class="button fork"><strong>View On GitHub</strong></a>
-        <div class="downloads">
-          <span>Downloads:</span>
-          <ul>
-            <li><a href="https://github.com/toin0u/Geotools/zipball/master" class="button">ZIP</a></li>
-            <li><a href="https://github.com/toin0u/Geotools/tarball/master" class="button">TAR</a></li>
-          </ul>
-        </div>
-      </div><!-- end banner -->
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/toin0u/Geotools/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/toin0u/Geotools/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-    <div class="wrapper">
-      <nav>
-        <ul></ul>
-      </nav>
-      <section>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>Geotools</h1>
 
 <p><strong>Geotools</strong> is a PHP geo-related library, built atop <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and
@@ -298,38 +290,43 @@ Thanks to <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and <a h
 <span class="nv">$dumper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\Dumper\WktDumper</span><span class="p">();</span>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$results</span> <span class="k">as</span> <span class="nv">$result</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// if a provider throws an exception (UnsupportedException, InvalidCredentialsException ...)</span>
-    <span class="c1">// an empty /Geocoder/Result/Geocoded instance is returned. It's possible to use dumpers</span>
-    <span class="c1">// and/or formatters from the Geocoder library</span>
-    <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$dumper</span><span class="o">-&gt;</span><span class="na">dump</span><span class="p">(</span><span class="nv">$result</span><span class="p">));</span>
+    <span class="c1">// an custom /Geocoder/Result/Geocoded instance is returned which embeded the name of the provider,</span>
+    <span class="c1">// the query string and the exception string. It's possible to use dumpers</span>
+    <span class="c1">// and/or formatters from the Geocoder library.</span>
+    <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s|%s|%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>
+        <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getProviderName</span><span class="p">(),</span>
+        <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">(),</span>
+        <span class="s1">''</span> <span class="o">===</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getExceptionMessage</span><span class="p">()</span> <span class="o">?</span> <span class="nv">$dumper</span><span class="o">-&gt;</span><span class="na">dump</span><span class="p">(</span><span class="nv">$result</span><span class="p">)</span> <span class="o">:</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getExceptionMessage</span><span class="p">()</span>
+    <span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 
 <p>You should get 24 results (4 values to geocode against 6 providers) something like:</p>
 
-<pre><code>POINT(2.352222 48.856614) // GoogleMapsProvider, OK! Address-based supported
-POINT(12.568337 55.676097) // GoogleMapsProvider, OK! Address-based supported
-POINT(0.000000 0.000000) // GoogleMapsProvider, IPv4 UnsupportedException thrown
-POINT(0.000000 0.000000) // GoogleMapsProvider, IPv6 UnsupportedException thrown
-POINT(2.320035 48.858841) // OpenStreetMapsProvider, OK! Address-based supported
-POINT(12.570069 55.686724) // OpenStreetMapsProvider, OK! Address-based supported
-POINT(0.000000 0.000000) // OpenStreetMapsProvider, IPv4 UnsupportedException thrown
-POINT(0.000000 0.000000) // OpenStreetMapsProvider, IPv6 UnsupportedException thrown
-POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(2.341198 48.856929) // YandexProvider, OK! Address-based supported
-POINT(12.567602 55.675682) // YandexProvider, OK! Address-based supported
-POINT(0.000000 0.000000) // YandexProvider, IPv4 UnsupportedException thrown
-POINT(0.000000 0.000000) // YandexProvider, IPv6 UnsupportedException thrown
-POINT(0.000000 0.000000) // FreeGeoIpProvider, Address-based UnsupportedException thrown
-POINT(0.000000 0.000000) // FreeGeoIpProvider, Address-based UnsupportedException thrown
-POINT(-122.415600 37.748400) // FreeGeoIpProvider, OK! IPv4 supported
-POINT(-111.613300 40.218100) // FreeGeoIpProvider, OK! IPv6 supported
-POINT(0.000000 0.000000) // GeoipProvider, Address-based UnsupportedException thrown
-POINT(0.000000 0.000000) // GeoipProvider, Address-based UnsupportedException thrown
-POINT(-122.415604 37.748402) // GeoipProvider, OK! IPv4 supported
-POINT(0.000000 0.000000) // GeoipProvider, NoResultException thrown but IPv6 is supported
+<pre><code>google_maps|Paris, France|POINT(2.352222 48.856614)
+google_maps|Copenhagen, Denmark|POINT(12.568337 55.676097)
+google_maps|74.200.247.59|The GoogleMapsProvider does not support IP addresses.
+google_maps|::ffff:66.147.244.214|The GoogleMapsProvider does not support IP addresses.
+openstreetmaps|Paris, France|POINT(2.352133 48.856506)
+openstreetmaps|Copenhagen, Denmark|POINT(12.570072 55.686724)
+openstreetmaps|74.200.247.59|Could not execute query http://nominatim.openstreetmap.org/search?q=74.200.247.59&amp;format=xml&amp;addressdetails=1&amp;limit=1
+openstreetmaps|::ffff:66.147.244.214|The OpenStreetMapsProvider does not support IPv6 addresses.
+bing_maps|Paris, France|Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=Paris%2C+France&amp;key=&lt;FAKE_API_KEY&gt;
+bing_maps|Copenhagen, Denmark|Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=Copenhagen%2C+Denmark&amp;key=&lt;FAKE_API_KEY&gt;
+bing_maps|74.200.247.59|The BingMapsProvider does not support IP addresses.
+bing_maps|::ffff:66.147.244.214|The BingMapsProvider does not support IP addresses.
+yandex|Paris, France|POINT(2.341198 48.856929)
+yandex|Copenhagen, Denmark|POINT(12.567602 55.675682)
+yandex|74.200.247.59|The YandexProvider does not support IP addresses.
+yandex|::ffff:66.147.244.214|The YandexProvider does not support IP addresses.
+free_geo_ip|Paris, France|The FreeGeoIpProvider does not support Street addresses.
+free_geo_ip|Copenhagen, Denmark|The FreeGeoIpProvider does not support Street addresses.
+free_geo_ip|74.200.247.59|POINT(-122.415600 37.748400)
+free_geo_ip|::ffff:66.147.244.214|POINT(-111.613300 40.218100)
+geoip|Paris, France|The GeoipProvider does not support Street addresses.
+geoip|Copenhagen, Denmark|The GeoipProvider does not support Street addresses.
+geoip|74.200.247.59|POINT(-122.415604 37.748402)
+geoip|::ffff:66.147.244.214|The GeoipProvider does not support IPv6 addresses.
 </code></pre>
 
 <p>Batch reverse geocoding is something like:</p>
@@ -576,12 +573,16 @@ Timezone:
 <p>Geotools is released under the MIT License. See the bundled
 <a href="https://github.com/toin0u/Geotools/blob/master/LICENSE">LICENSE</a> file for details.</p>
       </section>
-      <footer>
-        <p>Project maintained by <a href="https://github.com/toin0u">toin0u</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Geotools maintained by <a href="https://github.com/toin0u">toin0u</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -592,6 +593,7 @@ Timezone:
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
+
 
   </body>
 </html>
