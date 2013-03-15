@@ -63,6 +63,7 @@ class Command extends BaseCommand
         'ip_geo_base'          => 'IpGeoBaseProvider',
         'baidu'                => 'BaiduProvider',
         'tomtom'               => 'TomTomProvider',
+        'arcgis_online'        => 'ArcGISOnlineProvider',
     );
 
     /**
