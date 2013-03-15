@@ -13,8 +13,8 @@ namespace Geotools\Batch;
 
 use Geotools\Coordinate\CoordinateInterface;
 use Geotools\Exception\InvalidArgumentException;
+use Geotools\Batch\BatchResult;
 use Geocoder\GeocoderInterface;
-use Geocoder\Result\Geocoded;
 use React\Async\Util as Async;
 
 /**
@@ -56,27 +56,27 @@ class Batch implements BatchInterface
     {
         $geocoder = $this->geocoder;
 
-        foreach ($this->geocoder->getProviders() as $provider) {
+        foreach ($geocoder->getProviders() as $provider) {
             if (is_array($values) && 0 !== count($values)) {
                 foreach ($values as $value) {
                     $this->tasks[] = function ($callback) use ($geocoder, $provider, $value) {
                         try {
-                            $callback($geocoder->using($provider->getName())->geocode(
-                                $value
-                            ));
+                            $geocoder->setResultFactory(new BatchResult($provider->getName(), $value));
+                            $callback($geocoder->using($provider->getName())->geocode($value));
                         } catch (\Exception $e) {
-                            $callback(new Geocoded());
+                            $batchGeocoded = new BatchResult($provider->getName(), $value, $e->getMessage());
+                            $callback($batchGeocoded->newInstance());
                         }
                     };
                 }
             } elseif (is_string($values) && '' !== trim($values)) {
                 $this->tasks[] = function ($callback) use ($geocoder, $provider, $values) {
                     try {
-                        $callback($geocoder->using($provider->getName())->geocode(
-                            $values
-                        ));
+                        $geocoder->setResultFactory(new BatchResult($provider->getName(), $values));
+                        $callback($geocoder->using($provider->getName())->geocode($values));
                     } catch (\Exception $e) {
-                        $callback(new Geocoded());
+                        $batchGeocoded = new BatchResult($provider->getName(), $values, $e->getMessage());
+                        $callback($batchGeocoded->newInstance());
                     }
                 };
             } else {
@@ -96,29 +96,47 @@ class Batch implements BatchInterface
     {
         $geocoder = $this->geocoder;
 
-        foreach ($this->geocoder->getProviders() as $provider) {
+        foreach ($geocoder->getProviders() as $provider) {
             if (is_array($coordinates) && 0 !== count($coordinates)) {
                 foreach ($coordinates as $coordinate) {
                     $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinate) {
                         try {
+                            $geocoder->setResultFactory(new BatchResult(
+                                $provider->getName(),
+                                sprintf('%s, %s', $coordinate->getLatitude(), $coordinate->getLongitude())
+                            ));
                             $callback($geocoder->using($provider->getName())->reverse(
                                 $coordinate->getLatitude(),
                                 $coordinate->getLongitude()
                             ));
                         } catch (\Exception $e) {
-                            $callback(new Geocoded());
+                            $batchGeocoded = new BatchResult(
+                                $provider->getName(),
+                                sprintf('%s, %s', $coordinate->getLatitude(), $coordinate->getLongitude()),
+                                $e->getMessage()
+                            );
+                            $callback($batchGeocoded->newInstance());
                         }
                     };
                 }
             } elseif ($coordinates instanceOf CoordinateInterface) {
                 $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinates) {
                     try {
+                        $geocoder->setResultFactory(new BatchResult(
+                            $provider->getName(),
+                            sprintf('%s, %s', $coordinates->getLatitude(), $coordinates->getLongitude())
+                        ));
                         $callback($geocoder->using($provider->getName())->reverse(
                             $coordinates->getLatitude(),
                             $coordinates->getLongitude()
                         ));
                     } catch (\Exception $e) {
-                        $callback(new Geocoded());
+                        $batchGeocoded = new BatchResult(
+                            $provider->getName(),
+                            sprintf('%s, %s', $coordinates->getLatitude(), $coordinates->getLongitude()),
+                            $e->getMessage()
+                        );
+                        $callback($batchGeocoded->newInstance());
                     }
                 };
             } else {
@@ -139,7 +157,7 @@ class Batch implements BatchInterface
      */
     public function serie()
     {
-        $computedInParallel = array();
+        $computedInSerie = array();
 
         Async::series(
             $this->tasks,

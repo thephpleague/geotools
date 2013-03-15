@@ -211,39 +211,44 @@ $results  = $geotools->batch($geocoder)->geocode(array(
 $dumper = new \Geocoder\Dumper\WktDumper();
 foreach ($results as $result) {
     // if a provider throws an exception (UnsupportedException, InvalidCredentialsException ...)
-    // an empty /Geocoder/Result/Geocoded instance is returned. It's possible to use dumpers
-    // and/or formatters from the Geocoder library
-    printf("%s\n", $dumper->dump($result));
+    // an custom /Geocoder/Result/Geocoded instance is returned which embeded the name of the provider,
+    // the query string and the exception string. It's possible to use dumpers
+    // and/or formatters from the Geocoder library.
+    printf("%s|%s|%s\n",
+        $result->getProviderName(),
+        $result->getQuery(),
+        '' === $result->getExceptionMessage() ? $dumper->dump($result) : $result->getExceptionMessage()
+    );
 }
 ```
 
 You should get 24 results (4 values to geocode against 6 providers) something like:
 
 ```
-POINT(2.352222 48.856614) // GoogleMapsProvider, OK! Address-based supported
-POINT(12.568337 55.676097) // GoogleMapsProvider, OK! Address-based supported
-POINT(0.000000 0.000000) // GoogleMapsProvider, IPv4 UnsupportedException thrown
-POINT(0.000000 0.000000) // GoogleMapsProvider, IPv6 UnsupportedException thrown
-POINT(2.320035 48.858841) // OpenStreetMapsProvider, OK! Address-based supported
-POINT(12.570069 55.686724) // OpenStreetMapsProvider, OK! Address-based supported
-POINT(0.000000 0.000000) // OpenStreetMapsProvider, IPv4 UnsupportedException thrown
-POINT(0.000000 0.000000) // OpenStreetMapsProvider, IPv6 UnsupportedException thrown
-POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(0.000000 0.000000) // BingMapsProvider, InvalidCredentialsException thrown
-POINT(2.341198 48.856929) // YandexProvider, OK! Address-based supported
-POINT(12.567602 55.675682) // YandexProvider, OK! Address-based supported
-POINT(0.000000 0.000000) // YandexProvider, IPv4 UnsupportedException thrown
-POINT(0.000000 0.000000) // YandexProvider, IPv6 UnsupportedException thrown
-POINT(0.000000 0.000000) // FreeGeoIpProvider, Address-based UnsupportedException thrown
-POINT(0.000000 0.000000) // FreeGeoIpProvider, Address-based UnsupportedException thrown
-POINT(-122.415600 37.748400) // FreeGeoIpProvider, OK! IPv4 supported
-POINT(-111.613300 40.218100) // FreeGeoIpProvider, OK! IPv6 supported
-POINT(0.000000 0.000000) // GeoipProvider, Address-based UnsupportedException thrown
-POINT(0.000000 0.000000) // GeoipProvider, Address-based UnsupportedException thrown
-POINT(-122.415604 37.748402) // GeoipProvider, OK! IPv4 supported
-POINT(0.000000 0.000000) // GeoipProvider, NoResultException thrown but IPv6 is supported
+google_maps|Paris, France|POINT(2.352222 48.856614)
+google_maps|Copenhagen, Denmark|POINT(12.568337 55.676097)
+google_maps|74.200.247.59|The GoogleMapsProvider does not support IP addresses.
+google_maps|::ffff:66.147.244.214|The GoogleMapsProvider does not support IP addresses.
+openstreetmaps|Paris, France|POINT(2.352133 48.856506)
+openstreetmaps|Copenhagen, Denmark|POINT(12.570072 55.686724)
+openstreetmaps|74.200.247.59|Could not execute query http://nominatim.openstreetmap.org/search?q=74.200.247.59&format=xml&addressdetails=1&limit=1
+openstreetmaps|::ffff:66.147.244.214|The OpenStreetMapsProvider does not support IPv6 addresses.
+bing_maps|Paris, France|Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=Paris%2C+France&key=<FAKE_API_KEY>
+bing_maps|Copenhagen, Denmark|Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=Copenhagen%2C+Denmark&key=<FAKE_API_KEY>
+bing_maps|74.200.247.59|The BingMapsProvider does not support IP addresses.
+bing_maps|::ffff:66.147.244.214|The BingMapsProvider does not support IP addresses.
+yandex|Paris, France|POINT(2.341198 48.856929)
+yandex|Copenhagen, Denmark|POINT(12.567602 55.675682)
+yandex|74.200.247.59|The YandexProvider does not support IP addresses.
+yandex|::ffff:66.147.244.214|The YandexProvider does not support IP addresses.
+free_geo_ip|Paris, France|The FreeGeoIpProvider does not support Street addresses.
+free_geo_ip|Copenhagen, Denmark|The FreeGeoIpProvider does not support Street addresses.
+free_geo_ip|74.200.247.59|POINT(-122.415600 37.748400)
+free_geo_ip|::ffff:66.147.244.214|POINT(-111.613300 40.218100)
+geoip|Paris, France|The GeoipProvider does not support Street addresses.
+geoip|Copenhagen, Denmark|The GeoipProvider does not support Street addresses.
+geoip|74.200.247.59|POINT(-122.415604 37.748402)
+geoip|::ffff:66.147.244.214|The GeoipProvider does not support IPv6 addresses.
 ```
 
 Batch reverse geocoding is something like:
