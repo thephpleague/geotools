@@ -32,9 +32,9 @@
         "ext-curl" : "*"
     },
     "suggest": {
-        "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter.",
-        "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter.",
-        "zendframework/zendframework": "Enabling Zend Framework allows you to use the ZendHttpAdapter."
+        "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter",
+        "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter",
+        "zendframework/zendframework": "Enabling Zend Framework allows you to use the ZendHttpAdapter"
     },
     "autoload": {
         "psr-0": { "Geotools": "src/" }
