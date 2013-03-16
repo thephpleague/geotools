@@ -1,21 +1,25 @@
 CHANGELOG
 =========
 
-0.2.1 (xxxx-xx-xx)
+0.2.1 (2012-03-16)
 ------------------
 
-n/a
+* Added: arcgis_online provider
+* Merge branch 'BatchImproved'
+* Fixed: batched result object embed provider's name, query and exception string - fix #6
+* Added: Geocoder dev-master as require-dev
+* Fixed: CLI tests
 
 0.2.0 (2012-03-12)
 ------------------
 
-Fixed: empty ellipsoid name throws an exception now
-Added: Ellipsoid support to Point, Convert and Distance CLI - fix #7
-Added: Ellipsoid support to Point CLI
-Added: Ellipsoid support to Distance CLI
-Added: Ellipsoid support to Convert CLI
-Added: TomTom provier to CLI - fix #14
-Changed: mile parameter to mi in Distance to be more consistent [BC break]
+* Fixed: empty ellipsoid name throws an exception now
+* Added: Ellipsoid support to Point, Convert and Distance CLI - fix #7
+* Added: Ellipsoid support to Point CLI
+* Added: Ellipsoid support to Distance CLI
+* Added: Ellipsoid support to Convert CLI
+* Added: TomTom provier to CLI - fix #14
+* Changed: mile parameter to mi in Distance to be more consistent [BC break]
 
 0.1.12 (2012-03-08)
 -------------------
