@@ -73,13 +73,13 @@ class GeocodeTest extends TestCase
         $this->assertRegExp('/55\.6760968, 12\.5683371/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteIPv4AgainsFreeGeoIpProviderWithSocketAdapter()
+    public function testExecuteIPv4AgainsFreeGeoIpProviderWithBuzzAdapter()
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'value'      => '74.200.247.59',
             '--provider' => 'free_geo_ip',
-            '--adapter'  => 'socket',
+            '--adapter'  => 'buzz',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
