@@ -14,6 +14,8 @@ namespace Geotools\Batch;
 use Geocoder\Result\ResultFactory;
 
 /**
+ * BatchResult class
+ *
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class BatchResult extends ResultFactory
