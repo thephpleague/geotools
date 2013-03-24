@@ -45,11 +45,11 @@ class DMS extends Command
             ->setHelp(<<<EOT
 <info>Available ellipsoids</info>: $availableEllipsoids
 
-<info>Exemple with an output format</info>:
+<info>Example with an output format</info>:
 
     %command.full_name% "40.446195, -79.948862" <comment>--format="%P%D:%M:%S, %p%d:%m:%s"</comment>
 
-<info>Exemple with BESSEL_1841 ellipsoid</info>:
+<info>Example with BESSEL_1841 ellipsoid</info>:
 
     %command.full_name% "40.446195, -79.948862" <comment>--ellipsoid=BESSEL_1841</comment>
 EOT

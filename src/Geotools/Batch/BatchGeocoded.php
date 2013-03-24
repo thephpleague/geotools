@@ -33,7 +33,7 @@ class BatchGeocoded extends Geocoded
     protected $query;
 
     /**
-     * The execption message.
+     * The exception message.
      *
      * @var string
      */
@@ -43,48 +43,54 @@ class BatchGeocoded extends Geocoded
     /**
      * Get the name of the provider.
      */
-    public function getProviderName() {
+    public function getProviderName()
+    {
         return $this->providerName;
     }
 
     /**
      * Set the name of the provider.
      *
-     * @param string The name of the provider.
+     * @param string $providerName The name of the provider.
      */
-    public function setProviderName($providerName) {
+    public function setProviderName($providerName)
+    {
         $this->providerName = $providerName;
     }
 
     /**
      * Get the query.
      */
-    public function getQuery() {
+    public function getQuery()
+    {
         return $this->query;
     }
 
     /**
      * Set the query.
      *
-     * @param string The query.
+     * @param string $query The query.
      */
-    public function setQuery($query) {
+    public function setQuery($query)
+    {
         $this->query = $query;
     }
 
     /**
      * Get the exception message.
      */
-    public function getExceptionMessage() {
+    public function getExceptionMessage()
+    {
         return $this->exception;
     }
 
     /**
      * Set the exception message.
      *
-     * @param string The exception message.
+     * @param string $exception The exception message.
      */
-    public function setExceptionMessage($exception) {
+    public function setExceptionMessage($exception)
+    {
         $this->exception = $exception;
     }
 

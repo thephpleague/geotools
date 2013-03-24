@@ -86,7 +86,7 @@ class ReverseTest extends TestCase
         $this->assertRegExp('/Avenue Gambetta 10, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteReverseAgainsOpenStreetMapsProviderWithDefaultAdapterAndDefaultFormatter()
+    public function testExecuteReverseAgainstOpenStreetMapsProviderWithDefaultAdapterAndDefaultFormatter()
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
@@ -98,7 +98,7 @@ class ReverseTest extends TestCase
         $this->assertRegExp('/Avenue Gambetta 8, 75011 Paris/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteReverseAgainsOpenStreetMapsProviderWithDefaultAdapterAndFormatter()
+    public function testExecuteReverseAgainstOpenStreetMapsProviderWithDefaultAdapterAndFormatter()
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),

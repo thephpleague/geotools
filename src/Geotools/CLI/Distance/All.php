@@ -45,7 +45,7 @@ class All extends Command
             ->setHelp(<<<EOT
 <info>Available ellipsoids</info>: $availableEllipsoids
 
-<info>Exemple with AIRY ellipsoid</info>:
+<info>Example with AIRY ellipsoid</info>:
 
     %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--ellipsoid=AIRY</comment>
 EOT

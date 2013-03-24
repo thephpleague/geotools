@@ -33,7 +33,7 @@ interface ConvertInterface
     const DECIMAL_MINUTES_MODE = PHP_ROUND_HALF_EVEN;
 
     /**
-     * The dafault format for degrees minutes seconds coordinates.
+     * The default format for degrees minutes seconds coordinates.
      *
      * @var string
      */
