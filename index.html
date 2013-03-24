@@ -169,7 +169,7 @@ Longitudes below -180.0 or abode 180.0 degrees are <em>wrapped</em> through <cod
 <span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Coordinate</span><span class="p">(</span><span class="s1">'48.8234055, 2.3072664'</span><span class="p">);</span>
 <span class="c1">// or in degrees minutes seconds coordinate within WGS84 ellipsoid</span>
 <span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Coordinate</span><span class="p">(</span><span class="s1">'48°49′24″N, 2°18′26″E'</span><span class="p">);</span>
-<span class="c1">// or in decimal minutes cordinate within WGS84 ellipsoid</span>
+<span class="c1">// or in decimal minutes coordinate within WGS84 ellipsoid</span>
 <span class="nv">$coordinate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Coordinate</span><span class="p">(</span><span class="s1">'48 49.4N, 2 18.43333E'</span><span class="p">);</span>
 <span class="c1">// the result will be:</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"Latitude: %F</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$coordinate</span><span class="o">-&gt;</span><span class="na">getLatitude</span><span class="p">());</span> <span class="c1">// 48.8234055</span>
@@ -298,7 +298,7 @@ Thanks to <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and <a h
 <span class="nv">$dumper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\Dumper\WktDumper</span><span class="p">();</span>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$results</span> <span class="k">as</span> <span class="nv">$result</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// if a provider throws an exception (UnsupportedException, InvalidCredentialsException ...)</span>
-    <span class="c1">// an custom /Geocoder/Result/Geocoded instance is returned which embeded the name of the provider,</span>
+    <span class="c1">// an custom /Geocoder/Result/Geocoded instance is returned which embedded the name of the provider,</span>
     <span class="c1">// the query string and the exception string. It's possible to use dumpers</span>
     <span class="c1">// and/or formatters from the Geocoder library.</span>
     <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s|%s|%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>
@@ -424,7 +424,7 @@ of a coordinate and the <em>coordinate</em> and its <em>bounding box's coordinat
 <span class="c1">// encoded</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$encoded</span><span class="o">-&gt;</span><span class="na">getGeohash</span><span class="p">());</span> <span class="c1">// spey</span>
 <span class="c1">// encoded bounding box</span>
-<span class="nv">$boundingBox</span> <span class="o">=</span> <span class="nv">$encoded</span><span class="o">-&gt;</span><span class="na">getBoundingBox</span><span class="p">();</span> <span class="c1">// array of \Geotools\Coordinate\CordinateInterface</span>
+<span class="nv">$boundingBox</span> <span class="o">=</span> <span class="nv">$encoded</span><span class="o">-&gt;</span><span class="na">getBoundingBox</span><span class="p">();</span> <span class="c1">// array of \Geotools\Coordinate\CoordinateInterface</span>
 <span class="nv">$southWest</span>   <span class="o">=</span> <span class="nv">$boundingBox</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 <span class="nv">$northEast</span>   <span class="o">=</span> <span class="nv">$boundingBox</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"http://www.openstreetmap.org/?minlon=%s&amp;minlat=%s&amp;maxlon=%s&amp;maxlat=%s&amp;box=yes</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>

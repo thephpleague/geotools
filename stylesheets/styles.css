@@ -506,8 +506,8 @@ body {
   font: 14px/22px "Quattrocento Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #666;
   font-weight: 300;
-  margin: 0px;
-  padding: 0px 0 20px 0px;
+  margin: 0;
+  padding: 0 0 20px 0;
   background: url(../images/body-background.png) #eae6d1;
 }
 
@@ -585,7 +585,7 @@ code {
   font-family: "Lucida Sans", Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
   font-size: 13px;
   color: #efefef;
-  text-shadow: 0px 1px 0px #000;
+  text-shadow: 0 1px 0 #000;
   margin: 0 4px;
   padding: 2px 6px;
   background: #333;
@@ -611,8 +611,8 @@ pre {
   overflow-y: hidden;
 }
 pre code {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 table {
@@ -660,10 +660,10 @@ header {
   width: 100%;
   text-align: center;
   background: url(../images/background.png) #4276b6;
-  -moz-box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.75);
-  -o-box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.75);
-  box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 0 2px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 1px 0 2px rgba(0, 0, 0, 0.75);
+  -o-box-shadow: 1px 0 2px rgba(0, 0, 0, 0.75);
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.75);
   z-index: 99;
   -webkit-font-smoothing: antialiased;
   min-height: 76px;
@@ -671,8 +671,8 @@ header {
 header h1 {
   font: 40px/48px "Copse", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #f3f3f3;
-  text-shadow: 0px 2px 0px #235796;
-  margin: 0px;
+  text-shadow: 0 2px 0 #235796;
+  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -683,7 +683,7 @@ header p {
   color: #d8d8d8;
   text-shadow: rgba(0, 0, 0, 0.2) 0 1px 0;
   font-size: 18px;
-  margin: 0px;
+  margin: 0;
 }
 
 #banner {
@@ -696,16 +696,16 @@ header p {
   top: 115px;
   background: #ffcc00;
   border: 1px solid #f0b500;
-  -moz-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
-  -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
-  -o-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
-  -moz-border-radius: 0px 2px 2px 0px;
-  -webkit-border-radius: 0px 2px 2px 0px;
-  -o-border-radius: 0px 2px 2px 0px;
-  -ms-border-radius: 0px 2px 2px 0px;
-  -khtml-border-radius: 0px 2px 2px 0px;
-  border-radius: 0px 2px 2px 0px;
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  -moz-border-radius: 0 2px 2px 0;
+  -webkit-border-radius: 0 2px 2px 0;
+  -o-border-radius: 0 2px 2px 0;
+  -ms-border-radius: 0 2px 2px 0;
+  -khtml-border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0;
   padding-right: 10px;
 }
 #banner .button {
@@ -722,10 +722,10 @@ header p {
   -ms-border-radius: 2px;
   -khtml-border-radius: 2px;
   border-radius: 2px;
-  -moz-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 1px 1px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.1);
+  -o-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.1);
   background-color: #FFE788;
   margin-left: 5px;
   padding: 10px 12px;
@@ -805,10 +805,10 @@ section {
   -khtml-border-radius: 3px;
   border-radius: 3px;
   border: 1px solid #cbcbcb;
-  -moz-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09), inset 0px 0px 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
-  -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09), inset 0px 0px 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
-  -o-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09), inset 0px 0px 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09), inset 0px 0px 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.09), inset 0 0 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.09), inset 0 0 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
+  -o-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.09), inset 0 0 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.09), inset 0 0 2px 2px rgba(255, 255, 255, 0.5), inset 0 0 5px 5px rgba(255, 255, 255, 0.4);
 }
 
 small {
@@ -830,7 +830,7 @@ nav ul {
   line-height: 24px;
 }
 nav ul li {
-  padding: 5px 0px;
+  padding: 5px 0;
   line-height: 16px;
 }
 nav ul li.tag-h1 {
@@ -935,14 +935,14 @@ footer {
   #banner .fork {
     float: left;
     display: inline-block;
-    margin-left: 0px;
+    margin-left: 0;
     position: fixed;
     left: 20px;
   }
 
   section {
     margin-top: 130px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     width: auto;
   }
 
@@ -953,8 +953,8 @@ footer {
 @media print, screen and (max-width: 480px) {
   header {
     position: relative;
-    padding: 5px 0px;
-    min-height: 0px;
+    padding: 5px 0;
+    min-height: 0;
   }
   header h1 {
     font-size: 24px;
