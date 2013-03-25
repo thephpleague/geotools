@@ -11,6 +11,7 @@
 
 namespace Geotools\Cache;
 
+use Geotools\Exception\InvalidArgumentException;
 use Geotools\Batch\BatchGeocoded;
 
 /**
@@ -49,12 +50,18 @@ class MongoDB extends AbstractCache implements CacheInterface
      * @param string $server     The server information (optional).
      * @param string $database   The database name (optional).
      * @param string $collection The collection name (optional).
+     *
+     * @throws InvalidArgumentException
      */
     public function __construct($server = null, $database = self::DATABASE, $collection = self::COLLECTION)
     {
-        $mongoDB          = new \MongoClient($server);
-        $database         = $mongoDB->$database;
-        $this->collection = $database->$collection;
+        try {
+            $mongoDB          = new \MongoClient($server);
+            $database         = $mongoDB->$database;
+            $this->collection = $database->$collection;
+        } catch (\Exception $e) {
+            throw new InvalidArgumentException($e->getMessage());
+        }
     }
 
     /**

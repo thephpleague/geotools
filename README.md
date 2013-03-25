@@ -206,14 +206,18 @@ $geocoder->registerProviders(array(
     new \Geocoder\Provider\GeoipProvider(),
 ));
 
-$geotools = new \Geotools\Geotools();
-$mongoDB  = new \Geotools\Cache\MongoDB(); // optional
-$results  = $geotools->batch($geocoder)->setCache($mongoDB)->geocode(array(
-    'Paris, France',
-    'Copenhagen, Denmark',
-    '74.200.247.59',
-    '::ffff:66.147.244.214'
-))->parallel();
+try {
+    $geotools = new \Geotools\Geotools();
+    $mongoDB  = new \Geotools\Cache\MongoDB(); // optional
+    $results  = $geotools->batch($geocoder)->setCache($mongoDB)->geocode(array(
+        'Paris, France',
+        'Copenhagen, Denmark',
+        '74.200.247.59',
+        '::ffff:66.147.244.214'
+    ))->parallel();
+} catch (\Exception $e) {
+    die($e->getMessage());
+}
 
 $dumper = new \Geocoder\Dumper\WktDumper();
 foreach ($results as $result) {
@@ -265,9 +269,13 @@ Batch reverse geocoding is something like:
 
 // ... $geocoder like the previous example ...
 // If you want to reverse one coordinate
-$results = $geotools->batch($geocoder)->reverse(
-    new \Geotools\Coordinate\Coordinate(array(2.307266, 48.823405))
-)->parallel();
+try {
+    $results = $geotools->batch($geocoder)->reverse(
+        new \Geotools\Coordinate\Coordinate(array(2.307266, 48.823405))
+    )->parallel();
+} catch (\Exception $e) {
+    die($e->getMessage());
+}
 // Or if you want to reverse geocoding 3 coordinates
 $coordinates = array(
     new \Geotools\Coordinate\Coordinate(array(2.307266, 48.823405)),
