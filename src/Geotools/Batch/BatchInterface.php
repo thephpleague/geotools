@@ -11,6 +11,8 @@
 
 namespace Geotools\Batch;
 
+use Geotools\Cache\CacheInterface;
+
 /**
  * Batch interface
  *
@@ -59,4 +61,13 @@ interface BatchInterface
      * @throws \Exception
      */
     public function parallel();
+
+    /**
+     * Set the cache object to use.
+     *
+     * @param CacheInterface $cache The cache object to use.
+     *
+     * @return BatchInterface
+     */
+    public function setCache(CacheInterface $cache);
 }

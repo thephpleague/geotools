@@ -13,6 +13,7 @@ Features
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
 **set of providers**. [»](#batch)
+* **Cache** requests in MongoDB (work in progress...). [»](#batch)
 * Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates.
@@ -185,6 +186,11 @@ Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https:/
 It's possible to batch *one request* (a string) or a *set of request* (an array) against *one provider* or
 *set of providers*.
 
+You can use a **cache engine** by setting a cache object which implement `Geotools\Cache\CacheInterface`.
+At the moment you can use:
+* `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION)`
+* ... more to come ...
+
 ```php
 <?php
 
@@ -201,7 +207,8 @@ $geocoder->registerProviders(array(
 ));
 
 $geotools = new \Geotools\Geotools();
-$results  = $geotools->batch($geocoder)->geocode(array(
+$mongoDB  = new \Geotools\Cache\MongoDB(); // optional
+$results  = $geotools->batch($geocoder)->setCache($mongoDB)->geocode(array(
     'Paris, France',
     'Copenhagen, Denmark',
     '74.200.247.59',
@@ -484,6 +491,7 @@ Acknowledgments
 * [Geocoder](http://geocoder-php.org/)
 * [ReactPHP](http://reactphp.org/)
 * [Symfony Console Component](https://github.com/symfony/Console)
+* [Symfony Serializer Component](https://github.com/symfony/Serializer)
 * [Geokit](https://github.com/jsor/Geokit),
 [Geotools-for-CodeIgniter](https://github.com/weejames/Geotools-for-CodeIgniter),
 [geotools-php](https://github.com/jillesvangurp/geotools-php) ...
