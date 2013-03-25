@@ -208,7 +208,7 @@ $geocoder->registerProviders(array(
 
 try {
     $geotools = new \Geotools\Geotools();
-    $mongoDB  = new \Geotools\Cache\MongoDB(); // optional
+    $mongoDB  = new \Geotools\Cache\MongoDB(); // for example
     $results  = $geotools->batch($geocoder)->setCache($mongoDB)->geocode(array(
         'Paris, France',
         'Copenhagen, Denmark',
@@ -228,7 +228,7 @@ foreach ($results as $result) {
     printf("%s|%s|%s\n",
         $result->getProviderName(),
         $result->getQuery(),
-        '' === $result->getExceptionMessage() ? $dumper->dump($result) : $result->getExceptionMessage()
+        '' == $result->getExceptionMessage() ? $dumper->dump($result) : $result->getExceptionMessage()
     );
 }
 ```

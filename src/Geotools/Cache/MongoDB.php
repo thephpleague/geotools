@@ -33,7 +33,7 @@ class MongoDB extends AbstractCache implements CacheInterface
      *
      * @var string
      */
-    const COLLECTION = 'geotools_collection';
+    const COLLECTION = 'geotools_cache';
 
 
     /**
@@ -65,43 +65,30 @@ class MongoDB extends AbstractCache implements CacheInterface
     }
 
     /**
-     * Add into the cache.
-     *
-     * @param array $geocoded The normalized BatchGeocoded object.
+     * {@inheritDoc}
      */
-    private function add(array $geocoded)
+    public function cache(BatchGeocoded $geocoded)
     {
-        $this->collection->insert($geocoded);
-    }
-
-    /**
-     * Check if a BatchGeocoded object is already in the cache.
-     *
-     * @param BatchGeocoded $geocoded The BatchGeocoded to check.
-     *
-     * @return boolean Cached or not.
-     */
-    private function isCached(BatchGeocoded $geocoded)
-    {
-        $total = $this->collection->find(array(
-            'providerName' => $geocoded->getProviderName(),
-            'query'        => $geocoded->getQuery(),
-        ))->count();
-
-        return $total >= 1;
+        $this->collection->insert($this->normalize($geocoded));
     }
 
     /**
      * {@inheritDoc}
      */
-    public function check(BatchGeocoded $geocoded)
+    public function isCached($providerName, $value)
     {
-        if ($this->isCached($geocoded)) {
-            return $geocoded;
+        $result = $this->collection->findOne(array(
+            'providerName' => $providerName,
+            'query'        => $value,
+        ));
+
+        if (null === $result) {
+            return false;
         }
 
-        $this->add($this->normalize($geocoded));
+        $cached = new BatchGeocoded();
+        $cached->fromArray($result);
 
-        return $geocoded;
+        return $cached;
     }
 }

@@ -23,20 +23,6 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 abstract class AbstractCache
 {
     /**
-     * Serialize an object to json.
-     *
-     * @param BatchGeocoded $object The BatchGeocoded object to serialize.
-     *
-     * @return string The serialized object in json.
-     */
-    protected function serialize($object)
-    {
-        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array(new JsonEncoder()));
-
-        return $serializer->serialize($object, 'json');
-    }
-
-    /**
      * Normalize an object to array.
      *
      * @param BatchGeocoded $object The BatchGeocoded object to normalize.
@@ -51,6 +37,20 @@ abstract class AbstractCache
     }
 
     /**
+     * Serialize an object to json.
+     *
+     * @param BatchGeocoded $object The BatchGeocoded object to serialize.
+     *
+     * @return string The serialized object in json.
+     */
+    protected function serialize($object)
+    {
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array(new JsonEncoder()));
+
+        return $serializer->serialize($object, 'json');
+    }
+
+    /**
      * Deserialize a json to BatchGeocoded object.
      *
      * @param string $json The json string to deserialize to BatchGeocoded object.
@@ -59,7 +59,7 @@ abstract class AbstractCache
      */
     protected function deserialize($json)
     {
-        $serializer = new Serializer(array(), array(new JsonEncoder()));
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array(new JsonEncoder()));
 
         return $serializer->deserialize($json, 'Geotools\Batch\BatchGeocoded', 'json');
     }

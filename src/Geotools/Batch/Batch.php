@@ -64,9 +64,18 @@ class Batch implements BatchInterface
      *
      * @return BatchGeocoded The BatchGeocoded object from the query or the cache instance.
      */
-    public function cache(BatchGeocoded $value)
+    public function isCached($providerName, $value)
     {
-        return isset($this->cache) ? $this->cache->check($value) : $value;
+        return isset($this->cache) ? $this->cache->isCached($providerName, $value) : false;
+    }
+
+    public function cache(BatchGeocoded $geocoded)
+    {
+        if (isset($this->cache)) {
+            $this->cache->cache($geocoded);
+        }
+
+        return $geocoded;
     }
 
     /**
@@ -74,16 +83,20 @@ class Batch implements BatchInterface
      */
     public function geocode($values)
     {
-        $geocoder  = $this->geocoder;
-        $thisCache = $this;
+        $geocoder = $this->geocoder;
+        $cache    = $this;
 
         foreach ($geocoder->getProviders() as $provider) {
             if (is_array($values) && count($values) > 0) {
                 foreach ($values as $value) {
-                    $this->tasks[] = function ($callback) use ($geocoder, $provider, $value, $thisCache) {
+                    $this->tasks[] = function ($callback) use ($geocoder, $provider, $value, $cache) {
                         try {
-                            $geocoder->setResultFactory(new BatchResult($provider->getName(), $value));
-                            $callback($thisCache->cache($geocoder->using($provider->getName())->geocode($value)));
+                            if ($cached = $cache->isCached($provider->getName(), $value)) {
+                                $callback($cached);
+                            } else {
+                                $geocoder->setResultFactory(new BatchResult($provider->getName(), $value));
+                                $callback($cache->cache($geocoder->using($provider->getName())->geocode($value)));
+                            }
                         } catch (\Exception $e) {
                             $batchGeocoded = new BatchResult($provider->getName(), $value, $e->getMessage());
                             $callback($batchGeocoded->newInstance());
@@ -91,10 +104,14 @@ class Batch implements BatchInterface
                     };
                 }
             } elseif (is_string($values) && '' !== trim($values)) {
-                $this->tasks[] = function ($callback) use ($geocoder, $provider, $values, $thisCache) {
+                $this->tasks[] = function ($callback) use ($geocoder, $provider, $values, $cache) {
                     try {
-                        $geocoder->setResultFactory(new BatchResult($provider->getName(), $values));
-                        $callback($thisCache->cache($geocoder->using($provider->getName())->geocode($values)));
+                        if ($cached = $cache->isCached($provider->getName(), $values)) {
+                            $callback($cached);
+                        } else {
+                            $geocoder->setResultFactory(new BatchResult($provider->getName(), $values));
+                            $callback($cache->cache($geocoder->using($provider->getName())->geocode($values)));
+                        }
                     } catch (\Exception $e) {
                         $batchGeocoded = new BatchResult($provider->getName(), $values, $e->getMessage());
                         $callback($batchGeocoded->newInstance());
@@ -115,53 +132,49 @@ class Batch implements BatchInterface
      */
     public function reverse($coordinates)
     {
-        $geocoder  = $this->geocoder;
-        $thisCache = $this;
+        $geocoder = $this->geocoder;
+        $cache    = $this;
 
         foreach ($geocoder->getProviders() as $provider) {
             if (is_array($coordinates) && count($coordinates) > 0) {
                 foreach ($coordinates as $coordinate) {
-                    $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinate, $thisCache) {
+                    $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinate, $cache) {
+                        $valueCoordinates = sprintf('%s, %s', $coordinate->getLatitude(), $coordinate->getLongitude());
                         try {
-                            $geocoder->setResultFactory(new BatchResult(
-                                $provider->getName(),
-                                sprintf('%s, %s', $coordinate->getLatitude(), $coordinate->getLongitude())
-                            ));
-                            $callback($thisCache->cache(
-                                $geocoder->using($provider->getName())->reverse(
-                                    $coordinate->getLatitude(),
-                                    $coordinate->getLongitude()
-                                )
-                            ));
+                            if ($cached = $cache->isCached($provider->getName(), $valueCoordinates)) {
+                                $callback($cached);
+                            } else {
+                                $geocoder->setResultFactory(new BatchResult($provider->getName(), $valueCoordinates));
+                                $callback($cache->cache(
+                                    $geocoder->using($provider->getName())->reverse(
+                                        $coordinate->getLatitude(),
+                                        $coordinate->getLongitude()
+                                    )
+                                ));
+                            }
                         } catch (\Exception $e) {
-                            $batchGeocoded = new BatchResult(
-                                $provider->getName(),
-                                sprintf('%s, %s', $coordinate->getLatitude(), $coordinate->getLongitude()),
-                                $e->getMessage()
-                            );
+                            $batchGeocoded = new BatchResult($provider->getName(), $valueCoordinates, $e->getMessage());
                             $callback($batchGeocoded->newInstance());
                         }
                     };
                 }
             } elseif ($coordinates instanceOf CoordinateInterface) {
-                $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinates, $thisCache) {
+                $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinates, $cache) {
+                    $valueCoordinates = sprintf('%s, %s', $coordinates->getLatitude(), $coordinates->getLongitude());
                     try {
-                        $geocoder->setResultFactory(new BatchResult(
-                            $provider->getName(),
-                            sprintf('%s, %s', $coordinates->getLatitude(), $coordinates->getLongitude())
-                        ));
-                        $callback($thisCache->cache(
-                            $geocoder->using($provider->getName())->reverse(
-                                $coordinates->getLatitude(),
-                                $coordinates->getLongitude()
-                            )
-                        ));
+                        if ($cached = $cache->isCached($provider->getName(), $valueCoordinates)) {
+                            $callback($cached);
+                        } else {
+                            $geocoder->setResultFactory(new BatchResult($provider->getName(), $valueCoordinates));
+                            $callback($cache->cache(
+                                $geocoder->using($provider->getName())->reverse(
+                                    $coordinates->getLatitude(),
+                                    $coordinates->getLongitude()
+                                )
+                            ));
+                        }
                     } catch (\Exception $e) {
-                        $batchGeocoded = new BatchResult(
-                            $provider->getName(),
-                            sprintf('%s, %s', $coordinates->getLatitude(), $coordinates->getLongitude()),
-                            $e->getMessage()
-                        );
+                        $batchGeocoded = new BatchResult($provider->getName(), $valueCoordinates, $e->getMessage());
                         $callback($batchGeocoded->newInstance());
                     }
                 };

@@ -30,12 +30,14 @@
         "kriswallsmith/buzz": "@stable",
         "guzzle/guzzle": "@stable",
         "zendframework/zendframework": "~2.1",
+        "predis/predis": "v0.8.3",
         "ext-curl" : "*"
     },
     "suggest": {
         "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter",
         "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter",
-        "zendframework/zendframework": "Enabling Zend Framework allows you to use the ZendHttpAdapter"
+        "zendframework/zendframework": "Enabling Zend Framework allows you to use the ZendHttpAdapter",
+        "predis/predis": "Enabling Predis allows you to use RedisCache"
     },
     "autoload": {
         "psr-0": { "Geotools": "src/" }
