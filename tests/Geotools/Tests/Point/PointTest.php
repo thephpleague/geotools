@@ -250,8 +250,8 @@ class PointTest extends TestCase
         $this->assertTrue(is_object($middlePoint));
         $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $middlePoint);
         $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $middlePoint);
-        $this->assertEquals($expectedMiddlePoint[0]->getLatitude(), $middlePoint->getLatitude());
-        $this->assertEquals($expectedMiddlePoint[0]->getLongitude(), $middlePoint->getLongitude());
+        $this->assertEquals($expectedMiddlePoint->getLatitude(), $middlePoint->getLatitude());
+        $this->assertEquals($expectedMiddlePoint->getLongitude(), $middlePoint->getLongitude());
     }
 
     public function fromAndToCoordinatesAndExpectedMiddlePointProvider()
@@ -260,22 +260,22 @@ class PointTest extends TestCase
             array(
                 array(48.8234055, 2.3072664),
                 array(43.296482, 5.36978),
-                array($this->getMockCoordinateReturns(array(46.070143125815, 3.9152401085931)))
+                $this->getMockCoordinateReturns(array(46.070143125815, 3.9152401085931))
             ),
             array(
                 array('28.8234055', '1.3072664'),
                 array('43.296482', '5.36978'),
-                array($this->getMockCoordinateReturns(array(36.076935937133, 3.1506401291113)))
+                $this->getMockCoordinateReturns(array(36.076935937133, 3.1506401291113))
             ),
             array(
                 array(43.296482, 5.36978),
                 array(48.8234055, 2.3072664),
-                array($this->getMockCoordinateReturns(array('46.070143125815', '3.9152401085931')))
+                $this->getMockCoordinateReturns(array('46.070143125815', '3.9152401085931'))
             ),
             array(
                 array(-13.296482, -5.36978),
                 array(-38.8234055, -4.3072664),
-                array($this->getMockCoordinateReturns(array(-26.060903849478, -4.8973756901009)))
+                $this->getMockCoordinateReturns(array(-26.060903849478, -4.8973756901009))
             ),
         );
     }
@@ -307,8 +307,8 @@ class PointTest extends TestCase
         $this->assertTrue(is_object($destinationPoint));
         $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $destinationPoint);
         $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $destinationPoint);
-        $this->assertEquals($expectedDestinationPoint[0]->getLatitude(), $destinationPoint->getLatitude());
-        $this->assertEquals($expectedDestinationPoint[0]->getLongitude(), $destinationPoint->getLongitude());
+        $this->assertEquals($expectedDestinationPoint->getLatitude(), $destinationPoint->getLatitude());
+        $this->assertEquals($expectedDestinationPoint->getLongitude(), $destinationPoint->getLongitude());
     }
 
     public function fromAndBearingAndDistanceAndExpectedDestinationPoint()
@@ -318,25 +318,25 @@ class PointTest extends TestCase
                 array(48.8234055, 2.3072664),
                 180,
                 200000,
-                array($this->getMockCoordinateReturns(array(47.026774650075, 2.3072664)))
+                $this->getMockCoordinateReturns(array(47.026774650075, 2.3072664))
             ),
             array(
                 array('28.8234055', '1.3072664'),
                 95,
                 500000,
-                array($this->getMockCoordinateReturns(array(28.336641152298, 6.3923716035552)))
+                $this->getMockCoordinateReturns(array(28.336641152298, 6.3923716035552))
             ),
             array(
                 array(43.296482, 5.36978),
                 37,
                 3000,
-                array($this->getMockCoordinateReturns(array('43.318002633989', '5.3920718426221')))
+                $this->getMockCoordinateReturns(array('43.318002633989', '5.3920718426221'))
             ),
             array(
                 array(-13.296482, -5.36978),
                 166,
                 5000000,
-                array($this->getMockCoordinateReturns(array(-56.057095935971, 12.44347001977)))
+                $this->getMockCoordinateReturns(array(-56.057095935971, 12.44347001977))
             ),
         );
     }
