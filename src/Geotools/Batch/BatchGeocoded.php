@@ -35,7 +35,7 @@ class BatchGeocoded extends Geocoded
     protected $query;
 
     /**
-     * The execption message.
+     * The exception message.
      *
      * @var string
      */

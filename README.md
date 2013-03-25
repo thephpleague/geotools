@@ -122,7 +122,7 @@ $coordinate = new Coordinate(array(48.8234055, 2.3072664), Ellipsoid::createFrom
 $coordinate = new Coordinate('48.8234055, 2.3072664');
 // or in degrees minutes seconds coordinate within WGS84 ellipsoid
 $coordinate = new Coordinate('48°49′24″N, 2°18′26″E');
-// or in decimal minutes cordinate within WGS84 ellipsoid
+// or in decimal minutes coordinate within WGS84 ellipsoid
 $coordinate = new Coordinate('48 49.4N, 2 18.43333E');
 // the result will be:
 printf("Latitude: %F\n", $coordinate->getLatitude()); // 48.8234055
@@ -211,7 +211,7 @@ $results  = $geotools->batch($geocoder)->geocode(array(
 $dumper = new \Geocoder\Dumper\WktDumper();
 foreach ($results as $result) {
     // if a provider throws an exception (UnsupportedException, InvalidCredentialsException ...)
-    // an custom /Geocoder/Result/Geocoded instance is returned which embeded the name of the provider,
+    // an custom /Geocoder/Result/Geocoded instance is returned which embedded the name of the provider,
     // the query string and the exception string. It's possible to use dumpers
     // and/or formatters from the Geocoder library.
     printf("%s|%s|%s\n",
@@ -343,7 +343,7 @@ $encoded = $geotools->geohash()->encode($coordToGeohash, 4); // 12 is the defaul
 // encoded
 printf("%s\n", $encoded->getGeohash()); // spey
 // encoded bounding box
-$boundingBox = $encoded->getBoundingBox(); // array of \Geotools\Coordinate\CordinateInterface
+$boundingBox = $encoded->getBoundingBox(); // array of \Geotools\Coordinate\CoordinateInterface
 $southWest   = $boundingBox[0];
 $northEast   = $boundingBox[1];
 printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&box=yes\n",
@@ -357,7 +357,7 @@ $decoded = $geotools->geohash()->decode('spey61y');
 printf("%s\n", $decoded->getCoordinate()->getLatitude()); // 43.296432495117
 printf("%s\n", $decoded->getCoordinate()->getLongitude()); // 5.3702545166016
 // decoded bounding box
-$boundingBox = $decoded->getBoundingBox(); //array of \Geotools\Coordinate\CordinateInterface
+$boundingBox = $decoded->getBoundingBox(); //array of \Geotools\Coordinate\CoordinateInterface
 $southWest   = $boundingBox[0];
 $northEast   = $boundingBox[1];
 printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&box=yes\n",

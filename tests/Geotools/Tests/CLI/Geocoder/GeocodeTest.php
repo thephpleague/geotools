@@ -73,7 +73,7 @@ class GeocodeTest extends TestCase
         $this->assertRegExp('/55\.6760968, 12\.5683371/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteIPv4AgainsFreeGeoIpProviderWithBuzzAdapter()
+    public function testExecuteIPv4AgainstFreeGeoIpProviderWithBuzzAdapter()
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
@@ -86,7 +86,7 @@ class GeocodeTest extends TestCase
         $this->assertRegExp('/37\.7484, -122\.4156/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteIPv6AgainsFreeGeoIpProviderWithDefaultAdapter()
+    public function testExecuteIPv6AgainstFreeGeoIpProviderWithDefaultAdapter()
     {
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),

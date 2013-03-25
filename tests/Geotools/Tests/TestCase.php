@@ -33,6 +33,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array $providers
+     * @param array $data
      * @return GeocoderInterface
      */
     protected function getMockGeocoderReturns(array $providers, array $data = array())
@@ -65,6 +67,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array $providers
      * @return GeocoderInterface
      */
     protected function getMockGeocoderThrowException(array $providers)
@@ -104,6 +107,8 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array $coordinate
+     * @param Ellipsoid $ellipsoid
      * @return CoordinateInterface
      */
     protected function getMockCoordinateReturns(array $coordinate, Ellipsoid $ellipsoid = null)
@@ -129,6 +134,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param $expects
      * @return ResultInterface
      */
     protected function getMockGeocoded($expects = null)
@@ -147,6 +153,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param array $coordinate
      * @return ResultInterface
      */
     protected function getMockGeocodedReturns(array $coordinate)

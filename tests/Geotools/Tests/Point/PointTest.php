@@ -302,13 +302,13 @@ class PointTest extends TestCase
         $WGS84 = Ellipsoid::createFromName(Ellipsoid::WGS84);
 
         $this->point->setFrom($this->getMockCoordinateReturns($from, $WGS84));
-        $destionationPoint = $this->point->destination($bearing, $distance);
+        $destinationPoint = $this->point->destination($bearing, $distance);
 
-        $this->assertTrue(is_object($destionationPoint));
-        $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $destionationPoint);
-        $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $destionationPoint);
-        $this->assertEquals($expectedDestinationPoint[0]->getLatitude(), $destionationPoint->getLatitude());
-        $this->assertEquals($expectedDestinationPoint[0]->getLongitude(), $destionationPoint->getLongitude());
+        $this->assertTrue(is_object($destinationPoint));
+        $this->assertInstanceOf('Geotools\Coordinate\Coordinate', $destinationPoint);
+        $this->assertInstanceOf('Geotools\Coordinate\CoordinateInterface', $destinationPoint);
+        $this->assertEquals($expectedDestinationPoint[0]->getLatitude(), $destinationPoint->getLatitude());
+        $this->assertEquals($expectedDestinationPoint[0]->getLongitude(), $destinationPoint->getLongitude());
     }
 
     public function fromAndBearingAndDistanceAndExpectedDestinationPoint()

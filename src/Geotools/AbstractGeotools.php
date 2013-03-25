@@ -76,7 +76,7 @@ abstract class AbstractGeotools
     );
 
     /**
-     * Latitude bands in the UTM cordinate system.
+     * Latitude bands in the UTM coordinate system.
      * @see http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system
      *
      * @var array

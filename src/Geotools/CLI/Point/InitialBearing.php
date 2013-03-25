@@ -42,7 +42,7 @@ class InitialBearing extends Command
             ->setHelp(<<<EOT
 <info>Available ellipsoids</info>: $availableEllipsoids
 
-<info>Exemple with FISCHER_1968 ellipsoid</info>:
+<info>Example with FISCHER_1968 ellipsoid</info>:
 
     %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--ellipsoid=FISCHER_1968</comment>
 EOT
