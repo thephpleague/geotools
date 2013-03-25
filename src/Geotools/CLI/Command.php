@@ -101,7 +101,7 @@ class Command extends BaseCommand
     /**
      * Returns the list of available adapters sorted by alphabetical order.
      *
-     * @return string The list of availalbe adapters comma separated.
+     * @return string The list of available adapters comma separated.
      */
     protected function getAdapters()
     {
@@ -131,7 +131,7 @@ class Command extends BaseCommand
     /**
      * Returns the list of available providers sorted by alphabetical order.
      *
-     * @return string The list of availalbe providers comma separated.
+     * @return string The list of available providers comma separated.
      */
     protected function getProviders()
     {
@@ -161,7 +161,7 @@ class Command extends BaseCommand
     /**
      * Returns the list of available dumpers sorted by alphabetical order.
      *
-     * @return string The list of availalbe dumpers comma separated.
+     * @return string The list of available dumpers comma separated.
      */
     protected function getDumpers()
     {

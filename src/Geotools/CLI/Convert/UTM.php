@@ -41,7 +41,7 @@ class UTM extends Command
             ->setHelp(<<<EOT
 <info>Available ellipsoids</info>: $availableEllipsoids
 
-<info>Exemple with CLARKE_1866 ellipsoid</info>:
+<info>Example with CLARKE_1866 ellipsoid</info>:
 
     %command.full_name% "40.446195, -79.948862" <comment>--ellipsoid=CLARKE_1866</comment>
 EOT

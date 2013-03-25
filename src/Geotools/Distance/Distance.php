@@ -78,7 +78,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
     }
 
     /**
-     * Returns the approximate flat distance between two cordinates
+     * Returns the approximate flat distance between two coordinates
      * using Pythagoras’ theorem which is not very accurate.
      * @see http://en.wikipedia.org/wiki/Pythagorean_theorem
      * @see http://en.wikipedia.org/wiki/Equirectangular_projection

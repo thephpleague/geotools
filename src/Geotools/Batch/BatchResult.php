@@ -35,7 +35,7 @@ class BatchResult extends ResultFactory
     protected $query;
 
     /**
-     * The execption message.
+     * The exception message.
      *
      * @var string
      */

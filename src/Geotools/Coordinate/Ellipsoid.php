@@ -12,7 +12,6 @@
 namespace Geotools\Coordinate;
 
 use Geotools\Coordinate\CoordinateInterface;
-use Geotools\Coordinate\Ellipsoid;
 use Geotools\Exception\NotMatchingEllipsoidException;
 use Geotools\Exception\InvalidArgumentException;
 
@@ -228,7 +227,7 @@ class Ellipsoid
     }
 
     /**
-     * Create the ellipsoid choosen by its name.
+     * Create the ellipsoid chosen by its name.
      *
      * @param string $name The name of the ellipsoid to create (optional).
      *
@@ -338,7 +337,7 @@ class Ellipsoid
     /**
      * Returns the list of available ellipsoids sorted by alphabetical order.
      *
-     * @return string The list of availalbe ellipsoids comma separated.
+     * @return string The list of available ellipsoids comma separated.
      */
     public static function getAvailableEllipsoidNames()
     {

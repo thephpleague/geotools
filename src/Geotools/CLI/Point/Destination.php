@@ -43,7 +43,7 @@ class Destination extends Command
             ->setHelp(<<<EOT
 <info>Available ellipsoids</info>: $availableEllipsoids
 
-<info>Exemple with SOUTH_AMERICAN_1969 ellipsoid, 25 degrees and 10000 meters</info>:
+<info>Example with SOUTH_AMERICAN_1969 ellipsoid, 25 degrees and 10000 meters</info>:
 
     %command.full_name% "40° 26.7717, -79° 56.93172" 25 10000 <comment>--ellipsoid=SOUTH_AMERICAN_1969</comment>
 EOT
