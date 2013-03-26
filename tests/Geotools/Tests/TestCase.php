@@ -35,6 +35,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @param array $providers
      * @param array $data
+     *
      * @return GeocoderInterface
      */
     protected function getMockGeocoderReturns(array $providers, array $data = array())
@@ -68,6 +69,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $providers
+     *
      * @return GeocoderInterface
      */
     protected function getMockGeocoderThrowException(array $providers)
@@ -78,7 +80,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
             ->method('getProviders')
             ->will($this->returnValue($providers));
         $mock
-            ->expects($this->atLeastOnce())
+            ->expects($this->any())
             ->method('using')
             ->will($this->returnSelf());
         $mock
@@ -109,6 +111,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @param array $coordinate
      * @param Ellipsoid $ellipsoid
+     *
      * @return CoordinateInterface
      */
     protected function getMockCoordinateReturns(array $coordinate, Ellipsoid $ellipsoid = null)
@@ -135,6 +138,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $expects
+     *
      * @return ResultInterface
      */
     protected function getMockGeocoded($expects = null)
@@ -154,19 +158,63 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $coordinate
+     *
      * @return ResultInterface
      */
     protected function getMockGeocodedReturns(array $coordinate)
     {
         $mock = $this->getMock('\Geocoder\Result\ResultInterface');
         $mock
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('getLatitude')
             ->will($this->returnValue($coordinate['latitude']));
         $mock
-            ->expects($this->once())
+            ->expects($this->atLeastOnce())
             ->method('getLongitude')
             ->will($this->returnValue($coordinate['longitude']));
+
+        return $mock;
+    }
+
+    /**
+     * @return BatchGeocoded
+     */
+    protected function getStubBatchGeocoded()
+    {
+        $stub = $this
+            ->getMockBuilder('\Geotools\Batch\BatchGeocoded')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $stub;
+    }
+
+    /**
+     * @return CacheInterface
+     */
+    protected function getStubCache()
+    {
+        $stub = $this
+            ->getMockBuilder('\Geotools\Cache\CacheInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $stub;
+    }
+
+    /**
+     * @param string $method
+     * @param $returnValue
+     *
+     * @return CacheInterface
+     */
+    protected function getMockCacheReturns($method, $returnValue)
+    {
+        $mock = $this->getMock('\Geotools\Cache\CacheInterface');
+        $mock
+            ->expects($this->atLeastOnce())
+            ->method($method)
+            ->will($this->returnValue($returnValue));
 
         return $mock;
     }
