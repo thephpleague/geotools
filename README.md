@@ -13,7 +13,8 @@ Features
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
 **set of providers**. [»](#batch)
-* **Cache** geocode & reverse geocoding result(s) with **MongoDB** or **Redis** to improve performances. [»](#batch)
+* **Cache** geocode & reverse geocoding result(s) with **MongoDB**, **Redis** or **Memcached**
+to improve performances. [»](#batch)
 * Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates.
@@ -202,6 +203,11 @@ At the moment Geotools supports:
     * `Redis($client = null)`
     * `$client` should be an array with `host`, `port` and `database` keys
     * `flush()` method deletes all the keys of the currently selected database which is `0` by default
+* **[Memcached](http://memcached.org/)**, [php.net](http://fr.php.net/manual/fr/book.memcached.php)
+    * `Memcached($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT)`
+    * `$server` can be address like `exemple.com` or an IP, localhost is the default one
+    * `$port` can be an integer like `11211` (by default)
+    * `flush()` method invalidates all items in the cache
 * ... more to come ...
 
 NB: Before you implement caching in your app please be sure that doing so does not violate the Terms of Service
