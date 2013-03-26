@@ -48,4 +48,9 @@ interface CacheInterface
      * @return boolean|BatchGeocoded The BatchGeocoded if cached false otherwise.
      */
     public function isCached($providerName, $query);
+
+    /**
+     * Delete cached tuple.
+     */
+    public function flush();
 }

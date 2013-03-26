@@ -108,4 +108,12 @@ class MongoDB extends AbstractCache implements CacheInterface
 
         return $cached;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function flush()
+    {
+        $this->collection->drop();
+    }
 }

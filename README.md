@@ -13,7 +13,7 @@ Features
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
 **set of providers**. [»](#batch)
-* **Cache** requests in MongoDB (work in progress...). [»](#batch)
+* **Cache** results in MongoDB or Redis to improve performances. [»](#batch)
 * Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates.
@@ -186,10 +186,26 @@ Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https:/
 It's possible to batch *one request* (a string) or a *set of request* (an array) against *one provider* or
 *set of providers*.
 
-You can use a **cache engine** by setting a cache object which implement `Geotools\Cache\CacheInterface`.
-At the moment you can use:
-* `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION)`
+You can use a provided **cache engines** or use your own by setting a cache object which should implement
+`Geotools\Cache\CacheInterface` and extend `Geotools\Cache\AbstractCache` if needed.
+
+At the moment Geotools supports:
+* **[MongoDB](http://www.mongodb.org/)**, [driver](http://docs.mongodb.org/ecosystem/drivers/php/) and
+[php.net](http://www.php.net/manual/en/mongo.tutorial.connecting.php)
+    * `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION)`
+    * `$server` can be a string like `mongodb://example.com:65432`
+    * `$database` can be a string like `geotools` (by default)
+    * `$collection` can be a string like `geotools_cache` (by default)
+    * `flush()` method drops the current collection
+* **[Redis](http://redis.io/)**, [packagist](https://packagist.org/packages/predis/predis) and
+[github](https://github.com/nrk/predis)
+    * `Redis($client = null)`
+    * `$client` should be an array with `host`, `port` and `database` keys
+    * `flush()` method deletes all the keys of the currently selected database which is `0` by default
 * ... more to come ...
+
+NB: Before you implement caching in your app please be sure that doing so does not violate the Terms of Service
+for your(s) geocoding provider(s).
 
 ```php
 <?php
@@ -208,8 +224,14 @@ $geocoder->registerProviders(array(
 
 try {
     $geotools = new \Geotools\Geotools();
-    $mongoDB  = new \Geotools\Cache\MongoDB(); // for example
-    $results  = $geotools->batch($geocoder)->setCache($mongoDB)->geocode(array(
+    $cache    = new \Geotools\Cache\MongoDB();
+    // or
+    $cache    = new \Geotools\Cache\Redis(array(
+        'host'     => '127.0.0.1',
+        'port'     => 6379,
+        'database' => 15 // the last database ID
+    ));
+    $results  = $geotools->batch($geocoder)->setCache($cache)->geocode(array(
         'Paris, France',
         'Copenhagen, Denmark',
         '74.200.247.59',
@@ -496,10 +518,16 @@ Credits
 
 Acknowledgments
 ---------------
-* [Geocoder](http://geocoder-php.org/)
-* [ReactPHP](http://reactphp.org/)
-* [Symfony Console Component](https://github.com/symfony/Console)
-* [Symfony Serializer Component](https://github.com/symfony/Serializer)
+* [Geocoder](https://github.com/willdurand/Geocoder) -
+[MIT](https://raw.github.com/willdurand/Geocoder/master/LICENSE)
+* [ReactPHP](https://github.com/reactphp/) -
+[MIT](https://raw.github.com/reactphp/react/master/LICENSE)
+* [Symfony Console Component](https://github.com/symfony/Console) -
+[MIT](https://raw.github.com/symfony/Console/master/LICENSE)
+* [Symfony Serializer Component](https://github.com/symfony/Serializer) -
+[MIT](https://raw.github.com/symfony/Serializer/master/LICENSE)
+* [PHP client library for Redis](https://github.com/nrk/predis) -
+[MIT](https://raw.github.com/nrk/predis/master/LICENSE)
 * [Geokit](https://github.com/jsor/Geokit),
 [Geotools-for-CodeIgniter](https://github.com/weejames/Geotools-for-CodeIgniter),
 [geotools-php](https://github.com/jillesvangurp/geotools-php) ...

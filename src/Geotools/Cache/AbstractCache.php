@@ -55,12 +55,10 @@ abstract class AbstractCache
      *
      * @param string $json The json string to deserialize to BatchGeocoded object.
      *
-     * @return BatchGeocoded The deserialized json string.
+     * @return array The deserialized json to array.
      */
     protected function deserialize($json)
     {
-        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array(new JsonEncoder()));
-
-        return $serializer->deserialize($json, 'Geotools\Batch\BatchGeocoded', 'json');
+        return json_decode($json, true);
     }
 }
