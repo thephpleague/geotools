@@ -54,6 +54,9 @@
 <strong>Batch</strong> geocode &amp; reverse geocoding request(s) in <strong>serie</strong> / in <strong>parallel</strong> against one or a
 <strong>set of providers</strong>. <a href="#batch">»</a>
 </li>
+<li>
+<strong>Cache</strong> results in MongoDB or Redis to improve performances. <a href="#batch">»</a>
+</li>
 <li>Compute geocode &amp; reverse geocoding in the <strong>command-line interface</strong> (CLI) + dumpers and formatters. <a href="#cli">»</a>
 </li>
 <li>Accept <strong>almost</strong> all kind of WGS84
@@ -273,6 +276,45 @@ Thanks to <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and <a h
 <p>It's possible to batch <em>one request</em> (a string) or a <em>set of request</em> (an array) against <em>one provider</em> or
 <em>set of providers</em>.</p>
 
+<p>You can use a provided <strong>cache engines</strong> or use your own by setting a cache object which should implement
+<code>Geotools\Cache\CacheInterface</code> and extend <code>Geotools\Cache\AbstractCache</code> if needed.</p>
+
+<p>At the moment Geotools supports:</p>
+
+<ul>
+<li>
+<strong><a href="http://www.mongodb.org/">MongoDB</a></strong>, <a href="http://docs.mongodb.org/ecosystem/drivers/php/">driver</a> and
+<a href="http://www.php.net/manual/en/mongo.tutorial.connecting.php">php.net</a>
+
+<ul>
+<li><code>MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION)</code></li>
+<li>
+<code>$server</code> can be a string like <code>mongodb://example.com:65432</code>
+</li>
+<li>
+<code>$database</code> can be a string like <code>geotools</code> (by default)</li>
+<li>
+<code>$collection</code> can be a string like <code>geotools_cache</code> (by default)</li>
+<li>
+<code>flush()</code> method drops the current collection</li>
+</ul>
+</li>
+<li>
+<strong><a href="http://redis.io/">Redis</a></strong>, <a href="https://packagist.org/packages/predis/predis">packagist</a> and
+<a href="https://github.com/nrk/predis">github</a>
+
+<ul>
+<li><code>Redis($client = null)</code></li>
+<li>
+<code>$client</code> should be an array with <code>host</code>, <code>port</code> and <code>database</code> keys</li>
+<li>
+<code>flush()</code> method deletes all the keys of the currently selected database which is <code>0</code> by default</li>
+</ul>
+</li>
+<li>... more to come ...</li>
+</ul><p>NB: Before you implement caching in your app please be sure that doing so does not violate the Terms of Service
+for your(s) geocoding provider(s).</p>
+
 <div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="nv">$geocoder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\Geocoder</span><span class="p">();</span>
@@ -287,13 +329,24 @@ Thanks to <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and <a h
     <span class="k">new</span> <span class="nx">\Geocoder\Provider\GeoipProvider</span><span class="p">(),</span>
 <span class="p">));</span>
 
-<span class="nv">$geotools</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Geotools</span><span class="p">();</span>
-<span class="nv">$results</span>  <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="nv">$geocoder</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">geocode</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
-    <span class="s1">'Paris, France'</span><span class="p">,</span>
-    <span class="s1">'Copenhagen, Denmark'</span><span class="p">,</span>
-    <span class="s1">'74.200.247.59'</span><span class="p">,</span>
-    <span class="s1">'::ffff:66.147.244.214'</span>
-<span class="p">))</span><span class="o">-&gt;</span><span class="na">parallel</span><span class="p">();</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$geotools</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Geotools</span><span class="p">();</span>
+    <span class="nv">$cache</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Cache\MongoDB</span><span class="p">();</span>
+    <span class="c1">// or</span>
+    <span class="nv">$cache</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geotools\Cache\Redis</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">'host'</span>     <span class="o">=&gt;</span> <span class="s1">'127.0.0.1'</span><span class="p">,</span>
+        <span class="s1">'port'</span>     <span class="o">=&gt;</span> <span class="mi">6379</span><span class="p">,</span>
+        <span class="s1">'database'</span> <span class="o">=&gt;</span> <span class="mi">15</span> <span class="c1">// the last database ID</span>
+    <span class="p">));</span>
+    <span class="nv">$results</span>  <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="nv">$geocoder</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setCache</span><span class="p">(</span><span class="nv">$cache</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">geocode</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">'Paris, France'</span><span class="p">,</span>
+        <span class="s1">'Copenhagen, Denmark'</span><span class="p">,</span>
+        <span class="s1">'74.200.247.59'</span><span class="p">,</span>
+        <span class="s1">'::ffff:66.147.244.214'</span>
+    <span class="p">))</span><span class="o">-&gt;</span><span class="na">parallel</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">die</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="p">}</span>
 
 <span class="nv">$dumper</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Geocoder\Dumper\WktDumper</span><span class="p">();</span>
 <span class="k">foreach</span> <span class="p">(</span><span class="nv">$results</span> <span class="k">as</span> <span class="nv">$result</span><span class="p">)</span> <span class="p">{</span>
@@ -304,7 +357,7 @@ Thanks to <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and <a h
     <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s|%s|%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>
         <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getProviderName</span><span class="p">(),</span>
         <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getQuery</span><span class="p">(),</span>
-        <span class="s1">''</span> <span class="o">===</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getExceptionMessage</span><span class="p">()</span> <span class="o">?</span> <span class="nv">$dumper</span><span class="o">-&gt;</span><span class="na">dump</span><span class="p">(</span><span class="nv">$result</span><span class="p">)</span> <span class="o">:</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getExceptionMessage</span><span class="p">()</span>
+        <span class="s1">''</span> <span class="o">==</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getExceptionMessage</span><span class="p">()</span> <span class="o">?</span> <span class="nv">$dumper</span><span class="o">-&gt;</span><span class="na">dump</span><span class="p">(</span><span class="nv">$result</span><span class="p">)</span> <span class="o">:</span> <span class="nv">$result</span><span class="o">-&gt;</span><span class="na">getExceptionMessage</span><span class="p">()</span>
     <span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
@@ -343,9 +396,13 @@ geoip|::ffff:66.147.244.214|The GeoipProvider does not support IPv6 addresses.
 
 <span class="c1">// ... $geocoder like the previous example ...</span>
 <span class="c1">// If you want to reverse one coordinate</span>
-<span class="nv">$results</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="nv">$geocoder</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">reverse</span><span class="p">(</span>
-    <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">2.307266</span><span class="p">,</span> <span class="mf">48.823405</span><span class="p">))</span>
-<span class="p">)</span><span class="o">-&gt;</span><span class="na">parallel</span><span class="p">();</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="nv">$results</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">batch</span><span class="p">(</span><span class="nv">$geocoder</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">reverse</span><span class="p">(</span>
+        <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">2.307266</span><span class="p">,</span> <span class="mf">48.823405</span><span class="p">))</span>
+    <span class="p">)</span><span class="o">-&gt;</span><span class="na">parallel</span><span class="p">();</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">die</span><span class="p">(</span><span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">());</span>
+<span class="p">}</span>
 <span class="c1">// Or if you want to reverse geocoding 3 coordinates</span>
 <span class="nv">$coordinates</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
     <span class="k">new</span> <span class="nx">\Geotools\Coordinate\Coordinate</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="mf">2.307266</span><span class="p">,</span> <span class="mf">48.823405</span><span class="p">)),</span>
@@ -561,9 +618,26 @@ Timezone:
 </ul><h2>Acknowledgments</h2>
 
 <ul>
-<li><a href="http://geocoder-php.org/">Geocoder</a></li>
-<li><a href="http://reactphp.org/">ReactPHP</a></li>
-<li><a href="https://github.com/symfony/Console">Symfony Console Component</a></li>
+<li>
+<a href="https://github.com/willdurand/Geocoder">Geocoder</a> -
+<a href="https://raw.github.com/willdurand/Geocoder/master/LICENSE">MIT</a>
+</li>
+<li>
+<a href="https://github.com/reactphp/">ReactPHP</a> -
+<a href="https://raw.github.com/reactphp/react/master/LICENSE">MIT</a>
+</li>
+<li>
+<a href="https://github.com/symfony/Console">Symfony Console Component</a> -
+<a href="https://raw.github.com/symfony/Console/master/LICENSE">MIT</a>
+</li>
+<li>
+<a href="https://github.com/symfony/Serializer">Symfony Serializer Component</a> -
+<a href="https://raw.github.com/symfony/Serializer/master/LICENSE">MIT</a>
+</li>
+<li>
+<a href="https://github.com/nrk/predis">PHP client library for Redis</a> -
+<a href="https://raw.github.com/nrk/predis/master/LICENSE">MIT</a>
+</li>
 <li>
 <a href="https://github.com/jsor/Geokit">Geokit</a>,
 <a href="https://github.com/weejames/Geotools-for-CodeIgniter">Geotools-for-CodeIgniter</a>,
