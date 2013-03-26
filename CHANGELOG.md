@@ -1,10 +1,16 @@
 CHANGELOG
 =========
 
-0.2.2 (xxxx-xx-xx)
+0.2.2 (2012-03-26)
 ------------------
 
-n/a
+* Added: Redis cache - fix #23
+* Updated: MongoDB cache search by key
+* Fixed: MangoDB cache
+* Updated: doc with try .. catch bloc
+* Fixed: Batch test for php 5.3
+* Added: Cache interface + mongoDB - fix #2
+* Refactored: Point test
 
 0.2.1 (2012-03-16)
 ------------------
