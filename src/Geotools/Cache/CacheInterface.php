@@ -21,9 +21,21 @@ use Geotools\Batch\BatchGeocoded;
 interface CacheInterface
 {
     /**
+     * Return a unique key.
+     *
+     * @param string $providerName The name of the provider.
+     * @param string $query        The query string.
+     *
+     * @return string The unique key.
+     */
+    public function getKey($providerName, $query);
+
+    /**
      * Add into the cache.
      *
      * @param BatchGeocoded $geocoded The BatchGeocoded object to cache.
+     *
+     * @throws RuntimException
      */
     public function cache(BatchGeocoded $geocoded);
 
@@ -31,9 +43,9 @@ interface CacheInterface
      * Check against the cache instance if any.
      *
      * @param string $providerName The name of the provider.
-     * @param string $value        The value of the query.
+     * @param string $query        The query string.
      *
      * @return boolean|BatchGeocoded The BatchGeocoded if cached false otherwise.
      */
-    public function isCached($providerName, $value);
+    public function isCached($providerName, $query);
 }

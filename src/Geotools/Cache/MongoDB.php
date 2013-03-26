@@ -12,6 +12,7 @@
 namespace Geotools\Cache;
 
 use Geotools\Exception\InvalidArgumentException;
+use Geotools\Exception\RuntimException;
 use Geotools\Batch\BatchGeocoded;
 
 /**
@@ -67,20 +68,36 @@ class MongoDB extends AbstractCache implements CacheInterface
     /**
      * {@inheritDoc}
      */
-    public function cache(BatchGeocoded $geocoded)
+    public function getKey($providerName, $query)
     {
-        $this->collection->insert($this->normalize($geocoded));
+        return md5($providerName . $query);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function isCached($providerName, $value)
+    public function cache(BatchGeocoded $geocoded)
     {
-        $result = $this->collection->findOne(array(
-            'providerName' => $providerName,
-            'query'        => $value,
-        ));
+        try {
+            $this->collection->insert(
+                array_merge(
+                    array('id' => $this->getKey($geocoded->getProviderName(), $geocoded->getQuery())),
+                    $this->normalize($geocoded)
+                )
+            );
+        } catch (\Exception $e) {
+            throw new RuntimException($e->getMessage());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isCached($providerName, $query)
+    {
+        $result = $this->collection->findOne(
+            array('id' => $this->getKey($providerName, $query))
+        );
 
         if (null === $result) {
             return false;

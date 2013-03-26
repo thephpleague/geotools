@@ -60,15 +60,23 @@ class Batch implements BatchInterface
     /**
      * Check against the cache instance if any.
      *
-     * @param BatchGeocoded $value The BatchGeocoded object to check against the cache instance.
+     * @param string $providerName The name of the provider.
+     * @param string $query        The query string.
      *
-     * @return BatchGeocoded The BatchGeocoded object from the query or the cache instance.
+     * @return boolean|BatchGeocoded The BatchGeocoded object from the query or the cache instance.
      */
-    public function isCached($providerName, $value)
+    public function isCached($providerName, $query)
     {
-        return isset($this->cache) ? $this->cache->isCached($providerName, $value) : false;
+        return isset($this->cache) ? $this->cache->isCached($providerName, $query) : false;
     }
 
+    /**
+     * Cache the BatchGeocoded object.
+     *
+     * @param BatchGeocoded $geocoded The BatchGeocoded object to cache.
+     *
+     * @return BatchGeocoded The BatchGeocoded object.
+     */
     public function cache(BatchGeocoded $geocoded)
     {
         if (isset($this->cache)) {
