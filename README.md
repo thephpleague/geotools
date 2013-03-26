@@ -13,7 +13,7 @@ Features
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
 **set of providers**. [»](#batch)
-* **Cache** results in MongoDB or Redis to improve performances. [»](#batch)
+* **Cache** geocode & reverse geocoding result(s) with **MongoDB** or **Redis** to improve performances. [»](#batch)
 * Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates.
@@ -191,7 +191,7 @@ You can use a provided **cache engines** or use your own by setting a cache obje
 
 At the moment Geotools supports:
 * **[MongoDB](http://www.mongodb.org/)**, [driver](http://docs.mongodb.org/ecosystem/drivers/php/) and
-[php.net](http://www.php.net/manual/en/mongo.tutorial.connecting.php)
+[php.net](http://us2.php.net/mongo)
     * `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION)`
     * `$server` can be a string like `mongodb://example.com:65432`
     * `$database` can be a string like `geotools` (by default)
