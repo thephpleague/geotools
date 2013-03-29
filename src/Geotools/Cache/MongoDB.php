@@ -58,8 +58,7 @@ class MongoDB extends AbstractCache implements CacheInterface
     {
         try {
             $mongoDB          = new \MongoClient($server);
-            $database         = $mongoDB->$database;
-            $this->collection = $database->$collection;
+            $this->collection = $mongoDB->$database->$collection;
         } catch (\Exception $e) {
             throw new InvalidArgumentException($e->getMessage());
         }

@@ -34,9 +34,18 @@ class MongoDBTest extends TestCase
      * @expectedException Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage Failed to connect to: foo:27017: Couldn't get host info for foo
      */
-    public function testConstructor()
+    public function testConstructorThrowsInvalidArgumentException()
     {
         new MongoDB('foo', 'bar', 'baz');
+    }
+
+    public function testConstructor()
+    {
+        try {
+            new MongoDB();
+        } catch (\Exception $e) {
+            $this->markTestSkipped($e->getMessage());
+        }
     }
 
     public function testGetKey()
