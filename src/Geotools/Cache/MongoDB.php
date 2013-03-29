@@ -12,7 +12,7 @@
 namespace Geotools\Cache;
 
 use Geotools\Exception\InvalidArgumentException;
-use Geotools\Exception\RuntimException;
+use Geotools\Exception\RuntimeException;
 use Geotools\Batch\BatchGeocoded;
 
 /**
@@ -86,7 +86,7 @@ class MongoDB extends AbstractCache implements CacheInterface
                 )
             );
         } catch (\Exception $e) {
-            throw new RuntimException($e->getMessage());
+            throw new RuntimeException($e->getMessage());
         }
     }
 
