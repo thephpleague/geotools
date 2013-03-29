@@ -78,8 +78,7 @@ class MongoDBTest extends TestCase
 
         $mockMongo
             ->expects($this->once())
-            ->method('insert')
-            ->will($this->returnValue(null));
+            ->method('insert');
 
         $this->mongo->setCollection($mockMongo);
         $this->mongo->cache($this->getMock('\Geotools\Batch\BatchGeocoded'));
@@ -193,8 +192,7 @@ class MongoDBTest extends TestCase
 
         $mockMongo
             ->expects($this->once())
-            ->method('drop')
-            ->will($this->returnValue(null));
+            ->method('drop');
 
         $this->mongo->setCollection($mockMongo);
         $cached = $this->mongo->flush();

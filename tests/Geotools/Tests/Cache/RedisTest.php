@@ -49,24 +49,34 @@ class ResdisTest extends TestCase
 
     public function testCached()
     {
-        $this->redis->setRedis($this->getMockRedis('set', 'foo'));
+        $mockRedis = $this->getMock('\Predis\Client', array('set'));
+        $mockRedis
+            ->expects($this->once())
+            ->method('set')
+            ->will($this->returnValue(null));
+
+        $this->redis->setRedis($mockRedis);
 
         $mockGeocoded = $this->getMock('\Geotools\Batch\BatchGeocoded');
         $mockGeocoded
             ->expects($this->atLeastOnce())
-            ->method('getProviderName')
-            ->will($this->returnValue('foo'));
+            ->method('getProviderName');
         $mockGeocoded
             ->expects($this->atLeastOnce())
-            ->method('getQuery')
-            ->will($this->returnValue('bar'));
+            ->method('getQuery');
 
         $this->redis->cache($mockGeocoded);
     }
 
     public function testIsCachedReturnsFalse()
     {
-        $this->redis->setRedis($this->getMockRedis('exists', false));
+        $mockRedis = $this->getMock('\Predis\Client', array('exists'));
+        $mockRedis
+            ->expects($this->once())
+            ->method('exists')
+            ->will($this->returnValue(false));
+
+        $this->redis->setRedis($mockRedis);
         $cached = $this->redis->isCached('foo', 'bar');
 
         $this->assertFalse($cached);
@@ -124,11 +134,15 @@ JSON
 
     public function testFlush()
     {
-        $this->redis->setRedis($this->getMockRedis('flushDb', null));
+        $mockRedis = $this->getMock('\Predis\Client', array('flushDb'));
+        $mockRedis
+            ->expects($this->once())
+            ->method('flushDb');
+
+        $this->redis->setRedis($mockRedis);
         $this->redis->flush();
     }
 }
-
 
 class TestableRedis extends Redis
 {

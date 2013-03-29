@@ -218,21 +218,4 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         return $mock;
     }
-
-    /**
-     * @param string $method
-     * @param $returnValue
-     *
-     * @return Client
-     */
-    protected function getMockRedis($method, $returnValue)
-    {
-        $mock = $this->getMock('\Predis\Client', array($method));
-        $mock
-            ->expects($this->once())
-            ->method($method)
-            ->will($this->returnValue($returnValue));
-
-        return $mock;
-    }
 }
