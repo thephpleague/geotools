@@ -1,12 +1,17 @@
 CHANGELOG
 =========
 
-0.2.3 (xxxx-xx-xx)
+0.2.3 (2013-03-29)
 ------------------
 
-n/a
+* Updated: MongoDB test coverage
+* Added: Memcached cache test - fix #22
+* Refactored: Redis and MongoDB caches tests
+* Added: MongoDB cache test - fix #22
+* Added: Redis cache test - fix #22
+* Added: Memcached cache - fix #24
 
-0.2.2 (2012-03-26)
+0.2.2 (2013-03-26)
 ------------------
 
 * Added: Redis cache - fix #23
@@ -17,7 +22,7 @@ n/a
 * Added: Cache interface + mongoDB - fix #2
 * Refactored: Point test
 
-0.2.1 (2012-03-16)
+0.2.1 (2013-03-16)
 ------------------
 
 * Added: arcgis_online provider
@@ -26,7 +31,7 @@ n/a
 * Added: Geocoder dev-master as require-dev
 * Fixed: CLI tests
 
-0.2.0 (2012-03-12)
+0.2.0 (2013-03-12)
 ------------------
 
 * Fixed: empty ellipsoid name throws an exception now
@@ -37,7 +42,7 @@ n/a
 * Added: TomTom provier to CLI - fix #14
 * Changed: mile parameter to mi in Distance to be more consistent [BC break]
 
-0.1.12 (2012-03-08)
+0.1.12 (2013-03-08)
 -------------------
 
 * Added: command exemples and refactoring
@@ -48,7 +53,7 @@ n/a
 * Updated: list of contributors
 * Updated: geohash doc
 
-0.1.11 (2012-03-05)
+0.1.11 (2013-03-05)
 -------------------
 
 * Added: international feet unit to CLI + test - fix #10
@@ -58,7 +63,7 @@ n/a
 * Added International Feet as a unit
 * Added a bunch of tests.
 
-0.1.10 (2012-02-27)
+0.1.10 (2013-02-27)
 -------------------
 
 * Added: support of different ellipsoid + doc + tests - fix #5
@@ -66,7 +71,7 @@ n/a
 * Improved: geocoder:geocode and geocoder:reverse CLI + tests
 * Added: lowerize() method using mbstring extension
 
-0.1.9 (2012-02-24)
+0.1.9 (2013-02-24)
 ------------------
 
 * Added: dumper option to geocoder:geocode CLI + test
@@ -75,7 +80,7 @@ n/a
 * Removed: old files
 * Fixed: finalCardinal() into CLI + test
 
-0.1.8 (2012-02-21)
+0.1.8 (2013-02-21)
 ------------------
 
 * Refactored: getAdapter and getProvider in CLI
