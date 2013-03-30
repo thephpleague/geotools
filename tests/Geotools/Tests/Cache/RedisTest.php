@@ -47,13 +47,15 @@ class ResdisTest extends TestCase
         $this->assertEquals('3858f62230ac3c915f300c664312c63f', $key);
     }
 
-    public function testCached()
+    public function testCache()
     {
-        $mockRedis = $this->getMock('\Predis\Client', array('set'));
+        $mockRedis = $this->getMock('\Predis\Client', array('set', 'expire'));
         $mockRedis
             ->expects($this->once())
-            ->method('set')
-            ->will($this->returnValue(null));
+            ->method('set');
+        $mockRedis
+            ->expects($this->once())
+            ->method('expire');
 
         $this->redis->setRedis($mockRedis);
 
@@ -65,6 +67,7 @@ class ResdisTest extends TestCase
             ->expects($this->atLeastOnce())
             ->method('getQuery');
 
+        $this->redis->setExpire(12345);
         $this->redis->cache($mockGeocoded);
     }
 
@@ -149,5 +152,10 @@ class TestableRedis extends Redis
     public function setRedis($redis)
     {
         $this->redis = $redis;
+    }
+
+    public function setExpire($expire)
+    {
+        $this->expire = $expire;
     }
 }

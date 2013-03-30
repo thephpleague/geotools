@@ -42,10 +42,10 @@ coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direc
 Installation
 ------------
 
-Geotools can be found on [Packagist](https://packagist.org/packages/toin0u/geotools).
-The recommended way to install Geotools is through [composer](http://getcomposer.org).
+**Geotools** can be found on [Packagist](https://packagist.org/packages/toin0u/geotools).
+The recommended way to install **Geotools** is through [composer](http://getcomposer.org).
 
-Run these commands to install composer, Geotools and its dependencies:
+Run these commands to install composer, **Geotools** and its dependencies:
 
 ```bash
 $ curl -sS https://getcomposer.org/installer | php
@@ -200,15 +200,15 @@ At the moment Geotools supports:
     * `flush()` method drops the current collection
 * **[Redis](http://redis.io/)**, [packagist](https://packagist.org/packages/predis/predis) and
 [github](https://github.com/nrk/predis)
-    * `Redis($client = null)`
+    * `Redis(array $client = array(), $expire = 0)`
     * `$client` should be an array with `host`, `port` and `database` keys
+    * `$expire` should be an integer, no timeout by default
     * `flush()` method deletes all the keys of the currently selected database which is `0` by default
 * **[Memcached](http://memcached.org/)**, [php.net](http://fr.php.net/manual/fr/book.memcached.php)
     * `Memcached($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT)`
     * `$server` can be address like `exemple.com` or an IP, localhost is the default one
     * `$port` can be an integer like `11211` (by default)
     * `flush()` method invalidates all items in the cache
-* ... more to come ...
 
 NB: Before you implement caching in your app please be sure that doing so does not violate the Terms of Service
 for your(s) geocoding provider(s).

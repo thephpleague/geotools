@@ -29,18 +29,27 @@ class Redis extends AbstractCache implements CacheInterface
      */
     protected $redis;
 
+    /**
+     * The expire value for keys.
+     *
+     * @var integer
+     */
+    protected $expire;
+
 
     /**
      * Constructor.
      *
-     * @param array $client The client information (optional).
+     * @param array   $client The client information (optional).
+     * @param integer $expire The expire value in seconds (optional).
      *
      * @throws InvalidArgumentException
      */
-    public function __construct(array $client = array())
+    public function __construct(array $client = array(), $expire = 0)
     {
         try {
-            $this->redis = new Client($client);
+            $this->redis  = new Client($client);
+            $this->expire = (int) $expire;
         } catch (\Exception $e) {
             throw new InvalidArgumentException($e->getMessage());
         }
@@ -60,9 +69,13 @@ class Redis extends AbstractCache implements CacheInterface
     public function cache(BatchGeocoded $geocoded)
     {
         $this->redis->set(
-            $this->getKey($geocoded->getProviderName(), $geocoded->getQuery()),
+            $key = $this->getKey($geocoded->getProviderName(), $geocoded->getQuery()),
             $this->serialize($geocoded)
         );
+
+        if ($this->expire > 0) {
+            $this->redis->expire($key, $this->expire);
+        }
     }
 
     /**
@@ -70,9 +83,7 @@ class Redis extends AbstractCache implements CacheInterface
      */
     public function isCached($providerName, $query)
     {
-        $key = $this->getKey($providerName, $query);
-
-        if (!$this->redis->exists($key)) {
+        if (!$this->redis->exists($key = $this->getKey($providerName, $query))) {
             return false;
         }
 
