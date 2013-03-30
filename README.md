@@ -193,16 +193,17 @@ You can use a provided **cache engines** or use your own by setting a cache obje
 At the moment Geotools supports:
 * **[MongoDB](http://www.mongodb.org/)**, [driver](http://docs.mongodb.org/ecosystem/drivers/php/) and
 [php.net](http://us2.php.net/mongo)
-    * `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION)`
+    * `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION, $expire = 0)`
     * `$server` can be a string like `mongodb://example.com:65432`
     * `$database` can be a string like `geotools` (by default)
+    * `$expire` should be an integer, no expire value by default
     * `$collection` can be a string like `geotools_cache` (by default)
     * `flush()` method drops the current collection
 * **[Redis](http://redis.io/)**, [packagist](https://packagist.org/packages/predis/predis) and
 [github](https://github.com/nrk/predis)
     * `Redis(array $client = array(), $expire = 0)`
     * `$client` should be an array with `host`, `port` and `database` keys
-    * `$expire` should be an integer, no timeout by default
+    * `$expire` should be an integer, no expire value by default
     * `flush()` method deletes all the keys of the currently selected database which is `0` by default
 * **[Memcached](http://memcached.org/)**, [php.net](http://fr.php.net/manual/fr/book.memcached.php)
     * `Memcached($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT)`

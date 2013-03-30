@@ -21,35 +21,47 @@ use Geotools\Batch\BatchGeocoded;
 class Memcached extends AbstractCache implements CacheInterface
 {
     /**
-     * [$memcached description]
-     * @var [type]
+     * The default server.
+     *
+     * @var string
      */
     const DEFAULT_SERVER = 'localhost';
 
     /**
-     * [$memcached description]
-     * @var [type]
+     * The default port.
+     *
+     * @var integer
      */
     const DEFAULT_PORT = 11211;
 
 
     /**
-     * [$memcached description]
-     * @var [type]
+     * The memcached instance.
+     *
+     * @var Memcached
      */
     protected $memcached;
+
+    /**
+     * The expire value for keys.
+     *
+     * @var integer
+     */
+    protected $expire;
 
 
     /**
      * Constructor.
      *
-     * @param string $server The server address (optional).
-     * @param string $port   The port number (optional).
+     * @param string  $server The server address (optional).
+     * @param string  $port   The port number (optional).
+     * @param integer $expire The expire value in seconds (optional).
      */
-    public function __construct($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT)
+    public function __construct($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT, $expire = 0)
     {
         $this->memcached = new \Memcached();
         $this->memcached->addServer($server, $port);
+        $this->expire = (int) $expire;
     }
 
     /**
@@ -67,7 +79,8 @@ class Memcached extends AbstractCache implements CacheInterface
     {
         $this->memcached->set(
             $this->getKey($geocoded->getProviderName(), $geocoded->getQuery()),
-            $this->serialize($geocoded)
+            $this->serialize($geocoded),
+            $this->expire
         );
     }
 
