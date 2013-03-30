@@ -249,7 +249,8 @@ class Batch implements BatchInterface
     /**
      * {@inheritDoc}
      */
-    public function setCache(CacheInterface $cache) {
+    public function setCache(CacheInterface $cache)
+    {
         $this->cache = $cache;
 
         return $this;
