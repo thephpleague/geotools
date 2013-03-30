@@ -13,7 +13,7 @@ Features
 
 * **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
 **set of providers**. [»](#batch)
-* **Cache** geocode & reverse geocoding result(s) with **MongoDB**, **Redis** or **Memcached**
+* **Cache** geocode & reverse geocoding result(s) with **Redis**, **Memcached** or **MongoDB**
 to improve performances. [»](#batch)
 * Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
@@ -187,18 +187,10 @@ Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https:/
 It's possible to batch *one request* (a string) or a *set of request* (an array) against *one provider* or
 *set of providers*.
 
-You can use a provided **cache engines** or use your own by setting a cache object which should implement
+You can use a provided **cache engine** or use your own by setting a cache object which should implement
 `Geotools\Cache\CacheInterface` and extend `Geotools\Cache\AbstractCache` if needed.
 
 At the moment Geotools supports:
-* **[MongoDB](http://www.mongodb.org/)**, [driver](http://docs.mongodb.org/ecosystem/drivers/php/) and
-[php.net](http://us2.php.net/mongo)
-    * `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION, $expire = 0)`
-    * `$server` can be a string like `mongodb://example.com:65432`
-    * `$database` can be a string like `geotools` (by default)
-    * `$expire` should be an integer, no expire value by default
-    * `$collection` can be a string like `geotools_cache` (by default)
-    * `flush()` method drops the current collection
 * **[Redis](http://redis.io/)**, [packagist](https://packagist.org/packages/predis/predis) and
 [github](https://github.com/nrk/predis)
     * `Redis(array $client = array(), $expire = 0)`
@@ -206,10 +198,18 @@ At the moment Geotools supports:
     * `$expire` should be an integer, no expire value by default
     * `flush()` method deletes all the keys of the currently selected database which is `0` by default
 * **[Memcached](http://memcached.org/)**, [php.net](http://fr.php.net/manual/fr/book.memcached.php)
-    * `Memcached($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT)`
+    * `Memcached($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT, $expire = 0)`
     * `$server` can be address like `exemple.com` or an IP, localhost is the default one
     * `$port` can be an integer like `11211` (by default)
+    * `$expire` should be an integer, no expire value by default
     * `flush()` method invalidates all items in the cache
+* **[MongoDB](http://www.mongodb.org/)**, [driver](http://docs.mongodb.org/ecosystem/drivers/php/) and
+[php.net](http://us2.php.net/mongo)
+    * `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION)`
+    * `$server` can be a string like `mongodb://example.com:65432`
+    * `$database` can be a string like `geotools` (by default)
+    * `$collection` can be a string like `geotools_cache` (by default)
+    * `flush()` method drops the current collection
 
 NB: Before you implement caching in your app please be sure that doing so does not violate the Terms of Service
 for your(s) geocoding provider(s).
