@@ -23,7 +23,7 @@ class MongoDBTest extends TestCase
 
     protected function setUp()
     {
-        if (!class_exists('Mongo')) {
+        if (!extension_loaded('mongo')) {
             $this->markTestSkipped('You need to install Mongo.');
         }
 

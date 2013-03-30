@@ -23,7 +23,7 @@ class MemcachedTets extends TestCase
 
     protected function setUp()
     {
-        if (!class_exists('Memcached')) {
+        if (!extension_loaded('memcached')) {
             $this->markTestSkipped('You need to install Memcached.');
         }
 
