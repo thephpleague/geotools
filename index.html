@@ -55,7 +55,8 @@
 <strong>set of providers</strong>. <a href="#batch">»</a>
 </li>
 <li>
-<strong>Cache</strong> geocode &amp; reverse geocoding result(s) with <strong>MongoDB</strong> or <strong>Redis</strong> to improve performances. <a href="#batch">»</a>
+<strong>Cache</strong> geocode &amp; reverse geocoding result(s) with <strong>Redis</strong>, <strong>Memcached</strong> or <strong>MongoDB</strong>
+to improve performances. <a href="#batch">»</a>
 </li>
 <li>Compute geocode &amp; reverse geocoding in the <strong>command-line interface</strong> (CLI) + dumpers and formatters. <a href="#cli">»</a>
 </li>
@@ -95,10 +96,10 @@ coordinate, read more in <a href="http://en.wikipedia.org/wiki/Cardinal_directio
 <li>... more to come ...</li>
 </ul><h2>Installation</h2>
 
-<p>Geotools can be found on <a href="https://packagist.org/packages/toin0u/geotools">Packagist</a>.
-The recommended way to install Geotools is through <a href="http://getcomposer.org">composer</a>.</p>
+<p><strong>Geotools</strong> can be found on <a href="https://packagist.org/packages/toin0u/geotools">Packagist</a>.
+The recommended way to install <strong>Geotools</strong> is through <a href="http://getcomposer.org">composer</a>.</p>
 
-<p>Run these commands to install composer, Geotools and its dependencies:</p>
+<p>Run these commands to install composer, <strong>Geotools</strong> and its dependencies:</p>
 
 <div class="highlight"><pre><span class="nv">$ </span>curl -sS https://getcomposer.org/installer | php
 <span class="nv">$ </span>php composer.phar require toin0u/geotools:@stable
@@ -276,12 +277,41 @@ Thanks to <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and <a h
 <p>It's possible to batch <em>one request</em> (a string) or a <em>set of request</em> (an array) against <em>one provider</em> or
 <em>set of providers</em>.</p>
 
-<p>You can use a provided <strong>cache engines</strong> or use your own by setting a cache object which should implement
+<p>You can use a provided <strong>cache engine</strong> or use your own by setting a cache object which should implement
 <code>Geotools\Cache\CacheInterface</code> and extend <code>Geotools\Cache\AbstractCache</code> if needed.</p>
 
 <p>At the moment Geotools supports:</p>
 
 <ul>
+<li>
+<strong><a href="http://redis.io/">Redis</a></strong>, <a href="https://packagist.org/packages/predis/predis">packagist</a> and
+<a href="https://github.com/nrk/predis">github</a>
+
+<ul>
+<li><code>Redis(array $client = array(), $expire = 0)</code></li>
+<li>
+<code>$client</code> should be an array with <code>host</code>, <code>port</code> and <code>database</code> keys</li>
+<li>
+<code>$expire</code> should be an integer, no expire value by default</li>
+<li>
+<code>flush()</code> method deletes all the keys of the currently selected database which is <code>0</code> by default</li>
+</ul>
+</li>
+<li>
+<strong><a href="http://memcached.org/">Memcached</a></strong>, <a href="http://fr.php.net/manual/fr/book.memcached.php">php.net</a>
+
+<ul>
+<li><code>Memcached($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT, $expire = 0)</code></li>
+<li>
+<code>$server</code> can be address like <code>exemple.com</code> or an IP, localhost is the default one</li>
+<li>
+<code>$port</code> can be an integer like <code>11211</code> (by default)</li>
+<li>
+<code>$expire</code> should be an integer, no expire value by default</li>
+<li>
+<code>flush()</code> method invalidates all items in the cache</li>
+</ul>
+</li>
 <li>
 <strong><a href="http://www.mongodb.org/">MongoDB</a></strong>, <a href="http://docs.mongodb.org/ecosystem/drivers/php/">driver</a> and
 <a href="http://us2.php.net/mongo">php.net</a>
@@ -299,19 +329,6 @@ Thanks to <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and <a h
 <code>flush()</code> method drops the current collection</li>
 </ul>
 </li>
-<li>
-<strong><a href="http://redis.io/">Redis</a></strong>, <a href="https://packagist.org/packages/predis/predis">packagist</a> and
-<a href="https://github.com/nrk/predis">github</a>
-
-<ul>
-<li><code>Redis($client = null)</code></li>
-<li>
-<code>$client</code> should be an array with <code>host</code>, <code>port</code> and <code>database</code> keys</li>
-<li>
-<code>flush()</code> method deletes all the keys of the currently selected database which is <code>0</code> by default</li>
-</ul>
-</li>
-<li>... more to come ...</li>
 </ul><p>NB: Before you implement caching in your app please be sure that doing so does not violate the Terms of Service
 for your(s) geocoding provider(s).</p>
 
