@@ -13,17 +13,17 @@ Installation
 ------------
 
 ``` bash
-% pear install PHP_CodeSniffer
-% cd `pear config-get php_dir`/PHP/CodeSniffer/Standards
-% git clone git://github.com/opensky/Symfony2-coding-standard.git Symfony2
-% phpcs --config-set default_standard Symfony2
+$ pear install PHP_CodeSniffer
+$ cd `pear config-get php_dir`/PHP/CodeSniffer/Standards
+$ git clone git://github.com/opensky/Symfony2-coding-standard.git Symfony2
+$ phpcs --config-set default_standard Symfony2
 ```
 
 Usage
 -----
 
 ``` bash
-% phpcs src/
+$ phpcs src/
 ```
 
 **Happy coding** !
