@@ -492,6 +492,13 @@ Country Code:  DK
 Timezone:
 ```
 
+Integration with Frameworks
+---------------------------
+
+* [Laravel 4](https://github.com/toin0u/Geotools-laravel)
+* ... more to come ...
+
+
 Unit Tests
 ----------
 
