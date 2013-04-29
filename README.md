@@ -36,6 +36,7 @@ coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direc
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
 * A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert** classes. [»](#cli)
+* Integration with Frameworks: Laravel 4, Silex ... [»](#integration-with-frameworks)
 * ... more to come ...
 
 
