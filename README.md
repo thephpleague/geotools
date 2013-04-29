@@ -496,6 +496,7 @@ Integration with Frameworks
 ---------------------------
 
 * [Laravel 4](https://github.com/toin0u/Geotools-laravel)
+* [Silex](https://github.com/toin0u/Geotools-silex)
 * ... more to come ...
 
 
