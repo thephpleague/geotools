@@ -11,14 +11,14 @@
 
 namespace Geotools\Batch;
 
-use Geocoder\Result\ResultFactory;
+use Geocoder\Result\DefaultResultFactory;
 
 /**
  * BatchResult class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class BatchResult extends ResultFactory
+class BatchResult extends DefaultResultFactory
 {
     /**
      * The name of the provider.
