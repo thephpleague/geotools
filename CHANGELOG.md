@@ -1,10 +1,18 @@
 CHANGELOG
 =========
 
-0.2.3 (xxxx-xx-xx)
+0.2.4 (2013-05-03)
 ------------------
 
-n/a
+* Updated: made it working with Geocoder 1.5.0
+* Updated: integration with frameworks in features list
+* Added: integration with Silex
+* Added: integration with frameworks
+* Updated: Contribution doc
+* Added: memcached and mongo extensions to travis-ci
+* Added: mongodb service to travis-ci
+* Added: expire to Memcached cache - fix #26
+* Added: expire to Redis cache + test - fix #26
 
 0.2.3 (2013-03-29)
 ------------------
