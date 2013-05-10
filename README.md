@@ -5,6 +5,7 @@ Geotools
 [React](https://github.com/reactphp/react) libraries.
 
 [![Build Status](https://secure.travis-ci.org/toin0u/Geotools.png)](http://travis-ci.org/toin0u/Geotools)
+[![Coverage Status](https://coveralls.io/repos/toin0u/Geotools/badge.png?branch=master)](https://coveralls.io/r/toin0u/Geotools)
 [![project status](http://stillmaintained.com/toin0u/Geotools.png)](http://stillmaintained.com/toin0u/Geotools)
 
 
