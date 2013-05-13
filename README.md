@@ -37,7 +37,7 @@ coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direc
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
 * A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert** classes. [»](#cli)
-* Integration with Frameworks: Laravel 4, Silex ... [»](#integration-with-frameworks)
+* Integration with Frameworks: **Laravel 4**, **Silex** ... [»](#integration-with-frameworks)
 * ... more to come ...
 
 
@@ -201,7 +201,7 @@ At the moment Geotools supports:
     * `flush()` method deletes all the keys of the currently selected database which is `0` by default
 * **[Memcached](http://memcached.org/)**, [php.net](http://fr.php.net/manual/fr/book.memcached.php)
     * `Memcached($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT, $expire = 0)`
-    * `$server` can be address like `exemple.com` or an IP, localhost is the default one
+    * `$server` can be address like `example.com` or an IP, localhost is the default one
     * `$port` can be an integer like `11211` (by default)
     * `$expire` should be an integer, no expire value by default
     * `flush()` method invalidates all items in the cache
