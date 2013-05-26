@@ -23,22 +23,16 @@
         "willdurand/geocoder": "~1.0",
         "react/async": "~1.0",
         "symfony/console": "~2.0",
-        "symfony/serializer": "~2.2",
-        "satooshi/php-coveralls": "~0.6"
+        "symfony/serializer": "~2.2"
     },
     "require-dev": {
-        "willdurand/geocoder": "dev-master",
+        "willdurand/geocoder": "@dev",
         "kriswallsmith/buzz": "@stable",
         "guzzle/guzzle": "@stable",
         "zendframework/zendframework": "~2.1",
         "predis/predis": "v0.8.3",
-        "ext-curl" : "*"
-    },
-    "suggest": {
-        "kriswallsmith/buzz": "Enabling Buzz allows you to use the BuzzHttpAdapter",
-        "guzzle/guzzle": "Enabling Guzzle allows you to use the GuzzleHttpAdapter",
-        "zendframework/zendframework": "Enabling Zend Framework allows you to use the ZendHttpAdapter",
-        "predis/predis": "Enabling Predis allows you to use RedisCache"
+        "ext-curl" : "*",
+        "satooshi/php-coveralls": "~0.6"
     },
     "autoload": {
         "psr-0": { "Geotools": "src/" }
