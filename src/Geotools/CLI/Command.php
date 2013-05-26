@@ -42,7 +42,6 @@ class Command extends BaseCommand
         'free_geo_ip'          => 'FreeGeoIpProvider',
         'host_ip'              => 'HostIpProvider',
         'ip_info_db'           => 'IpInfoDbProvider',
-        'yahoo'                => 'YahooProvider',
         'google_maps'          => 'GoogleMapsProvider',
         'google_maps_business' => 'GoogleMapsBusinessProvider',
         'bing_maps'            => 'BingMapsProvider',
