@@ -66,7 +66,7 @@ class ReverseTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/Avenue Gambetta 10, 75020 Paris/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/Avenue Gambetta 12, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteReverseWithDefaultProviderAndSocketAdapterAndArguments()
@@ -83,7 +83,7 @@ class ReverseTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/Avenue Gambetta 10, 75020 Paris/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/Avenue Gambetta 12, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteReverseAgainstOpenStreetMapsProviderWithDefaultAdapterAndDefaultFormatter()

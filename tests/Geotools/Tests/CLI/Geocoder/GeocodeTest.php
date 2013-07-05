@@ -83,7 +83,7 @@ class GeocodeTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/37\.7484, -122\.4156/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/33\.0347, -96\.8134/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteIPv6AgainstFreeGeoIpProviderWithDefaultAdapter()
@@ -95,7 +95,7 @@ class GeocodeTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/37\.7484, -122\.4156/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/33\.0347, -96\.8134/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteStreetAddressWithDefaultDumper()
@@ -156,7 +156,7 @@ Latitude:      55.6760968
 Longitude:     12.5683371
 Bounds
  - South: 55.6177647
- - West:  12.4988635
+ - West:  12.4533824
  - North: 55.7270937
  - East:  12.7342654
 Street Number: 
@@ -187,7 +187,7 @@ EOF;
         ));
 
         $expected = <<<EOF
-{"latitude":55.6760968,"longitude":12.5683371,"bounds":{"south":55.6177647,"west":12.4988635,"north":55.7270937,"east":12.7342654},"streetNumber":null,"streetName":null,"zipcode":null,"city":"Copenhagen","cityDistrict":null,"county":"K\u00f8benhavn","countyCode":"K\u00d8BENHAVN","region":"Capital Region Of Denmark","regionCode":"CAPITAL REGION OF DENMARK","country":"Denmark","countryCode":"DK","timezone":null}
+{"latitude":55.6760968,"longitude":12.5683371,"bounds":{"south":55.6177647,"west":12.4533824,"north":55.7270937,"east":12.7342654},"streetNumber":null,"streetName":null,"zipcode":null,"city":"Copenhagen","cityDistrict":null,"county":"K\u00f8benhavn","countyCode":"K\u00d8BENHAVN","region":"Capital Region Of Denmark","regionCode":"CAPITAL REGION OF DENMARK","country":"Denmark","countryCode":"DK","timezone":null}
 
 EOF;
 
