@@ -13,6 +13,7 @@ namespace Geotools\Tests\Batch;
 
 use Geotools\Tests\TestCase;
 use Geotools\Batch\Batch;
+use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\ProviderInterface;
 
 /**
@@ -872,7 +873,7 @@ class TestableBatch extends Batch
     }
 }
 
-class MockProvider implements ProviderInterface
+class MockProvider extends AbstractProvider implements ProviderInterface
 {
     protected $name;
 
