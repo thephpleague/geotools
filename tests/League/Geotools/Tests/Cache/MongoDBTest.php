@@ -31,7 +31,7 @@ class MongoDBTest extends TestCase
     }
 
     /**
-     * @expectedException Geotools\Exception\InvalidArgumentException
+     * @expectedException League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage Failed to connect to: foo:27017: php_network_getaddresses: getaddrinfo failed: Name or service not known
      */
     public function testConstructorThrowsInvalidArgumentException()
@@ -57,7 +57,7 @@ class MongoDBTest extends TestCase
     }
 
     /**
-     * @expectedException Geotools\Exception\RuntimeException
+     * @expectedException League\Geotools\Exception\RuntimeException
      * @expectedExceptionMessage boo
      */
     public function testCacheThrowsRuntimeException()
@@ -74,7 +74,7 @@ class MongoDBTest extends TestCase
             ->will($this->throwException(new \Exception('boo')));
 
         $this->mongo->setCollection($mockMongo);
-        $this->mongo->cache($this->getMock('\Geotools\Batch\BatchGeocoded'));
+        $this->mongo->cache($this->getMock('\League\Geotools\Batch\BatchGeocoded'));
     }
 
     public function testCache()
@@ -90,7 +90,7 @@ class MongoDBTest extends TestCase
             ->method('insert');
 
         $this->mongo->setCollection($mockMongo);
-        $this->mongo->cache($this->getMock('\Geotools\Batch\BatchGeocoded'));
+        $this->mongo->cache($this->getMock('\League\Geotools\Batch\BatchGeocoded'));
     }
 
     public function testIsCachedReturnsFalse()
@@ -162,7 +162,7 @@ class MongoDBTest extends TestCase
         $cached = $this->mongo->isCached('foo', 'bar');
 
         $this->assertTrue(is_object($cached));
-        $this->assertInstanceOf('\Geotools\Batch\BatchGeocoded', $cached);
+        $this->assertInstanceOf('\League\Geotools\Batch\BatchGeocoded', $cached);
         $this->assertEquals('Google_Maps', $cached->getProviderName());
         $this->assertEquals('Paris, France', $cached->getQuery());
         $this->assertEmpty($cached->getExceptionMessage());

@@ -51,7 +51,7 @@ class MemcachedTets extends TestCase
             ->method('set');
 
         $this->memcached->setMemcached($mockMemcached);
-        $this->memcached->cache($this->getMock('\Geotools\Batch\BatchGeocoded'));
+        $this->memcached->cache($this->getMock('\League\Geotools\Batch\BatchGeocoded'));
     }
 
     public function testIsCachedReturnsFalse()
@@ -85,7 +85,7 @@ JSON
         $cached = $this->memcached->isCached('foo', 'bar');
 
         $this->assertTrue(is_object($cached));
-        $this->assertInstanceOf('\Geotools\Batch\BatchGeocoded', $cached);
+        $this->assertInstanceOf('\League\Geotools\Batch\BatchGeocoded', $cached);
         $this->assertEquals('Google_Maps', $cached->getProviderName());
         $this->assertEquals('Paris, France', $cached->getQuery());
         $this->assertEmpty($cached->getExceptionMessage());
