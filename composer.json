@@ -20,7 +20,7 @@
     },
 
     "replace" : {
-        "toin0u/geotools" : "self.version"
+        "toin0u/geotools" : "*"
     },
 
     "require" : {
