@@ -32,8 +32,6 @@
     },
 
     "require-dev" : {
-        "ext-curl"                    : "*",
-        "willdurand/geocoder"         : "@dev",
         "kriswallsmith/buzz"          : "~0.10",
         "guzzle/guzzle"               : "~3.7",
         "zendframework/zendframework" : "~2.2",

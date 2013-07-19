@@ -5,9 +5,7 @@ Geotools
 [React](https://github.com/reactphp/react) libraries.
 
 [![Build Status](https://secure.travis-ci.org/toin0u/Geotools.png)](http://travis-ci.org/toin0u/Geotools)
-[![Coverage Status](https://coveralls.io/repos/toin0u/Geotools/badge.png?branch=master)](https://coveralls.io/r/toin0u/Geotools)
-[![Latest Stable Version](https://poser.pugx.org/toin0u/geotools/v/stable.png)](https://packagist.org/packages/toin0u/geotools)
-[![Total Downloads](https://poser.pugx.org/toin0u/geotools/downloads.png)](https://packagist.org/packages/toin0u/geotools)
+[![Latest Stable Version](https://poser.pugx.org/league/geotools/v/stable.png)](https://packagist.org/packages/toin0u/geotools)
 
 
 Features
@@ -52,7 +50,7 @@ Run these commands to install composer, **Geotools** and its dependencies:
 
 ```bash
 $ curl -sS https://getcomposer.org/installer | php
-$ php composer.phar require toin0u/geotools:@stable
+$ php composer.phar require league/geotools:@stable
 ```
 
 Now you can add the autoloader, and you will have access to the library:
