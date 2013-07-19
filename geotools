@@ -37,12 +37,12 @@ EOT
 }
 
 use Symfony\Component\Console\Application as BaseApplication;
-use Geotools\Geotools;
-use Geotools\CLI\Distance;
-use Geotools\CLI\Point;
-use Geotools\CLI\Geohash;
-use Geotools\CLI\Convert;
-use Geotools\CLI\Geocoder;
+use League\Geotools\Geotools;
+use League\Geotools\CLI\Distance;
+use League\Geotools\CLI\Point;
+use League\Geotools\CLI\Geohash;
+use League\Geotools\CLI\Convert;
+use League\Geotools\CLI\Geocoder;
 
 class Application extends BaseApplication
 {

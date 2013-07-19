@@ -12,12 +12,12 @@
     >
     <testsuites>
         <testsuite name="Geotools Test Suite">
-            <directory>./tests/</directory>
+            <directory>./tests/League/</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory>./src/Geotools/</directory>
+            <directory>./src/League/Geotools/</directory>
         </whitelist>
     </filter>
 </phpunit>

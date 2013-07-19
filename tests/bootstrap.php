@@ -25,4 +25,4 @@ EOT
     );
 }
 
-$loader->add('Geotools\Tests', __DIR__);
+$loader->add('League\Geotools\Tests', __DIR__);

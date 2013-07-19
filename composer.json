@@ -1,5 +1,5 @@
 {
-    "name": "toin0u/geotools",
+    "name": "league/geotools",
     "type": "library",
     "description": "Geo-related tools PHP 5.3 library",
     "keywords": ["geotools", "geometry", "geocoder", "geocoding", "geoip", "bounds", "distance", "batch", "async"],
@@ -15,8 +15,8 @@
     ],
     "support": {
         "email": "support@geotools-php.org",
-        "issues": "https://github.com/toin0u/Geotools/issues",
-        "source": "https://github.com/toin0u/Geotools"
+        "issues": "https://github.com/php-loep/Geotools/issues",
+        "source": "https://github.com/php-loep/Geotools"
     },
     "require": {
         "php": ">=5.3.3",
@@ -35,7 +35,7 @@
         "satooshi/php-coveralls": "~0.6"
     },
     "autoload": {
-        "psr-0": { "Geotools": "src/" }
+        "psr-0": { "League\\Geotools": "src/" }
     },
     "bin": ["geotools"],
     "extra": {

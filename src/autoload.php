@@ -9,7 +9,7 @@
  */
 spl_autoload_register(function($className) {
     $className = ltrim($className, '\\');
-    if (0 != strpos($className, 'Geotools')) {
+    if (0 != strpos($className, 'League')) {
         return false;
     }
     $fileName = '';
