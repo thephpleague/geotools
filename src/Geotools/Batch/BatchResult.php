@@ -11,14 +11,14 @@
 
 namespace Geotools\Batch;
 
-use Geocoder\Result\DefaultResultFactory;
+use Geocoder\Result\ResultFactoryInterface;
 
 /**
  * BatchResult class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class BatchResult extends DefaultResultFactory
+class BatchResult implements ResultFactoryInterface
 {
     /**
      * The name of the provider.
@@ -54,6 +54,17 @@ class BatchResult extends DefaultResultFactory
         $this->providerName = $providerName;
         $this->query        = $query;
         $this->exception    = $exception;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createFromArray(array $data)
+    {
+        $result = $this->newInstance();
+        $result->fromArray(isset($data[0]) ? $data[0] : $data);
+
+        return $result;
     }
 
     /**
