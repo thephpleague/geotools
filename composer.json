@@ -27,10 +27,10 @@
     },
     "require-dev": {
         "willdurand/geocoder": "@dev",
-        "kriswallsmith/buzz": "@stable",
-        "guzzle/guzzle": "@stable",
-        "zendframework/zendframework": "~2.1",
-        "predis/predis": "v0.8.3",
+        "kriswallsmith/buzz": "~0.10",
+        "guzzle/guzzle": "~3.7",
+        "zendframework/zendframework": "~2.2",
+        "predis/predis": "~0.8",
         "ext-curl" : "*",
         "satooshi/php-coveralls": "~0.6"
     },
