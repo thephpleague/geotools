@@ -1,10 +1,11 @@
 CHANGELOG
 =========
 
-0.2.5 (xxxx-xx-xx)
+0.3.0 (2013-07-19)
 ------------------
 
-n/a
+* Updated: loep (The League of Extraordinary Packages) is now owner
+* Updated: use Geocoder 2.0.0
 
 
 0.2.4 (2013-05-03)

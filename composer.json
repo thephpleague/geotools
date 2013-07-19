@@ -1,46 +1,57 @@
 {
-    "name": "league/geotools",
-    "type": "library",
-    "description": "Geo-related tools PHP 5.3 library",
-    "keywords": ["geotools", "geometry", "geocoder", "geocoding", "geoip", "bounds", "distance", "batch", "async"],
-    "homepage": "http://geotools-php.org/",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Antoine Corcy",
-            "email": "contact@sbin.dk",
-            "homepage": "http://sbin.dk",
-            "role": "Developer"
+    "name"        : "league/geotools",
+    "type"        : "library",
+    "description" : "Geo-related tools PHP 5.3 library",
+    "keywords"    : ["geotools", "geometry", "geocoder", "geocoding", "geoip", "bounds", "distance", "batch", "async"],
+    "homepage"    : "http://geotools-php.org/",
+    "license"     : "MIT",
+
+    "authors" : [{
+        "name"     : "Antoine Corcy",
+        "email"    : "contact@sbin.dk",
+        "homepage" : "http://sbin.dk",
+        "role"     : "Developer"
+    }],
+
+    "support" : {
+        "email"  : "support@geotools-php.org",
+        "issues" : "https://github.com/php-loep/Geotools/issues",
+        "source" : "https://github.com/php-loep/Geotools"
+    },
+
+    "replace" : {
+        "toin0u/geotools" : "self.version"
+    },
+
+    "require" : {
+        "php"                 : ">=5.3.3",
+        "willdurand/geocoder" : "~2.0",
+        "react/async"         : "~1.0",
+        "symfony/console"     : "~2.3",
+        "symfony/serializer"  : "~2.3"
+    },
+
+    "require-dev" : {
+        "ext-curl"                    : "*",
+        "willdurand/geocoder"         : "@dev",
+        "kriswallsmith/buzz"          : "~0.10",
+        "guzzle/guzzle"               : "~3.7",
+        "zendframework/zendframework" : "~2.2",
+        "predis/predis"               : "~0.8",
+        "satooshi/php-coveralls"      : "~0.6"
+    },
+
+    "autoload" : {
+        "psr-0" : {
+            "League\\Geotools": "src/"
         }
-    ],
-    "support": {
-        "email": "support@geotools-php.org",
-        "issues": "https://github.com/php-loep/Geotools/issues",
-        "source": "https://github.com/php-loep/Geotools"
     },
-    "require": {
-        "php": ">=5.3.3",
-        "willdurand/geocoder": "~2.0",
-        "react/async": "~1.0",
-        "symfony/console": "~2.3",
-        "symfony/serializer": "~2.3"
-    },
-    "require-dev": {
-        "willdurand/geocoder": "@dev",
-        "kriswallsmith/buzz": "~0.10",
-        "guzzle/guzzle": "~3.7",
-        "zendframework/zendframework": "~2.2",
-        "predis/predis": "~0.8",
-        "ext-curl" : "*",
-        "satooshi/php-coveralls": "~0.6"
-    },
-    "autoload": {
-        "psr-0": { "League\\Geotools": "src/" }
-    },
-    "bin": ["geotools"],
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.2-dev"
+
+    "bin" : ["geotools"],
+
+    "extra" : {
+        "branch-alias" : {
+            "dev-master" : "0.3-dev"
         }
     }
 }
