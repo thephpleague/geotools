@@ -89,7 +89,7 @@ If you need to use an other ellipsoid, just create an array like this:
 ``` php
 <?php
 
-$myEllipsoid = \Geotools\Coordinate\Ellipsoid::createFromArray(array(
+$myEllipsoid = \League\Geotools\Coordinate\Ellipsoid::createFromArray(array(
     'name' => 'My Ellipsoid', // The name of the Ellipsoid
     'a'    => 123.0, // The semi-major axis (equatorial radius) in meters
     'invF' => 456.0 // The inverse flattening
@@ -110,14 +110,14 @@ like:
 * 40.446195, -79.948862
 * 40° 26.7717, -79° 56.93172
 
-Latitudes below -90.0 or above 90.0 degrees are *capped* through `\Geotools\Coordinate\Coordinate::normalizeLatitude()`.  
-Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
+Latitudes below -90.0 or above 90.0 degrees are *capped* through `\League\Geotools\Coordinate\Coordinate::normalizeLatitude()`.  
+Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\League\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
 
 ```php
 <?php
 
-use Geotools\Coordinate\Coordinate;
-use Geotools\Coordinate\Ellipsoid;
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Coordinate\Ellipsoid;
 
 // from an \Geocoder\Result\ResultInterface instance within Airy ellipsoid
 $coordinate = new Coordinate($geocoderResult, Ellipsoid::createFromName(Ellipsoid::AIRY));
@@ -150,8 +150,8 @@ region of Svalbard are covered).
 ```php
 <?php
 
-$geotools   = new \Geotools\Geotools();
-$coordinate = new \Geotools\Coordinate\Coordinate('40.446195, -79.948862');
+$geotools   = new \League\Geotools\Geotools();
+$coordinate = new \League\Geotools\Coordinate\Coordinate('40.446195, -79.948862');
 $converted  = $geotools->convert($coordinate);
 // convert to decimal degrees without and with format string
 printf("%s\n", $converted->toDecimalMinutes()); // 40 26.7717N, -79 56.93172W
@@ -191,7 +191,7 @@ It's possible to batch *one request* (a string) or a *set of request* (an array)
 *set of providers*.
 
 You can use a provided **cache engine** or use your own by setting a cache object which should implement
-`Geotools\Cache\CacheInterface` and extend `Geotools\Cache\AbstractCache` if needed.
+`League\Geotools\Cache\CacheInterface` and extend `League\Geotools\Cache\AbstractCache` if needed.
 
 At the moment Geotools supports:
 * **[Redis](http://redis.io/)**, [packagist](https://packagist.org/packages/predis/predis) and
@@ -233,10 +233,10 @@ $geocoder->registerProviders(array(
 ));
 
 try {
-    $geotools = new \Geotools\Geotools();
-    $cache    = new \Geotools\Cache\MongoDB();
+    $geotools = new \League\Geotools\Geotools();
+    $cache    = new \League\Geotools\Cache\MongoDB();
     // or
-    $cache    = new \Geotools\Cache\Redis(array(
+    $cache    = new \League\Geotools\Cache\Redis(array(
         'host'     => '127.0.0.1',
         'port'     => 6379,
         'database' => 15 // the last database ID
@@ -303,16 +303,16 @@ Batch reverse geocoding is something like:
 // If you want to reverse one coordinate
 try {
     $results = $geotools->batch($geocoder)->reverse(
-        new \Geotools\Coordinate\Coordinate(array(2.307266, 48.823405))
+        new \League\Geotools\Coordinate\Coordinate(array(2.307266, 48.823405))
     )->parallel();
 } catch (\Exception $e) {
     die($e->getMessage());
 }
 // Or if you want to reverse geocoding 3 coordinates
 $coordinates = array(
-    new \Geotools\Coordinate\Coordinate(array(2.307266, 48.823405)),
-    new \Geotools\Coordinate\Coordinate(array(12.568337, 55.676097)),
-    new \Geotools\Coordinate\Coordinate('-74.005973 40.714353')),
+    new \League\Geotools\Coordinate\Coordinate(array(2.307266, 48.823405)),
+    new \League\Geotools\Coordinate\Coordinate(array(12.568337, 55.676097)),
+    new \League\Geotools\Coordinate\Coordinate('-74.005973 40.714353')),
 );
 $results = $geotools->batch($geocoder)->reverse($coordinates)->parallel();
 // ...
@@ -334,9 +334,9 @@ Those coordinates should be in the same ellipsoid.
 ```php
 <?php
 
-$geotools = new \Geotools\Geotools();
-$coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-$coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
+$geotools = new \League\Geotools\Geotools();
+$coordA   = new \League\Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
+$coordB   = new \League\Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
 
 printf("%s\n",$distance->flat()); // 659166.50038742 (meters)
@@ -349,14 +349,14 @@ printf("%s\n",$distance->in('ft')->flat()); // 2162619.7519272
 
 It provides methods to compute the initial and final *bearing* in degrees, the initial and final *cardinal direction*,
 the *middle point* and the *destination point*. The middle and the destination points returns a
-`\Geotools\Coordinate\Coordinate` object with the same ellipsoid.
+`\League\Geotools\Coordinate\Coordinate` object with the same ellipsoid.
 
 ```php
 <?php
 
-$geotools = new \Geotools\Geotools();
-$coordA   = new \Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-$coordB   = new \Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
+$geotools = new \League\Geotools\Geotools();
+$coordA   = new \League\Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
+$coordB   = new \League\Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
 $point    =  $geotools->point()->setFrom($coordA)->setTo($coordB);
 
 printf("%d\n", $point->initialBearing()); // 157 (degrees)
@@ -364,11 +364,11 @@ printf("%s\n", $point->initialCardinal()); // SSE (SouthSouthEast)
 printf("%d\n", $point->finalBearing()); // 160 (degrees)
 printf("%s\n", $point->finalCardinal()); // SSE (SouthSouthEast)
 
-$middlePoint = $point->middle(); // \Geotools\Coordinate\Coordinate
+$middlePoint = $point->middle(); // \League\Geotools\Coordinate\Coordinate
 printf("%s\n", $middlePoint->getLatitude()); // 46.070143125815
 printf("%s\n", $middlePoint->getLongitude()); // 3.9152401085931
 
-$destinationPoint = $geotools->point()->setFrom($coordA)->destination(180, 200000); // \Geotools\Coordinate\Coordinate
+$destinationPoint = $geotools->point()->setFrom($coordA)->destination(180, 200000); // \League\Geotools\Coordinate\Coordinate
 printf("%s\n", $destinationPoint->getLatitude()); // 47.026774650075
 printf("%s\n", $destinationPoint->getLongitude()); // 2.3072664
 ```
@@ -382,15 +382,15 @@ of a coordinate and the *coordinate* and its *bounding box's coordinates* (South
 ```php
 <?php
 
-$geotools       = new \Geotools\Geotools();
-$coordToGeohash = new \Geotools\Coordinate\Coordinate('43.296482, 5.36978');
+$geotools       = new \League\Geotools\Geotools();
+$coordToGeohash = new \League\Geotools\Coordinate\Coordinate('43.296482, 5.36978');
 
 // encoding
 $encoded = $geotools->geohash()->encode($coordToGeohash, 4); // 12 is the default length / precision
 // encoded
 printf("%s\n", $encoded->getGeohash()); // spey
 // encoded bounding box
-$boundingBox = $encoded->getBoundingBox(); // array of \Geotools\Coordinate\CoordinateInterface
+$boundingBox = $encoded->getBoundingBox(); // array of \League\Geotools\Coordinate\CoordinateInterface
 $southWest   = $boundingBox[0];
 $northEast   = $boundingBox[1];
 printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&box=yes\n",
@@ -404,7 +404,7 @@ $decoded = $geotools->geohash()->decode('spey61y');
 printf("%s\n", $decoded->getCoordinate()->getLatitude()); // 43.296432495117
 printf("%s\n", $decoded->getCoordinate()->getLongitude()); // 5.3702545166016
 // decoded bounding box
-$boundingBox = $decoded->getBoundingBox(); //array of \Geotools\Coordinate\CoordinateInterface
+$boundingBox = $decoded->getBoundingBox(); //array of \League\Geotools\Coordinate\CoordinateInterface
 $southWest   = $boundingBox[0];
 $northEast   = $boundingBox[1];
 printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&box=yes\n",
