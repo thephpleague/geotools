@@ -5,7 +5,8 @@ Geotools
 [React](https://github.com/reactphp/react) libraries.
 
 [![Build Status](https://secure.travis-ci.org/toin0u/Geotools.png)](http://travis-ci.org/toin0u/Geotools)
-[![Latest Stable Version](https://poser.pugx.org/league/geotools/v/stable.png)](https://packagist.org/packages/toin0u/geotools)
+[![Total Downloads](https://poser.pugx.org/league/grunt/downloads.png)](https://packagist.org/packages/league/geotools)
+[![Latest Stable Version](https://poser.pugx.org/league/geotools/v/stable.png)](https://packagist.org/packages/league/geotools)
 
 
 Features
