@@ -517,12 +517,6 @@ $ phpunit --coverage-text
 ```
 
 
-Contributing
-------------
-
-Please see [CONTRIBUTING](https://github.com/toin0u/Geotools/blob/master/CONTRIBUTING.md) for details.
-
-
 Credits
 -------
 
@@ -552,19 +546,23 @@ Acknowledgments
 Changelog
 ---------
 
-[See the changelog file](https://github.com/toin0u/Geotools/blob/master/CHANGELOG.md)
+[See the changelog file](https://github.com/php-loep/Geotools/blob/master/CHANGELOG.md)
 
+Contributing
+------------
+
+Please see [CONTRIBUTING](https://github.com/php-loep/Geotools/blob/master/CONTRIBUTING.md) for details.
 
 Support
 -------
 
-[Please open an issues in github](https://github.com/toin0u/Geotools/issues)
+Bugs and feature request are tracked on [GitHub](https://github.com/php-loep/Geotools/issues)
 
 
 License
 -------
 
 Geotools is released under the MIT License. See the bundled
-[LICENSE](https://github.com/toin0u/Geotools/blob/master/LICENSE) file for details.
+[LICENSE](https://github.com/php-loep/Geotools/blob/master/LICENSE) file for details.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/toin0u/Geotools/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
