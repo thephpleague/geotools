@@ -47,11 +47,21 @@ Installation
 **Geotools** can be found on [Packagist](https://packagist.org/packages/toin0u/geotools).
 The recommended way to install **Geotools** is through [composer](http://getcomposer.org).
 
-Run these commands to install composer, **Geotools** and its dependencies:
+Edit `compose.json` and add:
+
+```json
+{
+    "require": {
+        "toin0u/geotools": "~0.3"
+    }
+}
+```
+
+And install dependecies:
 
 ```bash
 $ curl -sS https://getcomposer.org/installer | php
-$ php composer.phar require league/geotools:@stable
+$ php composer.phar install
 ```
 
 Now you can add the autoloader, and you will have access to the library:
