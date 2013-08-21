@@ -52,7 +52,7 @@ Edit `compose.json` and add:
 ```json
 {
     "require": {
-        "toin0u/geotools": "~0.3"
+        "league/geotools": "~0.3"
     }
 }
 ```
