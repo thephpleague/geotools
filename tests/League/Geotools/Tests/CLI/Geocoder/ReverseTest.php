@@ -125,18 +125,18 @@ Adapter:       \Geocoder\HttpAdapter\CurlHttpAdapter
 Provider:      \Geocoder\Provider\GoogleMapsProvider
 Arguments:     us_US
 ---
-Latitude:      40.6891988
-Longitude:     -74.0445167
+Latitude:      40.689758
+Longitude:     -74.045138
 Bounds
- - South: 40.6887596
- - West:  -74.0451881
- - North: 40.6896417
- - East:  -74.0439787
-Street Number: 
-Street Name:   
-Zipcode:       11231
+ - South: 40.689758
+ - West:  -74.045138
+ - North: 40.689758
+ - East:  -74.045138
+Street Number: 1
+Street Name:   Liberty Island - Ellis Island
+Zipcode:       10004
 City:          New York
-City District: Brooklyn
+City District: Manhattan
 County:        New York
 County Code:   NEW YORK
 Region:        New York
@@ -160,7 +160,7 @@ EOF;
         ));
 
         $expected = <<<EOF
-{"latitude":40.6891988,"longitude":-74.0445167,"bounds":{"south":40.6887596,"west":-74.0451881,"north":40.6896417,"east":-74.0439787},"streetNumber":null,"streetName":null,"zipcode":"11231","city":"New York","cityDistrict":"Brooklyn","county":"New York","countyCode":"NEW YORK","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}
+{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island - Ellis Island","zipcode":"10004","city":"New York","cityDistrict":"Manhattan","county":"New York","countyCode":"NEW YORK","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}
 
 EOF;
 
