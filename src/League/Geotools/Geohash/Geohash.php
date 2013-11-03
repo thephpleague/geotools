@@ -188,7 +188,8 @@ class Geohash implements GeohashInterface
             throw new InvalidArgumentException('The length of the geo hash should be between 1 and 12.');
         }
 
-        for ($i = 0; $i < count($this->base32Chars); $i++) {
+        $base32CharsTotal = count($this->base32Chars);
+        for ($i = 0; $i < $base32CharsTotal; $i++) {
             $base32DecodeMap[$this->base32Chars[$i]] = $i;
         }
 
@@ -196,7 +197,8 @@ class Geohash implements GeohashInterface
         $longitudeInterval = $this->longitudeInterval;
         $isEven            = true;
 
-        for ($i = 0; $i < strlen($geohash); $i++) {
+        $geohashLength = strlen($geohash);
+        for ($i = 0; $i < $geohashLength; $i++) {
 
             if (!isset($base32DecodeMap[$geohash[$i]])) {
                 throw new RuntimeException('This geo hash is invalid.');
@@ -204,7 +206,8 @@ class Geohash implements GeohashInterface
 
             $currentChar = $base32DecodeMap[$geohash[$i]];
 
-            for ($j = 0; $j < count($this->bits); $j++) {
+            $bitsTotal = count($this->bits);
+            for ($j = 0; $j < $bitsTotal; $j++) {
                 $mask = $this->bits[$j];
 
                 if ($isEven) {
