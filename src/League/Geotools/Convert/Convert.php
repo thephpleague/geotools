@@ -175,7 +175,6 @@ class Convert extends AbstractGeotools implements ConvertInterface
             ($this->coordinates->getEllipsoid()->getB() * sqrt(1 + $nu2));
         $t   = tan($phi);
         $t2  = $t * $t;
-        $tmp = ($t2 * $t2 * $t2) - pow($t, 6.0);
         $l   = $lambda - $lambda0;
 
         $l3coef = 1.0 - $t2 + $nu2;
