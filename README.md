@@ -7,6 +7,7 @@ Geotools
 [![Build Status](https://secure.travis-ci.org/php-loep/Geotools.png)](https://travis-ci.org/php-loep/Geotools)
 [![Total Downloads](https://poser.pugx.org/league/geotools/downloads.png)](https://packagist.org/packages/league/geotools)
 [![Latest Stable Version](https://poser.pugx.org/league/geotools/v/stable.png)](https://packagist.org/packages/league/geotools)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d/mini.png)](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d)
 
 
 Features
