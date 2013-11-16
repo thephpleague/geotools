@@ -45,7 +45,7 @@ coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direc
 Installation
 ------------
 
-**Geotools** can be found on [Packagist](https://packagist.org/packages/toin0u/geotools).
+**Geotools** can be found on [Packagist](https://packagist.org/packages/league/geotools).
 The recommended way to install **Geotools** is through [composer](http://getcomposer.org).
 
 Edit `compose.json` and add:
@@ -53,10 +53,14 @@ Edit `compose.json` and add:
 ```json
 {
     "require": {
-        "league/geotools": "~0.3"
+        "league/geotools": "@stable"
     }
 }
 ```
+
+**Protip:** you should browse the
+[`league/geotools`](https://packagist.org/packages/league/geotools)
+page to choose a stable version to use, avoid the `@stable` meta constraint.
 
 And install dependecies:
 
