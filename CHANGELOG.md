@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.3.2 (xxxx-xx-xx)
+------------------
+
+n/a
+
 0.3.1 (2013-11-16)
 ------------------
 
@@ -9,7 +14,6 @@ CHANGELOG
 * Updated: documentation
 * Fixed: travis, packagist and sensiolabs insight badges
 * Fixed: tests
-
 
 0.3.0 (2013-07-19)
 ------------------
