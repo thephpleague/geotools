@@ -1,10 +1,14 @@
 CHANGELOG
 =========
 
-0.3.1 (xxxx-xx-xx)
+0.3.1 (2013-11-16)
 ------------------
 
-n/a
+* Updated: use Geocoder 2.3.x
+* Updated: use SensioLabs Insight
+* Updated: documentation
+* Fixed: travis, packagist and sensiolabs insight badges
+* Fixed: tests
 
 
 0.3.0 (2013-07-19)
