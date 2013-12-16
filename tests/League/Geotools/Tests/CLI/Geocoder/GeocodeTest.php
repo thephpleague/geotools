@@ -157,8 +157,8 @@ Longitude:     12.5683371
 Bounds
  - South: 55.6177647
  - West:  12.4533824
- - North: 55.7270937
- - East:  12.7342654
+ - North: 55.7270936
+ - East:  12.7342653
 Street Number: 
 Street Name:   
 Zipcode:       
@@ -187,7 +187,7 @@ EOF;
         ));
 
         $expected = <<<EOF
-{"latitude":55.6760968,"longitude":12.5683371,"bounds":{"south":55.6177647,"west":12.4533824,"north":55.7270937,"east":12.7342654},"streetNumber":null,"streetName":null,"zipcode":null,"city":"Copenhagen","cityDistrict":null,"county":"K\u00f8benhavn","countyCode":"K\u00d8BENHAVN","region":"Capital Region Of Denmark","regionCode":"CAPITAL REGION OF DENMARK","country":"Denmark","countryCode":"DK","timezone":null}
+{"latitude":55.6760968,"longitude":12.5683371,"bounds":{"south":55.6177647,"west":12.4533824,"north":55.7270936,"east":12.7342653},"streetNumber":null,"streetName":null,"zipcode":null,"city":"Copenhagen","cityDistrict":null,"county":"K\u00f8benhavn","countyCode":"K\u00d8BENHAVN","region":"Capital Region Of Denmark","regionCode":"CAPITAL REGION OF DENMARK","country":"Denmark","countryCode":"DK","timezone":null}
 
 EOF;
 
