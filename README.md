@@ -9,6 +9,7 @@ Geotools
 [![Total Downloads](https://poser.pugx.org/league/geotools/downloads.png)](https://packagist.org/packages/league/geotools)
 [![Latest Stable Version](https://poser.pugx.org/league/geotools/v/stable.png)](https://packagist.org/packages/league/geotools)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d/mini.png)](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/thephpleague/Geotools/badges/quality-score.png?s=aae022aba1303d54a40ec8e0f2f4ea8ce48b691a)](https://scrutinizer-ci.com/g/thephpleague/Geotools/)
 
 
 Features
