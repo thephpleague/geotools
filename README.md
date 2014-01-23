@@ -4,7 +4,7 @@ Geotools
 **Geotools** is a PHP geo-related library, built atop [Geocoder](https://github.com/willdurand/Geocoder) and
 [React](https://github.com/reactphp/react) libraries.
 
-[![Build Status](https://secure.travis-ci.org/php-loep/Geotools.png)](https://travis-ci.org/php-loep/Geotools)
+[![Build Status](https://secure.travis-ci.org/thephpleague/Geotools.png)](https://travis-ci.org/thephpleague/Geotools)
 [![Total Downloads](https://poser.pugx.org/league/geotools/downloads.png)](https://packagist.org/packages/league/geotools)
 [![Latest Stable Version](https://poser.pugx.org/league/geotools/v/stable.png)](https://packagist.org/packages/league/geotools)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d/mini.png)](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d)
@@ -562,23 +562,23 @@ Acknowledgments
 Changelog
 ---------
 
-[See the changelog file](https://github.com/php-loep/Geotools/blob/master/CHANGELOG.md)
+[See the changelog file](https://github.com/thephpleague/Geotools/blob/master/CHANGELOG.md)
 
 Contributing
 ------------
 
-Please see [CONTRIBUTING](https://github.com/php-loep/Geotools/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/thephpleague/Geotools/blob/master/CONTRIBUTING.md) for details.
 
 Support
 -------
 
-Bugs and feature request are tracked on [GitHub](https://github.com/php-loep/Geotools/issues)
+Bugs and feature request are tracked on [GitHub](https://github.com/thephpleague/Geotools/issues)
 
 
 License
 -------
 
 Geotools is released under the MIT License. See the bundled
-[LICENSE](https://github.com/php-loep/Geotools/blob/master/LICENSE) file for details.
+[LICENSE](https://github.com/thephpleague/Geotools/blob/master/LICENSE) file for details.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/toin0u/Geotools/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
