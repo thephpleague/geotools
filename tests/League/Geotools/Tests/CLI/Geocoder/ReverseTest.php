@@ -108,7 +108,7 @@ class ReverseTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/Paris, Île-De-France, France Métropolitaine/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/Paris, Île-De-France/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteRawOptionAndLocalArgument()
