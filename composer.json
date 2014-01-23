@@ -15,8 +15,8 @@
 
     "support" : {
         "email"  : "support@geotools-php.org",
-        "issues" : "https://github.com/thephpleague/Geotools/issues",
-        "source" : "https://github.com/thephpleague/Geotools"
+        "issues" : "https://github.com/thephpleague/geotools/issues",
+        "source" : "https://github.com/thephpleague/geotools"
     },
 
     "replace" : {

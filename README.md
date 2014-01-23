@@ -4,12 +4,12 @@ Geotools
 **Geotools** is a PHP geo-related library, built atop [Geocoder](https://github.com/willdurand/Geocoder) and
 [React](https://github.com/reactphp/react) libraries.
 
-[![Build Status](https://secure.travis-ci.org/thephpleague/Geotools.png)](https://travis-ci.org/thephpleague/Geotools)
-[![Coverage Status](https://coveralls.io/repos/thephpleague/Geotools/badge.png)](https://coveralls.io/r/thephpleague/Geotools)
+[![Build Status](https://secure.travis-ci.org/thephpleague/geotools.png)](https://travis-ci.org/thephpleague/geotools)
+[![Coverage Status](https://coveralls.io/repos/thephpleague/geotools/badge.png)](https://coveralls.io/r/thephpleague/geotools)
 [![Total Downloads](https://poser.pugx.org/league/geotools/downloads.png)](https://packagist.org/packages/league/geotools)
 [![Latest Stable Version](https://poser.pugx.org/league/geotools/v/stable.png)](https://packagist.org/packages/league/geotools)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d/mini.png)](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/thephpleague/Geotools/badges/quality-score.png?s=aae022aba1303d54a40ec8e0f2f4ea8ce48b691a)](https://scrutinizer-ci.com/g/thephpleague/Geotools/)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/thephpleague/geotools/badges/quality-score.png?s=aae022aba1303d54a40ec8e0f2f4ea8ce48b691a)](https://scrutinizer-ci.com/g/thephpleague/geotools/)
 
 
 Features
@@ -564,23 +564,23 @@ Acknowledgments
 Changelog
 ---------
 
-[See the changelog file](https://github.com/thephpleague/Geotools/blob/master/CHANGELOG.md)
+[See the changelog file](https://github.com/thephpleague/geotools/blob/master/CHANGELOG.md)
 
 Contributing
 ------------
 
-Please see [CONTRIBUTING](https://github.com/thephpleague/Geotools/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/thephpleague/geotools/blob/master/CONTRIBUTING.md) for details.
 
 Support
 -------
 
-Bugs and feature request are tracked on [GitHub](https://github.com/thephpleague/Geotools/issues)
+Bugs and feature request are tracked on [GitHub](https://github.com/thephpleague/geotools/issues)
 
 
 License
 -------
 
 Geotools is released under the MIT License. See the bundled
-[LICENSE](https://github.com/thephpleague/Geotools/blob/master/LICENSE) file for details.
+[LICENSE](https://github.com/thephpleague/geotools/blob/master/LICENSE) file for details.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/toin0u/Geotools/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
