@@ -68,6 +68,7 @@ $console->setName('Geotools :: Geo-related tools PHP 5.3+ library');
 $console->setVersion($geotools::VERSION);
 $console->add(new Distance\All());
 $console->add(new Distance\Flat());
+$console->add(new Distance\GreatCircle());
 $console->add(new Distance\Haversine());
 $console->add(new Distance\Vincenty());
 $console->add(new Point\InitialBearing());
