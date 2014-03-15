@@ -133,12 +133,12 @@ Bounds
  - North: 40.689758
  - East:  -74.045138
 Street Number: 1
-Street Name:   Liberty Island - Ellis Island
+Street Name:   Liberty Island
 Zipcode:       10004
 City:          New York
 City District: Manhattan
-County:        New York
-County Code:   NEW YORK
+County:        New York County
+County Code:   NEW YORK COUNTY
 Region:        New York
 Region Code:   NY
 Country:       United States
@@ -160,7 +160,7 @@ EOF;
         ));
 
         $expected = <<<EOF
-{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island - Ellis Island","zipcode":"10004","city":"New York","cityDistrict":"Manhattan","county":"New York","countyCode":"NEW YORK","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}
+{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island","zipcode":"10004","city":"New York","cityDistrict":"Manhattan","county":"New York County","countyCode":"NEW YORK COUNTY","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}
 
 EOF;
 
