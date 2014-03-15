@@ -30,7 +30,7 @@ to improve performances. [»](#batch)
 [Universal Transverse Mercator](http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
 (UTM) projection. [»](#convert)
 * Compute the distance in **meter** (by default), **km**, **mi** or **ft** between two coordinates using **flat**,
-**haversine** or **vincenty** algorithms. [»](#distance)
+**great circle**, **haversine** or **vincenty** algorithms. [»](#distance)
 * Compute the initial and final **bearing** from the origin coordinate to the destination coordinate in degrees.
 [»](#point)
 * Compute the initial and final **cardinal point** (direction) from the origin coordinate to the destination
@@ -343,7 +343,7 @@ please read more at the [Geocoder library doc](https://github.com/willdurand/Geo
 ## Distance ##
 
 It provides methods to compute the distance in *meter* (by default), *km*, *mi* or *ft* between two coordinates
-using *flat* (most performant), *haversine* or *vincenty* (most accurate) algorithms.
+using *flat* (most performant), *great circle*, *haversine* or *vincenty* (most accurate) algorithms.
 
 Those coordinates should be in the same ellipsoid.
 
@@ -356,6 +356,7 @@ $coordB   = new \League\Geotools\Coordinate\Coordinate(array(43.296482, 5.36978)
 $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
 
 printf("%s\n",$distance->flat()); // 659166.50038742 (meters)
+printf("%s\n",$distance->greatCircle()); // 659021.90812846
 printf("%s\n",$distance->in('km')->haversine()); // 659.02190812846
 printf("%s\n",$distance->in('mi')->vincenty()); // 409.05330679648
 printf("%s\n",$distance->in('ft')->flat()); // 2162619.7519272
