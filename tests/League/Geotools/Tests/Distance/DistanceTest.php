@@ -115,6 +115,28 @@ class DistanceTest extends TestCase
     /**
      * @dataProvider ellipsoidInstanceAndExpectedResultProvider
      */
+    public function testGreatCircleDistance($ellipsoid, $result)
+    {
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['greatCircle']['m'], $this->distance->greatCircle(), '', 0.00001);
+
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['greatCircle']['km'], $this->distance->in('km')->greatCircle(), '', 0.00001);
+
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['greatCircle']['mi'], $this->distance->in('mi')->greatCircle(), '', 0.00001);
+
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
+        $this->assertEquals($result['greatCircle']['ft'], $this->distance->in('ft')->greatCircle(), '', 0.00001);
+    }
+
+    /**
+     * @dataProvider ellipsoidInstanceAndExpectedResultProvider
+     */
     public function testHaversineDistance($ellipsoid, $result)
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
@@ -168,6 +190,12 @@ class DistanceTest extends TestCase
                         'mi' => 409.58707724686,
                         'ft' => 2162619.7519272,
                     ),
+                    'greatCircle' => array(
+                        'm'  => 659021.90812846,
+                        'km' => 659.02190812846,
+                        'mi' => 409.49722876431,
+                        'ft' => 2162145.3678755,
+                    ),
                     'haversine' => array(
                         'm'  => 659021.90812846,
                         'km' => 659.02190812846,
@@ -190,6 +218,12 @@ class DistanceTest extends TestCase
                         'km' => 659.16660373525,
                         'mi' => 409.587138446,
                         'ft' => 2162620.0909949,
+                    ),
+                    'greatCircle' => array(
+                        'm'  => 659022.01145362,
+                        'km' => 659.02201145362,
+                        'mi' => 409.49729296758,
+                        'ft' => 2162145.7068688,
                     ),
                     'haversine' => array(
                         'm'  => 659022.01145362,
@@ -214,6 +248,12 @@ class DistanceTest extends TestCase
                         'mi' => 409.59434010217,
                         'ft' => 2162658.1157394,
                     ),
+                    'greatCircle' => array(
+                        'm'  => 659033.59885343,
+                        'km' => 659.03359885343,
+                        'mi' => 409.50449304402,
+                        'ft' => 2162183.7232724,
+                    ),
                     'haversine' => array(
                         'm'  => 659033.59885343,
                         'km' => 659.03359885343,
@@ -236,6 +276,12 @@ class DistanceTest extends TestCase
                         'km' => 659.18034899633,
                         'mi' => 409.59567935527,
                         'ft' => 2162665.1869958,
+                    ),
+                    'greatCircle' => array(
+                        'm'  => 659035.7536996,
+                        'km' => 659.0357536996,
+                        'mi' => 409.50583200335,
+                        'ft' => 2162190.7929777,
                     ),
                     'haversine' => array(
                         'm'  => 659035.7536996,

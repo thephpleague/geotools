@@ -103,6 +103,28 @@ class Distance extends AbstractGeotools implements DistanceInterface
     }
 
     /**
+     * Returns the approximate distance between two coordinates
+     * using the spherical trigonometry called Great Circle Distance.
+     * @see http://www.ga.gov.au/earth-monitoring/geodesy/geodetic-techniques/distance-calculation-algorithms.html#circle
+     * @see http://en.wikipedia.org/wiki/Cosine_law
+     *
+     * @return double The distance in meters
+     */
+    public function greatCircle()
+    {
+        Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
+
+        $latA = deg2rad($this->from->getLatitude());
+        $lngA = deg2rad($this->from->getLongitude());
+        $latB = deg2rad($this->to->getLatitude());
+        $lngB = deg2rad($this->to->getLongitude());
+
+        $degrees = acos(sin($latA) * sin($latB) + cos($latA) * cos($latB) * cos($lngB - $lngA));
+
+        return $this->convertToUserUnit($degrees * $this->from->getEllipsoid()->getA());
+    }
+
+    /**
     * Returns the approximate sea level great circle (Earth) distance between
     * two coordinates using the Haversine formula which is accurate to around 0.3%.
     * @see http://www.movable-type.co.uk/scripts/latlong.html
