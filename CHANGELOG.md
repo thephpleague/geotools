@@ -1,10 +1,17 @@
 CHANGELOG
 =========
 
-0.3.2 (xxxx-xx-xx)
+0.3.2 (2014-03-15)
 ------------------
 
-n/a
+* Updated: geotools CLI moved in bin folder
+* Updated: use Geocoder 2.4.x
+* Added: great circle formula and CLI + tests
+* Added: test against php 5.6
+* Updated: repo name
+* Added: coverage and scrutinizer-ci badges
+* Updated: organisation name
+* Added: test against HHVM
 
 0.3.1 (2013-11-16)
 ------------------
