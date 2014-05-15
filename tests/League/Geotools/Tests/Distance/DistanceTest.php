@@ -299,6 +299,42 @@ class DistanceTest extends TestCase
             ),
         );
     }
+
+    public function testVincentyDistanceCoIncidentPoint()
+    {
+        $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+
+        $this->assertSame(0.0, $this->distance->vincenty());
+    }
+
+    public function testFlatDistanceWithSameCoordinate()
+    {
+        $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+
+        $this->assertSame(0.0, $this->distance->flat());
+    }
+
+    public function testGreatCircleDistanceWithSameCoordinate()
+    {
+        $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+
+        $this->assertSame(0.0, $this->distance->greatCircle());
+    }
+
+    public function testHaversineDistanceWithSameCoordinate()
+    {
+        $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+
+        $this->assertSame(0.0, $this->distance->haversine());
+    }
 }
 
 class TestableDistance extends Distance
