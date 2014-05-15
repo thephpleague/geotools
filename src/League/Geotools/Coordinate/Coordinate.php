@@ -60,9 +60,7 @@ class Coordinate implements CoordinateInterface
             $this->setLatitude($coordinates[0]);
             $this->setLongitude($coordinates[1]);
         } elseif (is_string($coordinates)) {
-            $inDecimalDegree = $this->toDecimalDegrees($coordinates);
-            $this->setLatitude($inDecimalDegree[0]);
-            $this->setLongitude($inDecimalDegree[1]);
+            $this->setFromString($coordinates);
         } else {
             throw new InvalidArgumentException(sprintf(
                 '%s', 'It should be a string, an array or a class which implements Geocoder\Result\ResultInterface !'
@@ -133,6 +131,28 @@ class Coordinate implements CoordinateInterface
     public function getEllipsoid()
     {
         return $this->ellipsoid;
+    }
+
+    /**
+     * Creates a valid and acceptable geographic coordinates.
+     *
+     * @param string $coordinates
+     *
+     * @throws InvalidArgumentException
+     */
+    public function setFromString($coordinates)
+    {
+        if (!is_string($coordinates)) {
+            throw new InvalidArgumentException('The given coordinates should be a string !');
+        }
+
+        try {
+            $inDecimalDegree = $this->toDecimalDegrees($coordinates);
+            $this->setLatitude($inDecimalDegree[0]);
+            $this->setLongitude($inDecimalDegree[1]);
+        } catch (InvalidArgumentException $e) {
+            throw $e;
+        }
     }
 
     /**

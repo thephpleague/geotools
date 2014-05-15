@@ -318,4 +318,33 @@ class CoordinateTest extends TestCase
         $this->assertTrue(is_object($ellipsoid));
         $this->assertInstanceOf('League\Geotools\Coordinate\Ellipsoid', $ellipsoid);
     }
+
+    /**
+     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage The given coordinates should be a string !
+     */
+    public function testCreateFromStringWithoutAString()
+    {
+        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate->setFromString(123);
+    }
+
+    /**
+     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
+     */
+    public function testCreateFromStringWithInvalidCoordinateString()
+    {
+        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate->setFromString('foo');
+    }
+
+    public function testCreateFromStringWithValidCoordinatesShouldBeValid()
+    {
+        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate->setFromString('40°26′47″N 079°58′36″W');
+
+        $this->assertSame(40.446388888889, $coordinate->getLatitude());
+        $this->assertSame(-79.976666666667, $coordinate->getLongitude());
+    }
 }
