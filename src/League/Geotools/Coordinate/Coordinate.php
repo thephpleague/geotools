@@ -173,7 +173,8 @@ class Coordinate implements CoordinateInterface
         }
 
         // 40°26.7717S 79°56.93172E
-        if (preg_match('/([0-9]{1,2})\D+([0-9]{1,2}\.?\d*)([ns]{1})[, ] ?([0-9]{1,3})\D+([0-9]{1,2}\.?\d*)([we]{1})$/i',
+        // 25°59.86′N,21°09.81′W
+        if (preg_match('/([0-9]{1,2})\D+([0-9]{1,2}\.?\d*)\D*([ns]{1})[, ] ?([0-9]{1,3})\D+([0-9]{1,2}\.?\d*)\D*([we]{1})$/i',
             $coordinates, $match)) {
             $latitude  = $match[1] + $match[2] / 60;
             $longitude = $match[4] + $match[5] / 60;
