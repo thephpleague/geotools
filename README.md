@@ -153,6 +153,10 @@ printf("Equatorial radius: %F\n", $coordinate->getEllipsoid()->getA()); // 63781
 printf("Polar distance: %F\n", $coordinate->getEllipsoid()->getB()); // 6356751.317598
 printf("Inverse flattening: %F\n", $coordinate->getEllipsoid()->getInvF()); // 298.257224
 printf("Mean radius: %F\n", $coordinate->getEllipsoid()->getArithmeticMeanRadius()); // 6371007.772533
+// it's also possible to modify the coordinate without creating an other coodinate
+$coordinate->setFromString('40°26′47″N 079°58′36″W');
+printf("Latitude: %F\n", $coordinate->getLatitude()); // 40.446388888889
+printf("Longitude: %F\n", $coordinate->getLongitude()); // -79.976666666667
 ```
 
 ## Convert ##
