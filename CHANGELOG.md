@@ -1,10 +1,14 @@
 CHANGELOG
 =========
 
-0.3.3 (xxxx-xx-xx)
+0.3.3 (2014-05-16)
 ------------------
 
-n/a
+* Fixed: HHVM compatible tested on `HipHop VM 3.1.0-dev+2014.05.15`
+* Added: falling tests in Distance with same coordinates (@kornrunner)
+* Fixed: division by zero in computing distance between 2 identical coordinates (@kornrunner)
+* Added: `setFromString` method to create and modify coordinate + doc - fix #31
+* Fixed: coordinate parsing issue
 
 0.3.2 (2014-03-15)
 ------------------
