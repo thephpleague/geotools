@@ -62,9 +62,9 @@ class Coordinate implements CoordinateInterface
         } elseif (is_string($coordinates)) {
             $this->setFromString($coordinates);
         } else {
-            throw new InvalidArgumentException(sprintf(
-                '%s', 'It should be a string, an array or a class which implements Geocoder\Result\ResultInterface !'
-            ));
+            throw new InvalidArgumentException(
+                'It should be a string, an array or a class which implements Geocoder\Result\ResultInterface !'
+            );
         }
 
         $this->ellipsoid = $ellipsoid ?: Ellipsoid::createFromName(Ellipsoid::WGS84);
@@ -220,8 +220,8 @@ class Coordinate implements CoordinateInterface
             );
         }
 
-        throw new InvalidArgumentException(sprintf(
-            '%s', 'It should be a valid and acceptable ways to write geographic coordinates !'
-        ));
+        throw new InvalidArgumentException(
+            'It should be a valid and acceptable ways to write geographic coordinates !'
+        );
     }
 }
