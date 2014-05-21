@@ -15,7 +15,7 @@ Geotools
 Features
 --------
 
-* **Batch** geocode & reverse geocoding request(s) in **serie** / in **parallel** against one or a
+* **Batch** geocode & reverse geocoding request(s) in **series** / in **parallel** against one or a
 **set of providers**. [»](#batch)
 * **Cache** geocode & reverse geocoding result(s) with **Redis**, **Memcached** or **MongoDB**
 to improve performances. [»](#batch)
