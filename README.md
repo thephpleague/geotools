@@ -50,7 +50,7 @@ Installation
 **Geotools** can be found on [Packagist](https://packagist.org/packages/league/geotools).
 The recommended way to install **Geotools** is through [composer](http://getcomposer.org).
 
-Edit `compose.json` and add:
+Edit `composer.json` and add:
 
 ```json
 {
@@ -64,7 +64,7 @@ Edit `compose.json` and add:
 [`league/geotools`](https://packagist.org/packages/league/geotools)
 page to choose a stable version to use, avoid the `@stable` meta constraint.
 
-And install dependecies:
+And install dependencies:
 
 ```bash
 $ curl -sS https://getcomposer.org/installer | php
