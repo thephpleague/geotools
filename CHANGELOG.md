@@ -1,10 +1,13 @@
 CHANGELOG
 =========
 
-0.3.4 (xxxx-xx-xx)
+0.4.0 (2014-07-30)
 ------------------
 
-n/a
+* Uses: PSR-4
+* Removed: not relevant autoloads
+* Fixed: tests
+* Fixed: typos
 
 0.3.3 (2014-05-16)
 ------------------
