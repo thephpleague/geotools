@@ -1,34 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
     <title>Geotools by thephpleague</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>Geotools</h1>
-        <h2>Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries</h2>
-        <a href="https://github.com/thephpleague/geotools" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>
+      <header>
+        <h1>Geotools</h1>
+        <p>Geo-related tools PHP 5.3+ library built atop Geocoder and React libraries</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/thephpleague/geotools" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/thephpleague/geotools/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/thephpleague/geotools/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>
 <a name="geotools" class="anchor" href="#geotools"><span class="octicon octicon-link"></span></a>Geotools</h1>
 
 <p><strong>Geotools</strong> is a PHP geo-related library, built atop <a href="https://github.com/willdurand/Geocoder">Geocoder</a> and
@@ -46,7 +57,7 @@
 
 <ul>
 <li>
-<strong>Batch</strong> geocode &amp; reverse geocoding request(s) in <strong>serie</strong> / in <strong>parallel</strong> against one or a
+<strong>Batch</strong> geocode &amp; reverse geocoding request(s) in <strong>series</strong> / in <strong>parallel</strong> against one or a
 <strong>set of providers</strong>. <a href="#batch">»</a>
 </li>
 <li>
@@ -71,7 +82,7 @@ to improve performances. <a href="#batch">»</a>
 (UTM) projection. <a href="#convert">»</a>
 </li>
 <li>Compute the distance in <strong>meter</strong> (by default), <strong>km</strong>, <strong>mi</strong> or <strong>ft</strong> between two coordinates using <strong>flat</strong>,
-<strong>haversine</strong> or <strong>vincenty</strong> algorithms. <a href="#distance">»</a>
+<strong>great circle</strong>, <strong>haversine</strong> or <strong>vincenty</strong> algorithms. <a href="#distance">»</a>
 </li>
 <li>Compute the initial and final <strong>bearing</strong> from the origin coordinate to the destination coordinate in degrees.
 <a href="#point">»</a>
@@ -97,7 +108,7 @@ coordinate, read more in <a href="http://en.wikipedia.org/wiki/Cardinal_directio
 <p><strong>Geotools</strong> can be found on <a href="https://packagist.org/packages/league/geotools">Packagist</a>.
 The recommended way to install <strong>Geotools</strong> is through <a href="http://getcomposer.org">composer</a>.</p>
 
-<p>Edit <code>compose.json</code> and add:</p>
+<p>Edit <code>composer.json</code> and add:</p>
 
 <div class="highlight highlight-json"><pre><span class="p">{</span>
     <span class="nt">"require"</span><span class="p">:</span> <span class="p">{</span>
@@ -110,7 +121,7 @@ The recommended way to install <strong>Geotools</strong> is through <a href="htt
 <a href="https://packagist.org/packages/league/geotools"><code>league/geotools</code></a>
 page to choose a stable version to use, avoid the <code>@stable</code> meta constraint.</p>
 
-<p>And install dependecies:</p>
+<p>And install dependencies:</p>
 
 <div class="highlight highlight-bash"><pre><span class="nv">$ </span>curl -sS https://getcomposer.org/installer <span class="p">|</span> php
 <span class="nv">$ </span>php composer.phar install
@@ -121,13 +132,6 @@ page to choose a stable version to use, avoid the <code>@stable</code> meta cons
 <div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
-</pre></div>
-
-<p>If you don't use neither <strong>Composer</strong> nor a <em>ClassLoader</em> in your application, just require the provided autoloader:</p>
-
-<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
-
-<span class="k">require_once</span> <span class="s1">'src/autoload.php'</span><span class="p">;</span>
 </pre></div>
 
 <h2>
@@ -196,6 +200,10 @@ Longitudes below -180.0 or abode 180.0 degrees are <em>wrapped</em> through <cod
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"Polar distance: %F</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$coordinate</span><span class="o">-&gt;</span><span class="na">getEllipsoid</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getB</span><span class="p">());</span> <span class="c1">// 6356751.317598</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"Inverse flattening: %F</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$coordinate</span><span class="o">-&gt;</span><span class="na">getEllipsoid</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getInvF</span><span class="p">());</span> <span class="c1">// 298.257224</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"Mean radius: %F</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$coordinate</span><span class="o">-&gt;</span><span class="na">getEllipsoid</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getArithmeticMeanRadius</span><span class="p">());</span> <span class="c1">// 6371007.772533</span>
+<span class="c1">// it's also possible to modify the coordinate without creating an other coodinate</span>
+<span class="nv">$coordinate</span><span class="o">-&gt;</span><span class="na">setFromString</span><span class="p">(</span><span class="s1">'40°26′47″N 079°58′36″W'</span><span class="p">);</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"Latitude: %F</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$coordinate</span><span class="o">-&gt;</span><span class="na">getLatitude</span><span class="p">());</span> <span class="c1">// 40.446388888889</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"Longitude: %F</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="nv">$coordinate</span><span class="o">-&gt;</span><span class="na">getLongitude</span><span class="p">());</span> <span class="c1">// -79.976666666667</span>
 </pre></div>
 
 <h2>
@@ -459,7 +467,7 @@ please read more at the <a href="https://github.com/willdurand/Geocoder#freegeoi
 <a name="distance" class="anchor" href="#distance"><span class="octicon octicon-link"></span></a>Distance</h2>
 
 <p>It provides methods to compute the distance in <em>meter</em> (by default), <em>km</em>, <em>mi</em> or <em>ft</em> between two coordinates
-using <em>flat</em> (most performant), <em>haversine</em> or <em>vincenty</em> (most accurate) algorithms.</p>
+using <em>flat</em> (most performant), <em>great circle</em>, <em>haversine</em> or <em>vincenty</em> (most accurate) algorithms.</p>
 
 <p>Those coordinates should be in the same ellipsoid.</p>
 
@@ -471,6 +479,7 @@ using <em>flat</em> (most performant), <em>haversine</em> or <em>vincenty</em> (
 <span class="nv">$distance</span> <span class="o">=</span> <span class="nv">$geotools</span><span class="o">-&gt;</span><span class="na">distance</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="nv">$coordA</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="nv">$coordB</span><span class="p">);</span>
 
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">());</span> <span class="c1">// 659166.50038742 (meters)</span>
+<span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">greatCircle</span><span class="p">());</span> <span class="c1">// 659021.90812846</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'km'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">haversine</span><span class="p">());</span> <span class="c1">// 659.02190812846</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'mi'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">vincenty</span><span class="p">());</span> <span class="c1">// 409.05330679648</span>
 <span class="nb">printf</span><span class="p">(</span><span class="s2">"%s</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="nv">$distance</span><span class="o">-&gt;</span><span class="na">in</span><span class="p">(</span><span class="s1">'ft'</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">flat</span><span class="p">());</span> <span class="c1">// 2162619.7519272</span>
@@ -557,13 +566,13 @@ Thanks to the <a href="https://github.com/symfony/Console">Symfony Console Compo
 <span class="nv">$ </span>php geotools d:v <span class="s2">"35,45"</span> <span class="s2">"45,35"</span> --km --ellipsoid<span class="o">=</span>WGS60 // 1398.4145201642
 <span class="nv">$ </span>php geotools point:initial-cardinal <span class="s2">"40:26:46.302N 079:56:55.903W"</span> <span class="s2">"43.296482, 5.36978"</span> // NE <span class="o">(</span>NordEast<span class="o">)</span>
 <span class="nv">$ </span>php geotools point:final-cardinal <span class="s2">"40:26:46.302N 079:56:55.903W"</span> <span class="s2">"43.296482, 5.36978"</span> // ESE <span class="o">(</span>EastSouthEast<span class="o">)</span>
-<span class="nv">$ </span>php geotools point:destination <span class="s2">"40° 26.7717, -79° 56.93172"</span> 25 10000 // 40.527599285543, -79.898914904538
-<span class="nv">$ </span>php geotools p:d <span class="s2">"40° 26.7717, -79° 56.93172"</span> 25 10000 --ellipsoid<span class="o">=</span>GRS_1980 // 40.527599272782, -79.898914912379
-<span class="nv">$ </span>php geotools geohash:encode <span class="s2">"40° 26.7717, -79° 56.93172"</span> --length<span class="o">=</span>3 // dpp
+<span class="nv">$ </span>php geotools point:destination <span class="s2">"40° 26.7717, -79° 56.93172"</span> <span class="m">25</span> <span class="m">10000</span> // 40.527599285543, -79.898914904538
+<span class="nv">$ </span>php geotools p:d <span class="s2">"40° 26.7717, -79° 56.93172"</span> <span class="m">25</span> <span class="m">10000</span> --ellipsoid<span class="o">=</span>GRS_1980 // 40.527599272782, -79.898914912379
+<span class="nv">$ </span>php geotools geohash:encode <span class="s2">"40° 26.7717, -79° 56.93172"</span> --length<span class="o">=</span><span class="m">3</span> // dpp
 <span class="nv">$ </span>php geotools convert:dm <span class="s2">"40.446195, -79.948862"</span> --format<span class="o">=</span><span class="s2">"%P%D°%N %p%d°%n"</span> // 40°26.7717 -79°56.93172
 <span class="nv">$ </span>php geotools convert:dms <span class="s2">"40.446195, -79.948862"</span> --format<span class="o">=</span><span class="s2">"%P%D:%M:%S, %p%d:%m:%s"</span> // 40:26:46, -79:56:56
-<span class="nv">$ </span>php geotools convert:utm <span class="s2">"60.3912628, 5.3220544"</span> // 32V 297351 6700644
-<span class="nv">$ </span>php geotools c:u <span class="s2">"60.3912628, 5.3220544"</span> --ellipsoid<span class="o">=</span>AIRY // 32V 297371 6700131
+<span class="nv">$ </span>php geotools convert:utm <span class="s2">"60.3912628, 5.3220544"</span> // 32V <span class="m">297351</span> 6700644
+<span class="nv">$ </span>php geotools c:u <span class="s2">"60.3912628, 5.3220544"</span> --ellipsoid<span class="o">=</span>AIRY // 32V <span class="m">297371</span> 6700131
 ...
 </pre></div>
 
@@ -596,7 +605,7 @@ Read more <a href="https://github.com/willdurand/Geocoder#dumpers">here</a>.</li
 <span class="nv">$ </span>php geotools geocoder:geocode Paris --args<span class="o">=</span><span class="s2">"fr_FR"</span> --args<span class="o">=</span><span class="s2">"France"</span> --args<span class="o">=</span><span class="s2">"true"</span> // 48.856614, 2.3522219
 <span class="nv">$ </span>php geotools geocoder:geocode Paris --dumper<span class="o">=</span>wkt // POINT<span class="o">(</span>2.352222 48.856614<span class="o">)</span>
 ...
-<span class="nv">$ </span>php geotools geocoder:reverse <span class="s2">"48.8631507, 2.388911"</span> // Avenue Gambetta 10, 75020 Paris
+<span class="nv">$ </span>php geotools geocoder:reverse <span class="s2">"48.8631507, 2.388911"</span> // Avenue Gambetta 10, <span class="m">75020</span> Paris
 <span class="nv">$ </span>php geotools geocoder:reverse <span class="s2">"48.8631507, 2.388911"</span> --format<span class="o">=</span><span class="s2">"%L, %R, %C"</span> // Paris, Île-De-France, France
 <span class="nv">$ </span>php geotools geocoder:reverse <span class="s2">"48.8631507, 2.388911"</span> --format<span class="o">=</span><span class="s2">"%L, %R, %C"</span> --provider<span class="o">=</span><span class="s2">"openstreetmaps"</span>
 // Paris, Île-De-France, France Métropolitaine
@@ -709,26 +718,14 @@ Timezone:
 <a href="https://github.com/thephpleague/geotools/blob/master/LICENSE">LICENSE</a> file for details.</p>
 
 <p><a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/toin0u/Geotools/trend.png" alt="Bitdeli Badge"></a></p>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/thephpleague/geotools/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/thephpleague/geotools/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/thephpleague/geotools"></a> is maintained by <a href="https://github.com/thephpleague">thephpleague</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/thephpleague">thephpleague</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
+      </footer>
     </div>
-
-            <script type="text/javascript">
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
