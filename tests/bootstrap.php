@@ -24,5 +24,3 @@ $ phpunit
 EOT
     );
 }
-
-$loader->add('League\Geotools\Tests', __DIR__);
