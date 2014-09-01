@@ -1,24 +1,22 @@
 language: php
 
 php:
-    - 5.3
-    - 5.4
-    - 5.5
-    - 5.6
-    - hhvm-nightly
-
-matrix:
-    allow_failures:
-        - php: hhvm-nightly
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm-nightly
 
 services: mongodb
 
 before_script:
-    - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
-    - sh -c 'echo 'extension = "memcached.so"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini'
-    - composer self-update
-    - composer install --dev --prefer-source --no-interaction
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'echo 'extension = "memcached.so"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini'
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source --dev
 
-script: phpunit --coverage-text --coverage-clover ./build/logs/clover.xml
+script:
+  - phpunit --coverage-text --coverage-clover ./build/logs/clover.xml
 
-after_script: php vendor/bin/coveralls
+after_script:
+  - php vendor/bin/coveralls
