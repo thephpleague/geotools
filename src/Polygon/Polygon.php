@@ -15,7 +15,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     JsonSerializable
 {
     /**
-     * @var CoordinateCollection
+     * @var CoordinateCollection|CoordinateInterface[]
      */
     private $coordinates;
 
@@ -94,6 +94,24 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
                 $this->maximumCoordinate->setLongitude($longitude);
             }
         }
+    }
+
+    /**
+     * @param CoordinateInterface $coordinate
+     * @return bool
+     */
+    public function pointOnVertex(CoordinateInterface $coordinate)
+    {
+        foreach ($this->coordinates as $vertexCoordinate) {
+            if (
+                $vertexCoordinate->getLatitude() === $coordinate->getLatitude() &&
+                $vertexCoordinate->getLongitude() === $coordinate->getLongitude()
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

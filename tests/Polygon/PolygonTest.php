@@ -1,7 +1,7 @@
 <?php
 namespace League\Geotools\Tests\Polygon;
 
-use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Polygon\Polygon;
 use League\Geotools\Tests\TestCase;
 
@@ -65,5 +65,41 @@ class PolygonTest extends TestCase
             $this->assertEquals($value[0], $this->polygon->get($key)->getLatitude());
             $this->assertEquals($value[1], $this->polygon->get($key)->getLongitude());
         }
+    }
+
+    public function polygonAndVertexCoordinate()
+    {
+        return array(
+            array(
+                'polygonCoordinates' => array(
+                    array(48.9675969, 1.7440796),
+                    array(48.4711003, 2.5268555),
+                    array(48.9279131, 3.1448364),
+                    array(49.3895245, 2.6119995)
+                ),
+                'vertexCoordinate' => array(48.4711003, 2.5268555),
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider polygonAndVertexCoordinate
+     * @param array $polygonCoordinates
+     * @param array $vertexCoordinate
+     */
+    public function testPointOnVertex($polygonCoordinates, $vertexCoordinate)
+    {
+        $this->polygon->set($polygonCoordinates);
+        $this->assertTrue($this->polygon->pointOnVertex(new Coordinate($vertexCoordinate)));
+    }
+
+    /**
+     * @dataProvider polygonAndVertexCoordinate
+     * @param array $polygonCoordinates
+     */
+    public function testPointNotOnVertex($polygonCoordinates)
+    {
+        $this->polygon->set($polygonCoordinates);
+        $this->assertFalse($this->polygon->pointOnVertex(new Coordinate(array(0, 0))));
     }
 }
