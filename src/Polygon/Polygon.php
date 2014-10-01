@@ -34,9 +34,21 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     private $hasCoordinate = false;
 
-    public function __construct()
+    /**
+     * @param null|array|CoordinateCollection $coordinates
+     */
+    public function __construct($coordinates = null)
     {
-        $this->coordinates = new CoordinateCollection();
+        if (is_array($coordinates) || null === $coordinates) {
+            $this->coordinates = new CoordinateCollection();
+            if (is_array($coordinates)) {
+                $this->set($coordinates);
+            }
+        } elseif ($coordinates instanceof CoordinateCollection) {
+            $this->coordinates = $coordinates;
+        } else {
+            throw new \InvalidArgumentException;
+        }
         $this->maximumCoordinate = new Coordinate(array(0,0));
         $this->minimumCoordinate = new Coordinate(array(0,0));
     }
@@ -218,11 +230,25 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * {@inheritDoc}
+     * @param string|array $key
+     * @param null|CoordinateInterface $coordinate
      */
-    public function set($key, CoordinateInterface $coordinate)
+    public function set($key, CoordinateInterface $coordinate = null)
     {
-        $this->coordinates->set($key, $coordinate);
+        if (is_array($key)) {
+            $values = $key;
+        } elseif (null !== $coordinate) {
+            $values = array($key => $coordinate);
+        } else {
+            throw new \InvalidArgumentException;
+        }
+
+        foreach ($values as $key => $value) {
+            if (!$value instanceof CoordinateInterface) {
+                $value = new Coordinate($value);
+            }
+            $this->coordinates->set($key, $value);
+        }
         $this->recalulateMaximumAndMinimum();
     }
 

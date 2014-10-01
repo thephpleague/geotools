@@ -51,4 +51,19 @@ class PolygonTest extends TestCase
         $this->assertEquals($minimumCoordinate[0], $this->polygon->getMinimumCoordinate()->getLatitude());
         $this->assertEquals($minimumCoordinate[1], $this->polygon->getMinimumCoordinate()->getLongitude());
     }
+
+    /**
+     * @dataProvider polygonAndExpectedMaximumAndMinimumCoordinates
+     * @param array $polygonCoordinates
+     */
+    public function testArraySetterAndGetter($polygonCoordinates)
+    {
+        $this->polygon->set($polygonCoordinates);
+
+        $this->assertCount(4, $this->polygon);
+        foreach ($polygonCoordinates as $key => $value) {
+            $this->assertEquals($value[0], $this->polygon->get($key)->getLatitude());
+            $this->assertEquals($value[1], $this->polygon->get($key)->getLongitude());
+        }
+    }
 }
