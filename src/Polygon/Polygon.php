@@ -100,12 +100,57 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      * @param CoordinateInterface $coordinate
      * @return bool
      */
+    public function pointOnBoundary(CoordinateInterface $coordinate)
+    {
+        for ($i = 1; $i <= $this->count(); $i++) {
+            $currentVertex = $this->get($i - 1);
+            $nextVertex = $this->get($i);
+            if (null === $nextVertex) {
+                $nextVertex = $this->get(0);
+            }
+
+            // Check if coordinate is on a horizontal boundary
+            if (
+                (string)$currentVertex->getLatitude() == (string)$nextVertex->getLatitude() &&
+                (string)$currentVertex->getLatitude() == (string)$coordinate->getLatitude() &&
+                (string)$coordinate->getLongitude() > (string)min($currentVertex->getLongitude(), $nextVertex->getLongitude()) &&
+                (string)$coordinate->getLongitude() < (string)max($currentVertex->getLongitude(), $nextVertex->getLongitude())
+            ) {
+                return true;
+            }
+
+            // Check if coordinate is on a boundary
+            if (
+                (string)$coordinate->getLatitude() > (string)min($currentVertex->getLatitude(), $nextVertex->getLatitude()) &&
+                (string)$coordinate->getLatitude() <= (string)max($currentVertex->getLatitude(), $nextVertex->getLatitude()) &&
+                (string)$coordinate->getLongitude() <= (string)max($currentVertex->getLongitude(), $nextVertex->getLongitude()) &&
+                (string)$currentVertex->getLatitude() != (string)$nextVertex->getLatitude()
+            ) {
+                $xinters =
+                    ($coordinate->getLatitude() - $currentVertex->getLatitude()) *
+                    ($nextVertex->getLongitude() - $currentVertex->getLongitude()) /
+                    ($nextVertex->getLatitude() - $currentVertex->getLatitude()) +
+                    $currentVertex->getLongitude();
+
+                if ((string)$xinters == (string)$coordinate->getLongitude()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param CoordinateInterface $coordinate
+     * @return bool
+     */
     public function pointOnVertex(CoordinateInterface $coordinate)
     {
         foreach ($this->coordinates as $vertexCoordinate) {
             if (
-                $vertexCoordinate->getLatitude() === $coordinate->getLatitude() &&
-                $vertexCoordinate->getLongitude() === $coordinate->getLongitude()
+                (string)$vertexCoordinate->getLatitude() == (string)$coordinate->getLatitude() &&
+                (string)$vertexCoordinate->getLongitude() == (string)$coordinate->getLongitude()
             ) {
                 return true;
             }

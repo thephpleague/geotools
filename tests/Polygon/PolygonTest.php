@@ -102,4 +102,57 @@ class PolygonTest extends TestCase
         $this->polygon->set($polygonCoordinates);
         $this->assertFalse($this->polygon->pointOnVertex(new Coordinate(array(0, 0))));
     }
+
+    public function polygonAndPointOnBoundaryCoordinate()
+    {
+        return array(
+            array(
+                'polygonCoordinates' => array(
+                    array(48.9675969, 1.7440796),
+                    array(48.4711003, 2.5268555),
+                    array(48.9279131, 3.1448364),
+                    array(49.3895245, 2.6119995)
+                ),
+                'pointOnBoundaryCoordinates' => array(
+                    array(48.7193486, 2.13546755),
+                    array(48.6995067, 2.83584595),
+                    array(49.1587188, 2.87841795),
+                    array(49.1785607, 2.17803955),
+                ),
+                'pointNotOnBoundaryCoordinates' => array(
+                    array(43.7193486, 2.13546755),
+                    array(45.6995067, 2.83584595),
+                    array(47.1587188, 2.87841795),
+                    array(20.1785607, 2.17803955),
+                ),
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider polygonAndPointOnBoundaryCoordinate
+     * @param array $polygonCoordinates
+     * @param array $pointOnBoundaryCoordinates
+     */
+    public function testPointOnBoundary($polygonCoordinates, $pointOnBoundaryCoordinates)
+    {
+        $this->polygon->set($polygonCoordinates);
+        foreach ($pointOnBoundaryCoordinates as $pointOnBoundaryCoordinate) {
+            $this->assertTrue($this->polygon->pointOnBoundary(new Coordinate($pointOnBoundaryCoordinate)));
+        }
+    }
+
+    /**
+     * @dataProvider polygonAndPointOnBoundaryCoordinate
+     * @param array $polygonCoordinates
+     * @param array $pointOnBoundaryCoordinates
+     * @param array $pointNotOnBoundaryCoordinates
+     */
+    public function testPointNotOnBoundary($polygonCoordinates, $pointOnBoundaryCoordinates, $pointNotOnBoundaryCoordinates)
+    {
+        $this->polygon->set($polygonCoordinates);
+        foreach ($pointNotOnBoundaryCoordinates as $pointNotOnBoundaryCoordinate) {
+            $this->assertFalse($this->polygon->pointOnBoundary(new Coordinate($pointNotOnBoundaryCoordinate)));
+        }
+    }
 }
