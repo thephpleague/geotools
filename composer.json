@@ -36,7 +36,8 @@
         "guzzle/guzzle"           : "~3.7",
         "zendframework/zend-http" : "~2.2",
         "predis/predis"           : "~0.8",
-        "satooshi/php-coveralls"  : "~0.6"
+        "satooshi/php-coveralls"  : "~0.6",
+        "phpunit/phpunit": "~4"
     },
 
     "autoload" : {
