@@ -39,6 +39,8 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     public function __construct($coordinates = null)
     {
+        $this->maximumCoordinate = new Coordinate(array(0, 0));
+        $this->minimumCoordinate = new Coordinate(array(0, 0));
         if (is_array($coordinates) || null === $coordinates) {
             $this->coordinates = new CoordinateCollection();
             if (is_array($coordinates)) {
@@ -49,8 +51,6 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
         } else {
             throw new \InvalidArgumentException;
         }
-        $this->maximumCoordinate = new Coordinate(array(0,0));
-        $this->minimumCoordinate = new Coordinate(array(0,0));
     }
 
     private function recalulateMaximumAndMinimum()
