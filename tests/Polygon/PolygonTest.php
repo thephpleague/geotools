@@ -148,11 +148,70 @@ class PolygonTest extends TestCase
      * @param array $pointOnBoundaryCoordinates
      * @param array $pointNotOnBoundaryCoordinates
      */
-    public function testPointNotOnBoundary($polygonCoordinates, $pointOnBoundaryCoordinates, $pointNotOnBoundaryCoordinates)
+    public function testPointNotOnBoundary(
+        $polygonCoordinates,
+        $pointOnBoundaryCoordinates,
+        $pointNotOnBoundaryCoordinates
+    )
     {
         $this->polygon->set($polygonCoordinates);
         foreach ($pointNotOnBoundaryCoordinates as $pointNotOnBoundaryCoordinate) {
             $this->assertFalse($this->polygon->pointOnBoundary(new Coordinate($pointNotOnBoundaryCoordinate)));
+        }
+    }
+
+    public function polygonAndPointInPolygonCoordinate()
+    {
+        return array(
+            array(
+                'polygonCoordinates' => array(
+                    array(48.9675969, 1.7440796),
+                    array(48.4711003, 2.5268555),
+                    array(48.9279131, 3.1448364),
+                    array(49.3895245, 2.6119995)
+                ),
+                'pointInPolygonCoordinates' => array(
+                    array(49.1785607, 2.4444580),
+                    array(49.1785607, 2.0000000),
+                    array(49.1785607, 1.7440796),
+                    array(48.9279131, 2.4444580),
+                ),
+                'pointNotInPolygonCoordinates' => array(
+                    array(49.1785607, 5),
+                    array(50, 2.4444580),
+                )
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider polygonAndPointInPolygonCoordinate
+     * @param array $polygonCoordinates
+     * @param array $pointInPolygonCoordinates
+     */
+    public function testPointInPolygon($polygonCoordinates, $pointInPolygonCoordinates)
+    {
+        $this->polygon->set($polygonCoordinates);
+        foreach ($pointInPolygonCoordinates as $pointInPolygonCoordinate) {
+            $this->assertTrue($this->polygon->pointInPolygon(new Coordinate($pointInPolygonCoordinate)));
+        }
+    }
+
+    /**
+     * @dataProvider polygonAndPointInPolygonCoordinate
+     * @param array $polygonCoordinates
+     * @param array $pointInPolygonCoordinates
+     * @param array $pointNotInPolygonCoordinates
+     */
+    public function testPointNotInPolygon(
+        $polygonCoordinates,
+        $pointInPolygonCoordinates,
+        $pointNotInPolygonCoordinates
+    )
+    {
+        $this->polygon->set($polygonCoordinates);
+        foreach ($pointNotInPolygonCoordinates as $pointNotInPolygonCoordinate) {
+            $this->assertFalse($this->polygon->pointInPolygon(new Coordinate($pointNotInPolygonCoordinate)));
         }
     }
 }

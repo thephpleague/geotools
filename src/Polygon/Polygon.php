@@ -100,6 +100,71 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      * @param CoordinateInterface $coordinate
      * @return bool
      */
+    public function pointInPolygon(CoordinateInterface $coordinate)
+    {
+        if (!$this->hasCoordinate) {
+            return false;
+        }
+
+        $latitude = $coordinate->getLatitude();
+        $longitude = $coordinate->getLongitude();
+
+        if (
+            $latitude < $this->minimumCoordinate->getLatitude() ||
+            $latitude > $this->maximumCoordinate->getLatitude()
+        ) {
+            return false;
+        } elseif (
+            $longitude < $this->minimumCoordinate->getLongitude() ||
+            $longitude > $this->maximumCoordinate->getLongitude()
+        ) {
+            return false;
+        }
+
+        if ($this->pointOnVertex($coordinate)) {
+            return true;
+        }
+
+        if ($this->pointOnBoundary($coordinate)) {
+            return true;
+        }
+
+        $intersections = 0;
+        for ($i = 1; $i < $this->count(); $i++) {
+            $currentVertex = $this->get($i - 1);
+            $nextVertex = $this->get($i);
+
+            if (
+                (string)$coordinate->getLatitude() > (string)min($currentVertex->getLatitude(), $nextVertex->getLatitude()) &&
+                (string)$coordinate->getLatitude() <= (string)max($currentVertex->getLatitude(), $nextVertex->getLatitude()) &&
+                (string)$coordinate->getLongitude() <= (string)max($currentVertex->getLongitude(), $nextVertex->getLongitude()) &&
+                (string)$currentVertex->getLatitude() != (string)$nextVertex->getLatitude()
+            ) {
+                $xinters =
+                    ($coordinate->getLatitude() - $currentVertex->getLatitude()) *
+                    ($nextVertex->getLongitude() - $currentVertex->getLongitude()) /
+                    ($nextVertex->getLatitude() - $currentVertex->getLatitude()) +
+                    $currentVertex->getLongitude();
+
+                if (
+                    (string)$currentVertex->getLongitude() == (string)$nextVertex->getLongitude() ||
+                    (string)$coordinate->getLongitude() <= (string)$xinters) {
+                    $intersections++;
+                }
+            }
+        }
+
+        if ($intersections % 2 != 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param CoordinateInterface $coordinate
+     * @return bool
+     */
     public function pointOnBoundary(CoordinateInterface $coordinate)
     {
         for ($i = 1; $i <= $this->count(); $i++) {
