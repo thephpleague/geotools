@@ -13,6 +13,7 @@ namespace League\Geotools\Tests;
 
 use League\Geotools\Batch\BatchGeocoded;
 use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\Coordinate\CoordinateInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>

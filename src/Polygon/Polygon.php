@@ -1,15 +1,15 @@
 <?php
-namespace League\Geotools\Point;
+namespace League\Geotools\Polygon;
 
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
+use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\CoordinateCollection;
 use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\CoordinateInterface;
-use League\Geotools\Polygon\PolygonInterface;
 
 class Polygon extends AbstractGeotools implements PolygonInterface, Countable, IteratorAggregate, ArrayAccess,
     JsonSerializable
@@ -19,9 +19,105 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     private $coordinates;
 
+    /**
+     * @var CoordinateInterface
+     */
+    private $maximumCoordinate;
+
+    /**
+     * @var CoordinateInterface
+     */
+    private $minimumCoordinate;
+
+    /**
+     * @var bool
+     */
+    private $hasCoordinate = false;
+
     public function __construct()
     {
         $this->coordinates = new CoordinateCollection();
+        $this->maximumCoordinate = new Coordinate(array(0,0));
+        $this->minimumCoordinate = new Coordinate(array(0,0));
+    }
+
+    private function recalulateMaximumAndMinimum()
+    {
+        $this->hasCoordinate = false;
+        $this->maximumCoordinate = new Coordinate(array(0,0));
+        $this->minimumCoordinate = new Coordinate(array(0,0));
+        foreach ($this->coordinates as $coordinate) {
+            $this->compareMaximumAndMinimum($coordinate);
+            $this->hasCoordinate = true;
+        }
+    }
+
+    /**
+     * @param CoordinateInterface $coordinate
+     */
+    private function compareMaximumAndMinimum(CoordinateInterface $coordinate)
+    {
+        if (!$this->hasCoordinate) {
+            $this->maximumCoordinate->setLatitude($coordinate->getLatitude());
+            $this->maximumCoordinate->setLongitude($coordinate->getLongitude());
+            $this->minimumCoordinate->setLatitude($coordinate->getLatitude());
+            $this->minimumCoordinate->setLongitude($coordinate->getLongitude());
+        } else {
+            $latitude = $coordinate->getLatitude();
+            $longitude = $coordinate->getLongitude();
+
+            if ($latitude < $this->minimumCoordinate->getLatitude()) {
+                $this->minimumCoordinate->setLatitude($latitude);
+            }
+
+            if ($latitude > $this->maximumCoordinate->getLatitude()) {
+                $this->maximumCoordinate->setLatitude($latitude);
+            }
+
+            if ($longitude < $this->minimumCoordinate->getLongitude()) {
+                $this->minimumCoordinate->setLongitude($longitude);
+            }
+
+            if ($longitude > $this->maximumCoordinate->getLongitude()) {
+                $this->maximumCoordinate->setLongitude($longitude);
+            }
+        }
+    }
+
+    /**
+     * @return CoordinateInterface
+     */
+    public function getMaximumCoordinate()
+    {
+        return $this->maximumCoordinate;
+    }
+
+    /**
+     * @param CoordinateInterface $maximumCoordinate
+     * @return $this
+     */
+    public function setMaximumCoordinate(CoordinateInterface $maximumCoordinate)
+    {
+        $this->maximumCoordinate = $maximumCoordinate;
+        return $this;
+    }
+
+    /**
+     * @return CoordinateInterface
+     */
+    public function getMinimumCoordinate()
+    {
+        return $this->minimumCoordinate;
+    }
+
+    /**
+     * @param CoordinateInterface $minimumCoordinate
+     * @return $this
+     */
+    public function setMinimumCoordinate(CoordinateInterface $minimumCoordinate)
+    {
+        $this->minimumCoordinate = $minimumCoordinate;
+        return $this;
     }
 
     /**
@@ -38,6 +134,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     public function setCoordinates(CoordinateCollection $coordinates)
     {
         $this->coordinates = $coordinates;
+        $this->recalulateMaximumAndMinimum();
         return $this;
     }
 
@@ -82,6 +179,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     public function offsetSet($offset, $value)
     {
         $this->coordinates->offsetSet($offset, $value);
+        $this->recalulateMaximumAndMinimum();
     }
 
     /**
@@ -90,7 +188,9 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     public function offsetUnset($offset)
     {
-        return $this->coordinates->offsetUnset($offset);
+        $retval = $this->coordinates->offsetUnset($offset);
+        $this->recalulateMaximumAndMinimum();
+        return $retval;
     }
 
     /**
@@ -123,6 +223,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     public function set($key, CoordinateInterface $coordinate)
     {
         $this->coordinates->set($key, $coordinate);
+        $this->recalulateMaximumAndMinimum();
     }
 
     /**
@@ -130,6 +231,8 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     public function add(CoordinateInterface $coordinate)
     {
+        $this->compareMaximumAndMinimum($coordinate);
+        $this->hasCoordinate = true;
         return $this->coordinates->add($coordinate);
     }
 
@@ -138,6 +241,8 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     public function remove($key)
     {
-        return $this->coordinates->remove($key);
+        $retval = $this->coordinates->remove($key);
+        $this->recalulateMaximumAndMinimum();
+        return $retval;
     }
 }
