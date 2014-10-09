@@ -35,6 +35,11 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     private $hasCoordinate = false;
 
     /**
+     * @var int
+     */
+    private $precision = 8;
+
+    /**
      * @param null|array|CoordinateCollection $coordinates
      */
     public function __construct($coordinates = null)
@@ -135,10 +140,26 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
             $nextVertex = $this->get($i);
 
             if (
-                (string)$coordinate->getLatitude() > (string)min($currentVertex->getLatitude(), $nextVertex->getLatitude()) &&
-                (string)$coordinate->getLatitude() <= (string)max($currentVertex->getLatitude(), $nextVertex->getLatitude()) &&
-                (string)$coordinate->getLongitude() <= (string)max($currentVertex->getLongitude(), $nextVertex->getLongitude()) &&
-                (string)$currentVertex->getLatitude() != (string)$nextVertex->getLatitude()
+                bccomp(
+                    $coordinate->getLatitude(),
+                    min($currentVertex->getLatitude(), $nextVertex->getLatitude()),
+                    $this->getPrecision()
+                ) === 1 &&
+                bccomp(
+                    $coordinate->getLatitude(),
+                    max($currentVertex->getLatitude(), $nextVertex->getLatitude()),
+                    $this->getPrecision()
+                ) <= 0 &&
+                bccomp(
+                    $coordinate->getLongitude(),
+                    max($currentVertex->getLongitude(), $nextVertex->getLongitude()),
+                    $this->getPrecision()
+                ) <= 0 &&
+                bccomp(
+                    $currentVertex->getLatitude(),
+                    $nextVertex->getLatitude(),
+                    $this->getPrecision()
+                ) !== 0
             ) {
                 $xinters =
                     ($coordinate->getLatitude() - $currentVertex->getLatitude()) *
@@ -147,8 +168,17 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
                     $currentVertex->getLongitude();
 
                 if (
-                    (string)$currentVertex->getLongitude() == (string)$nextVertex->getLongitude() ||
-                    (string)$coordinate->getLongitude() <= (string)$xinters) {
+                    bccomp(
+                        $currentVertex->getLongitude(),
+                        $nextVertex->getLongitude(),
+                        $this->getPrecision()
+                    ) === 0 ||
+                    bccomp(
+                        $coordinate->getLongitude(),
+                        $xinters,
+                        $this->getPrecision()
+                    ) <= 0
+                ) {
                     $intersections++;
                 }
             }
@@ -176,20 +206,52 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
 
             // Check if coordinate is on a horizontal boundary
             if (
-                (string)$currentVertex->getLatitude() == (string)$nextVertex->getLatitude() &&
-                (string)$currentVertex->getLatitude() == (string)$coordinate->getLatitude() &&
-                (string)$coordinate->getLongitude() > (string)min($currentVertex->getLongitude(), $nextVertex->getLongitude()) &&
-                (string)$coordinate->getLongitude() < (string)max($currentVertex->getLongitude(), $nextVertex->getLongitude())
+                bccomp(
+                    $currentVertex->getLatitude(),
+                    $nextVertex->getLatitude(),
+                    $this->getPrecision()
+                ) === 0 &&
+                bccomp(
+                    $currentVertex->getLatitude(),
+                    $coordinate->getLatitude(),
+                    $this->getPrecision()
+                ) === 0 &&
+                bccomp(
+                    $coordinate->getLongitude(),
+                    min($currentVertex->getLongitude(), $nextVertex->getLongitude()),
+                    $this->getPrecision()
+                ) === 1 &&
+                bccomp(
+                    $coordinate->getLongitude(),
+                    max($currentVertex->getLongitude(), $nextVertex->getLongitude()),
+                    $this->getPrecision()
+                ) === -1
             ) {
                 return true;
             }
 
             // Check if coordinate is on a boundary
             if (
-                (string)$coordinate->getLatitude() > (string)min($currentVertex->getLatitude(), $nextVertex->getLatitude()) &&
-                (string)$coordinate->getLatitude() <= (string)max($currentVertex->getLatitude(), $nextVertex->getLatitude()) &&
-                (string)$coordinate->getLongitude() <= (string)max($currentVertex->getLongitude(), $nextVertex->getLongitude()) &&
-                (string)$currentVertex->getLatitude() != (string)$nextVertex->getLatitude()
+                bccomp(
+                    $coordinate->getLatitude(),
+                    min($currentVertex->getLatitude(), $nextVertex->getLatitude()),
+                    $this->getPrecision()
+                ) === 1 &&
+                bccomp(
+                    $coordinate->getLatitude(),
+                    max($currentVertex->getLatitude(), $nextVertex->getLatitude()),
+                    $this->getPrecision()
+                ) <= 0 &&
+                bccomp(
+                    $coordinate->getLongitude(),
+                    max($currentVertex->getLongitude(), $nextVertex->getLongitude()),
+                    $this->getPrecision()
+                ) <= 0 &&
+                bccomp(
+                    $currentVertex->getLatitude(),
+                    $nextVertex->getLatitude(),
+                    $this->getPrecision()
+                ) !== 0
             ) {
                 $xinters =
                     ($coordinate->getLatitude() - $currentVertex->getLatitude()) *
@@ -197,7 +259,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
                     ($nextVertex->getLatitude() - $currentVertex->getLatitude()) +
                     $currentVertex->getLongitude();
 
-                if ((string)$xinters == (string)$coordinate->getLongitude()) {
+                if (bccomp($xinters, $coordinate->getLongitude(), $this->getPrecision()) === 0) {
                     return true;
                 }
             }
@@ -214,8 +276,16 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     {
         foreach ($this->coordinates as $vertexCoordinate) {
             if (
-                (string)$vertexCoordinate->getLatitude() == (string)$coordinate->getLatitude() &&
-                (string)$vertexCoordinate->getLongitude() == (string)$coordinate->getLongitude()
+                bccomp(
+                    $vertexCoordinate->getLatitude(),
+                    $coordinate->getLatitude(),
+                    $this->getPrecision()
+                ) === 0 &&
+                bccomp(
+                    $vertexCoordinate->getLongitude(),
+                    $coordinate->getLongitude(),
+                    $this->getPrecision()
+                ) === 0
             ) {
                 return true;
             }
@@ -398,5 +468,23 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
         $retval = $this->coordinates->remove($key);
         $this->recalulateMaximumAndMinimum();
         return $retval;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrecision()
+    {
+        return $this->precision;
+    }
+
+    /**
+     * @param int $precision
+     * @return $this
+     */
+    public function setPrecision($precision)
+    {
+        $this->precision = $precision;
+        return $this;
     }
 }
