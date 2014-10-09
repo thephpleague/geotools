@@ -6,6 +6,8 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
+use League\Geotools\BoundingBox\BoundingBox;
+use League\Geotools\BoundingBox\BoundingBoxInterface;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\CoordinateCollection;
 use League\Geotools\AbstractGeotools;
@@ -20,14 +22,9 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     private $coordinates;
 
     /**
-     * @var CoordinateInterface
+     * @var BoundingBoxInterface
      */
-    private $maximumCoordinate;
-
-    /**
-     * @var CoordinateInterface
-     */
-    private $minimumCoordinate;
+    private $boundingBox;
 
     /**
      * @var bool
@@ -44,8 +41,6 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     public function __construct($coordinates = null)
     {
-        $this->maximumCoordinate = new Coordinate(array(0, 0));
-        $this->minimumCoordinate = new Coordinate(array(0, 0));
         if (is_array($coordinates) || null === $coordinates) {
             $this->coordinates = new CoordinateCollection();
             if (is_array($coordinates)) {
@@ -56,49 +51,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
         } else {
             throw new \InvalidArgumentException;
         }
-    }
-
-    private function recalulateMaximumAndMinimum()
-    {
-        $this->hasCoordinate = false;
-        $this->maximumCoordinate = new Coordinate(array(0,0));
-        $this->minimumCoordinate = new Coordinate(array(0,0));
-        foreach ($this->coordinates as $coordinate) {
-            $this->compareMaximumAndMinimum($coordinate);
-            $this->hasCoordinate = true;
-        }
-    }
-
-    /**
-     * @param CoordinateInterface $coordinate
-     */
-    private function compareMaximumAndMinimum(CoordinateInterface $coordinate)
-    {
-        if (!$this->hasCoordinate) {
-            $this->maximumCoordinate->setLatitude($coordinate->getLatitude());
-            $this->maximumCoordinate->setLongitude($coordinate->getLongitude());
-            $this->minimumCoordinate->setLatitude($coordinate->getLatitude());
-            $this->minimumCoordinate->setLongitude($coordinate->getLongitude());
-        } else {
-            $latitude = $coordinate->getLatitude();
-            $longitude = $coordinate->getLongitude();
-
-            if ($latitude < $this->minimumCoordinate->getLatitude()) {
-                $this->minimumCoordinate->setLatitude($latitude);
-            }
-
-            if ($latitude > $this->maximumCoordinate->getLatitude()) {
-                $this->maximumCoordinate->setLatitude($latitude);
-            }
-
-            if ($longitude < $this->minimumCoordinate->getLongitude()) {
-                $this->minimumCoordinate->setLongitude($longitude);
-            }
-
-            if ($longitude > $this->maximumCoordinate->getLongitude()) {
-                $this->maximumCoordinate->setLongitude($longitude);
-            }
-        }
+        $this->boundingBox = new BoundingBox($this);
     }
 
     /**
@@ -111,18 +64,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
             return false;
         }
 
-        $latitude = $coordinate->getLatitude();
-        $longitude = $coordinate->getLongitude();
-
-        if (
-            $latitude < $this->minimumCoordinate->getLatitude() ||
-            $latitude > $this->maximumCoordinate->getLatitude()
-        ) {
-            return false;
-        } elseif (
-            $longitude < $this->minimumCoordinate->getLongitude() ||
-            $longitude > $this->maximumCoordinate->getLongitude()
-        ) {
+        if (!$this->boundingBox->pointInBoundingBox($coordinate)) {
             return false;
         }
 
@@ -295,42 +237,6 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @return CoordinateInterface
-     */
-    public function getMaximumCoordinate()
-    {
-        return $this->maximumCoordinate;
-    }
-
-    /**
-     * @param CoordinateInterface $maximumCoordinate
-     * @return $this
-     */
-    public function setMaximumCoordinate(CoordinateInterface $maximumCoordinate)
-    {
-        $this->maximumCoordinate = $maximumCoordinate;
-        return $this;
-    }
-
-    /**
-     * @return CoordinateInterface
-     */
-    public function getMinimumCoordinate()
-    {
-        return $this->minimumCoordinate;
-    }
-
-    /**
-     * @param CoordinateInterface $minimumCoordinate
-     * @return $this
-     */
-    public function setMinimumCoordinate(CoordinateInterface $minimumCoordinate)
-    {
-        $this->minimumCoordinate = $minimumCoordinate;
-        return $this;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function getCoordinates()
@@ -344,7 +250,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     public function setCoordinates(CoordinateCollection $coordinates)
     {
         $this->coordinates = $coordinates;
-        $this->recalulateMaximumAndMinimum();
+        $this->boundingBox->setPolygon($this);
         return $this;
     }
 
@@ -389,7 +295,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     public function offsetSet($offset, $value)
     {
         $this->coordinates->offsetSet($offset, $value);
-        $this->recalulateMaximumAndMinimum();
+        $this->boundingBox->setPolygon($this);
     }
 
     /**
@@ -399,7 +305,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     public function offsetUnset($offset)
     {
         $retval = $this->coordinates->offsetUnset($offset);
-        $this->recalulateMaximumAndMinimum();
+        $this->boundingBox->setPolygon($this);
         return $retval;
     }
 
@@ -447,7 +353,9 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
             }
             $this->coordinates->set($key, $value);
         }
-        $this->recalulateMaximumAndMinimum();
+
+        $this->hasCoordinate = true;
+        $this->boundingBox->setPolygon($this);
     }
 
     /**
@@ -455,9 +363,10 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     public function add(CoordinateInterface $coordinate)
     {
-        $this->compareMaximumAndMinimum($coordinate);
+        $retval = $this->coordinates->add($coordinate);
         $this->hasCoordinate = true;
-        return $this->coordinates->add($coordinate);
+        $this->boundingBox->setPolygon($this);
+        return $retval;
     }
 
     /**
@@ -466,7 +375,10 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     public function remove($key)
     {
         $retval = $this->coordinates->remove($key);
-        $this->recalulateMaximumAndMinimum();
+        if (!count($this->coordinates)) {
+            $this->hasCoordinate = false;
+        }
+        $this->boundingBox->setPolygon($this);
         return $retval;
     }
 
@@ -484,7 +396,26 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
      */
     public function setPrecision($precision)
     {
+        $this->boundingBox->setPrecision($precision);
         $this->precision = $precision;
+        return $this;
+    }
+
+    /**
+     * @return BoundingBoxInterface
+     */
+    public function getBoundingBox()
+    {
+        return $this->boundingBox;
+    }
+
+    /**
+     * @param BoundingBoxInterface $boundingBox
+     * @return $this
+     */
+    public function setBoundingBox(BoundingBoxInterface $boundingBox)
+    {
+        $this->boundingBox = $boundingBox;
         return $this;
     }
 }
