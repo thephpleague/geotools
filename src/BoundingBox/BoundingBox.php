@@ -59,7 +59,7 @@ class BoundingBox implements BoundingBoxInterface
             $this->setPolygon($object);
         } elseif ($object instanceof CoordinateInterface) {
             $this->addCoordinate($object);
-        } else {
+        } elseif (null !== $object) {
             throw new InvalidArgumentException;
         }
     }

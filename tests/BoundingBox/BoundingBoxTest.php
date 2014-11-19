@@ -1,6 +1,8 @@
 <?php
 namespace League\Geotools\Tests\BoundingBox;
 
+use League\Geotools\BoundingBox\BoundingBox;
+use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Polygon\Polygon;
 use League\Geotools\Tests\TestCase;
 
@@ -32,6 +34,30 @@ class BoundingBoxText extends TestCase
                 'west' => 1.7440796,
             ),
         );
+    }
+
+    public function testConstructWithPolygon()
+    {
+        new BoundingBox(new Polygon());
+    }
+
+
+    public function testConstructWithCoordinate()
+    {
+        new BoundingBox(new Coordinate(array(0, 0)));
+    }
+
+    public function testConstructWithNull()
+    {
+        new BoundingBox();
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testConstructWithInvalidArgument()
+    {
+        new BoundingBox('string');
     }
 
     /**
