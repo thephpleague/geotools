@@ -6,22 +6,22 @@ use League\Geotools\Coordinate\CoordinateInterface;
 interface BoundingBoxInterface
 {
     /**
-     * @return CoordinateInterface
+     * @return float|string|int
      */
-    public function getSouthWestCoordinate();
+    public function getNorth();
 
     /**
-     * @return CoordinateInterface
+     * @return float|string|int
      */
-    public function getSouthEastCoordinate();
+    public function getEast();
 
     /**
-     * @return CoordinateInterface
+     * @return float|string|int
      */
-    public function getNorthWestCoordinate();
+    public function getSouth();
 
     /**
-     * @return CoordinateInterface
+     * @return float|string|int
      */
-    public function getNorthEastCoordinate();
+    public function getWest();
 }

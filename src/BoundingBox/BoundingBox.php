@@ -2,7 +2,6 @@
 namespace League\Geotools\BoundingBox;
 
 use InvalidArgumentException;
-use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Polygon\PolygonInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
 
@@ -14,14 +13,32 @@ class BoundingBox implements BoundingBoxInterface
     private $polygon;
 
     /**
-     * @var CoordinateInterface
+     * The latitude of the north coordinate
+     *
+     * @var float|string|int
      */
-    private $nortWestCorner;
+    private $north;
 
     /**
-     * @var CoordinateInterface
+     * The longitude of the east coordinate
+     *
+     * @var float|string|int
      */
-    private $southEastCorner;
+    private $east;
+
+    /**
+     * The latitude of the south coordinate
+     *
+     * @var float|string|int
+     */
+    private $south;
+
+    /**
+     * The longitude of the west coordinate
+     *
+     * @var float|string|int
+     */
+    private $west;
 
     /**
      * @var bool
@@ -34,14 +51,14 @@ class BoundingBox implements BoundingBoxInterface
     private $precision = 8;
 
     /**
-     * @param PolygonInterface$object
+     * @param PolygonInterface|CoordinateInterface $object
      */
     public function __construct($object = null)
     {
-        $this->nortWestCorner = new Coordinate(array(0, 0));
-        $this->southEastCorner = new Coordinate(array(0, 0));
         if ($object instanceof PolygonInterface) {
             $this->setPolygon($object);
+        } elseif ($object instanceof CoordinateInterface) {
+            $this->addCoordinate($object);
         } else {
             throw new InvalidArgumentException;
         }
@@ -50,44 +67,40 @@ class BoundingBox implements BoundingBoxInterface
     private function createBoundingBoxForPolygon()
     {
         $this->hasCoordinate = false;
-        $this->nortWestCorner = new Coordinate(array(0,0));
-        $this->southEastCorner = new Coordinate(array(0,0));
+        $this->west = $this->east = $this->north = $this->south = null;
         foreach ($this->polygon->getCoordinates() as $coordinate) {
-            $this->compareMaximumAndMinimum($coordinate);
-            $this->hasCoordinate = true;
+            $this->addCoordinate($coordinate);
         }
     }
 
     /**
      * @param CoordinateInterface $coordinate
      */
-    private function compareMaximumAndMinimum(CoordinateInterface $coordinate)
+    private function addCoordinate(CoordinateInterface $coordinate)
     {
+        $latitude = $coordinate->getLatitude();
+        $longitude = $coordinate->getLongitude();
+
         if (!$this->hasCoordinate) {
-            $this->nortWestCorner->setLatitude($coordinate->getLatitude());
-            $this->nortWestCorner->setLongitude($coordinate->getLongitude());
-            $this->southEastCorner->setLatitude($coordinate->getLatitude());
-            $this->southEastCorner->setLongitude($coordinate->getLongitude());
+            $this->setNorth($latitude);
+            $this->setSouth($latitude);
+            $this->setEast($longitude);
+            $this->setWest($longitude);
         } else {
-            $latitude = $coordinate->getLatitude();
-            $longitude = $coordinate->getLongitude();
-
-            if ($latitude < $this->southEastCorner->getLatitude()) {
-                $this->southEastCorner->setLatitude($latitude);
+            if (bccomp($latitude, $this->getSouth(), $this->getPrecision()) === -1) {
+                $this->setSouth($latitude);
             }
-
-            if ($latitude > $this->nortWestCorner->getLatitude()) {
-                $this->nortWestCorner->setLatitude($latitude);
+            if (bccomp($latitude, $this->getNorth(), $this->getPrecision()) === 1) {
+                $this->setNorth($latitude);
             }
-
-            if ($longitude < $this->southEastCorner->getLongitude()) {
-                $this->southEastCorner->setLongitude($longitude);
+            if (bccomp($longitude, $this->getEast(), $this->getPrecision()) === 1) {
+                $this->setEast($longitude);
             }
-
-            if ($longitude > $this->nortWestCorner->getLongitude()) {
-                $this->nortWestCorner->setLongitude($longitude);
+            if (bccomp($longitude, $this->getWest(), $this->getPrecision()) === -1) {
+                $this->setWest($longitude);
             }
         }
+        $this->hasCoordinate = true;
     }
 
     /**
@@ -97,26 +110,10 @@ class BoundingBox implements BoundingBoxInterface
     public function pointInBoundingBox(CoordinateInterface $coordinate)
     {
         if (
-            bccomp(
-                $coordinate->getLatitude(),
-                $this->southEastCorner->getLatitude(),
-                $this->getPrecision()
-            ) === -1 ||
-            bccomp(
-                $coordinate->getLatitude(),
-                $this->nortWestCorner->getLatitude(),
-                $this->getPrecision()
-            ) === 1 ||
-            bccomp(
-                $coordinate->getLongitude(),
-                $this->southEastCorner->getLongitude(),
-                $this->getPrecision()
-            ) === -1 ||
-            bccomp(
-                $coordinate->getLongitude(),
-                $this->nortWestCorner->getLongitude(),
-                $this->getPrecision()
-            ) === 1
+            bccomp($coordinate->getLatitude(), $this->getSouth(), $this->getPrecision()) === -1 ||
+            bccomp($coordinate->getLatitude(), $this->getNorth(), $this->getPrecision()) === 1 ||
+            bccomp($coordinate->getLongitude(), $this->getEast(), $this->getPrecision()) === -1 ||
+            bccomp($coordinate->getLongitude(), $this->getWest(), $this->getPrecision()) === 1
         ) {
             return false;
         }
@@ -144,41 +141,75 @@ class BoundingBox implements BoundingBoxInterface
     }
 
     /**
-     * @return CoordinateInterface
+     * @return float|string|int
      */
-    public function getSouthWestCoordinate()
+    public function getNorth()
     {
-        return new Coordinate(array(
-            $this->southEastCorner->getLatitude(),
-            $this->nortWestCorner->getLongitude()
-        ));
+        return $this->north;
     }
 
     /**
-     * @return CoordinateInterface
+     * @param float|string|int $north
+     * @return $this
      */
-    public function getSouthEastCoordinate()
+    public function setNorth($north)
     {
-        return $this->southEastCorner;
+        $this->north = $north;
+        return $this;
     }
 
     /**
-     * @return CoordinateInterface
+     * @return float|string|int
      */
-    public function getNorthWestCoordinate()
+    public function getEast()
     {
-        return $this->nortWestCorner;
+        return $this->east;
     }
 
     /**
-     * @return CoordinateInterface
+     * @param float|string|int $east
+     * @return $this
      */
-    public function getNorthEastCoordinate()
+    public function setEast($east)
     {
-        return new Coordinate(array(
-            $this->nortWestCorner->getLatitude(),
-            $this->southEastCorner->getLongitude()
-        ));
+        $this->east = $east;
+        return $this;
+    }
+
+    /**
+     * @return float|string|int
+     */
+    public function getSouth()
+    {
+        return $this->south;
+    }
+
+    /**
+     * @param float|string|int $south
+     * @return $this
+     */
+    public function setSouth($south)
+    {
+        $this->south = $south;
+        return $this;
+    }
+
+    /**
+     * @return float|string|int
+     */
+    public function getWest()
+    {
+        return $this->west;
+    }
+
+    /**
+     * @param float|string|int $west
+     * @return $this
+     */
+    public function setWest($west)
+    {
+        $this->west = $west;
+        return $this;
     }
 
     /**
