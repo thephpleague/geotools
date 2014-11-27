@@ -83,7 +83,7 @@ class GeocodeTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/33\.0347, -96\.8134/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/33\.035, -96\.814/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteIPv6AgainstFreeGeoIpProviderWithDefaultAdapter()
@@ -95,7 +95,7 @@ class GeocodeTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/33\.0347, -96\.8134/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/33\.035, -96\.814/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteStreetAddressWithDefaultDumper()
