@@ -237,7 +237,7 @@ $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
 
 $geocoder->registerProviders(array(
     new \Geocoder\Provider\GoogleMapsProvider($adapter),
-    new \Geocoder\Provider\OpenStreetMapsProvider($adapter),
+    new \Geocoder\Provider\OpenStreetMapProvider($adapter),
     new \Geocoder\Provider\BingMapsProvider($adapter, '<FAKE_API_KEY>'), // throws InvalidCredentialsException
     new \Geocoder\Provider\YandexProvider($adapter),
     new \Geocoder\Provider\FreeGeoIpProvider($adapter),
@@ -287,7 +287,7 @@ google_maps|::ffff:66.147.244.214|The GoogleMapsProvider does not support IP add
 openstreetmaps|Paris, France|POINT(2.352133 48.856506)
 openstreetmaps|Copenhagen, Denmark|POINT(12.570072 55.686724)
 openstreetmaps|74.200.247.59|Could not execute query http://nominatim.openstreetmap.org/search?q=74.200.247.59&format=xml&addressdetails=1&limit=1
-openstreetmaps|::ffff:66.147.244.214|The OpenStreetMapsProvider does not support IPv6 addresses.
+openstreetmaps|::ffff:66.147.244.214|The OpenStreetMapProvider does not support IPv6 addresses.
 bing_maps|Paris, France|Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=Paris%2C+France&key=<FAKE_API_KEY>
 bing_maps|Copenhagen, Denmark|Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=Copenhagen%2C+Denmark&key=<FAKE_API_KEY>
 bing_maps|74.200.247.59|The BingMapsProvider does not support IP addresses.
