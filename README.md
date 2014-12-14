@@ -426,38 +426,6 @@ printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&bo
 ); // http://www.openstreetmap.org/?minlon=5.3695678710938&minlat=43.295745849609&maxlon=5.3709411621094&maxlat=43.297119140625&box=yes
 ```
 
-## Polygon
-
-The Polygon object provides methods to check weither a point is in, or on the polygon's boundaries.
-
-### Point in polygon
-
-It provides methods to compute the initial and final *bearing* in degrees, the initial and final *cardinal direction*,
-the *middle point* and the *destination point*. The middle and the destination points returns a
-`\League\Geotools\Coordinate\Coordinate` object with the same ellipsoid.
-
-```php
-<?php
-
-$geotools = new \League\Geotools\Geotools();
-$coordA   = new \League\Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-$coordB   = new \League\Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
-$point    =  $geotools->point()->setFrom($coordA)->setTo($coordB);
-
-printf("%d\n", $point->initialBearing()); // 157 (degrees)
-printf("%s\n", $point->initialCardinal()); // SSE (SouthSouthEast)
-printf("%d\n", $point->finalBearing()); // 160 (degrees)
-printf("%s\n", $point->finalCardinal()); // SSE (SouthSouthEast)
-
-$middlePoint = $point->middle(); // \League\Geotools\Coordinate\Coordinate
-printf("%s\n", $middlePoint->getLatitude()); // 46.070143125815
-printf("%s\n", $middlePoint->getLongitude()); // 3.9152401085931
-
-$destinationPoint = $geotools->point()->setFrom($coordA)->destination(180, 200000); // \League\Geotools\Coordinate\Coordinate
-printf("%s\n", $destinationPoint->getLatitude()); // 47.026774650075
-printf("%s\n", $destinationPoint->getLongitude()); // 2.3072664
-```
-
 ## CLI ##
 
 It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert** classes.
