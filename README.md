@@ -50,14 +50,10 @@ Installation
 **Geotools** can be found on [Packagist](https://packagist.org/packages/league/geotools).
 The recommended way to install **Geotools** is through [composer](http://getcomposer.org).
 
-Edit `composer.json` and add:
+Run the following on the command line:
 
-```json
-{
-    "require": {
-        "league/geotools": "@stable"
-    }
-}
+```
+php composer require league/geotools=@stable
 ```
 
 **Protip:** you should browse the
