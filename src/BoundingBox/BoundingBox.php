@@ -1,10 +1,22 @@
 <?php
+
+/**
+ * This file is part of the Geotools library.
+ *
+ * (c) Antoine Corcy <contact@sbin.dk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace League\Geotools\BoundingBox;
 
-use InvalidArgumentException;
 use League\Geotools\Polygon\PolygonInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
 
+/**
+ * @author Gabriel Bull <me@gabrielbull.com>
+ */
 class BoundingBox implements BoundingBoxInterface
 {
     /**
@@ -15,38 +27,38 @@ class BoundingBox implements BoundingBoxInterface
     /**
      * The latitude of the north coordinate
      *
-     * @var float|string|int
+     * @var float|string|integer
      */
     private $north;
 
     /**
      * The longitude of the east coordinate
      *
-     * @var float|string|int
+     * @var float|string|integer
      */
     private $east;
 
     /**
      * The latitude of the south coordinate
      *
-     * @var float|string|int
+     * @var float|string|integer
      */
     private $south;
 
     /**
      * The longitude of the west coordinate
      *
-     * @var float|string|int
+     * @var float|string|integer
      */
     private $west;
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $hasCoordinate = false;
 
     /**
-     * @var int
+     * @var integer
      */
     private $precision = 8;
 
@@ -60,7 +72,7 @@ class BoundingBox implements BoundingBoxInterface
         } elseif ($object instanceof CoordinateInterface) {
             $this->addCoordinate($object);
         } elseif (null !== $object) {
-            throw new InvalidArgumentException;
+            throw new \InvalidArgumentException;
         }
     }
 
@@ -78,7 +90,7 @@ class BoundingBox implements BoundingBoxInterface
      */
     private function addCoordinate(CoordinateInterface $coordinate)
     {
-        $latitude = $coordinate->getLatitude();
+        $latitude  = $coordinate->getLatitude();
         $longitude = $coordinate->getLongitude();
 
         if (!$this->hasCoordinate) {
@@ -100,11 +112,12 @@ class BoundingBox implements BoundingBoxInterface
                 $this->setWest($longitude);
             }
         }
+
         $this->hasCoordinate = true;
     }
 
     /**
-     * @param CoordinateInterface $coordinate
+     * @param  CoordinateInterface $coordinate
      * @return bool
      */
     public function pointInBoundingBox(CoordinateInterface $coordinate)
@@ -130,18 +143,19 @@ class BoundingBox implements BoundingBoxInterface
     }
 
     /**
-     * @param PolygonInterface $polygon
+     * @param  PolygonInterface $polygon
      * @return $this
      */
     public function setPolygon(PolygonInterface $polygon)
     {
         $this->polygon = $polygon;
         $this->createBoundingBoxForPolygon();
+
         return $this;
     }
 
     /**
-     * @return float|string|int
+     * {@inheritDoc}
      */
     public function getNorth()
     {
@@ -149,17 +163,18 @@ class BoundingBox implements BoundingBoxInterface
     }
 
     /**
-     * @param float|string|int $north
+     * @param  float|string|integer $north
      * @return $this
      */
     public function setNorth($north)
     {
         $this->north = $north;
+
         return $this;
     }
 
     /**
-     * @return float|string|int
+     * {@inheritDoc}
      */
     public function getEast()
     {
@@ -167,17 +182,18 @@ class BoundingBox implements BoundingBoxInterface
     }
 
     /**
-     * @param float|string|int $east
+     * @param  float|string|integer $east
      * @return $this
      */
     public function setEast($east)
     {
         $this->east = $east;
+
         return $this;
     }
 
     /**
-     * @return float|string|int
+     * {@inheritDoc}
      */
     public function getSouth()
     {
@@ -185,17 +201,18 @@ class BoundingBox implements BoundingBoxInterface
     }
 
     /**
-     * @param float|string|int $south
+     * @param  float|string|integer $south
      * @return $this
      */
     public function setSouth($south)
     {
         $this->south = $south;
+
         return $this;
     }
 
     /**
-     * @return float|string|int
+     * {@inheritDoc}
      */
     public function getWest()
     {
@@ -203,17 +220,18 @@ class BoundingBox implements BoundingBoxInterface
     }
 
     /**
-     * @param float|string|int $west
+     * @param  float|string|integer $west
      * @return $this
      */
     public function setWest($west)
     {
         $this->west = $west;
+
         return $this;
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPrecision()
     {
@@ -221,12 +239,13 @@ class BoundingBox implements BoundingBoxInterface
     }
 
     /**
-     * @param int $precision
+     * @param  integer $precision
      * @return $this
      */
     public function setPrecision($precision)
     {
         $this->precision = $precision;
+
         return $this;
     }
 }

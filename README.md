@@ -39,6 +39,7 @@ coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direc
 * Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
+* Polygon. [»](#polygon)
 * A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert** classes. [»](#cli)
 * Integration with Frameworks: **Laravel 4**, **Silex** ... [»](#integration-with-frameworks)
 * ... more to come ...
@@ -422,6 +423,10 @@ printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&bo
 ); // http://www.openstreetmap.org/?minlon=5.3695678710938&minlat=43.295745849609&maxlon=5.3709411621094&maxlat=43.297119140625&box=yes
 ```
 
+## Polygon ##
+
+Coming soon ...
+
 ## CLI ##
 
 It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert** classes.
@@ -533,8 +538,8 @@ Credits
 
 * [Antoine Corcy](https://twitter.com/toin0u)
 * [Pascal Borreli](https://twitter.com/pborreli)
-* [Phil Sturgeon] (https://twitter.com/philsturgeon)
-* [Gabriel Bull] (mailto:me@gabrielbull.com)
+* [Phil Sturgeon](https://twitter.com/philsturgeon)
+* [Gabriel Bull](mailto:me@gabrielbull.com)
 * [All contributors](https://github.com/toin0u/Geotools/contributors)
 
 

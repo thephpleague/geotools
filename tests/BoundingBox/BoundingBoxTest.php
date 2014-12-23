@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * This file is part of the Geotools library.
+ *
+ * (c) Antoine Corcy <contact@sbin.dk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace League\Geotools\Tests\BoundingBox;
 
 use League\Geotools\BoundingBox\BoundingBox;
@@ -6,6 +16,9 @@ use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Polygon\Polygon;
 use League\Geotools\Tests\TestCase;
 
+/**
+ * @author Gabriel Bull <me@gabrielbull.com>
+ */
 class BoundingBoxText extends TestCase
 {
     /**

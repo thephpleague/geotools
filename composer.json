@@ -45,7 +45,7 @@
             "League\\Geotools\\"        : "src",
             "League\\Geotools\\Tests\\" : "tests"
         },
-        "classmap": [ "stubs/" ]
+        "classmap" : [ "stubs/" ]
     },
 
     "bin" : ["bin/geotools"],

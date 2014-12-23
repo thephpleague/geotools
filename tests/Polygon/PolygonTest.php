@@ -1,10 +1,23 @@
 <?php
+
+/**
+ * This file is part of the Geotools library.
+ *
+ * (c) Antoine Corcy <contact@sbin.dk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace League\Geotools\Tests\Polygon;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Polygon\Polygon;
 use League\Geotools\Tests\TestCase;
 
+/**
+ * @author Gabriel Bull <me@gabrielbull.com>
+ */
 class PolygonTest extends TestCase
 {
     /**
@@ -131,8 +144,7 @@ class PolygonTest extends TestCase
         $polygonCoordinates,
         $pointOnBoundaryCoordinates,
         $pointNotOnBoundaryCoordinates
-    )
-    {
+    ) {
         $this->polygon->set($polygonCoordinates);
         foreach ($pointNotOnBoundaryCoordinates as $pointNotOnBoundaryCoordinate) {
             $this->assertFalse($this->polygon->pointOnBoundary(new Coordinate($pointNotOnBoundaryCoordinate)));
@@ -186,8 +198,7 @@ class PolygonTest extends TestCase
         $polygonCoordinates,
         $pointInPolygonCoordinates,
         $pointNotInPolygonCoordinates
-    )
-    {
+    ) {
         $this->polygon->set($polygonCoordinates);
         foreach ($pointNotInPolygonCoordinates as $pointNotInPolygonCoordinate) {
             $this->assertFalse($this->polygon->pointInPolygon(new Coordinate($pointNotInPolygonCoordinate)));

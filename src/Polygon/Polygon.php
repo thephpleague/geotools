@@ -1,20 +1,27 @@
 <?php
+
+/**
+ * This file is part of the Geotools library.
+ *
+ * (c) Antoine Corcy <contact@sbin.dk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace League\Geotools\Polygon;
 
-use ArrayAccess;
-use ArrayIterator;
-use Countable;
-use IteratorAggregate;
-use JsonSerializable;
 use League\Geotools\BoundingBox\BoundingBox;
 use League\Geotools\BoundingBox\BoundingBoxInterface;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\CoordinateCollection;
-use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\CoordinateInterface;
 
-class Polygon extends AbstractGeotools implements PolygonInterface, Countable, IteratorAggregate, ArrayAccess,
-    JsonSerializable
+/**
+ * @author Gabriel Bull <me@gabrielbull.com>
+ */
+class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterface, \Countable, \IteratorAggregate,
+    \ArrayAccess, \JsonSerializable
 {
     /**
      * @var CoordinateCollection|CoordinateInterface[]
@@ -27,12 +34,12 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     private $boundingBox;
 
     /**
-     * @var bool
+     * @var boolean
      */
     private $hasCoordinate = false;
 
     /**
-     * @var int
+     * @var integer
      */
     private $precision = 8;
 
@@ -42,7 +49,8 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     public function __construct($coordinates = null)
     {
         if (is_array($coordinates) || null === $coordinates) {
-            $this->coordinates = new CoordinateCollection();
+            $this->coordinates = new CoordinateCollection;
+
             if (is_array($coordinates)) {
                 $this->set($coordinates);
             }
@@ -51,12 +59,13 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
         } else {
             throw new \InvalidArgumentException;
         }
+
         $this->boundingBox = new BoundingBox($this);
     }
 
     /**
-     * @param CoordinateInterface $coordinate
-     * @return bool
+     * @param  CoordinateInterface $coordinate
+     * @return boolean
      */
     public function pointInPolygon(CoordinateInterface $coordinate)
     {
@@ -134,14 +143,15 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param CoordinateInterface $coordinate
-     * @return bool
+     * @param  CoordinateInterface $coordinate
+     * @return boolean
      */
     public function pointOnBoundary(CoordinateInterface $coordinate)
     {
         for ($i = 1; $i <= $this->count(); $i++) {
             $currentVertex = $this->get($i - 1);
             $nextVertex = $this->get($i);
+
             if (null === $nextVertex) {
                 $nextVertex = $this->get(0);
             }
@@ -211,8 +221,8 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param CoordinateInterface $coordinate
-     * @return bool
+     * @param  CoordinateInterface $coordinate
+     * @return boolean
      */
     public function pointOnVertex(CoordinateInterface $coordinate)
     {
@@ -251,6 +261,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     {
         $this->coordinates = $coordinates;
         $this->boundingBox->setPolygon($this);
+
         return $this;
     }
 
@@ -263,7 +274,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function jsonSerialize()
     {
@@ -271,8 +282,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param string $offset
-     * @return bool
+     * {@inheritDoc}
      */
     public function offsetExists($offset)
     {
@@ -280,8 +290,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param string $offset
-     * @return mixed
+     * {@inheritDoc}
      */
     public function offsetGet($offset)
     {
@@ -289,8 +298,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param string $offset
-     * @param mixed $value
+     * {@inheritDoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -299,8 +307,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param string $offset
-     * @return null
+     * {@inheritDoc}
      */
     public function offsetUnset($offset)
     {
@@ -310,7 +317,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @return int
+     * {@inheritDoc}
      */
     public function count()
     {
@@ -318,7 +325,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @return ArrayIterator
+     * {@inheritDoc}
      */
     public function getIterator()
     {
@@ -334,8 +341,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param string|array $key
-     * @param null|CoordinateInterface $coordinate
+     * {@inheritDoc}
      */
     public function set($key, CoordinateInterface $coordinate = null)
     {
@@ -383,7 +389,7 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPrecision()
     {
@@ -391,13 +397,14 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param int $precision
+     * @param  integer $precision
      * @return $this
      */
     public function setPrecision($precision)
     {
         $this->boundingBox->setPrecision($precision);
         $this->precision = $precision;
+
         return $this;
     }
 
@@ -410,12 +417,13 @@ class Polygon extends AbstractGeotools implements PolygonInterface, Countable, I
     }
 
     /**
-     * @param BoundingBoxInterface $boundingBox
+     * @param  BoundingBoxInterface $boundingBox
      * @return $this
      */
     public function setBoundingBox(BoundingBoxInterface $boundingBox)
     {
         $this->boundingBox = $boundingBox;
+
         return $this;
     }
 }

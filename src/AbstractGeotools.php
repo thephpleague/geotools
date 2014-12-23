@@ -11,8 +11,6 @@
 
 namespace League\Geotools;
 
-use League\Geotools\Coordinate\CoordinateInterface;
-
 /**
  * Geotools abstract class
  *

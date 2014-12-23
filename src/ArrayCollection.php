@@ -1,13 +1,20 @@
 <?php
+
+/**
+ * This file is part of the Geotools library.
+ *
+ * (c) Antoine Corcy <contact@sbin.dk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace League\Geotools;
 
-use ArrayAccess;
-use ArrayIterator;
-use Countable;
-use IteratorAggregate;
-use JsonSerializable;
-
-class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, JsonSerializable
+/**
+ * @author Gabriel Bull <me@gabrielbull.com>
+ */
+class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerializable
 {
     /**
      * @var array
@@ -31,7 +38,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function jsonSerialize()
     {
@@ -39,8 +46,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
-     * @param string $offset
-     * @return bool
+     * {@inheritDoc}
      */
     public function offsetExists($offset)
     {
@@ -48,8 +54,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
-     * @param string $offset
-     * @return mixed
+     * {@inheritDoc}
      */
     public function offsetGet($offset)
     {
@@ -57,8 +62,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
-     * @param string $offset
-     * @param mixed $value
+     * {@inheritDoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -66,8 +70,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
-     * @param string $offset
-     * @return null
+     * {@inheritDoc}
      */
     public function offsetUnset($offset)
     {
@@ -75,7 +78,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
-     * @return int
+     * {@inheritDoc}
      */
     public function count()
     {
@@ -83,15 +86,15 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
-     * @return ArrayIterator
+     * {@inheritDoc}
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->elements);
+        return new \ArrayIterator($this->elements);
     }
 
     /**
-     * @param string $key
+     * @param  string     $key
      * @return null|mixed
      */
     public function get($key)
@@ -99,6 +102,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
         if (isset($this->elements[$key])) {
             return $this->elements[$key];
         }
+
         return null;
     }
 
@@ -112,17 +116,18 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
     }
 
     /**
-     * @param mixed $value
+     * @param  mixed $value
      * @return bool
      */
     public function add($value)
     {
         $this->elements[] = $value;
+
         return true;
     }
 
     /**
-     * @param string $key
+     * @param  string $key
      * @return null|mixed
      */
     public function remove($key)
@@ -133,6 +138,7 @@ class ArrayCollection implements Countable, IteratorAggregate, ArrayAccess, Json
 
             return $removed;
         }
+
         return null;
     }
 }
