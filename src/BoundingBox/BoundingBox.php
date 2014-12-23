@@ -125,8 +125,8 @@ class BoundingBox implements BoundingBoxInterface
         if (
             bccomp($coordinate->getLatitude(), $this->getSouth(), $this->getPrecision()) === -1 ||
             bccomp($coordinate->getLatitude(), $this->getNorth(), $this->getPrecision()) === 1 ||
-            bccomp($coordinate->getLongitude(), $this->getEast(), $this->getPrecision()) === -1 ||
-            bccomp($coordinate->getLongitude(), $this->getWest(), $this->getPrecision()) === 1
+            bccomp($coordinate->getLongitude(), $this->getEast(), $this->getPrecision()) === 1 ||
+            bccomp($coordinate->getLongitude(), $this->getWest(), $this->getPrecision()) === -1
         ) {
             return false;
         }
