@@ -138,8 +138,6 @@ class Geohash implements GeohashInterface
         $charIndex         = 0;
 
         while (strlen($this->geohash) < $length) {
-            $middle = 0.0;
-
             if ($isEven) {
                 $middle = ($longitudeInterval[0] + $longitudeInterval[1]) / 2;
                 if ($coordinate->getLongitude() > $middle) {
