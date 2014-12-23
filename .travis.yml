@@ -1,16 +1,27 @@
 language: php
 
 php:
+  - 5.3.3
   - 5.3
   - 5.4
   - 5.5
   - 5.6
-  - hhvm-nightly
+  - hhvm
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+matrix:
+  allow_failures:
+    - php: hhvm
 
 services: mongodb
 
 before_script:
-  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm-nightly" ]; then echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi;'
   - sh -c 'echo 'extension = "memcached.so"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini'
   - travis_retry composer self-update
   - travis_retry composer install --no-interaction --prefer-source --dev
