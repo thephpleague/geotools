@@ -19,6 +19,9 @@ use League\Geotools\Cache\Memcached;
  */
 class MemcachedTets extends TestCase
 {
+    /**
+     * @var $memcached \League\Geotools\Cache\Memcached
+     */
     protected $memcached;
 
     protected function setUp()
@@ -32,7 +35,18 @@ class MemcachedTets extends TestCase
 
     public function testConstructor()
     {
-        new Memcached();
+        $this->assertInstanceOf('\League\Geotools\Cache\Memcached', new Memcached());
+    }
+
+    public function testSetterandGetters()
+    {
+        $this->memcached->set(11211, 'localhost', 0);
+        $tempMemcache = new Memcached(
+            $this->memcached->getServer(),
+            $this->memcached->getPort(),
+            $this->memcached->getExpire()
+        );
+        $this->assertInstanceOf('\League\Geotools\Cache\Memcached', $tempMemcache);
     }
 
     public function testGetKey()

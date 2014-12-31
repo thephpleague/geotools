@@ -38,7 +38,7 @@ class Memcached extends AbstractCache implements CacheInterface
     /**
      * The memcached instance.
      *
-     * @var Memcached
+     * @var \League\Geotools\Cache\Memcached
      */
     protected $memcached;
 
@@ -48,6 +48,16 @@ class Memcached extends AbstractCache implements CacheInterface
      * @var integer
      */
     protected $expire;
+
+    /**
+     * @var string $server Optional server address
+     */
+    protected $server;
+
+    /**
+     * @var string $port  Optional port address
+     */
+    protected $port;
 
 
     /**
@@ -59,7 +69,7 @@ class Memcached extends AbstractCache implements CacheInterface
      */
     public function __construct($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT, $expire = 0)
     {
-        $this->memcached = new \Memcached();
+        $this->memcached = new Memcached();
         $this->memcached->addServer($server, $port);
         $this->expire = (int) $expire;
     }
@@ -106,4 +116,27 @@ class Memcached extends AbstractCache implements CacheInterface
     {
         $this->memcached->flush();
     }
+
+    public function set($server, $port, $expire)
+    {
+        $this->server = $server;
+        $this->port = $port;
+        $this->expire = $expire;
+    }
+
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    public function getPort()
+    {
+        return $this->port;
+    }
+
+    public function getExpire()
+    {
+        return $this->expire;
+    }
+
 }
