@@ -24,14 +24,14 @@ interface GeotoolsInterface
     /**
      * Returns an instance of Distance.
      *
-     * @return /Distance/DistanceInterface
+     * @return Distance\DistanceInterface
      */
     public function distance();
 
     /**
      * Returns an instance of Point.
      *
-     * @return /Point/PointInterface
+     * @return Point\PointInterface
      */
     public function point();
 
@@ -40,14 +40,14 @@ interface GeotoolsInterface
      *
      * @param GeocoderInterface $geocoder The Geocoder instance to use.
      *
-     * @return /Batch/BatchInterface
+     * @return Batch\BatchInterface
      */
     public function batch(GeocoderInterface $geocoder);
 
     /**
      * Returns an instance of Geohash.
      *
-     * @return /Geohash/GeohashInterface
+     * @return Geohash\GeohashInterface
      */
     public function geohash();
 
@@ -56,7 +56,7 @@ interface GeotoolsInterface
      *
      * @param CoordinateInterface $coordinates The coordinates to convert.
      *
-     * @return /Convert/ConvertInterface
+     * @return Convert\ConvertInterface
      */
     public function convert(CoordinateInterface $coordinates);
 }
