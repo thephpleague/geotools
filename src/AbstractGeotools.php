@@ -88,14 +88,14 @@ abstract class AbstractGeotools
     /**
      * The origin coordinate.
      *
-     * @var CoordinateInterface
+     * @var $from Coordinate\CoordinateInterface
      */
     protected $from;
 
     /**
      * The destination coordinate.
      *
-     * @var CoordinateInterface
+     * @var $to Coordinate\CoordinateInterface
      */
     protected $to;
 }
