@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,13 +11,13 @@
 
 namespace League\Geotools\CLI\Command\Point;
 
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\Geotools;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use League\Geotools\Geotools;
-use League\Geotools\Coordinate\Coordinate;
-use League\Geotools\Coordinate\Ellipsoid;
 
 /**
  * Command-line point:destination class
@@ -51,7 +51,7 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $from     = new Coordinate($input->getArgument('origin'), Ellipsoid::createFromName($input->getOption('ellipsoid')));
-        $geotools = new Geotools();
+        $geotools = new Geotools;
 
         $destination = $geotools->point()->setFrom($from);
         $destination = $destination->destination($input->getArgument('bearing'), $input->getArgument('distance'));

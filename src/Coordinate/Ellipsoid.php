@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -12,8 +12,8 @@
 namespace League\Geotools\Coordinate;
 
 use League\Geotools\Coordinate\CoordinateInterface;
-use League\Geotools\Exception\NotMatchingEllipsoidException;
 use League\Geotools\Exception\InvalidArgumentException;
+use League\Geotools\Exception\NotMatchingEllipsoidException;
 
 /**
  * Ellipsoid class

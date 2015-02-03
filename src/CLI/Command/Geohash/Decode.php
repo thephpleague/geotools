@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,10 +11,10 @@
 
 namespace League\Geotools\CLI\Command\Geohash;
 
+use League\Geotools\Geotools;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use League\Geotools\Geotools;
 
 /**
  * Command-line geohash:decode class
@@ -37,7 +37,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $geotools   = new Geotools();
+        $geotools   = new Geotools;
         $coordinate = $geotools->geohash()->decode($input->getArgument('geohash'))->getCoordinate();
 
         $output->writeln(sprintf(

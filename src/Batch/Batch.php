@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,11 +11,11 @@
 
 namespace League\Geotools\Batch;
 
-use League\Geotools\Coordinate\CoordinateInterface;
-use League\Geotools\Exception\InvalidArgumentException;
+use Geocoder\GeocoderInterface;
 use League\Geotools\Batch\BatchResult;
 use League\Geotools\Cache\CacheInterface;
-use Geocoder\GeocoderInterface;
+use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Exception\InvalidArgumentException;
 use React\Async\Util as Async;
 
 /**

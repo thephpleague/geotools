@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -39,7 +39,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
      */
     public function distance()
     {
-        return new Distance();
+        return new Distance;
     }
 
     /**
@@ -47,7 +47,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
      */
     public function point()
     {
-        return new Point();
+        return new Point;
     }
 
     /**
@@ -63,7 +63,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
      */
     public function geohash()
     {
-        return new Geohash();
+        return new Geohash;
     }
 
     /**

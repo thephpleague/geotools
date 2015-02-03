@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,8 +11,8 @@
 
 namespace League\Geotools\Convert;
 
-use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\AbstractGeotools;
+use League\Geotools\Coordinate\CoordinateInterface;
 
 /**
  * Convert class

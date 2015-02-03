@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,8 +11,8 @@
 
 namespace League\Geotools\Coordinate;
 
-use League\Geotools\Exception\InvalidArgumentException;
 use Geocoder\Result\ResultInterface;
+use League\Geotools\Exception\InvalidArgumentException;
 
 /**
  * Coordinate class

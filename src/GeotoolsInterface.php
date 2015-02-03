@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,8 +11,8 @@
 
 namespace League\Geotools;
 
-use League\Geotools\Coordinate\CoordinateInterface;
 use Geocoder\GeocoderInterface;
+use League\Geotools\Coordinate\CoordinateInterface;
 
 /**
  * Geotools interface

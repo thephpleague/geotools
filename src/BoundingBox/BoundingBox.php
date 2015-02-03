@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,8 +11,8 @@
 
 namespace League\Geotools\BoundingBox;
 
-use League\Geotools\Polygon\PolygonInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Polygon\PolygonInterface;
 
 /**
  * @author Gabriel Bull <me@gabrielbull.com>

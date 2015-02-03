@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -48,22 +48,22 @@ $geotools = new Geotools;
 $console = new Application;
 $console->setName('Geotools :: Geo-related tools PHP 5.3+ library');
 $console->setVersion($geotools::VERSION);
+$console->add(new Convert\DM);
+$console->add(new Convert\DMS);
+$console->add(new Convert\UTM);
 $console->add(new Distance\All);
 $console->add(new Distance\Flat);
 $console->add(new Distance\GreatCircle);
 $console->add(new Distance\Haversine);
 $console->add(new Distance\Vincenty);
-$console->add(new Point\InitialBearing);
-$console->add(new Point\FinalBearing);
-$console->add(new Point\InitialCardinal);
-$console->add(new Point\FinalCardinal);
-$console->add(new Point\Middle);
-$console->add(new Point\Destination);
-$console->add(new Geohash\Encode);
-$console->add(new Geohash\Decode);
-$console->add(new Convert\DM);
-$console->add(new Convert\DMS);
-$console->add(new Convert\UTM);
 $console->add(new Geocoder\Geocode);
 $console->add(new Geocoder\Reverse);
+$console->add(new Geohash\Decode);
+$console->add(new Geohash\Encode);
+$console->add(new Point\Destination);
+$console->add(new Point\FinalBearing);
+$console->add(new Point\FinalCardinal);
+$console->add(new Point\InitialBearing);
+$console->add(new Point\InitialCardinal);
+$console->add(new Point\Middle);
 $console->run();

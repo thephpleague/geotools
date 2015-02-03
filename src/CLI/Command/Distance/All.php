@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,13 +11,13 @@
 
 namespace League\Geotools\CLI\Command\Distance;
 
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\Geotools;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use League\Geotools\Geotools;
-use League\Geotools\Coordinate\Coordinate;
-use League\Geotools\Coordinate\Ellipsoid;
 
 /**
  * Command-line distance:all class
@@ -56,7 +56,7 @@ EOT
         $from      = new Coordinate($input->getArgument('origin'), $ellipsoid);
         $to        = new Coordinate($input->getArgument('destination'), $ellipsoid);
 
-        $geotools = new Geotools();
+        $geotools = new Geotools;
         $distance = $geotools->distance()->setFrom($from)->setTo($to);
 
         if ($input->getOption('km')) {

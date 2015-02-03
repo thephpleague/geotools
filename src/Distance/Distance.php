@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,10 +11,10 @@
 
 namespace League\Geotools\Distance;
 
+use League\Geootols\Exception\NotConvergingException;
 use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
-use League\Geootols\Exception\NotConvergingException;
 
 /**
  * Distance class
@@ -218,6 +218,7 @@ class Distance extends AbstractGeotools implements DistanceInterface
     /**
      * Converts results in meters to user's unit (if any).
      * The default returned value is in meters.
+     *
      * @param double $meters
      *
      * @return double

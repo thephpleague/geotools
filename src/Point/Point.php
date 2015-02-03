@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,10 +11,10 @@
 
 namespace League\Geotools\Point;
 
+use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
-use League\Geotools\AbstractGeotools;
 
 /**
  * Point class

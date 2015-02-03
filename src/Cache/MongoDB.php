@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,9 +11,9 @@
 
 namespace League\Geotools\Cache;
 
+use League\Geotools\Batch\BatchGeocoded;
 use League\Geotools\Exception\InvalidArgumentException;
 use League\Geotools\Exception\RuntimeException;
-use League\Geotools\Batch\BatchGeocoded;
 
 /**
  * MongoDB cache class.

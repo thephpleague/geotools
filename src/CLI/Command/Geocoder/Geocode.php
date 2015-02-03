@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,11 +11,11 @@
 
 namespace League\Geotools\CLI\Command\Geocoder;
 
+use Geocoder\Geocoder;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Geocoder\Geocoder;
 
 /**
  * Command-line geocoder:geocode class
@@ -68,7 +68,7 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $geocoder = new Geocoder();
+        $geocoder = new Geocoder;
         $adapter  = $this->getAdapter($input->getOption('adapter'));
         $provider = $this->getProvider($input->getOption('provider'));
 

@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,14 +11,12 @@
 
 namespace League\Geotools\Batch;
 
-use Geocoder\Result\Geocoded;
-
 /**
  * BatchGeocoded class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class BatchGeocoded extends Geocoded
+class BatchGeocoded extends \Geocoder\Result\Geocoded
 {
     /**
      * The name of the provider.

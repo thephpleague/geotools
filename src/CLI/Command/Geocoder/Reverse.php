@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,13 +11,13 @@
 
 namespace League\Geotools\CLI\Command\Geocoder;
 
+use Geocoder\Formatter\Formatter;
+use Geocoder\Geocoder;
+use League\Geotools\Coordinate\Coordinate;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Geocoder\Geocoder;
-use Geocoder\Formatter\Formatter;
-use League\Geotools\Coordinate\Coordinate;
 
 /**
  * Command-line geocoder:reverse class
@@ -64,7 +64,7 @@ EOT
     {
         $coordinate = new Coordinate($input->getArgument('coordinate'));
 
-        $geocoder = new Geocoder();
+        $geocoder = new Geocoder;
         $adapter  = $this->getAdapter($input->getOption('adapter'));
         $provider = $this->getProvider($input->getOption('provider'));
 
