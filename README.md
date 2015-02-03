@@ -5,7 +5,7 @@ Geotools
 [React](https://github.com/reactphp/react) libraries.
 
 [![Latest Version](https://img.shields.io/github/release/thephpleague/geotools.svg?style=flat-square)](https://github.com/thephpleague/geotools/releases)
-[![Total Downloads](https://img.shields.io/packagist/dt/thephpleague/geotools.svg?style=flat-square)](https://packagist.org/packages/thephpleague/geotools)
+[![Total Downloads](https://img.shields.io/packagist/dt/league/geotools.svg?style=flat-square)](https://packagist.org/packages/thephpleague/geotools)
 [![Build Status](https://img.shields.io/travis/thephpleague/geotools/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/geotools)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/thephpleague/geotools.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/geotools/?branch=master)
 [![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/geotools.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/geotools)
