@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,13 +11,12 @@
 
 namespace League\Getools\Tests\Cache;
 
-use League\Geotools\Tests\TestCase;
 use League\Geotools\Cache\Memcached;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class MemcachedTest extends TestCase
+class MemcachedTest extends \League\Geotools\Tests\TestCase
 {
     protected $memcached;
 
@@ -31,12 +30,12 @@ class MemcachedTest extends TestCase
             $this->markTestSkipped('Tests can only be run with memcached extension 2.1.0 or lower');
         }
 
-        $this->memcached = new TestableMemcached();
+        $this->memcached = new TestableMemcached;
     }
 
     public function testConstructor()
     {
-        new Memcached();
+        new Memcached;
     }
 
     public function testGetKey()

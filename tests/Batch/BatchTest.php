@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,15 +11,14 @@
 
 namespace League\Geotools\Tests\Batch;
 
-use League\Geotools\Tests\TestCase;
-use League\Geotools\Batch\Batch;
 use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\ProviderInterface;
+use League\Geotools\Batch\Batch;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class BatchTest extends TestCase
+class BatchTest extends \League\Geotools\Tests\TestCase
 {
     protected $geocoder;
     protected $providers;

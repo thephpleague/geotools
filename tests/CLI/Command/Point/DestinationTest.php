@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,15 +11,14 @@
 
 namespace League\Geotools\Tests\CLI\Command\Point;
 
+use League\Geotools\CLI\Command\Point\Destination;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use League\Geotools\Tests\TestCase;
-use League\Geotools\CLI\Command\Point\Destination;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class DestinationTest extends TestCase
+class DestinationTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,8 +26,8 @@ class DestinationTest extends TestCase
 
     protected function setUp()
     {
-        $this->application = new Application();
-        $this->application->add(new Destination());
+        $this->application = new Application;
+        $this->application->add(new Destination);
 
         $this->command = $this->application->find('point:destination');
 

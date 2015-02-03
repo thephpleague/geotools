@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,15 +11,14 @@
 
 namespace League\Geotools\Tests\CLI\Command\Distance;
 
+use League\Geotools\CLI\Command\Distance\Vincenty;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use League\Geotools\Tests\TestCase;
-use League\Geotools\CLI\Command\Distance\Vincenty;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class VincentyTest extends TestCase
+class VincentyTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,8 +26,8 @@ class VincentyTest extends TestCase
 
     protected function setUp()
     {
-        $this->application = new Application();
-        $this->application->add(new Vincenty());
+        $this->application = new Application;
+        $this->application->add(new Vincenty);
 
         $this->command = $this->application->find('distance:vincenty');
 

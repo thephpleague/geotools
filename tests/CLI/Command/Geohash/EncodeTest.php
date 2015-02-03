@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,16 +11,15 @@
 
 namespace League\Geotools\Tests\CLI\Command\Geohash;
 
+use League\Geotools\CLI\Command\Geohash\Encode;
+use League\Geotools\Geohash\Geohash;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use League\Geotools\Tests\TestCase;
-use League\Geotools\Geohash\Geohash;
-use League\Geotools\CLI\Command\Geohash\Encode;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class EncodeTest extends TestCase
+class EncodeTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -28,8 +27,8 @@ class EncodeTest extends TestCase
 
     protected function setUp()
     {
-        $this->application = new Application();
-        $this->application->add(new Encode());
+        $this->application = new Application;
+        $this->application->add(new Encode);
 
         $this->command = $this->application->find('geohash:encode');
 
@@ -86,17 +85,14 @@ class EncodeTest extends TestCase
 
     public function testExecuteWithLengthOption()
     {
-        $length = 4;
-
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '40° 26.7717, -79° 56.93172',
-            '--length'   => $length,
+            '--length'   => 4,
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertEquals($length, strlen(trim($this->commandTester->getDisplay())));
-        $this->assertRegExp('/dppn/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/<value>dppn<\/value>/', $this->commandTester->getDisplay());
     }
 
     /**

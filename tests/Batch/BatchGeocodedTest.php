@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,17 +11,16 @@
 
 namespace League\Geotools\Tests\Batch;
 
-use League\Geotools\Tests\TestCase;
 use League\Geotools\Batch\BatchGeocoded;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class BatchGeocodedTest extends TestCase
+class BatchGeocodedTest extends \League\Geotools\Tests\TestCase
 {
     public function testFromArray()
     {
-        $batchGeocoded = new BatchGeocoded();
+        $batchGeocoded = new BatchGeocoded;
 
         $array = array(
             'providerName' => 'Foo provider foo',

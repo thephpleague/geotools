@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,14 +11,13 @@
 
 namespace League\Geotools\Tests\Distance;
 
-use League\Geotools\Tests\TestCase;
-use League\Geotools\Distance\Distance;
 use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\Distance\Distance;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class DistanceTest extends TestCase
+class DistanceTest extends \League\Geotools\Tests\TestCase
 {
     protected $distance;
     protected $from;
@@ -28,7 +27,7 @@ class DistanceTest extends TestCase
 
     protected function setUp()
     {
-        $this->distance = new TestableDistance();
+        $this->distance = new TestableDistance;
         $this->from     = $this->getStubCoordinate();
         $this->to       = $this->getStubCoordinate();
         $this->coordA   = array(48.8234055, 2.3072664);

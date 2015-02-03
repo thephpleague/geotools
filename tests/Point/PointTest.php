@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,15 +11,14 @@
 
 namespace League\Geotools\Tests\Point;
 
-use League\Geotools\Tests\TestCase;
-use League\Geotools\Point\Point;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\Point\Point;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class PointTest extends TestCase
+class PointTest extends \League\Geotools\Tests\TestCase
 {
     protected $point;
     protected $from;
@@ -27,7 +26,7 @@ class PointTest extends TestCase
 
     protected function setUp()
     {
-        $this->point = new Point();
+        $this->point = new Point;
         $this->from  = $this->getStubCoordinate();
         $this->to    = $this->getStubCoordinate();
         }

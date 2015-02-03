@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -40,7 +40,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocoderReturns(array $providers, array $data = array())
     {
-        $batchGeocoded = new BatchGeocoded();
+        $batchGeocoded = new BatchGeocoded;
 
         if (!empty($data)) {
             $batchGeocoded->fromArray($data);
@@ -86,11 +86,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $mock
             ->expects($this->any())
             ->method('geocode')
-            ->will($this->throwException(new \Exception()));
+            ->will($this->throwException(new \Exception));
         $mock
             ->expects($this->any())
             ->method('reverse')
-            ->will($this->throwException(new \Exception()));
+            ->will($this->throwException(new \Exception));
 
         return $mock;
     }

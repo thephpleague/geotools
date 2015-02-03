@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,19 +11,18 @@
 
 namespace League\Geotools\Tests\Geohash;
 
-use League\Geotools\Tests\TestCase;
 use League\Geotools\Geohash\Geohash;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class GeohashTest extends TestCase
+class GeohashTest extends \League\Geotools\Tests\TestCase
 {
     protected $geohash;
 
     protected function setUp()
     {
-        $this->geohash = new Geohash();
+        $this->geohash = new Geohash;
     }
 
     /**

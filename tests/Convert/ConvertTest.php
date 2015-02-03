@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,14 +11,13 @@
 
 namespace League\Geotools\Tests;
 
-use League\Geotools\Tests\TestCase;
 use League\Geotools\Convert\Convert;
 use League\Geotools\Coordinate\Coordinate;
 
 /**
 * @author Antoine Corcy <contact@sbin.dk>
 */
-class ConvertTest extends TestCase
+class ConvertTest extends \League\Geotools\Tests\TestCase
 {
     public function testConstructorShouldAcceptCoordinateInterface()
     {

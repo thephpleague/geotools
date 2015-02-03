@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,15 +11,14 @@
 
 namespace League\Geotools\Tests\CLI\Command\Geocoder;
 
+use League\Geotools\CLI\Command\Geocoder\Reverse;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use League\Geotools\Tests\TestCase;
-use League\Geotools\CLI\Command\Geocoder\Reverse;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class ReverseTest extends TestCase
+class ReverseTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,8 +26,8 @@ class ReverseTest extends TestCase
 
     protected function setUp()
     {
-        $this->application = new Application();
-        $this->application->add(new Reverse());
+        $this->application = new Application;
+        $this->application->add(new Reverse);
 
         $this->command = $this->application->find('geocoder:reverse');
 
@@ -121,29 +120,29 @@ class ReverseTest extends TestCase
         ));
 
         $expected = <<<EOF
-Adapter:       \Geocoder\HttpAdapter\CurlHttpAdapter
-Provider:      \Geocoder\Provider\GoogleMapsProvider
-Arguments:     us_US
+<label>Adapter</label>:       <value>\Geocoder\HttpAdapter\CurlHttpAdapter</value>
+<label>Provider</label>:      <value>\Geocoder\Provider\GoogleMapsProvider</value>
+<label>Arguments</label>:     <value>us_US</value>
 ---
-Latitude:      40.689758
-Longitude:     -74.045138
-Bounds
- - South: 40.689758
- - West:  -74.045138
- - North: 40.689758
- - East:  -74.045138
-Street Number: 1
-Street Name:   Liberty Island
-Zipcode:       10004
-City:          New York
-City District: Manhattan
-County:        New York County
-County Code:   NEW YORK COUNTY
-Region:        New York
-Region Code:   NY
-Country:       United States
-Country Code:  US
-Timezone:      
+<label>Latitude</label>:      <value>40.689758</value>
+<label>Longitude</label>:     <value>-74.045138</value>
+<label>Bounds</label>
+ - <label>South</label>: <value>40.689758</value>
+ - <label>West</label>:  <value>-74.045138</value>
+ - <label>North</label>: <value>40.689758</value>
+ - <label>East</label>:  <value>-74.045138</value>
+<label>Street Number</label>: <value>1</value>
+<label>Street Name</label>:   <value>Liberty Island</value>
+<label>Zipcode</label>:       <value>10004</value>
+<label>City</label>:          <value>New York</value>
+<label>City District</label>: <value>Manhattan</value>
+<label>County</label>:        <value>New York County</value>
+<label>County Code</label>:   <value>NEW YORK COUNTY</value>
+<label>Region</label>:        <value>New York</value>
+<label>Region Code</label>:   <value>NY</value>
+<label>Country</label>:       <value>United States</value>
+<label>Country Code</label>:  <value>US</value>
+<label>Timezone</label>:      <value></value>
 
 EOF;
 
@@ -160,7 +159,7 @@ EOF;
         ));
 
         $expected = <<<EOF
-{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island","zipcode":"10004","city":"New York","cityDistrict":"Manhattan","county":"New York County","countyCode":"NEW YORK COUNTY","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}
+<value>{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island","zipcode":"10004","city":"New York","cityDistrict":"Manhattan","county":"New York County","countyCode":"NEW YORK COUNTY","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}</value>
 
 EOF;
 

@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,13 +11,12 @@
 
 namespace League\Geotools\Tests\Cache;
 
-use League\Geotools\Tests\TestCase;
 use League\Geotools\Cache\Redis;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class ResdisTest extends TestCase
+class ResdisTest extends \League\Geotools\Tests\TestCase
 {
     protected $redis;
 
@@ -27,7 +26,7 @@ class ResdisTest extends TestCase
             $this->markTestSkipped('You need to install Predis.');
         }
 
-        $this->redis = new TestableRedis();
+        $this->redis = new TestableRedis;
     }
 
     /**

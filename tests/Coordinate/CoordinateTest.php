@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,14 +11,13 @@
 
 namespace League\Geotools\Tests\Coordinate;
 
-use League\Geotools\Tests\TestCase;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class CoordinateTest extends TestCase
+class CoordinateTest extends \League\Geotools\Tests\TestCase
 {
     /**
      * @expectedException League\Geotools\Exception\InvalidArgumentException

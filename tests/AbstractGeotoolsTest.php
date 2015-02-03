@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -23,7 +23,7 @@ class AbstractGeotoolsTest extends TestCase
 
     protected function setUp()
     {
-        $this->geotools = new MockGeotools();
+        $this->geotools = new MockGeotools;
     }
 
     public function testConsts()

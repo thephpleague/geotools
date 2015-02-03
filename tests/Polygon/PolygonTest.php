@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -13,12 +13,11 @@ namespace League\Geotools\Tests\Polygon;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Polygon\Polygon;
-use League\Geotools\Tests\TestCase;
 
 /**
  * @author Gabriel Bull <me@gabrielbull.com>
  */
-class PolygonTest extends TestCase
+class PolygonTest extends \League\Geotools\Tests\TestCase
 {
     /**
      * @var Polygon
@@ -27,7 +26,7 @@ class PolygonTest extends TestCase
 
     protected function setUp()
     {
-        $this->polygon = new Polygon();
+        $this->polygon = new Polygon;
     }
 
     public function polygonCoordinates()

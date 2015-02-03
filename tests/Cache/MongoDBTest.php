@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,13 +11,12 @@
 
 namespace League\Geotools\Tests\Cache;
 
-use League\Geotools\Tests\TestCase;
 use League\Geotools\Cache\MongoDB;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class MongoDBTest extends TestCase
+class MongoDBTest extends \League\Geotools\Tests\TestCase
 {
     protected $mongo;
 
@@ -27,7 +26,7 @@ class MongoDBTest extends TestCase
             $this->markTestSkipped('You need to install Mongo.');
         }
 
-        $this->mongo = new TestableMongoDB();
+        $this->mongo = new TestableMongoDB;
     }
 
     /**
@@ -42,7 +41,7 @@ class MongoDBTest extends TestCase
     public function testConstructor()
     {
         try {
-            new MongoDB();
+            new MongoDB;
         } catch (\Exception $e) {
             $this->markTestSkipped($e->getMessage());
         }

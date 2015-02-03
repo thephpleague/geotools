@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -14,12 +14,11 @@ namespace League\Geotools\Tests\BoundingBox;
 use League\Geotools\BoundingBox\BoundingBox;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Polygon\Polygon;
-use League\Geotools\Tests\TestCase;
 
 /**
  * @author Gabriel Bull <me@gabrielbull.com>
  */
-class BoundingBoxText extends TestCase
+class BoundingBoxTest extends \League\Geotools\Tests\TestCase
 {
     /**
      * @var Polygon
@@ -28,7 +27,7 @@ class BoundingBoxText extends TestCase
 
     protected function setUp()
     {
-        $this->polygon = new Polygon();
+        $this->polygon = new Polygon;
     }
 
     public function polygonAndExpectedNorthWestAndSouthEastCoordinates()
@@ -51,7 +50,7 @@ class BoundingBoxText extends TestCase
 
     public function testConstructWithPolygon()
     {
-        new BoundingBox(new Polygon());
+        new BoundingBox(new Polygon);
     }
 
 
@@ -62,7 +61,7 @@ class BoundingBoxText extends TestCase
 
     public function testConstructWithNull()
     {
-        new BoundingBox();
+        new BoundingBox;
     }
 
     /**

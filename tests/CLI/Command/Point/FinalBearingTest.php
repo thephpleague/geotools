@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,15 +11,14 @@
 
 namespace League\Geotools\Tests\CLI\Command\Point;
 
+use League\Geotools\CLI\Command\Point\FinalBearing;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use League\Geotools\Tests\TestCase;
-use League\Geotools\CLI\Command\Point\FinalBearing;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class FinalBearingTest extends TestCase
+class FinalBearingTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,8 +26,8 @@ class FinalBearingTest extends TestCase
 
     protected function setUp()
     {
-        $this->application = new Application();
-        $this->application->add(new FinalBearing());
+        $this->application = new Application;
+        $this->application->add(new FinalBearing);
 
         $this->command = $this->application->find('point:final-bearing');
 
@@ -109,6 +108,6 @@ class FinalBearingTest extends TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertSame('118', trim($this->commandTester->getDisplay()));
+        $this->assertSame('<value>118</value>', trim($this->commandTester->getDisplay()));
     }
 }

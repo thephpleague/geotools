@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Geotools library.
  *
  * (c) Antoine Corcy <contact@sbin.dk>
@@ -11,15 +11,14 @@
 
 namespace League\Geotools\Tests\CLI\Command\Distance;
 
+use League\Geotools\CLI\Command\Distance\All;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use League\Geotools\Tests\TestCase;
-use League\Geotools\CLI\Command\Distance\All;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class AllTest extends TestCase
+class AllTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,8 +26,8 @@ class AllTest extends TestCase
 
     protected function setUp()
     {
-        $this->application = new Application();
-        $this->application->add(new All());
+        $this->application = new Application;
+        $this->application->add(new All);
 
         $this->command = $this->application->find('distance:all');
 
@@ -127,9 +126,9 @@ class AllTest extends TestCase
         ));
 
         $expected = <<<EOF
-Flat:      4690203.0702905
-Haversine: 4625820.4879867
-Vincenty:  4629758.7977236
+<label>Flat:</label>      <value>4690203.0702905</value>
+<label>Haversine:</label> <value>4625820.4879867</value>
+<label>Vincenty:</label>  <value>4629758.7977236</value>
 
 EOF;
 
@@ -175,9 +174,9 @@ EOF;
         ));
 
         $expected = <<<EOF
-Flat:      4690217.0420619
-Haversine: 4625834.2679671
-Vincenty:  4629772.0245618
+<label>Flat:</label>      <value>4690217.0420619</value>
+<label>Haversine:</label> <value>4625834.2679671</value>
+<label>Vincenty:</label>  <value>4629772.0245618</value>
 
 EOF;
 
@@ -196,9 +195,9 @@ EOF;
         ));
 
         $expected = <<<EOF
-Flat:      2914.0590940473
-Haversine: 2874.0577024979
-Vincenty:  2876.4972775872
+<label>Flat:</label>      <value>2914.0590940473</value>
+<label>Haversine:</label> <value>2874.0577024979</value>
+<label>Vincenty:</label>  <value>2876.4972775872</value>
 
 EOF;
 
@@ -217,9 +216,9 @@ EOF;
         ));
 
         $expected = <<<EOF
-Flat:      15387975.194818
-Haversine: 15176743.918768
-Vincenty:  15189808.665879
+<label>Flat:</label>      <value>15387975.194818</value>
+<label>Haversine:</label> <value>15176743.918768</value>
+<label>Vincenty:</label>  <value>15189808.665879</value>
 
 EOF;
 
