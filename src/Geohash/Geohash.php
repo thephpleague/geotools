@@ -186,6 +186,7 @@ class Geohash implements GeohashInterface
             throw new InvalidArgumentException('The length of the geo hash should be between 1 and 12.');
         }
 
+        $base32DecodeMap  = array();
         $base32CharsTotal = count($this->base32Chars);
         for ($i = 0; $i < $base32CharsTotal; $i++) {
             $base32DecodeMap[$this->base32Chars[$i]] = $i;

@@ -54,12 +54,12 @@ class Memcached extends AbstractCache implements CacheInterface
      * Constructor.
      *
      * @param string  $server The server address (optional).
-     * @param string  $port   The port number (optional).
+     * @param integer $port   The port number (optional).
      * @param integer $expire The expire value in seconds (optional).
      */
     public function __construct($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT, $expire = 0)
     {
-        $this->memcached = new \Memcached();
+        $this->memcached = new \Memcached;
         $this->memcached->addServer($server, $port);
         $this->expire = (int) $expire;
     }
@@ -93,7 +93,7 @@ class Memcached extends AbstractCache implements CacheInterface
             return false;
         }
 
-        $cached = new BatchGeocoded();
+        $cached = new BatchGeocoded;
         $cached->fromArray($this->deserialize($result));
 
         return $cached;

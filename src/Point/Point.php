@@ -110,7 +110,7 @@ class Point extends AbstractGeotools implements PointInterface
     {
         Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
 
-        return $this->cardinalPoints[(integer) round($this->initialBearing($this->from, $this->to) / 22.5)];
+        return $this->cardinalPoints[(integer) round($this->initialBearing() / 22.5)];
     }
 
     /**
@@ -124,7 +124,7 @@ class Point extends AbstractGeotools implements PointInterface
     {
         Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
 
-        return $this->cardinalPoints[(integer) round($this->finalBearing($this->from, $this->to) / 22.5)];
+        return $this->cardinalPoints[(integer) round($this->finalBearing() / 22.5)];
     }
 
     /**

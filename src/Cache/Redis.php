@@ -87,7 +87,7 @@ class Redis extends AbstractCache implements CacheInterface
             return false;
         }
 
-        $cached = new BatchGeocoded();
+        $cached = new BatchGeocoded;
         $cached->fromArray($this->deserialize($this->redis->get($key)));
 
         return $cached;

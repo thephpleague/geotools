@@ -71,6 +71,7 @@ EOT
             $distance->in('ft');
         }
 
+        $result = array();
         $result[] = sprintf('<label>Flat:</label>      <value>%s</value>', $distance->flat());
         $result[] = sprintf('<label>Haversine:</label> <value>%s</value>', $distance->haversine());
         $result[] = sprintf('<label>Vincenty:</label>  <value>%s</value>', $distance->vincenty());

@@ -102,7 +102,7 @@ class MongoDB extends AbstractCache implements CacheInterface
             return false;
         }
 
-        $cached = new BatchGeocoded();
+        $cached = new BatchGeocoded;
         $cached->fromArray($result);
 
         return $cached;

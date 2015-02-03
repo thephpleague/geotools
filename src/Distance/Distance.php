@@ -174,7 +174,6 @@ class Distance extends AbstractGeotools implements DistanceInterface
         $cosU2 = cos($u2);
 
         $lambda    = $lL;
-        $lambdaP   = 2 * pi();
         $iterLimit = 100;
 
         do {

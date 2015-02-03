@@ -84,6 +84,7 @@ EOT
         $geocoded = $geocoder->geocode($input->getArgument('value'));
 
         if ($input->getOption('raw')) {
+            $result = array();
             $result[] = sprintf('<label>Adapter</label>:       <value>%s</value>', $adapter);
             $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
             if ($input->getOption('args')) {
@@ -115,7 +116,7 @@ EOT
             $result = sprintf('<value>%s</value>', json_encode($geocoded->toArray()));
         } elseif ($input->getOption('dumper')) {
             $dumper = $this->getDumper($input->getOption('dumper'));
-            $dumper = new $dumper();
+            $dumper = new $dumper;
             $result = sprintf('<value>%s</value>', $dumper->dump($geocoded));
         } else {
             $result = sprintf('<value>%s, %s</value>', $geocoded->getLatitude(), $geocoded->getLongitude());

@@ -31,7 +31,7 @@ abstract class AbstractCache
      */
     protected function normalize($object)
     {
-        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array());
+        $serializer = new Serializer(array(new GetSetMethodNormalizer), array());
 
         return $serializer->normalize($object);
     }
@@ -45,7 +45,7 @@ abstract class AbstractCache
      */
     protected function serialize($object)
     {
-        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array(new JsonEncoder()));
+        $serializer = new Serializer(array(new GetSetMethodNormalizer), array(new JsonEncoder));
 
         return $serializer->serialize($object, 'json');
     }

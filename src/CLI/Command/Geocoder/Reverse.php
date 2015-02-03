@@ -82,6 +82,7 @@ EOT
         $formatter = new Formatter($reversed);
 
         if ($input->getOption('raw')) {
+            $result = array();
             $result[] = sprintf('<label>Adapter</label>:       <value>%s</value>', $adapter);
             $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
             if ($input->getOption('args')) {
