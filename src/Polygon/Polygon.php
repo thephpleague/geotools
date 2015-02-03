@@ -85,8 +85,9 @@ class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterf
             return true;
         }
 
+        $total = $this->count();
         $intersections = 0;
-        for ($i = 1; $i < $this->count(); $i++) {
+        for ($i = 1; $i < $total; $i++) {
             $currentVertex = $this->get($i - 1);
             $nextVertex = $this->get($i);
 
@@ -148,7 +149,8 @@ class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterf
      */
     public function pointOnBoundary(CoordinateInterface $coordinate)
     {
-        for ($i = 1; $i <= $this->count(); $i++) {
+        $total = $this->count();
+        for ($i = 1; $i <= $total; $i++) {
             $currentVertex = $this->get($i - 1);
             $nextVertex = $this->get($i);
 

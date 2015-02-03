@@ -11,8 +11,6 @@
 
 namespace League\Geotools\BoundingBox;
 
-use League\Geotools\Coordinate\CoordinateInterface;
-
 /**
  * @author Gabriel Bull <me@gabrielbull.com>
  */
