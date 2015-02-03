@@ -36,33 +36,15 @@ EOT
     );
 }
 
-use Symfony\Component\Console\Application as BaseApplication;
+use League\Geotools\CLI\Application;
+use League\Geotools\CLI\Command\Convert;
+use League\Geotools\CLI\Command\Distance;
+use League\Geotools\CLI\Command\Geocoder;
+use League\Geotools\CLI\Command\Geohash;
+use League\Geotools\CLI\Command\Point;
 use League\Geotools\Geotools;
-use League\Geotools\CLI\Distance;
-use League\Geotools\CLI\Point;
-use League\Geotools\CLI\Geohash;
-use League\Geotools\CLI\Convert;
-use League\Geotools\CLI\Geocoder;
-
-class Application extends BaseApplication
-{
-    private $logo = '      ________              __                .__
-     /  _____/  ____  _____/  |_  ____   ____ |  |   ______
-    /   \  ____/ __ \/  _ \   __\/  _ \ /  _ \|  |  /  ___/
-    \    \_\  \  ___(  <_> )  | (  <_> |  <_> )  |__\___ \
-     \______  /\___  >____/|__|  \____/ \____/|____/____  >
-            \/     \/                                   \/
-
-';
-
-    public function getHelp()
-    {
-        return $this->logo . parent::getHelp();
-    }
-}
 
 $geotools = new Geotools;
-
 $console = new Application;
 $console->setName('Geotools :: Geo-related tools PHP 5.3+ library');
 $console->setVersion($geotools::VERSION);
