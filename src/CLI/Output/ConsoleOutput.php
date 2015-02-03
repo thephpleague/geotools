@@ -12,6 +12,7 @@
 namespace League\Geotools\CLI\Output;
 
 use League\Geotools\CLI\Formatter\OutputFormatter;
+use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
