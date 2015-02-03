@@ -43,7 +43,7 @@ class Command extends \Symfony\Component\Console\Command\Command
         'google_maps'          => 'GoogleMapsProvider',
         'google_maps_business' => 'GoogleMapsBusinessProvider',
         'bing_maps'            => 'BingMapsProvider',
-        'openstreetmaps'       => 'OpenStreetMapsProvider',
+        'openstreetmaps'       => 'OpenStreetMapProvider',
         'cloudmade'            => 'CloudMadeProvider',
         'geoip'                => 'GeoipProvider',
         'map_quest'            => 'MapQuestProvider',

@@ -72,9 +72,9 @@ EOT
             $args = is_array($input->getOption('args'))
                 ? implode(',', $input->getOption('args'))
                 : $input->getOption('args');
-            $geocoder->registerProvider(@new $provider(@new $adapter(), $args));
+            $geocoder->registerProvider(new $provider(new $adapter(), $args));
         } else {
-            $geocoder->registerProvider(@new $provider(@new $adapter()));
+            $geocoder->registerProvider(new $provider(new $adapter()));
         }
 
         $reversed = $geocoder->reverse($coordinate->getLatitude(), $coordinate->getLongitude());
