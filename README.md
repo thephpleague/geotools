@@ -4,11 +4,14 @@ Geotools
 **Geotools** is a PHP geo-related library, built atop [Geocoder](https://github.com/willdurand/Geocoder) and
 [React](https://github.com/reactphp/react) libraries.
 
-[![Build Status](https://secure.travis-ci.org/thephpleague/geotools.png)](https://travis-ci.org/thephpleague/geotools)
-[![Total Downloads](https://poser.pugx.org/league/geotools/downloads.png)](https://packagist.org/packages/league/geotools)
-[![Latest Stable Version](https://poser.pugx.org/league/geotools/v/stable.png)](https://packagist.org/packages/league/geotools)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d/mini.png)](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/thephpleague/geotools/badges/quality-score.png?s=aae022aba1303d54a40ec8e0f2f4ea8ce48b691a)](https://scrutinizer-ci.com/g/thephpleague/geotools/)
+[![Latest Version](https://img.shields.io/github/release/thephpleague/geotools.svg?style=flat-square)](https://github.com/thephpleague/geotools/releases)
+[![Total Downloads](https://img.shields.io/packagist/dt/thephpleague/geotools.svg?style=flat-square)](https://packagist.org/packages/thephpleague/geotools)
+[![Build Status](https://img.shields.io/travis/thephpleague/geotools/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/geotools)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/thephpleague/geotools.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/geotools/?branch=master)
+[![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/geotools.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/geotools)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/thephpleague/geotools.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/geotools)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/7d2b448f-b223-4db9-9fab-96cdededf03d.svg?style=flat-square)](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d)
+[![HHVM Status](https://img.shields.io/hhvm/thephpleague/geotools.svg?style=flat-square)](http://hhvm.h4cc.de/package/thephpleague/geotools)
 
 
 Features
