@@ -155,8 +155,8 @@ class Point extends AbstractGeotools implements PointInterface
      * Returns the destination point with a given bearing in degrees travelling along a
      * (shortest distance) great circle arc and a distance in meters.
      *
-     * @param integer   $bearing  The bearing of the origin in degrees.
-     * @param $distance $distance The distance from the origin in meters.
+     * @param integer $bearing  The bearing of the origin in degrees.
+     * @param integer $distance The distance from the origin in meters.
      *
      * @return CoordinateInterface
      */
