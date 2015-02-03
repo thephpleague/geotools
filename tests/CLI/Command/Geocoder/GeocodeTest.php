@@ -11,8 +11,8 @@
 
 namespace League\Geotools\Tests\CLI\Command\Geocoder;
 
+use League\Geotools\CLI\Application;
 use League\Geotools\CLI\Command\Geocoder\Geocode;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**

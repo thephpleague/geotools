@@ -11,8 +11,8 @@
 
 namespace League\Geotools\Tests\CLI\Command\Point;
 
+use League\Geotools\CLI\Application;
 use League\Geotools\CLI\Command\Point\FinalBearing;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**

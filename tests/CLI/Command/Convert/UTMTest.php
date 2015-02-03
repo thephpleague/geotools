@@ -11,8 +11,8 @@
 
 namespace League\Geotools\Tests\CLI\Command\Convert;
 
+use League\Geotools\CLI\Application;
 use League\Geotools\CLI\Command\Convert\UTM;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**

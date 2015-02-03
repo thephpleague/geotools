@@ -11,8 +11,8 @@
 
 namespace League\Geotools\Tests\CLI\Command\Distance;
 
+use League\Geotools\CLI\Application;
 use League\Geotools\CLI\Command\Distance\All;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**

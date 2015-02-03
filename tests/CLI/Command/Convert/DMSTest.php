@@ -11,8 +11,8 @@
 
 namespace League\Geotools\Tests\CLI\Command\Convert;
 
-use League\Geotools\CLI\Command\Convert\DMS;
 use League\Geotools\CLI\Application;
+use League\Geotools\CLI\Command\Convert\DMS;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
