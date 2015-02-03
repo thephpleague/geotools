@@ -17,7 +17,7 @@ use League\Geotools\Cache\Memcached;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class MemcachedTets extends TestCase
+class MemcachedTest extends TestCase
 {
     protected $memcached;
 
@@ -25,6 +25,10 @@ class MemcachedTets extends TestCase
     {
         if (!extension_loaded('memcached')) {
             $this->markTestSkipped('You need to install Memcached.');
+        }
+
+        if (version_compare(phpversion('memcached'), '2.2.0', '>=')) {
+            $this->markTestSkipped('Tests can only be run with memcached extension 2.1.0 or lower');
         }
 
         $this->memcached = new TestableMemcached();

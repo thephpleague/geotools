@@ -32,7 +32,7 @@ class MongoDBTest extends TestCase
 
     /**
      * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Failed to connect to: foo:27017: php_network_getaddresses: getaddrinfo failed: Name or service not known
+     * @expectedExceptionMessage Failed to connect to: foo:27017
      */
     public function testConstructorThrowsInvalidArgumentException()
     {
