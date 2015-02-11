@@ -17,7 +17,7 @@ use League\Geotools\Point\Point;
 use League\Geotools\Batch\Batch;
 use League\Geotools\Geohash\Geohash;
 use League\Geotools\Convert\Convert;
-use Geocoder\GeocoderInterface;
+use Geocoder\Geocoder as GeocoderInterface;
 
 /**
  * Geotools class

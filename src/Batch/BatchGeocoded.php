@@ -11,12 +11,14 @@
 
 namespace League\Geotools\Batch;
 
+use Geocoder\Model\Address;
+
 /**
  * BatchGeocoded class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class BatchGeocoded extends \Geocoder\Result\Geocoded
+class BatchGeocoded
 {
     /**
      * The name of the provider.
@@ -39,6 +41,12 @@ class BatchGeocoded extends \Geocoder\Result\Geocoded
      */
     protected $exception;
 
+    /**
+     * The address object.
+     *
+     * @var Address
+     */
+    protected $address;
 
     /**
      * Get the name of the provider.
@@ -101,22 +109,22 @@ class BatchGeocoded extends \Geocoder\Result\Geocoded
     }
 
     /**
-     * {@inheritDoc}
+     * Get the address
+     *
+     * @return Address
      */
-    public function fromArray(array $data = array())
+    public function getAddress()
     {
-        parent::fromArray($data);
+        return $this->address;
+    }
 
-        if (isset($data['providerName'])) {
-            $this->providerName = $this->formatString($data['providerName']);
-        }
-
-        if (isset($data['query'])) {
-            $this->query = $this->formatString($data['query']);
-        }
-
-        if (isset($data['exception'])) {
-            $this->exception = $this->formatString($data['exception']);
-        }
+    /**
+     * Set the address
+     *
+     * @param Address $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
     }
 }
