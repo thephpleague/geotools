@@ -134,9 +134,9 @@ class MongoDBTest extends \League\Geotools\Tests\TestCase
                 ),
             'streetNumber' => null,
             'streetName'   => null,
-            'city'         => 'Paris',
-            'zipcode'      => null,
-            'cityDistrict' => null,
+            'locality'     => 'Paris',
+            'postalCode'   => null,
+            'subLocality'  => null,
             'county'       => 'Paris',
             'countyCode'   => '75',
             'region'       => 'Île-De-France',
@@ -162,14 +162,13 @@ class MongoDBTest extends \League\Geotools\Tests\TestCase
 
         $this->assertTrue(is_object($cached));
         $this->assertInstanceOf('\League\Geotools\Batch\BatchGeocoded', $cached);
-        $this->assertEquals('Google_Maps', $cached->getProviderName());
+        $this->assertEquals('google_maps', $cached->getProviderName());
         $this->assertEquals('Paris, France', $cached->getQuery());
         $this->assertEmpty($cached->getExceptionMessage());
-        $this->assertTrue(is_array($cached->getCoordinates()));
-        $this->assertCount(2, $cached->getCoordinates());
+        $this->assertInstanceOf('\Geocoder\Model\Coordinates', $cached->getCoordinates());
         $this->assertEquals(48.856614, $cached->getLatitude());
         $this->assertEquals(2.3522219, $cached->getLongitude());
-        $bounds = $cached->getBounds();
+        $bounds = $cached->getBounds()->toArray();
         $this->assertTrue(is_array($bounds));
         $this->assertCount(4, $bounds);
         $this->assertEquals(48.815573, $bounds['south']);
@@ -178,14 +177,14 @@ class MongoDBTest extends \League\Geotools\Tests\TestCase
         $this->assertEquals(2.4699208, $bounds['east']);
         $this->assertNull($cached->getStreetNumber());
         $this->assertNull($cached->getStreetName());
-        $this->assertEquals('Paris', $cached->getCity());
-        $this->assertNull($cached->getZipCode());
-        $this->assertNull($cached->getCityDistrict());
-        $this->assertEquals('Paris', $cached->getCounty());
+        $this->assertEquals('Paris', $cached->getLocality());
+        $this->assertNull($cached->getPostalCode());
+        $this->assertNull($cached->getSubLocality());
+        $this->assertEquals('Paris', $cached->getCounty()->toString());
         $this->assertEquals(75, $cached->getCountyCode());
-        $this->assertEquals('Île-De-France', $cached->getRegion());
+        $this->assertEquals('Île-De-France', $cached->getRegion()->toString());
         $this->assertEquals('IDF', $cached->getRegionCode());
-        $this->assertEquals('France', $cached->getCountry());
+        $this->assertEquals('France', $cached->getCountry()->toString());
         $this->assertEquals('FR', $cached->getCountryCode());
         $this->assertNull($cached->getTimezone());
     }

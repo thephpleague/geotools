@@ -11,6 +11,9 @@
 
 namespace League\Geotools\Tests;
 
+use Geocoder\Model\Address;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\AddressFactory;
 use League\Geotools\Batch\BatchGeocoded;
 use League\Geotools\Coordinate\Ellipsoid;
 
@@ -40,10 +43,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocoderReturns(array $providers, array $data = array())
     {
-        $batchGeocoded = $this->getMockGeocoded();
+        $addresses = new AddressCollection();
 
         if (!empty($data)) {
-            $batchGeocoded->setAddress($data);
+            $addresses = (new AddressFactory())->createFromArray([ $data ]);
         }
 
         $mock = $this->getMock('\Geocoder\ProviderAggregator');
@@ -58,11 +61,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $mock
             ->expects($this->any())
             ->method('geocode')
-            ->will($this->returnValue($batchGeocoded));
+            ->will($this->returnValue($addresses));
         $mock
             ->expects($this->any())
             ->method('reverse')
-            ->will($this->returnValue($batchGeocoded));
+            ->will($this->returnValue($addresses));
 
         return $mock;
     }
@@ -147,7 +150,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
             $expects = $this->once();
         }
 
-        $mock = $this->getMock('\Geocoder\Model\Address');
+        $mock = $this->getMock('\League\Geotools\Batch\BatchGeocoded');
         $mock
             ->expects($expects)
             ->method('getCoordinates')
@@ -163,7 +166,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocodedReturns(array $coordinate)
     {
-        $mock = $this->getMock('\Geocoder\Model\Address');
+        $mock = $this->getMock('\League\Geotools\Batch\BatchGeocoded');
         $mock
             ->expects($this->atLeastOnce())
             ->method('getLatitude')
@@ -217,5 +220,27 @@ class TestCase extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnValue));
 
         return $mock;
+    }
+
+	/**
+     * Create an address object for testing
+     *
+     * @param array $data
+     * @return Address|null
+     */
+    protected function createAddress(array $data)
+    {
+        $addresses = (new AddressFactory())->createFromArray([ $data ]);
+        return 0 === count($addresses) ? null : $addresses->first();
+    }
+
+	/**
+     * Create an empty address object
+     *
+     * @return Address|null
+     */
+    protected function createEmptyAddress()
+    {
+        return $this->createAddress([]);
     }
 }

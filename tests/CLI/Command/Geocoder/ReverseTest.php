@@ -115,7 +115,7 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/Paris, Île-De-France/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/Paris, Île-de-France/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteRawOptionAndLocalArgument()
@@ -130,8 +130,8 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
         ));
 
         $expected = <<<EOF
-<label>Adapter</label>:       <value>\Geocoder\HttpAdapter\CurlHttpAdapter</value>
-<label>Provider</label>:      <value>\Geocoder\Provider\GoogleMapsProvider</value>
+<label>Adapter</label>:       <value>\Ivory\HttpAdapter\CurlHttpAdapter</value>
+<label>Provider</label>:      <value>\Geocoder\Provider\GoogleMaps</value>
 <label>Arguments</label>:     <value>us_US</value>
 ---
 <label>Latitude</label>:      <value>40.689758</value>
@@ -171,7 +171,7 @@ EOF;
         ));
 
         $expected = <<<EOF
-<value>{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island","zipcode":"10004","city":"New York","cityDistrict":"Manhattan","county":"New York County","countyCode":"NEW YORK COUNTY","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}</value>
+<value>{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island","postalCode":"10004","locality":"New York","subLocality":"Manhattan","county":"New York County","countyCode":"NEW YORK COUNTY","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}</value>
 
 EOF;
 

@@ -130,6 +130,48 @@ class BatchGeocoded
     }
 
     /**
+     * Returns an array of coordinates (latitude, longitude).
+     *
+     * @return Coordinates
+     */
+    public function getCoordinates()
+    {
+        if (null === $this->address) {
+            return null;
+        }
+
+        return $this->address->getCoordinates();
+    }
+
+    /**
+     * Returns the latitude value.
+     *
+     * @return double
+     */
+    public function getLatitude()
+    {
+        if (null === $this->address) {
+            return null;
+        }
+
+        return $this->address->getLatitude();
+    }
+
+    /**
+     * Returns the longitude value.
+     *
+     * @return double
+     */
+    public function getLongitude()
+    {
+        if (null === $this->address) {
+            return null;
+        }
+
+        return $this->address->getLongitude();
+    }
+
+    /**
      * Create an instance from an array, used from cache libraries.
      *
      * @param array $data
@@ -160,6 +202,10 @@ class BatchGeocoded
      */
     public function __call($method, $args)
     {
+        if (null === $this->address) {
+            return null;
+        }
+
         return call_user_func_array(array($this->address, $method), $args);
     }
 
