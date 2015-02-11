@@ -12,7 +12,7 @@
 namespace League\Geotools\Tests\Batch;
 
 use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\ProviderInterface;
+use Geocoder\Provider\Provider as ProviderInterface;
 use League\Geotools\Batch\Batch;
 
 /**
@@ -885,12 +885,12 @@ class MockProvider extends AbstractProvider implements ProviderInterface
         $this->name = $name;
     }
 
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         return array();
     }
 
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         return array();
     }

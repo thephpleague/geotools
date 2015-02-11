@@ -25,7 +25,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected function getStubGeocoder()
     {
         $stub = $this
-            ->getMockBuilder('\Geocoder\GeocoderInterface')
+            ->getMockBuilder('\Geocoder\Geocoder')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -40,13 +40,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocoderReturns(array $providers, array $data = array())
     {
-        $batchGeocoded = new BatchGeocoded;
+        $batchGeocoded = $this->getMockGeocoded();
 
         if (!empty($data)) {
-            $batchGeocoded->fromArray($data);
+            $batchGeocoded->setAddress($data);
         }
 
-        $mock = $this->getMock('\Geocoder\Geocoder');
+        $mock = $this->getMock('\Geocoder\ProviderAggregator');
         $mock
             ->expects($this->any())
             ->method('getProviders')
@@ -74,7 +74,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocoderThrowException(array $providers)
     {
-        $mock = $this->getMock('\Geocoder\Geocoder');
+        $mock = $this->getMock('\Geocoder\ProviderAggregator');
         $mock
             ->expects($this->once())
             ->method('getProviders')
@@ -147,7 +147,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
             $expects = $this->once();
         }
 
-        $mock = $this->getMock('\Geocoder\Result\ResultInterface');
+        $mock = $this->getMock('\Geocoder\Model\Address');
         $mock
             ->expects($expects)
             ->method('getCoordinates')
@@ -163,7 +163,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocodedReturns(array $coordinate)
     {
-        $mock = $this->getMock('\Geocoder\Result\ResultInterface');
+        $mock = $this->getMock('\Geocoder\Model\Address');
         $mock
             ->expects($this->atLeastOnce())
             ->method('getLatitude')
