@@ -11,7 +11,7 @@
 
 namespace League\Geotools\CLI\Command\Geocoder;
 
-use Geocoder\Geocoder;
+use Geocoder\ProviderAggregator as Geocoder;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -82,6 +82,7 @@ EOT
         }
 
         $geocoded = $geocoder->geocode($input->getArgument('value'));
+        $geocoded = $geocoded->first();
 
         if ($input->getOption('raw')) {
             $result = array();
@@ -93,7 +94,7 @@ EOT
             $result[] = '---';
             $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $geocoded->getLatitude());
             $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $geocoded->getLongitude());
-            if (null !== $bounds = $geocoded->getBounds()) {
+            if (null !== $bounds = $geocoded->getBounds()->toArray()) {
                 $result[] = '<label>Bounds</label>';
                 $result[] = sprintf(' - <label>South</label>: <value>%s</value>', $bounds['south']);
                 $result[] = sprintf(' - <label>West</label>:  <value>%s</value>', $bounds['west']);
@@ -102,14 +103,14 @@ EOT
             }
             $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $geocoded->getStreetNumber());
             $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $geocoded->getStreetName());
-            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $geocoded->getZipcode());
-            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $geocoded->getCity());
-            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $geocoded->getCityDistrict());
-            $result[] = sprintf('<label>County</label>:        <value>%s</value>', $geocoded->getCounty());
+            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $geocoded->getPostalCode());
+            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $geocoded->getLocality());
+            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $geocoded->getSublocality());
+            $result[] = sprintf('<label>County</label>:        <value>%s</value>', $geocoded->getCounty()->toString());
             $result[] = sprintf('<label>County Code</label>:   <value>%s</value>', $geocoded->getCountyCode());
-            $result[] = sprintf('<label>Region</label>:        <value>%s</value>', $geocoded->getRegion());
+            $result[] = sprintf('<label>Region</label>:        <value>%s</value>', $geocoded->getRegion()->toString());
             $result[] = sprintf('<label>Region Code</label>:   <value>%s</value>', $geocoded->getRegionCode());
-            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $geocoded->getCountry());
+            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $geocoded->getCountry()->toString());
             $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $geocoded->getCountryCode());
             $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $geocoded->getTimezone());
         } elseif ($input->getOption('json')) {

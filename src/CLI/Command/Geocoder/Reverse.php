@@ -11,8 +11,8 @@
 
 namespace League\Geotools\CLI\Command\Geocoder;
 
-use Geocoder\Formatter\Formatter;
-use Geocoder\Geocoder;
+use Geocoder\Formatter\StringFormatter as Formatter;
+use Geocoder\ProviderAggregator as Geocoder;
 use League\Geotools\Coordinate\Coordinate;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -78,8 +78,9 @@ EOT
         }
 
         $reversed = $geocoder->reverse($coordinate->getLatitude(), $coordinate->getLongitude());
+        $reversed = $reversed->first();
 
-        $formatter = new Formatter($reversed);
+        $formatter = new Formatter();
 
         if ($input->getOption('raw')) {
             $result = array();
@@ -91,7 +92,7 @@ EOT
             $result[] = '---';
             $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $reversed->getLatitude());
             $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $reversed->getLongitude());
-            if (null !== $bounds = $reversed->getBounds()) {
+            if (null !== $bounds = $reversed->getBounds()->toArray()) {
                 $result[] = '<label>Bounds</label>';
                 $result[] = sprintf(' - <label>South</label>: <value>%s</value>', $bounds['south']);
                 $result[] = sprintf(' - <label>West</label>:  <value>%s</value>', $bounds['west']);
@@ -100,20 +101,20 @@ EOT
             }
             $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $reversed->getStreetNumber());
             $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $reversed->getStreetName());
-            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $reversed->getZipcode());
-            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $reversed->getCity());
-            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $reversed->getCityDistrict());
-            $result[] = sprintf('<label>County</label>:        <value>%s</value>', $reversed->getCounty());
+            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $reversed->getPostalCode());
+            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $reversed->getLocality());
+            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $reversed->getSubLocality());
+            $result[] = sprintf('<label>County</label>:        <value>%s</value>', $reversed->getCounty()->toString());
             $result[] = sprintf('<label>County Code</label>:   <value>%s</value>', $reversed->getCountyCode());
-            $result[] = sprintf('<label>Region</label>:        <value>%s</value>', $reversed->getRegion());
+            $result[] = sprintf('<label>Region</label>:        <value>%s</value>', $reversed->getRegion()->toString());
             $result[] = sprintf('<label>Region Code</label>:   <value>%s</value>', $reversed->getRegionCode());
-            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $reversed->getCountry());
+            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $reversed->getCountry()->toString());
             $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $reversed->getCountryCode());
             $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $reversed->getTimezone());
         } elseif ($input->getOption('json')) {
             $result = sprintf('<value>%s</value>', json_encode($reversed->toArray()));
         } else {
-            $result = sprintf('<value>%s</value>', $formatter->format($input->getOption('format')));
+            $result = $formatter->format($reversed, $input->getOption('format'));
         }
 
         $output->writeln($result);

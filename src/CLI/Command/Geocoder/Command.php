@@ -37,30 +37,30 @@ class Command extends \Symfony\Component\Console\Command\Command
      * @var array
      */
     private $providers = array(
-        'free_geo_ip'          => 'FreeGeoIpProvider',
-        'host_ip'              => 'HostIpProvider',
-        'ip_info_db'           => 'IpInfoDbProvider',
-        'google_maps'          => 'GoogleMapsProvider',
-        'google_maps_business' => 'GoogleMapsBusinessProvider',
-        'bing_maps'            => 'BingMapsProvider',
-        'openstreetmaps'       => 'OpenStreetMapProvider',
-        'cloudmade'            => 'CloudMadeProvider',
-        'geoip'                => 'GeoipProvider',
-        'map_quest'            => 'MapQuestProvider',
-        'oio_rest'             => 'OIORestProvider',
-        'geocoder_ca'          => 'GeocoderCaProvider',
-        'geocoder_us'          => 'GeocoderUsProvider',
-        'ign_openls'           => 'IGNOpenLSProvider',
-        'data_science_toolkit' => 'DataScienceToolkitProvider',
-        'yandex'               => 'YandexProvider',
-        'geo_plugin'           => 'GeoPluginProvider',
-        'geo_ips'              => 'GeoIPsProvider',
-        'maxmind'              => 'MaxMindProvider',
-        'geonames'             => 'GeonamesProvider',
-        'ip_geo_base'          => 'IpGeoBaseProvider',
-        'baidu'                => 'BaiduProvider',
-        'tomtom'               => 'TomTomProvider',
-        'arcgis_online'        => 'ArcGISOnlineProvider',
+        'free_geo_ip'          => 'FreeGeoIp',
+        'host_ip'              => 'HostIp',
+        'ip_info_db'           => 'IpInfoDb',
+        'google_maps'          => 'GoogleMaps',
+        'google_maps_business' => 'GoogleMapsBusiness',
+        'bing_maps'            => 'BingMaps',
+        'openstreetmaps'       => 'OpenStreetMap',
+        'cloudmade'            => 'CloudMade',
+        'geoip'                => 'Geoip',
+        'map_quest'            => 'MapQuest',
+        'oio_rest'             => 'OIORest',
+        'geocoder_ca'          => 'GeocoderCa',
+        'geocoder_us'          => 'GeocoderUs',
+        'ign_openls'           => 'IGNOpenLS',
+        'data_science_toolkit' => 'DataScienceToolkit',
+        'yandex'               => 'Yandex',
+        'geo_plugin'           => 'GeoPlugin',
+        'geo_ips'              => 'GeoIPs',
+        'maxmind'              => 'MaxMind',
+        'geonames'             => 'Geonames',
+        'ip_geo_base'          => 'IpGeoBase',
+        'baidu'                => 'Baidu',
+        'tomtom'               => 'TomTom',
+        'arcgis_online'        => 'ArcGISOnline',
     );
 
     /**
@@ -69,11 +69,11 @@ class Command extends \Symfony\Component\Console\Command\Command
      * @var array
      */
     private $dumpers = array(
-        'gpx'     => 'GpxDumper',
-        'geojson' => 'GeoJsonDumper',
-        'kml'     => 'KmlDumper',
-        'wkb'     => 'WkbDumper',
-        'wkt'     => 'WktDumper',
+        'gpx'     => 'Gpx',
+        'geojson' => 'GeoJson',
+        'kml'     => 'Kml',
+        'wkb'     => 'Wkb',
+        'wkt'     => 'Wkt',
     );
 
 
@@ -92,7 +92,7 @@ class Command extends \Symfony\Component\Console\Command\Command
             ? $this->adapters[$adapter]
             : $this->adapters['curl'];
 
-        return '\\Geocoder\\HttpAdapter\\' . $adapter;
+        return '\\Ivory\\HttpAdapter\\' . $adapter;
     }
 
     /**
