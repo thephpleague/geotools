@@ -12,6 +12,7 @@
 namespace League\Geotools\Batch;
 
 use Geocoder\Model\Address;
+use Geocoder\Model\AddressFactory;
 
 /**
  * BatchGeocoded class
@@ -127,4 +128,39 @@ class BatchGeocoded
     {
         $this->address = $address;
     }
+
+    /**
+     * Create an instance from an array, used from cache libraries.
+     *
+     * @param array $data
+     */
+    public function fromArray(array $data = array())
+    {
+        if (isset($data['providerName'])) {
+            $this->providerName = $data['providerName'];
+        }
+        if (isset($data['query'])) {
+            $this->query = $data['query'];
+        }
+        if (isset($data['exception'])) {
+            $this->exception = $data['exception'];
+        }
+
+        // Shortcut to create the address and set it in this class
+        $addressFactory = new AddressFactory();
+        $this->setAddress($addressFactory->createFromArray([$data])->first());
+    }
+
+	/**
+     * Router all other methods call directly to our address object
+     *
+     * @param $method
+     * @param $args
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
+        return call_user_func_array(array($this->address, $method), $args);
+    }
+
 }

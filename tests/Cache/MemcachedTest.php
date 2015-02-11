@@ -89,7 +89,7 @@ JSON
 
         $this->assertTrue(is_object($cached));
         $this->assertInstanceOf('\League\Geotools\Batch\BatchGeocoded', $cached);
-        $this->assertEquals('Google_Maps', $cached->getProviderName());
+        $this->assertEquals('google_maps', $cached->getProviderName());
         $this->assertEquals('Paris, France', $cached->getQuery());
         $this->assertEmpty($cached->getExceptionMessage());
         $this->assertTrue(is_array($cached->getCoordinates()));

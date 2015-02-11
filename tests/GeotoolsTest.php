@@ -12,7 +12,7 @@
 namespace League\Geotools\Tests;
 
 use League\Geotools\Geotools;
-use Geocoder\Geocoder;
+use Geocoder\ProviderAggregator as Geocoder;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
