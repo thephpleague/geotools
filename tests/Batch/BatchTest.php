@@ -770,37 +770,41 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     {
         $batch = new TestableBatch($this->geocoder);
         $batch->setTasks($tasks = array(
-            function ($callback, $errback) {
-                $callback('foo');
+            function () {
+                return \React\Promise\resolve('foo');
             },
-            function ($callback, $errback) {
-                $errback(new \RuntimeException('booooooooooo!'));
+            function () {
+                throw new \RuntimeException('booooooooooo!');
             },
-            function ($callback, $errback) {
-                $callback('bar');
+            function () {
+                return \React\Promise\resolve('bar');
             },
         ))->geocode('foo')->serie();
     }
 
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage booooooooooo!
+     */
     public function testParallelShouldThrowException()
     {
         $called = 0;
 
         $batch = new TestableBatch($this->geocoder);
         $batch->setTasks(array(
-            function ($callback, $errback) {
-                $errback(new \RuntimeException('booooooooooo!'));
+            function () {
+                throw new \RuntimeException('booooooooooo!');
             },
-            function ($callback, $errback) use (&$called) {
-                $callback('foo');
+            function () use (&$called) {
                 $called++;
+                return \React\Promise\resolve('foo');
             },
-            function ($callback, $errback) {
-                $errback(new \RuntimeException('booooooooooo!'));
+            function () {
+                throw new \RuntimeException('booooooooooo!');
             },
-            function ($callback, $errback) use (&$called) {
-                $callback('bar');
+            function () use (&$called) {
                 $called++;
+                return \React\Promise\resolve('bar');
             },
         ))->geocode('foo')->parallel();
 

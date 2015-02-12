@@ -26,9 +26,10 @@
     "require" : {
         "php"                 : ">=5.3.3",
         "willdurand/geocoder" : "~2.4",
-        "react/async"         : "~1.0",
+        "react/promise"       : "~2.2",
         "symfony/console"     : "~2.4",
-        "symfony/serializer"  : "~2.4"
+        "symfony/serializer"  : "~2.4",
+        "react/event-loop": "0.4.*"
     },
 
     "require-dev" : {
