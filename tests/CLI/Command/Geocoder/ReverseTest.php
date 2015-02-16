@@ -111,7 +111,7 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
             'command'    => $this->command->getName(),
             'coordinate' => '48.8631507, 2.388911',
             '--provider' => 'openstreetmaps',
-            '--format'   => '%L, %R, %C',
+            '--format'   => '%L, %A1, %C',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
@@ -146,10 +146,9 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
 <label>Zipcode</label>:       <value>10004</value>
 <label>City</label>:          <value>New York</value>
 <label>City District</label>: <value>Manhattan</value>
-<label>County</label>:        <value>New York County</value>
-<label>County Code</label>:   <value>NEW YORK COUNTY</value>
-<label>Region</label>:        <value>New York</value>
-<label>Region Code</label>:   <value>NY</value>
+<label>Admin Levels</label>
+ - <label>NY</label>: <value>New York</value>
+ - <label>New York County</label>: <value>New York County</value>
 <label>Country</label>:       <value>United States</value>
 <label>Country Code</label>:  <value>US</value>
 <label>Timezone</label>:      <value></value>
@@ -171,7 +170,7 @@ EOF;
         ));
 
         $expected = <<<EOF
-<value>{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island","postalCode":"10004","locality":"New York","subLocality":"Manhattan","county":"New York County","countyCode":"NEW YORK COUNTY","region":"New York","regionCode":"NY","country":"United States","countryCode":"US","timezone":null}</value>
+<value>{"latitude":40.689758,"longitude":-74.045138,"bounds":{"south":40.689758,"west":-74.045138,"north":40.689758,"east":-74.045138},"streetNumber":"1","streetName":"Liberty Island","postalCode":"10004","locality":"New York","subLocality":"Manhattan","adminLevels":{"1":{"name":"New York","code":"NY"},"2":{"name":"New York County","code":"New York County"}},"country":"United States","countryCode":"US","timezone":null}</value>
 
 EOF;
 

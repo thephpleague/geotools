@@ -177,10 +177,9 @@ KML;
 <label>Zipcode</label>:       <value></value>
 <label>City</label>:          <value>København</value>
 <label>City District</label>: <value></value>
-<label>County</label>:        <value>København</value>
-<label>County Code</label>:   <value>KØBENHAVN</value>
-<label>Region</label>:        <value>Hovedstaden</value>
-<label>Region Code</label>:   <value>HOVEDSTADEN</value>
+<label>Admin Levels</label>
+ - <label>Hovedstaden</label>: <value>Hovedstaden</value>
+ - <label>København</label>: <value>København</value>
 <label>Country</label>:       <value>Danmark</value>
 <label>Country Code</label>:  <value>DK</value>
 <label>Timezone</label>:      <value></value>
@@ -202,7 +201,7 @@ EOF;
         ));
 
         $expected = <<<EOF
-<value>{"latitude":55.6760968,"longitude":12.5683371,"bounds":{"south":55.615441,"west":12.4533824,"north":55.7270937,"east":12.7342654},"streetNumber":null,"streetName":null,"postalCode":null,"locality":"Copenhagen","subLocality":null,"county":"K\u00f8benhavn","countyCode":"K\u00d8BENHAVN","region":"Capital Region of Denmark","regionCode":"CAPITAL REGION OF DENMARK","country":"Denmark","countryCode":"DK","timezone":null}</value>
+<value>{"latitude":55.6760968,"longitude":12.5683371,"bounds":{"south":55.615441,"west":12.4533824,"north":55.7270937,"east":12.7342654},"streetNumber":null,"streetName":null,"postalCode":null,"locality":"Copenhagen","subLocality":null,"adminLevels":{"1":{"name":"Capital Region of Denmark","code":"Capital Region of Denmark"},"2":{"name":"K\u00f8benhavn","code":"K\u00f8benhavn"}},"country":"Denmark","countryCode":"DK","timezone":null}</value>
 
 EOF;
 

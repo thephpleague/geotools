@@ -59,6 +59,23 @@ abstract class AbstractCache
      */
     protected function deserialize($json)
     {
-        return json_decode($json, true);
+        $array = json_decode($json, true);
+        $array = $this->setAdminLevels($array);
+
+        return $array;
+    }
+
+    /**
+     * Set admin levels in the array for compatibility with geocoder
+     *
+     * @param $array
+     */
+    protected function setAdminLevels($array)
+    {
+        foreach ($array['adminLevels'] as $level => &$adminLevel) {
+            $adminLevel['level'] = $level;
+        }
+
+        return $array;
     }
 }

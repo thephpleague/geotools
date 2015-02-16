@@ -106,11 +106,12 @@ EOT
             $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $geocoded->getPostalCode());
             $result[] = sprintf('<label>City</label>:          <value>%s</value>', $geocoded->getLocality());
             $result[] = sprintf('<label>City District</label>: <value>%s</value>', $geocoded->getSublocality());
-            $result[] = sprintf('<label>County</label>:        <value>%s</value>', $geocoded->getCounty()->toString());
-            $result[] = sprintf('<label>County Code</label>:   <value>%s</value>', $geocoded->getCountyCode());
-            $result[] = sprintf('<label>Region</label>:        <value>%s</value>', $geocoded->getRegion()->toString());
-            $result[] = sprintf('<label>Region Code</label>:   <value>%s</value>', $geocoded->getRegionCode());
-            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $geocoded->getCountry()->toString());
+            if ( NULL !== $adminLevels = $geocoded->getAdminLevels() ) {
+                $result[] = '<label>Admin Levels</label>';
+                foreach ($adminLevels as $adminLevel) {
+                    $result[] = sprintf(' - <label>%s</label>: <value>%s</value>', $adminLevel->getCode(), $adminLevel->getName());
+                }
+            }            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $geocoded->getCountry()->toString());
             $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $geocoded->getCountryCode());
             $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $geocoded->getTimezone());
         } elseif ($input->getOption('json')) {

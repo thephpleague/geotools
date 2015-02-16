@@ -87,7 +87,7 @@ class ResdisTest extends \League\Geotools\Tests\TestCase
     public function testIsCachedReturnsBatchGeocodedObject()
     {
         $json = <<<JSON
-{"providerName":"google_maps","query":"Paris, France","exceptionMessage":"","coordinates":[48.856614,2.3522219],"latitude":48.856614,"longitude":2.3522219,"bounds":{"south":48.815573,"west":2.224199,"north":48.9021449,"east":2.4699208},"streetNumber":null,"streetName":null,"locality":"Paris","postalCode":null,"subLocality":null,"county":"Paris","countyCode":"75","region":"\u00cele-De-France","regionCode":"IDF","country":"France","countryCode":"FR","timezone":null}
+{"providerName":"google_maps","query":"Paris, France","exceptionMessage":"","coordinates":[48.856614,2.3522219],"latitude":48.856614,"longitude":2.3522219,"bounds":{"south":48.815573,"west":2.224199,"north":48.9021449,"east":2.4699208},"streetNumber":null,"streetName":null,"locality":"Paris","postalCode":null,"subLocality":null,"adminLevels":{"1":{"name":"New York","code":"NY"},"2":{"name":"New York County","code":"New York County"}},"country":"France","countryCode":"FR","timezone":null}
 JSON
         ;
 
@@ -112,6 +112,7 @@ JSON
         $this->assertInstanceOf('\Geocoder\Model\Coordinates', $cached->getCoordinates());
         $this->assertEquals(48.856614, $cached->getLatitude());
         $this->assertEquals(2.3522219, $cached->getLongitude());
+        $this->assertInstanceOf('\Geocoder\Model\Bounds', $cached->getBounds());
         $bounds = $cached->getBounds()->toArray();
         $this->assertTrue(is_array($bounds));
         $this->assertCount(4, $bounds);
@@ -124,10 +125,16 @@ JSON
         $this->assertEquals('Paris', $cached->getLocality());
         $this->assertNull($cached->getPostalCode());
         $this->assertNull($cached->getSubLocality());
-        $this->assertEquals('Paris', $cached->getCounty()->toString());
-        $this->assertEquals(75, $cached->getCountyCode());
-        $this->assertEquals('Île-De-France', $cached->getRegion()->toString());
-        $this->assertEquals('IDF', $cached->getRegionCode());
+        $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $cached->getAdminLevels());
+        $adminLevels = $cached->getAdminLevels()->all();
+        $this->assertTrue(is_array($adminLevels));
+        $this->assertCount(2, $adminLevels);
+        $this->assertInstanceOf('\Geocoder\Model\AdminLevel', $adminLevels[1]);
+        $this->assertEquals('New York', $adminLevels[1]->getName());
+        $this->assertEquals('NY', $adminLevels[1]->getCode());
+        $this->assertInstanceOf('\Geocoder\Model\AdminLevel', $adminLevels[2]);
+        $this->assertEquals('New York County', $adminLevels[2]->getName());
+        $this->assertEquals('New York County', $adminLevels[2]->getCode());
         $this->assertEquals('France', $cached->getCountry()->toString());
         $this->assertEquals('FR', $cached->getCountryCode());
         $this->assertNull($cached->getTimezone());
