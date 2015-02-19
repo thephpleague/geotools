@@ -12,11 +12,12 @@
 namespace League\Geotools\Batch;
 
 use Geocoder\GeocoderInterface;
-use League\Geotools\Batch\BatchResult;
 use League\Geotools\Cache\CacheInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Exception\InvalidArgumentException;
-use React\Async\Util as Async;
+use League\Geotools\HttpAdapter\ParallelHttpAdapter;
+use React\EventLoop\Factory as EventLoopFactory;
+use React\Promise\Deferred;
 
 /**
  * Batch class
@@ -45,7 +46,6 @@ class Batch implements BatchInterface
      * @var CacheInterface
      */
     protected $cache;
-
 
     /**
      * Set the Geocoder instance to use.
@@ -97,33 +97,41 @@ class Batch implements BatchInterface
         foreach ($geocoder->getProviders() as $provider) {
             if (is_array($values) && count($values) > 0) {
                 foreach ($values as $value) {
-                    $this->tasks[] = function ($callback) use ($geocoder, $provider, $value, $cache) {
+                    $this->tasks[] = function () use ($geocoder, $provider, $value, $cache) {
+                        $deferred = new Deferred();
+
                         try {
                             if ($cached = $cache->isCached($provider->getName(), $value)) {
-                                $callback($cached);
+                                $deferred->resolve($cached);
                             } else {
                                 $geocoder->setResultFactory(new BatchResult($provider->getName(), $value));
-                                $callback($cache->cache($geocoder->using($provider->getName())->geocode($value)));
+                                $deferred->resolve($cache->cache($geocoder->using($provider->getName())->geocode($value)));
                             }
                         } catch (\Exception $e) {
                             $batchGeocoded = new BatchResult($provider->getName(), $value, $e->getMessage());
-                            $callback($batchGeocoded->newInstance());
+                            $deferred->reject($batchGeocoded->newInstance());
                         }
+
+                        return $deferred->promise();
                     };
                 }
             } elseif (is_string($values) && '' !== trim($values)) {
-                $this->tasks[] = function ($callback) use ($geocoder, $provider, $values, $cache) {
+                $this->tasks[] = function () use ($geocoder, $provider, $values, $cache) {
+                    $deferred = new Deferred();
+
                     try {
                         if ($cached = $cache->isCached($provider->getName(), $values)) {
-                            $callback($cached);
+                            $deferred->resolve($cached);
                         } else {
                             $geocoder->setResultFactory(new BatchResult($provider->getName(), $values));
-                            $callback($cache->cache($geocoder->using($provider->getName())->geocode($values)));
+                            $deferred->resolve($cache->cache($geocoder->using($provider->getName())->geocode($values)));
                         }
                     } catch (\Exception $e) {
                         $batchGeocoded = new BatchResult($provider->getName(), $values, $e->getMessage());
-                        $callback($batchGeocoded->newInstance());
+                        $deferred->reject($batchGeocoded->newInstance());
                     }
+
+                    return $deferred->promise();
                 };
             } else {
                 throw new InvalidArgumentException(
@@ -146,14 +154,16 @@ class Batch implements BatchInterface
         foreach ($geocoder->getProviders() as $provider) {
             if (is_array($coordinates) && count($coordinates) > 0) {
                 foreach ($coordinates as $coordinate) {
-                    $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinate, $cache) {
+                    $this->tasks[] = function () use ($geocoder, $provider, $coordinate, $cache) {
+                        $deferred = new Deferred();
+
                         $valueCoordinates = sprintf('%s, %s', $coordinate->getLatitude(), $coordinate->getLongitude());
                         try {
                             if ($cached = $cache->isCached($provider->getName(), $valueCoordinates)) {
-                                $callback($cached);
+                                $deferred->resolve($cached);
                             } else {
                                 $geocoder->setResultFactory(new BatchResult($provider->getName(), $valueCoordinates));
-                                $callback($cache->cache(
+                                $deferred->resolve($cache->cache(
                                     $geocoder->using($provider->getName())->reverse(
                                         $coordinate->getLatitude(),
                                         $coordinate->getLongitude()
@@ -162,19 +172,23 @@ class Batch implements BatchInterface
                             }
                         } catch (\Exception $e) {
                             $batchGeocoded = new BatchResult($provider->getName(), $valueCoordinates, $e->getMessage());
-                            $callback($batchGeocoded->newInstance());
+                            $deferred->reject($batchGeocoded->newInstance());
                         }
+
+                        return $deferred->promise();
                     };
                 }
             } elseif ($coordinates instanceOf CoordinateInterface) {
-                $this->tasks[] = function ($callback) use ($geocoder, $provider, $coordinates, $cache) {
+                $this->tasks[] = function () use ($geocoder, $provider, $coordinates, $cache) {
+                    $deferred = new Deferred();
+
                     $valueCoordinates = sprintf('%s, %s', $coordinates->getLatitude(), $coordinates->getLongitude());
                     try {
                         if ($cached = $cache->isCached($provider->getName(), $valueCoordinates)) {
-                            $callback($cached);
+                            $deferred->resolve($cached);
                         } else {
                             $geocoder->setResultFactory(new BatchResult($provider->getName(), $valueCoordinates));
-                            $callback($cache->cache(
+                            $deferred->resolve($cache->cache(
                                 $geocoder->using($provider->getName())->reverse(
                                     $coordinates->getLatitude(),
                                     $coordinates->getLongitude()
@@ -183,8 +197,10 @@ class Batch implements BatchInterface
                         }
                     } catch (\Exception $e) {
                         $batchGeocoded = new BatchResult($provider->getName(), $valueCoordinates, $e->getMessage());
-                        $callback($batchGeocoded->newInstance());
+                        $deferred->reject($batchGeocoded->newInstance());
                     }
+
+                    return $deferred->promise();
                 };
             } else {
                 throw new InvalidArgumentException(
@@ -206,17 +222,13 @@ class Batch implements BatchInterface
     {
         $computedInSerie = array();
 
-        Async::series(
-            $this->tasks,
-            function (array $providerResults) use (&$computedInSerie) {
-                foreach ($providerResults as $providerResult) {
-                    $computedInSerie[] = $providerResult;
-                }
-            },
-            function (\Exception $e) {
-                throw $e;
-            }
-        );
+        foreach ($this->tasks as $task) {
+            $task()->then(function($result) use (&$computedInSerie) {
+                $computedInSerie[] = $result;
+            }, function ($emptyResult) use (&$computedInSerie) {
+                $computedInSerie[] = $emptyResult;
+            });
+        }
 
         return $computedInSerie;
     }
@@ -229,19 +241,20 @@ class Batch implements BatchInterface
      */
     public function parallel()
     {
+        $loop = EventLoopFactory::create();
         $computedInParallel = array();
 
-        Async::parallel(
-            $this->tasks,
-            function (array $providerResults) use (&$computedInParallel) {
-                foreach ($providerResults as $providerResult) {
-                    $computedInParallel[] = $providerResult;
-                }
-            },
-            function (\Exception $e) {
-                throw $e;
-            }
-        );
+        foreach ($this->tasks as $task) {
+            $loop->nextTick(function () use ($task, &$computedInParallel) {
+                $task()->then(function($result) use (&$computedInParallel) {
+                    $computedInParallel[] = $result;
+                }, function ($emptyResult) use (&$computedInParallel) {
+                    $computedInParallel[] = $emptyResult;
+                });
+            });
+        }
+
+        $loop->run();
 
         return $computedInParallel;
     }
