@@ -372,8 +372,10 @@ class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterf
     public function add(CoordinateInterface $coordinate)
     {
         $retval = $this->coordinates->add($coordinate);
+
         $this->hasCoordinate = true;
         $this->boundingBox->setPolygon($this);
+
         return $retval;
     }
 
@@ -383,10 +385,12 @@ class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterf
     public function remove($key)
     {
         $retval = $this->coordinates->remove($key);
+
         if (!count($this->coordinates)) {
             $this->hasCoordinate = false;
         }
         $this->boundingBox->setPolygon($this);
+
         return $retval;
     }
 

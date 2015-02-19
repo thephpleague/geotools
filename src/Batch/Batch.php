@@ -98,7 +98,7 @@ class Batch implements BatchInterface
             if (is_array($values) && count($values) > 0) {
                 foreach ($values as $value) {
                     $this->tasks[] = function () use ($geocoder, $provider, $value, $cache) {
-                        $deferred = new Deferred();
+                        $deferred = new Deferred;
 
                         try {
                             if ($cached = $cache->isCached($provider->getName(), $value)) {
@@ -117,7 +117,7 @@ class Batch implements BatchInterface
                 }
             } elseif (is_string($values) && '' !== trim($values)) {
                 $this->tasks[] = function () use ($geocoder, $provider, $values, $cache) {
-                    $deferred = new Deferred();
+                    $deferred = new Deferred;
 
                     try {
                         if ($cached = $cache->isCached($provider->getName(), $values)) {
