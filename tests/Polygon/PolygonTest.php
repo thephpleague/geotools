@@ -47,6 +47,15 @@ class PolygonTest extends \League\Geotools\Tests\TestCase
      * @dataProvider polygonCoordinates
      * @param array $polygonCoordinates
      */
+    public function testContructor($polygonCoordinates)
+    {
+        new Polygon($polygonCoordinates);
+    }
+
+    /**
+     * @dataProvider polygonCoordinates
+     * @param array $polygonCoordinates
+     */
     public function testArraySetterAndGetter($polygonCoordinates)
     {
         $this->polygon->set($polygonCoordinates);

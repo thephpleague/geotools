@@ -41,9 +41,9 @@ class BoundingBoxTest extends \League\Geotools\Tests\TestCase
                     array(49.3895245, 2.6119995)
                 ),
                 'north' => 49.3895245,
-                'east' => 3.1448364,
+                'east'  => 3.1448364,
                 'south' => 48.4711003,
-                'west' => 1.7440796,
+                'west'  => 1.7440796,
             ),
         );
     }

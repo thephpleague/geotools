@@ -50,10 +50,6 @@ class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterf
     {
         if (is_array($coordinates) || null === $coordinates) {
             $this->coordinates = new CoordinateCollection;
-
-            if (is_array($coordinates)) {
-                $this->set($coordinates);
-            }
         } elseif ($coordinates instanceof CoordinateCollection) {
             $this->coordinates = $coordinates;
         } else {
@@ -61,6 +57,10 @@ class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterf
         }
 
         $this->boundingBox = new BoundingBox($this);
+
+        if (is_array($coordinates)) {
+            $this->set($coordinates);
+        }
     }
 
     /**
