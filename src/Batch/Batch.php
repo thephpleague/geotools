@@ -15,7 +15,6 @@ use Geocoder\GeocoderInterface;
 use League\Geotools\Cache\CacheInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Exception\InvalidArgumentException;
-use League\Geotools\HttpAdapter\ParallelHttpAdapter;
 use React\EventLoop\Factory as EventLoopFactory;
 use React\Promise\Deferred;
 

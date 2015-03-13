@@ -42,7 +42,7 @@ coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direc
 * Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
-* Polygon. [»](#polygon)
+* **Polygon**. [»](#polygon)
 * A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert** classes. [»](#cli)
 * Integration with Frameworks: **Laravel 4**, **Silex** ... [»](#integration-with-frameworks)
 * ... more to come ...
@@ -428,7 +428,18 @@ printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&bo
 
 ## Polygon ##
 
-Coming soon ...
+You can provide:
+- an array of arrays
+- an array of `Coordinate`
+- a `CoordinateCollection`
+
+Create the doc based on:
+- testPointOnVertex
+- testPointNotOnVertex
+- testPointOnBoundary
+- testPointNotOnBoundary
+- testPointInPolygon
+- testPointNotInPolygon
 
 ## CLI ##
 
