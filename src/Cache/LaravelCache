@@ -1,6 +1,6 @@
 <?php namespace App\Geotools\Cache;
 
-use Illuminate\Contracts\Cache\Store;
+use Illuminate\Cache\Repository;
 use League\Geotools\Batch\BatchGeocoded;
 use League\Geotools\Cache\AbstractCache;
 use League\Geotools\Cache\CacheInterface;
@@ -31,7 +31,7 @@ class LaravelCache extends AbstractCache implements CacheInterface
      * @param Store $cache
      * @param int $expire
      */
-    public function __construct(Store $cache, $expire = 0)
+    public function __construct(Repository $cache, $expire = 0)
     {
         $this->cache = $cache;
         $this->expire = $expire;
@@ -70,7 +70,7 @@ class LaravelCache extends AbstractCache implements CacheInterface
             $this->cache->put(
                 $this->getKey($geocoded->getProviderName(), $geocoded->getQuery()),
                 $this->serialize($geocoded),
-                Carbon::now()->addMinutes($this->expire)
+                 Carbon::now()->addMinutes($this->expire)
             );
         }
 
