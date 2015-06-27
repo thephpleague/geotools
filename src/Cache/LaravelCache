@@ -70,7 +70,7 @@ class LaravelCache extends AbstractCache implements CacheInterface
             $this->cache->put(
                 $this->getKey($geocoded->getProviderName(), $geocoded->getQuery()),
                 $this->serialize($geocoded),
-                $expiresAt = Carbon::now()->addMinutes($this->expire)
+                Carbon::now()->addMinutes($this->expire)
             );
         }
 
