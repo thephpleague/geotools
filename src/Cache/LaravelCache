@@ -1,0 +1,110 @@
+<?php namespace App\Geotools\Cache;
+
+use Illuminate\Contracts\Cache\Store;
+use League\Geotools\Batch\BatchGeocoded;
+use League\Geotools\Cache\AbstractCache;
+use League\Geotools\Cache\CacheInterface;
+use League\Geotools\Cache\RuntimException;
+
+/**
+ * Created by Jason Kristian.
+ * Project: WebApplication
+ * Author: jasonkristian
+ * Date: 28/06/15
+ * Time: 5:40 AM
+ */
+class LaravelCache extends AbstractCache implements CacheInterface
+{
+    /**
+     * The expire value for keys.
+     *
+     * @var integer
+     */
+    protected $expire;
+    /**
+     * @var
+     */
+    private $cache;
+
+    /**
+     * LaravelCache constructor.
+     * @param Store $cache
+     * @param int $expire
+     */
+    public function __construct(Store $cache, $expire = 0)
+    {
+        $this->cache = $cache;
+        $this->expire = $expire;
+    }
+
+
+    /**
+     * Return a unique key.
+     *
+     * @param string $providerName The name of the provider.
+     * @param string $query The query string.
+     *
+     * @return string The unique key.
+     */
+    public function getKey($providerName, $query)
+    {
+        // TODO: Implement getKey() method.
+        return md5($providerName . $query);
+    }
+
+    /**
+     * Add into the cache.
+     *
+     * @param BatchGeocoded $geocoded The BatchGeocoded object to cache.
+     *
+     * @throws RuntimException
+     */
+    public function cache(BatchGeocoded $geocoded)
+    {
+        if($this->expire == 0 ) {
+            $this->cache->forever(
+                $this->getKey($geocoded->getProviderName(), $geocoded->getQuery()),
+                $this->serialize($geocoded)
+            );
+        } else {
+            $this->cache->put(
+                $this->getKey($geocoded->getProviderName(), $geocoded->getQuery()),
+                $this->serialize($geocoded),
+                $expiresAt = Carbon::now()->addMinutes($this->expire)
+            );
+        }
+
+    }
+
+    /**
+     * Check against the cache instance if any.
+     *
+     * @param string $providerName The name of the provider.
+     * @param string $query The query string.
+     *
+     * @return boolean|BatchGeocoded The BatchGeocoded if cached false otherwise.
+     */
+    public function isCached($providerName, $query)
+    {
+        // TODO: Implement isCached() method.
+        $key = $this->getKey($providerName, $query);
+        if( ! $this->cache->has($key)){
+                return false;
+        }
+
+        $cached = new BatchGeocoded();
+        $cached->fromArray($this->deserialize($this->cache->get($key)));
+
+        return $cached;
+
+    }
+
+    /**
+     * Delete cached tuple.
+     */
+    public function flush()
+    {
+        $this->cache->flush();
+    }
+
+}
