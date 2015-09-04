@@ -5,13 +5,13 @@ use League\Geotools\Batch\BatchGeocoded;
 use League\Geotools\Cache\AbstractCache;
 use League\Geotools\Cache\CacheInterface;
 use League\Geotools\Cache\RuntimException;
-
-/**
- * Created by Jason Kristian.
- * Project: WebApplication
- * Author: jasonkristian
- * Date: 28/06/15
- * Time: 5:40 AM
+/*
+ * This file is part of the Geotools library.
+ *
+ * (c) Antoine Corcy <contact@sbin.dk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 class LaravelCache extends AbstractCache implements CacheInterface
 {
