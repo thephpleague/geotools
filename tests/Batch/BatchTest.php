@@ -12,7 +12,7 @@
 namespace League\Geotools\Tests\Batch;
 
 use Geocoder\Provider\AbstractProvider;
-use Geocoder\Provider\ProviderInterface;
+use Geocoder\Provider\Provider as ProviderInterface;
 use League\Geotools\Batch\Batch;
 
 /**
@@ -73,7 +73,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $geocoder = $batch->getGeocoder();
 
         $this->assertTrue(is_object($geocoder));
-        $this->assertInstanceOf('Geocoder\GeocoderInterface', $geocoder);
+        $this->assertInstanceOf('Geocoder\Geocoder', $geocoder);
     }
 
     public function testGeocodeShouldReturnBatchInterface()
@@ -196,8 +196,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -215,7 +213,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -231,8 +229,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -250,7 +246,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers) * count($this->values), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -266,8 +262,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -285,7 +279,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -301,8 +295,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -320,7 +312,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -336,8 +328,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -355,7 +345,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers), $resultComputedInParallel);
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -371,8 +361,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -390,7 +378,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers) * count($this->values), $resultComputedInParallel);
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -406,8 +394,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -425,7 +411,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -441,8 +427,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -460,7 +444,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals($this->data['latitude'], $providerResult->getLatitude());
             $this->assertEquals($this->data['longitude'], $providerResult->getLongitude());
         }
@@ -476,8 +460,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEmpty($providerResult->getLatitude());
             $this->assertEmpty($providerResult->getLongitude());
             $this->assertContains($providerResult->getProviderName(), $this->providersName);
@@ -497,7 +479,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals(48.8234055, $providerResult->getLatitude());
             $this->assertEquals(2.3072664, $providerResult->getLongitude());
         }
@@ -513,8 +495,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEmpty($providerResult->getLatitude());
             $this->assertEmpty($providerResult->getLongitude());
             $this->assertContains($providerResult->getProviderName(), $this->providersName);
@@ -534,7 +514,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers), $resultComputedInParallel);
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals(48.8234055, $providerResult->getLatitude());
             $this->assertEquals(2.3072664, $providerResult->getLongitude());
         }
@@ -550,8 +530,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEmpty($providerResult->getLatitude());
             $this->assertEmpty($providerResult->getLongitude());
             $this->assertContains($providerResult->getProviderName(), $this->providersName);
@@ -571,7 +549,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers) * count($this->values), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals(48.8234055, $providerResult->getLatitude());
             $this->assertEquals(2.3072664, $providerResult->getLongitude());
         }
@@ -587,8 +565,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEmpty($providerResult->getLatitude());
             $this->assertEmpty($providerResult->getLongitude());
             $this->assertContains($providerResult->getProviderName(), $this->providersName);
@@ -608,7 +584,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers) * count($this->values), $resultComputedInParallel);
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals(48.8234055, $providerResult->getLatitude());
             $this->assertEquals(2.3072664, $providerResult->getLongitude());
         }
@@ -624,8 +600,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEmpty($providerResult->getLatitude());
             $this->assertEmpty($providerResult->getLongitude());
             $this->assertContains($providerResult->getProviderName(), $this->providersName);
@@ -645,7 +619,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals(48.8234055, $providerResult->getLatitude());
             $this->assertEquals(2.3072664, $providerResult->getLongitude());
         }
@@ -661,8 +635,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEmpty($providerResult->getLatitude());
             $this->assertEmpty($providerResult->getLongitude());
             $this->assertContains($providerResult->getProviderName(), $this->providersName);
@@ -682,7 +654,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers), $resultComputedInParallel);
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals(48.8234055, $providerResult->getLatitude());
             $this->assertEquals(2.3072664, $providerResult->getLongitude());
         }
@@ -698,8 +670,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEmpty($providerResult->getLatitude());
             $this->assertEmpty($providerResult->getLongitude());
             $this->assertContains($providerResult->getProviderName(), $this->providersName);
@@ -719,7 +689,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals(48.8234055, $providerResult->getLatitude());
             $this->assertEquals(2.3072664, $providerResult->getLongitude());
         }
@@ -735,8 +705,6 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
             $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\Geocoded', $providerResult);
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
             $this->assertEmpty($providerResult->getLatitude());
             $this->assertEmpty($providerResult->getLongitude());
             $this->assertContains($providerResult->getProviderName(), $this->providersName);
@@ -756,7 +724,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInParallel);
         foreach ($resultComputedInParallel as $providerResult) {
             $this->assertTrue(is_object($providerResult));
-            $this->assertInstanceOf('Geocoder\Result\ResultInterface', $providerResult);
+            $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $providerResult);
             $this->assertEquals(48.8234055, $providerResult->getLatitude());
             $this->assertEquals(2.3072664, $providerResult->getLongitude());
         }
@@ -885,12 +853,12 @@ class MockProvider extends AbstractProvider implements ProviderInterface
         $this->name = $name;
     }
 
-    public function getGeocodedData($address)
+    public function geocode($address)
     {
         return array();
     }
 
-    public function getReversedData(array $coordinates)
+    public function reverse($latitude, $longitude)
     {
         return array();
     }

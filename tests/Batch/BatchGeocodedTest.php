@@ -18,20 +18,20 @@ use League\Geotools\Batch\BatchGeocoded;
  */
 class BatchGeocodedTest extends \League\Geotools\Tests\TestCase
 {
-    public function testFromArray()
-    {
-        $batchGeocoded = new BatchGeocoded;
+	public function testFromArray()
+	{
+		$batchGeocoded = new BatchGeocoded;
 
-        $array = array(
-            'providerName' => 'Foo provider foo',
-            'query'        => 'Bar query bar',
-            'exception'    => 'Baz exception baz',
-        );
+		$array = array(
+			'providerName' => 'Foo provider foo',
+			'query'        => 'Bar query bar',
+			'exception'    => 'Baz exception baz',
+		);
 
-        $batchGeocoded->fromArray($array);
+		$batchGeocoded->fromArray($array);
 
-        $this->assertEquals('Foo Provider Foo', $batchGeocoded->getProviderName());
-        $this->assertEquals('Bar Query Bar', $batchGeocoded->getQuery());
-        $this->assertEquals('Baz Exception Baz', $batchGeocoded->getExceptionMessage());
-    }
+		$this->assertEquals('Foo provider foo', $batchGeocoded->getProviderName());
+		$this->assertEquals('Bar query bar', $batchGeocoded->getQuery());
+		$this->assertEquals('Baz exception baz', $batchGeocoded->getExceptionMessage());
+	}
 }

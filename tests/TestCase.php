@@ -11,6 +11,9 @@
 
 namespace League\Geotools\Tests;
 
+use Geocoder\Model\Address;
+use Geocoder\Model\AddressCollection;
+use Geocoder\Model\AddressFactory;
 use League\Geotools\Batch\BatchGeocoded;
 use League\Geotools\Coordinate\Ellipsoid;
 
@@ -25,7 +28,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected function getStubGeocoder()
     {
         $stub = $this
-            ->getMockBuilder('\Geocoder\GeocoderInterface')
+            ->getMockBuilder('\Geocoder\Geocoder')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -40,13 +43,13 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocoderReturns(array $providers, array $data = array())
     {
-        $batchGeocoded = new BatchGeocoded;
+        $addresses = new AddressCollection();
 
         if (!empty($data)) {
-            $batchGeocoded->fromArray($data);
+            $addresses = (new AddressFactory())->createFromArray([ $data ]);
         }
 
-        $mock = $this->getMock('\Geocoder\Geocoder');
+        $mock = $this->getMock('\Geocoder\ProviderAggregator');
         $mock
             ->expects($this->any())
             ->method('getProviders')
@@ -58,11 +61,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
         $mock
             ->expects($this->any())
             ->method('geocode')
-            ->will($this->returnValue($batchGeocoded));
+            ->will($this->returnValue($addresses));
         $mock
             ->expects($this->any())
             ->method('reverse')
-            ->will($this->returnValue($batchGeocoded));
+            ->will($this->returnValue($addresses));
 
         return $mock;
     }
@@ -74,7 +77,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocoderThrowException(array $providers)
     {
-        $mock = $this->getMock('\Geocoder\Geocoder');
+        $mock = $this->getMock('\Geocoder\ProviderAggregator');
         $mock
             ->expects($this->once())
             ->method('getProviders')
@@ -147,7 +150,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
             $expects = $this->once();
         }
 
-        $mock = $this->getMock('\Geocoder\Result\ResultInterface');
+        $mock = $this->getMock('\League\Geotools\Batch\BatchGeocoded');
         $mock
             ->expects($expects)
             ->method('getCoordinates')
@@ -163,7 +166,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocodedReturns(array $coordinate)
     {
-        $mock = $this->getMock('\Geocoder\Result\ResultInterface');
+        $mock = $this->getMock('\League\Geotools\Batch\BatchGeocoded');
         $mock
             ->expects($this->atLeastOnce())
             ->method('getLatitude')
@@ -217,5 +220,27 @@ class TestCase extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($returnValue));
 
         return $mock;
+    }
+
+	/**
+     * Create an address object for testing
+     *
+     * @param array $data
+     * @return Address|null
+     */
+    protected function createAddress(array $data)
+    {
+        $addresses = (new AddressFactory())->createFromArray([ $data ]);
+        return 0 === count($addresses) ? null : $addresses->first();
+    }
+
+	/**
+     * Create an empty address object
+     *
+     * @return Address|null
+     */
+    protected function createEmptyAddress()
+    {
+        return $this->createAddress([]);
     }
 }

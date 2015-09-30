@@ -169,7 +169,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
 
     public function testConstructorWithResultInterfaceArgumentShouldBeValid()
     {
-        new Coordinate($this->getMockGeocoded($this->never()));
+        new Coordinate($this->createEmptyAddress());
     }
 
     /**
@@ -177,7 +177,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
      */
     public function testConstructorShouldReturnsLatitudeAndLongitude($result)
     {
-        $geocoded = $this->getMockGeocodedReturns($result);
+        $geocoded = $this->createAddress($result);
         $coordinate = new Coordinate($geocoded);
 
         $this->assertSame((double) $result['latitude'], $coordinate->getLatitude());
@@ -219,7 +219,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
      */
     public function testNormalizeLatitude($latitude, $expectedLatitude)
     {
-        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate = new Coordinate($this->createEmptyAddress());
 
         $this->assertSame($expectedLatitude, $coordinate->normalizeLatitude($latitude));
     }
@@ -238,7 +238,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
      */
     public function testNormalizeLongitude($longitude, $expectedLongitude)
     {
-        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate = new Coordinate($this->createEmptyAddress());
 
         $this->assertSame($expectedLongitude, $coordinate->normalizeLongitude($longitude));
     }
@@ -263,7 +263,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
      */
     public function testSetLatitude($latitude)
     {
-        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setLatitude($latitude);
 
         $this->assertSame((double) $latitude, $coordinate->getLatitude());
@@ -288,7 +288,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
      */
     public function testSetLongitude($longitude)
     {
-        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setLongitude($longitude);
 
         $this->assertSame((double) $longitude, $coordinate->getLongitude());
@@ -311,7 +311,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
     public function testGetEllipsoid()
     {
         $WGS84      = Ellipsoid::createFromName(Ellipsoid::WGS84);
-        $coordinate = new Coordinate($this->getMockGeocoded($this->never()), $WGS84);
+        $coordinate = new Coordinate($this->createEmptyAddress(), $WGS84);
         $ellipsoid  = $coordinate->getEllipsoid();
 
         $this->assertTrue(is_object($ellipsoid));
@@ -324,7 +324,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
      */
     public function testCreateFromStringWithoutAString()
     {
-        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setFromString(123);
     }
 
@@ -334,13 +334,13 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
      */
     public function testCreateFromStringWithInvalidCoordinateString()
     {
-        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setFromString('foo');
     }
 
     public function testCreateFromStringWithValidCoordinatesShouldBeValid()
     {
-        $coordinate = new Coordinate($this->getMockGeocoded($this->never()));
+        $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setFromString('40°26′47″N 079°58′36″W');
 
         $this->assertSame(40.446388888889, $coordinate->getLatitude());

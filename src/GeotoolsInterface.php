@@ -11,7 +11,7 @@
 
 namespace League\Geotools;
 
-use Geocoder\GeocoderInterface;
+use Geocoder\Geocoder as GeocoderInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
 
 /**

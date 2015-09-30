@@ -11,12 +11,15 @@
 
 namespace League\Geotools\Batch;
 
+use Geocoder\Model\Address;
+use Geocoder\Model\AddressFactory;
+
 /**
  * BatchGeocoded class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class BatchGeocoded extends \Geocoder\Result\Geocoded
+class BatchGeocoded
 {
     /**
      * The name of the provider.
@@ -39,6 +42,12 @@ class BatchGeocoded extends \Geocoder\Result\Geocoded
      */
     protected $exception;
 
+    /**
+     * The address object.
+     *
+     * @var Address
+     */
+    protected $address;
 
     /**
      * Get the name of the provider.
@@ -101,22 +110,103 @@ class BatchGeocoded extends \Geocoder\Result\Geocoded
     }
 
     /**
-     * {@inheritDoc}
+     * Get the address
+     *
+     * @return Address
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set the address
+     *
+     * @param Address $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * Returns an array of coordinates (latitude, longitude).
+     *
+     * @return Coordinates
+     */
+    public function getCoordinates()
+    {
+        if (null === $this->address) {
+            return null;
+        }
+
+        return $this->address->getCoordinates();
+    }
+
+    /**
+     * Returns the latitude value.
+     *
+     * @return double
+     */
+    public function getLatitude()
+    {
+        if (null === $this->address) {
+            return null;
+        }
+
+        return $this->address->getLatitude();
+    }
+
+    /**
+     * Returns the longitude value.
+     *
+     * @return double
+     */
+    public function getLongitude()
+    {
+        if (null === $this->address) {
+            return null;
+        }
+
+        return $this->address->getLongitude();
+    }
+
+    /**
+     * Create an instance from an array, used from cache libraries.
+     *
+     * @param array $data
      */
     public function fromArray(array $data = array())
     {
-        parent::fromArray($data);
-
         if (isset($data['providerName'])) {
-            $this->providerName = $this->formatString($data['providerName']);
+            $this->providerName = $data['providerName'];
         }
-
         if (isset($data['query'])) {
-            $this->query = $this->formatString($data['query']);
+            $this->query = $data['query'];
+        }
+        if (isset($data['exception'])) {
+            $this->exception = $data['exception'];
         }
 
-        if (isset($data['exception'])) {
-            $this->exception = $this->formatString($data['exception']);
-        }
+        // Shortcut to create the address and set it in this class
+        $addressFactory = new AddressFactory();
+        $this->setAddress($addressFactory->createFromArray([$data])->first());
     }
+
+	/**
+     * Router all other methods call directly to our address object
+     *
+     * @param $method
+     * @param $args
+     * @return mixed
+     */
+    public function __call($method, $args)
+    {
+        if (null === $this->address) {
+            return null;
+        }
+
+        return call_user_func_array(array($this->address, $method), $args);
+    }
+
 }

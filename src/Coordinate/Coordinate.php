@@ -11,7 +11,7 @@
 
 namespace League\Geotools\Coordinate;
 
-use Geocoder\Result\ResultInterface;
+use Geocoder\Model\Address as ResultInterface;
 use League\Geotools\Exception\InvalidArgumentException;
 
 /**

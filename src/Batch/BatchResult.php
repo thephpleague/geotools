@@ -11,12 +11,14 @@
 
 namespace League\Geotools\Batch;
 
+use Geocoder\Model\Address;
+
 /**
  * BatchResult class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class BatchResult implements \Geocoder\Result\ResultFactoryInterface
+class BatchResult
 {
     /**
      * The name of the provider.
@@ -57,10 +59,10 @@ class BatchResult implements \Geocoder\Result\ResultFactoryInterface
     /**
      * {@inheritDoc}
      */
-    public function createFromArray(array $data)
+    public function createFromAddress(Address $address)
     {
         $result = $this->newInstance();
-        $result->fromArray(isset($data[0]) ? $data[0] : $data);
+        $result->setAddress($address);
 
         return $result;
     }
