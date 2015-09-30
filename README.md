@@ -119,7 +119,7 @@ like:
 * 40° 26.7717, -79° 56.93172
 
 Latitudes below -90.0 or above 90.0 degrees are *capped* through `\League\Geotools\Coordinate\Coordinate::normalizeLatitude()`.  
-Longitudes below -180.0 or abode 180.0 degrees are *wrapped* through `\League\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
+Longitudes below -180.0 or above 180.0 degrees are *wrapped* through `\League\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
 
 ```php
 <?php
