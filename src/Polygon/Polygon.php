@@ -48,18 +48,16 @@ class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterf
      */
     public function __construct($coordinates = null)
     {
-        if (is_array($coordinates) || null === $coordinates) {
-            $this->coordinates = new CoordinateCollection;
-        } elseif ($coordinates instanceof CoordinateCollection) {
+        if ($coordinates instanceof CoordinateCollection) {
             $this->coordinates = $coordinates;
+        } elseif (is_array($coordinates)) {
+            $this->set($coordinates);
+            $this->boundingBox = new BoundingBox($this);
+        } elseif (empty($coordinates)) {
+            $this->coordinates = new CoordinateCollection;
+            $this->boundingBox = new BoundingBox($this);
         } else {
             throw new \InvalidArgumentException;
-        }
-
-        $this->boundingBox = new BoundingBox($this);
-
-        if (is_array($coordinates)) {
-            $this->set($coordinates);
         }
     }
 
