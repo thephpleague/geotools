@@ -13,7 +13,7 @@ namespace League\Geotools\Tests\Point;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
-use League\Geotools\Point\Point;
+use League\Geotools\Vertex\Point;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -45,8 +45,8 @@ class PointTest extends \League\Geotools\Tests\TestCase
         $point = $this->point->setFrom($this->from);
 
         $this->assertTrue(is_object($point));
-        $this->assertInstanceOf('League\Geotools\Point\Point', $point);
-        $this->assertInstanceOf('League\Geotools\Point\VertexInterface', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\Point', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $point);
         $this->assertSame($this->point, $point);
     }
 
@@ -64,8 +64,8 @@ class PointTest extends \League\Geotools\Tests\TestCase
         $point = $this->point->setTo($this->to);
 
         $this->assertTrue(is_object($point));
-        $this->assertInstanceOf('League\Geotools\Point\Point', $point);
-        $this->assertInstanceOf('League\Geotools\Point\VertexInterface', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\Point', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $point);
         $this->assertSame($this->point, $point);
     }
 

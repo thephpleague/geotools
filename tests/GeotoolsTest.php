@@ -40,8 +40,8 @@ class GeotoolsTest extends TestCase
         $point = $this->geotools->point();
 
         $this->assertTrue(is_object($point));
-        $this->assertInstanceOf('League\Geotools\Point\Point', $point);
-        $this->assertInstanceOf('League\Geotools\Point\VertexInterface', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\Point', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $point);
     }
 
     public function testBatchShouldReturnANewBatchInstance()

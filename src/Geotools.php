@@ -13,7 +13,7 @@ namespace League\Geotools;
 
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Distance\Distance;
-use League\Geotools\Point\Point;
+use League\Geotools\Vertex\Point;
 use League\Geotools\Batch\Batch;
 use League\Geotools\Geohash\Geohash;
 use League\Geotools\Convert\Convert;
