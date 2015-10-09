@@ -14,18 +14,18 @@ namespace League\Geotools\Point;
 use League\Geotools\Coordinate\CoordinateInterface;
 
 /**
- * Point interface
+ * Vertex interface
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-interface PointInterface
+interface VertexInterface
 {
     /**
      * Set the origin coordinate.
      *
      * @param CoordinateInterface $from The origin coordinate.
      *
-     * @return PointInterface
+     * @return VertexInterface
      */
     public function setFrom(CoordinateInterface $from);
 
@@ -41,7 +41,7 @@ interface PointInterface
      *
      * @param CoordinateInterface $to The destination coordinate.
      *
-     * @return PointInterface
+     * @return VertexInterface
      */
     public function setTo(CoordinateInterface $to);
 

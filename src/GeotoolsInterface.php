@@ -31,7 +31,7 @@ interface GeotoolsInterface
     /**
      * Returns an instance of Point.
      *
-     * @return PointInterface
+     * @return VertexInterface
      */
     public function point();
 

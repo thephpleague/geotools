@@ -21,7 +21,7 @@ use League\Geotools\Coordinate\Ellipsoid;
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Point extends AbstractGeotools implements PointInterface
+class Point extends AbstractGeotools implements VertexInterface
 {
     /**
      * {@inheritDoc}

@@ -46,7 +46,7 @@ class PointTest extends \League\Geotools\Tests\TestCase
 
         $this->assertTrue(is_object($point));
         $this->assertInstanceOf('League\Geotools\Point\Point', $point);
-        $this->assertInstanceOf('League\Geotools\Point\PointInterface', $point);
+        $this->assertInstanceOf('League\Geotools\Point\VertexInterface', $point);
         $this->assertSame($this->point, $point);
     }
 
@@ -65,7 +65,7 @@ class PointTest extends \League\Geotools\Tests\TestCase
 
         $this->assertTrue(is_object($point));
         $this->assertInstanceOf('League\Geotools\Point\Point', $point);
-        $this->assertInstanceOf('League\Geotools\Point\PointInterface', $point);
+        $this->assertInstanceOf('League\Geotools\Point\VertexInterface', $point);
         $this->assertSame($this->point, $point);
     }
 
