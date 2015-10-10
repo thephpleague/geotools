@@ -1,10 +1,17 @@
 CHANGELOG
 =========
 
-0.4.1 (xxxx-xx-xx)
+0.5.0 (2015-10-10)
 ------------------
 
-n/a
+* Updated: use Geocoder 3.2.x
+* Added: Polygon class
+* Added: Bounding box class
+* Fixed: division by zero in vincenty algorithm
+* Dropped: PHP 5.3 and stub to JsonSerializable
+* Updated: switch from async to promise
+* Updated: documentation
+* Added: code of conduct
 
 0.4.0 (2014-07-30)
 ------------------

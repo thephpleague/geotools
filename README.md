@@ -63,6 +63,8 @@ php composer require league/geotools=@stable
 [`league/geotools`](https://packagist.org/packages/league/geotools)
 page to choose a stable version to use, avoid the `@stable` meta constraint.
 
+**Important:** you should use the `0.4` version if you use Geocoder `2.x` or/and PHP `5.3`.
+
 And install dependencies:
 
 ```bash
