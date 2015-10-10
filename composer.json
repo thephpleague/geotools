@@ -43,8 +43,7 @@
         "psr-4" : {
             "League\\Geotools\\"        : "src",
             "League\\Geotools\\Tests\\" : "tests"
-        },
-        "classmap" : [ "stubs/" ]
+        }
     },
 
     "bin" : ["bin/geotools"],
