@@ -12,7 +12,7 @@
 namespace League\Geotools\CLI\Command\Geocoder;
 
 use Geocoder\Formatter\StringFormatter as Formatter;
-use Geocoder\ProviderAggregator as Geocoder;
+use Geocoder\ProviderAggregator;
 use League\Geotools\Coordinate\Coordinate;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -64,7 +64,7 @@ EOT
     {
         $coordinate = new Coordinate($input->getArgument('coordinate'));
 
-        $geocoder = new Geocoder;
+        $geocoder = new ProviderAggregator;
         $adapter  = $this->getAdapter($input->getOption('adapter'));
         $provider = $this->getProvider($input->getOption('provider'));
 

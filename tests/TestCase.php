@@ -142,7 +142,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @param $expects
      *
-     * @return ResultInterface
+     * @return AddressCollection
      */
     protected function getMockGeocoded($expects = null)
     {
@@ -162,7 +162,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @param array $coordinate
      *
-     * @return ResultInterface
+     * @return AddressCollection
      */
     protected function getMockGeocodedReturns(array $coordinate)
     {

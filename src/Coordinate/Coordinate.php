@@ -11,7 +11,7 @@
 
 namespace League\Geotools\Coordinate;
 
-use Geocoder\Model\Address as ResultInterface;
+use Geocoder\Model\Address;
 use League\Geotools\Exception\InvalidArgumentException;
 
 /**
@@ -46,14 +46,14 @@ class Coordinate implements CoordinateInterface
     /**
      * Set the latitude and the longitude of the coordinates into an selected ellipsoid.
      *
-     * @param ResultInterface|array|string $coordinates The coordinates.
+     * @param Address|array|string         $coordinates The coordinates.
      * @param Ellipsoid                    $ellipsoid   The selected ellipsoid (WGS84 by default).
      *
      * @throws InvalidArgumentException
      */
     public function __construct($coordinates, Ellipsoid $ellipsoid = null)
     {
-        if ($coordinates instanceof ResultInterface) {
+        if ($coordinates instanceof Address) {
             $this->setLatitude($coordinates->getLatitude());
             $this->setLongitude($coordinates->getLongitude());
         } elseif (is_array($coordinates) && 2 === count($coordinates)) {
@@ -63,7 +63,7 @@ class Coordinate implements CoordinateInterface
             $this->setFromString($coordinates);
         } else {
             throw new InvalidArgumentException(
-                'It should be a string, an array or a class which implements Geocoder\Result\ResultInterface !'
+                'It should be a string, an array or a class which implements Geocoder\Model\Address !'
             );
         }
 

@@ -4,8 +4,6 @@ Geotools
 **Geotools** is a PHP geo-related library, built atop [Geocoder](https://github.com/willdurand/Geocoder) and
 [React](https://github.com/reactphp/react) libraries.
 
-**The support of PHP 5.3 will be dropped in the 0.5.0 release**
-
 [![Latest Version](https://img.shields.io/github/release/thephpleague/geotools.svg?style=flat-square)](https://github.com/thephpleague/geotools/releases)
 [![Total Downloads](https://img.shields.io/packagist/dt/league/geotools.svg?style=flat-square)](https://packagist.org/packages/league/geotools)
 [![Build Status](https://img.shields.io/travis/thephpleague/geotools/master.svg?style=flat-square)](https://travis-ci.org/thephpleague/geotools)
@@ -42,7 +40,8 @@ coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direc
 * Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
-* **Polygon**. [»](#polygon)
+* **Polygon** class provides methods to check either a poing (coordinate) is in, or on the polygon's boundaries.
+[»](#polygon)
 * A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert** classes. [»](#cli)
 * Integration with Frameworks: **Laravel 4**, **Silex** ... [»](#integration-with-frameworks)
 * ... more to come ...
@@ -97,15 +96,15 @@ If you need to use an other ellipsoid, just create an array like this:
 ``` php
 <?php
 
-$myEllipsoid = \League\Geotools\Coordinate\Ellipsoid::createFromArray(array(
+$myEllipsoid = \League\Geotools\Coordinate\Ellipsoid::createFromArray([
     'name' => 'My Ellipsoid', // The name of the Ellipsoid
     'a'    => 123.0, // The semi-major axis (equatorial radius) in meters
     'invF' => 456.0 // The inverse flattening
-));
+]);
 ```
 
 **Geotools** is built atop [Geocoder](https://github.com/willdurand/Geocoder). It means it's possible to use the
-`\Geocoder\Result\ResultInterface` directly but it's also possible to use a *string* or a simple *array* with its
+`\Geocoder\Model\Address` directly but it's also possible to use a *string* or a simple *array* with its
 latitude and longitude.
 
 It supports [valid and acceptable geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion)
@@ -127,10 +126,10 @@ Longitudes below -180.0 or above 180.0 degrees are *wrapped* through `\League\Ge
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
 
-// from an \Geocoder\Result\ResultInterface instance within Airy ellipsoid
+// from an \Geocoder\Model\Address instance within Airy ellipsoid
 $coordinate = new Coordinate($geocoderResult, Ellipsoid::createFromName(Ellipsoid::AIRY));
 // or in an array of latitude/longitude coordinate within GRS 1980 ellipsoid
-$coordinate = new Coordinate(array(48.8234055, 2.3072664), Ellipsoid::createFromName(Ellipsoid::GRS_1980));
+$coordinate = new Coordinate([48.8234055, 2.3072664], Ellipsoid::createFromName(Ellipsoid::GRS_1980));
 // or in latitude/longitude coordinate within WGS84 ellipsoid
 $coordinate = new Coordinate('48.8234055, 2.3072664');
 // or in degrees minutes seconds coordinate within WGS84 ellipsoid
@@ -208,7 +207,7 @@ You can use a provided **cache engine** or use your own by setting a cache objec
 At the moment Geotools supports:
 * **[Redis](http://redis.io/)**, [packagist](https://packagist.org/packages/predis/predis) and
 [github](https://github.com/nrk/predis)
-    * `Redis(array $client = array(), $expire = 0)`
+    * `Redis(array $client = [], $expire = 0)`
     * `$client` should be an array with `host`, `port` and `database` keys
     * `$expire` should be an integer, no expire value by default
     * `flush()` method deletes all the keys of the currently selected database which is `0` by default
@@ -232,33 +231,33 @@ for your(s) geocoding provider(s).
 ```php
 <?php
 
-$geocoder = new \Geocoder\Geocoder();
-$adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+$geocoder = new \Geocoder\ProviderAggregator(); // or \Geocoder\TimedGeocoder
+$adapter  = new \Ivory\HttpAdapter\CurlHttpAdapter();
 
-$geocoder->registerProviders(array(
+$geocoder->registerProviders([
     new \Geocoder\Provider\GoogleMapsProvider($adapter),
     new \Geocoder\Provider\OpenStreetMapProvider($adapter),
     new \Geocoder\Provider\BingMapsProvider($adapter, '<FAKE_API_KEY>'), // throws InvalidCredentialsException
     new \Geocoder\Provider\YandexProvider($adapter),
     new \Geocoder\Provider\FreeGeoIpProvider($adapter),
     new \Geocoder\Provider\GeoipProvider(),
-));
+]);
 
 try {
     $geotools = new \League\Geotools\Geotools();
     $cache    = new \League\Geotools\Cache\MongoDB();
     // or
-    $cache    = new \League\Geotools\Cache\Redis(array(
+    $cache    = new \League\Geotools\Cache\Redis([
         'host'     => '127.0.0.1',
         'port'     => 6379,
         'database' => 15 // the last database ID
-    ));
-    $results  = $geotools->batch($geocoder)->setCache($cache)->geocode(array(
+    ]);
+    $results  = $geotools->batch($geocoder)->setCache($cache)->geocode([
         'Paris, France',
         'Copenhagen, Denmark',
         '74.200.247.59',
         '::ffff:66.147.244.214'
-    ))->parallel();
+    ])->parallel();
 } catch (\Exception $e) {
     die($e->getMessage());
 }
@@ -315,17 +314,17 @@ Batch reverse geocoding is something like:
 // If you want to reverse one coordinate
 try {
     $results = $geotools->batch($geocoder)->reverse(
-        new \League\Geotools\Coordinate\Coordinate(array(2.307266, 48.823405))
+        new \League\Geotools\Coordinate\Coordinate([2.307266, 48.823405])
     )->parallel();
 } catch (\Exception $e) {
     die($e->getMessage());
 }
 // Or if you want to reverse geocoding 3 coordinates
-$coordinates = array(
-    new \League\Geotools\Coordinate\Coordinate(array(2.307266, 48.823405)),
-    new \League\Geotools\Coordinate\Coordinate(array(12.568337, 55.676097)),
+$coordinates = [
+    new \League\Geotools\Coordinate\Coordinate([2.307266, 48.823405]),
+    new \League\Geotools\Coordinate\Coordinate([12.568337, 55.676097]),
     new \League\Geotools\Coordinate\Coordinate('-74.005973 40.714353')),
-);
+];
 $results = $geotools->batch($geocoder)->reverse($coordinates)->parallel();
 // ...
 ```
@@ -347,8 +346,8 @@ Those coordinates should be in the same ellipsoid.
 <?php
 
 $geotools = new \League\Geotools\Geotools();
-$coordA   = new \League\Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-$coordB   = new \League\Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
+$coordA   = new \League\Geotools\Coordinate\Coordinate([48.8234055, 2.3072664]);
+$coordB   = new \League\Geotools\Coordinate\Coordinate([43.296482, 5.36978]);
 $distance = $geotools->distance()->setFrom($coordA)->setTo($coordB);
 
 printf("%s\n",$distance->flat()); // 659166.50038742 (meters)
@@ -368,8 +367,8 @@ the *middle point* and the *destination point*. The middle and the destination p
 <?php
 
 $geotools = new \League\Geotools\Geotools();
-$coordA   = new \League\Geotools\Coordinate\Coordinate(array(48.8234055, 2.3072664));
-$coordB   = new \League\Geotools\Coordinate\Coordinate(array(43.296482, 5.36978));
+$coordA   = new \League\Geotools\Coordinate\Coordinate([48.8234055, 2.3072664]);
+$coordB   = new \League\Geotools\Coordinate\Coordinate([43.296482, 5.36978]);
 $point    =  $geotools->point()->setFrom($coordA)->setTo($coordB);
 
 printf("%d\n", $point->initialBearing()); // 157 (degrees)
@@ -428,18 +427,31 @@ printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&bo
 
 ## Polygon ##
 
-You can provide:
+It helps you to know if a point (coordinate) is in a Polygon or on the Polygon's boundaries and if this in on
+a Polygon's vertex.
+
+First you need to create the polygon, you can provide:
 - an array of arrays
 - an array of `Coordinate`
 - a `CoordinateCollection`
 
-Create the doc based on:
-- testPointOnVertex
-- testPointNotOnVertex
-- testPointOnBoundary
-- testPointNotOnBoundary
-- testPointInPolygon
-- testPointNotInPolygon
+```php
+$polygon = new \League\Geotools\Polygon([
+    [48.9675969, 1.7440796],
+    [48.4711003, 2.5268555],
+    [48.9279131, 3.1448364],
+    [49.3895245, 2.6119995],
+]);
+
+$polygon->setPrecision(5); // set the comparision precision
+$polygon->pointInPolygon(new \League\Geotools\Coordinate\Coordinate([49.1785607, 2.4444580])); // true
+$polygon->pointInPolygon(new \League\Geotools\Coordinate\Coordinate([49.1785607, 5])); // false
+$polygon->pointOnBoundary(new \League\Geotools\Coordinate\Coordinate([48.7193486, 2.13546755])); // true
+$polygon->pointOnBoundary(new \League\Geotools\Coordinate\Coordinate([47.1587188, 2.87841795])); // false
+$polygon->pointOnVertex(new \League\Geotools\Coordinate\Coordinate([48.4711003, 2.5268555])); // true
+$polygon->pointOnVertex(new \League\Geotools\Coordinate\Coordinate([49.1785607, 2.4444580])); // false
+$polygon->getBoundingBox(); // return the BoundingBox object
+```
 
 ## CLI ##
 
@@ -498,8 +510,8 @@ $ php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --
 The last command will show an output like this:
 
 ```
-Adapter:       \Geocoder\HttpAdapter\SocketHttpAdapter
-Provider:      \Geocoder\Provider\GoogleMapsProvider
+Adapter:       \Ivory\HttpAdapter\SocketHttpAdapter
+Provider:      \Geocoder\Provider\GoogleMaps
 Arguments:     da_DK,Denmark
 ---
 Latitude:      55.699953

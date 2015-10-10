@@ -21,7 +21,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
 {
     /**
      * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage It should be a string, an array or a class which implements Geocoder\Result\ResultInterface !
+     * @expectedExceptionMessage It should be a string, an array or a class which implements Geocoder\Model\Address !
      * @dataProvider invalidCoordinatesProvider
      */
     public function testConstructorWithInvalidCoordinatesShouldThrowAnException($coordinates)
@@ -167,7 +167,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
         );
     }
 
-    public function testConstructorWithResultInterfaceArgumentShouldBeValid()
+    public function testConstructorWithAddressArgumentShouldBeValid()
     {
         new Coordinate($this->createEmptyAddress());
     }

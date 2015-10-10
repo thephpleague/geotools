@@ -22,7 +22,7 @@ interface BatchInterface
 {
     /**
      * Set an array of closures to geocode.
-     * If a provider throws an exception it will return an empty ResultInterface.
+     * If a provider throws an exception it will return an empty AddressCollection.
      *
      * @param string|array $values A value or an array of values to geocode.
      *
@@ -34,7 +34,7 @@ interface BatchInterface
 
     /**
      * Set an array of closures to reverse geocode.
-     * If a provider throws an exception it will return an empty ResultInterface.
+     * If a provider throws an exception it will return an empty AddressCollection.
      *
      * @param CoordinateInterface|array $coordinates A coordinate or an array of coordinates to reverse.
      *
@@ -45,18 +45,18 @@ interface BatchInterface
     public function reverse($coordinates);
 
     /**
-     * Returns an array of ResultInterface processed in serie.
+     * Returns an array of AddressCollection processed in serie.
      *
-     * @return ResultInterface[]
+     * @return AddressCollection[]
      *
      * @throws \Exception
      */
     public function serie();
 
     /**
-     * Returns an array of ResultInterface processed in parallel.
+     * Returns an array of AddressCollection processed in parallel.
      *
-     * @return ResultInterface[]
+     * @return AddressCollection[]
      *
      * @throws \Exception
      */
