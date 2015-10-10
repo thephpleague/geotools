@@ -29,6 +29,22 @@ class PolygonTest extends \League\Geotools\Tests\TestCase
         $this->polygon = new Polygon;
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCannotCreatePolygonWithString()
+    {
+        new Polygon('foo');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCannotCreatePolygonWithInteger()
+    {
+        new Polygon(123);
+    }
+
     public function polygonCoordinates()
     {
         return array(
