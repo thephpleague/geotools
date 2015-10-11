@@ -12,7 +12,7 @@
 namespace League\Geotools\Cache;
 
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 /**
@@ -31,7 +31,7 @@ abstract class AbstractCache
      */
     protected function normalize($object)
     {
-        $serializer = new Serializer(array(new GetSetMethodNormalizer), array());
+        $serializer = new Serializer([new ObjectNormalizer]);
 
         return $serializer->normalize($object);
     }
@@ -45,7 +45,10 @@ abstract class AbstractCache
      */
     protected function serialize($object)
     {
-        $serializer = new Serializer(array(new GetSetMethodNormalizer), array(new JsonEncoder));
+        $normalizer = new ObjectNormalizer;
+        // there is an issue while serializing the country object
+        $normalizer->setIgnoredAttributes(['country']);
+        $serializer = new Serializer([$normalizer], [new JsonEncoder]);
 
         return $serializer->serialize($object, 'json');
     }
@@ -59,23 +62,6 @@ abstract class AbstractCache
      */
     protected function deserialize($json)
     {
-        $array = json_decode($json, true);
-        $array = $this->setAdminLevels($array);
-
-        return $array;
-    }
-
-    /**
-     * Set admin levels in the array for compatibility with geocoder
-     *
-     * @param $array
-     */
-    protected function setAdminLevels($array)
-    {
-        foreach ($array['adminLevels'] as $level => &$adminLevel) {
-            $adminLevel['level'] = $level;
-        }
-
-        return $array;
+        return json_decode($json, true);
     }
 }

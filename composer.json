@@ -24,12 +24,13 @@
     },
 
     "require" : {
-        "php"                 : ">=5.4",
-        "willdurand/geocoder" : "~3.2",
-        "react/promise"       : "~2.2",
-        "symfony/console"     : "~2.4",
-        "symfony/serializer"  : "~2.4",
-        "react/event-loop"    : "0.4.*"
+        "php"                     : ">=5.4",
+        "willdurand/geocoder"     : "~3.2",
+        "react/promise"           : "~2.2",
+        "symfony/console"         : "~2.7",
+        "symfony/property-access" : "~2.7",
+        "symfony/serializer"      : "~2.7",
+        "react/event-loop"        : "0.4.*"
     },
 
     "require-dev" : {

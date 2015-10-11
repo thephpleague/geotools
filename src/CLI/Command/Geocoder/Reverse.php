@@ -11,8 +11,9 @@
 
 namespace League\Geotools\CLI\Command\Geocoder;
 
-use Geocoder\Formatter\StringFormatter as Formatter;
+use Geocoder\Formatter\StringFormatter;
 use Geocoder\ProviderAggregator;
+use League\Geotools\Batch\Batch;
 use League\Geotools\Coordinate\Coordinate;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,6 +37,8 @@ class Reverse extends Command
                 'If set, the name of the provider to use, Google Maps by default', 'google_maps')
             ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the adapter to use, cURL by default', 'curl')
+            ->addOption('cache', null, InputOption::VALUE_REQUIRED,
+                'If set, the name of the cache to use, Redis by default')
             ->addOption('raw', null, InputOption::VALUE_NONE,
                 'If set, the raw format of the reverse geocoding result')
             ->addOption('json', null, InputOption::VALUE_NONE,
@@ -48,6 +51,7 @@ class Reverse extends Command
 <info>Available adapters</info>:   {$this->getAdapters()}
 <info>Available providers</info>:  {$this->getProviders()} <comment>(some providers need arguments)</comment>
 <info>Available dumpers</info>:    {$this->getDumpers()}
+<info>Available caches</info>:     {$this->getCaches()}
 
 <info>Use the default provider with the socket adapter and format the output</info>:
 
@@ -77,46 +81,52 @@ EOT
             $geocoder->registerProvider(new $provider(new $adapter()));
         }
 
-        $reversed = $geocoder->reverse($coordinate->getLatitude(), $coordinate->getLongitude());
-        $reversed = $reversed->first();
+        $batch = new Batch($geocoder);
+        if ($input->getOption('cache')) {
+            $cache = $this->getCache($input->getOption('cache'));
+            $batch->setCache(new $cache());
+        }
 
-        $formatter = new Formatter();
+        $reversed = $batch->reverse($coordinate)->parallel();
+        $address = $reversed[0]->getAddress();
 
         if ($input->getOption('raw')) {
             $result = array();
             $result[] = sprintf('<label>Adapter</label>:       <value>%s</value>', $adapter);
             $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
+            $result[] = sprintf('<label>Cache</label>:         <value>%s</value>', isset($cache) ? $cache : 'None');
             if ($input->getOption('args')) {
                 $result[] = sprintf('<label>Arguments</label>:     <value>%s</value>', $args);
             }
             $result[] = '---';
-            $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $reversed->getLatitude());
-            $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $reversed->getLongitude());
-            if (null !== $bounds = $reversed->getBounds()->toArray()) {
+            $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $address->getLatitude());
+            $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $address->getLongitude());
+            if ($address->getBounds()->isDefined()) {
+                $bounds = $address->getBounds()->toArray();
                 $result[] = '<label>Bounds</label>';
                 $result[] = sprintf(' - <label>South</label>: <value>%s</value>', $bounds['south']);
                 $result[] = sprintf(' - <label>West</label>:  <value>%s</value>', $bounds['west']);
                 $result[] = sprintf(' - <label>North</label>: <value>%s</value>', $bounds['north']);
                 $result[] = sprintf(' - <label>East</label>:  <value>%s</value>', $bounds['east']);
             }
-            $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $reversed->getStreetNumber());
-            $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $reversed->getStreetName());
-            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $reversed->getPostalCode());
-            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $reversed->getLocality());
-            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $reversed->getSubLocality());
-            if ( NULL !== $adminLevels = $reversed->getAdminLevels() ) {
+            $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $address->getStreetNumber());
+            $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $address->getStreetName());
+            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $address->getPostalCode());
+            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $address->getLocality());
+            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $address->getSubLocality());
+            if ( NULL !== $adminLevels = $address->getAdminLevels() ) {
                 $result[] = '<label>Admin Levels</label>';
                 foreach ($adminLevels as $adminLevel) {
                     $result[] = sprintf(' - <label>%s</label>: <value>%s</value>', $adminLevel->getCode(), $adminLevel->getName());
                 }
             }
-            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $reversed->getCountry()->toString());
-            $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $reversed->getCountryCode());
-            $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $reversed->getTimezone());
+            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $address->getCountry()->toString());
+            $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $address->getCountryCode());
+            $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $address->getTimezone());
         } elseif ($input->getOption('json')) {
-            $result = sprintf('<value>%s</value>', json_encode($reversed->toArray()));
+            $result = sprintf('<value>%s</value>', json_encode($address->toArray()));
         } else {
-            $result = $formatter->format($reversed, $input->getOption('format'));
+            $result = (new StringFormatter)->format($address, $input->getOption('format'));
         }
 
         $output->writeln($result);

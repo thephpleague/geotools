@@ -485,6 +485,7 @@ It's possible to define and precise your request through these options:
 * `--adapter`: `socket`, `buzz`, `zend`, `guzzle` or `curl` by default.
 * `--provider`: `bing_maps`, `yahoo`, `maxmind`... `google_maps` is the default one. See the full list
 [here](https://github.com/willdurand/Geocoder#providers).
+* `--cache`: `mongodb`, `memcached` or `redis` as a fallback.
 * `--raw`: the result output in RAW format, shows Adapter, Provider and Arguments if any.
 * `--json`: the result output in JSON string format.
 * `--args`: this option accepts multiple values (e.g. --args="API_KEY" --args="LOCALE") if your provider needs or
@@ -506,7 +507,7 @@ $ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" // 
 $ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" --provider="openstreetmaps"
 // Paris, Île-De-France, France Métropolitaine
 ...
-$ php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket
+$ php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket --cache=redis
 ```
 
 The last command will show an output like this:
@@ -514,6 +515,7 @@ The last command will show an output like this:
 ```
 Adapter:       \Ivory\HttpAdapter\SocketHttpAdapter
 Provider:      \Geocoder\Provider\GoogleMaps
+Cache:         \League\Geotools\Cache\Redis
 Arguments:     da_DK,Denmark
 ---
 Latitude:      55.699953
@@ -540,9 +542,9 @@ Timezone:
 Integration with Frameworks
 ---------------------------
 
-* [Laravel 4](https://github.com/toin0u/Geotools-laravel)
+* [Laravel 4 & 5](https://github.com/toin0u/Geotools-laravel)
 * [Silex](https://github.com/toin0u/Geotools-silex)
-* ... more to come ...
+* ...
 
 
 Unit Tests

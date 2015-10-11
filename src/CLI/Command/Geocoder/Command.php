@@ -19,24 +19,35 @@ namespace League\Geotools\CLI\Command\Geocoder;
 class Command extends \Symfony\Component\Console\Command\Command
 {
     /**
+     * Available caches.
+     *
+     * @var array
+     */
+    private $caches = [
+        'memcached' => 'Memcached',
+        'mongodb'   => 'MongoDB',
+        'redis'     => 'Redis',
+    ];
+
+    /**
      * Available adapters.
      *
      * @var array
      */
-    private $adapters = array(
+    private $adapters = [
         'buzz'    => 'BuzzHttpAdapter',
         'curl'    => 'CurlHttpAdapter',
         'guzzle'  => 'GuzzleHttpAdapter',
         'socket'  => 'SocketHttpAdapter',
         'zend'    => 'ZendHttpAdapter',
-    );
+    ];
 
     /**
      * Available providers.
      *
      * @var array
      */
-    private $providers = array(
+    private $providers = [
         'free_geo_ip'          => 'FreeGeoIp',
         'host_ip'              => 'HostIp',
         'ip_info_db'           => 'IpInfoDb',
@@ -61,21 +72,51 @@ class Command extends \Symfony\Component\Console\Command\Command
         'baidu'                => 'Baidu',
         'tomtom'               => 'TomTom',
         'arcgis_online'        => 'ArcGISOnline',
-    );
+    ];
 
     /**
      * Available dumpers.
      *
      * @var array
      */
-    private $dumpers = array(
+    private $dumpers = [
         'gpx'     => 'Gpx',
         'geojson' => 'GeoJson',
         'kml'     => 'Kml',
         'wkb'     => 'Wkb',
         'wkt'     => 'Wkt',
-    );
+    ];
 
+
+    /**
+     * Returns the cache class name.
+     * The default cache is Redis.
+     *
+     * @param  string $cache The name of the cache to use.
+     *
+     * @return string The name of the cache to use.
+     */
+    protected function getCache($cache)
+    {
+        $cache = $this->lowerize((trim($cache)));
+        $cache = array_key_exists($cache, $this->caches)
+            ? $this->caches[$cache]
+            : $this->caches['redis'];
+
+        return '\\League\\Geotools\\Cache\\' . $cache;
+    }
+
+    /**
+     * Returns the list of available caches sorted by alphabetical order.
+     *
+     * @return string The list of available caches comma separated.
+     */
+    protected function getCaches()
+    {
+        ksort($this->caches);
+
+        return implode(', ', array_keys($this->caches));
+    }
 
     /**
      * Returns the adapter class name.

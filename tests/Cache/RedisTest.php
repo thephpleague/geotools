@@ -16,7 +16,7 @@ use League\Geotools\Cache\Redis;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class ResdisTest extends \League\Geotools\Tests\TestCase
+class RedisTest extends \League\Geotools\Tests\TestCase
 {
     protected $redis;
 
@@ -87,7 +87,44 @@ class ResdisTest extends \League\Geotools\Tests\TestCase
     public function testIsCachedReturnsBatchGeocodedObject()
     {
         $json = <<<JSON
-{"providerName":"google_maps","query":"Paris, France","exceptionMessage":"","coordinates":[48.856614,2.3522219],"latitude":48.856614,"longitude":2.3522219,"bounds":{"south":48.815573,"west":2.224199,"north":48.9021449,"east":2.4699208},"streetNumber":null,"streetName":null,"locality":"Paris","postalCode":null,"subLocality":null,"adminLevels":{"1":{"name":"New York","code":"NY"},"2":{"name":"New York County","code":"New York County"}},"country":"France","countryCode":"FR","timezone":null}
+{
+    "providerName": "google_maps",
+    "query": "Paris, France",
+    "exceptionMessage": "",
+    "coordinates": [48.856614, 2.3522219],
+    "latitude": 48.856614,
+    "longitude": 2.3522219,
+    "address": {
+        "latitude": 48.856614,
+        "longitude": 2.3522219,
+        "bounds": {
+            "south": 48.815573,
+            "west": 2.224199,
+            "north": 48.9021449,
+            "east": 2.4699208
+        },
+        "streetNumber": null,
+        "streetName": null,
+        "locality": "Paris",
+        "postalCode": null,
+        "subLocality": null,
+        "adminLevels": {
+            "1": {
+                "level": 1,
+                "name": "New York",
+                "code": "NY"
+            },
+            "2": {
+                "level": 2,
+                "name": "New York County",
+                "code": "New York County"
+            }
+        },
+        "country": "France",
+        "countryCode": "FR",
+        "timezone": null
+    }
+}
 JSON
         ;
 
@@ -135,7 +172,7 @@ JSON
         $this->assertInstanceOf('\Geocoder\Model\AdminLevel', $adminLevels[2]);
         $this->assertEquals('New York County', $adminLevels[2]->getName());
         $this->assertEquals('New York County', $adminLevels[2]->getCode());
-        $this->assertEquals('France', $cached->getCountry()->toString());
+        $this->assertEquals('France', $cached->getCountry()->getName());
         $this->assertEquals('FR', $cached->getCountryCode());
         $this->assertNull($cached->getTimezone());
     }

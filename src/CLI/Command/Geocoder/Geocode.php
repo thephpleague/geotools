@@ -12,6 +12,7 @@
 namespace League\Geotools\CLI\Command\Geocoder;
 
 use Geocoder\ProviderAggregator;
+use League\Geotools\Batch\Batch;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -34,6 +35,8 @@ class Geocode extends Command
                 'If set, the name of the provider to use, Google Maps by default', 'google_maps')
             ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the adapter to use, cURL by default', 'curl')
+            ->addOption('cache', null, InputOption::VALUE_REQUIRED,
+                'If set, the name of the cache to use, Redis by default')
             ->addOption('raw', null, InputOption::VALUE_NONE,
                 'If set, the raw format of the reverse geocoding result')
             ->addOption('json', null, InputOption::VALUE_NONE,
@@ -46,6 +49,7 @@ class Geocode extends Command
 <info>Available adapters</info>:   {$this->getAdapters()}
 <info>Available providers</info>:  {$this->getProviders()} <comment>(some providers need arguments)</comment>
 <info>Available dumpers</info>:    {$this->getDumpers()}
+<info>Available caches</info>:     {$this->getCaches()}
 
 <info>Use the default provider with the socket adapter and dump the output in WKT standard</info>:
 
@@ -81,47 +85,56 @@ EOT
             $geocoder->registerProvider(new $provider(new $adapter()));
         }
 
-        $geocoded = $geocoder->geocode($input->getArgument('value'));
-        $geocoded = $geocoded->first();
+        $batch = new Batch($geocoder);
+        if ($input->getOption('cache')) {
+            $cache = $this->getCache($input->getOption('cache'));
+            $batch->setCache(new $cache());
+        }
+
+        $geocoded = $batch->geocode($input->getArgument('value'))->parallel();
+        $address = $geocoded[0]->getAddress();
 
         if ($input->getOption('raw')) {
             $result = array();
             $result[] = sprintf('<label>Adapter</label>:       <value>%s</value>', $adapter);
             $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
+            $result[] = sprintf('<label>Cache</label>:         <value>%s</value>', isset($cache) ? $cache : 'None');
             if ($input->getOption('args')) {
                 $result[] = sprintf('<label>Arguments</label>:     <value>%s</value>', $args);
             }
             $result[] = '---';
-            $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $geocoded->getLatitude());
-            $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $geocoded->getLongitude());
-            if (null !== $bounds = $geocoded->getBounds()->toArray()) {
+            $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $address->getLatitude());
+            $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $address->getLongitude());
+            if ($address->getBounds()->isDefined()) {
+                $bounds = $address->getBounds()->toArray();
                 $result[] = '<label>Bounds</label>';
                 $result[] = sprintf(' - <label>South</label>: <value>%s</value>', $bounds['south']);
                 $result[] = sprintf(' - <label>West</label>:  <value>%s</value>', $bounds['west']);
                 $result[] = sprintf(' - <label>North</label>: <value>%s</value>', $bounds['north']);
                 $result[] = sprintf(' - <label>East</label>:  <value>%s</value>', $bounds['east']);
             }
-            $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $geocoded->getStreetNumber());
-            $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $geocoded->getStreetName());
-            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $geocoded->getPostalCode());
-            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $geocoded->getLocality());
-            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $geocoded->getSublocality());
-            if ( NULL !== $adminLevels = $geocoded->getAdminLevels() ) {
+            $result[] = sprintf('<label>Street Number</label>: <value>%s</value>', $address->getStreetNumber());
+            $result[] = sprintf('<label>Street Name</label>:   <value>%s</value>', $address->getStreetName());
+            $result[] = sprintf('<label>Zipcode</label>:       <value>%s</value>', $address->getPostalCode());
+            $result[] = sprintf('<label>City</label>:          <value>%s</value>', $address->getLocality());
+            $result[] = sprintf('<label>City District</label>: <value>%s</value>', $address->getSublocality());
+            if (null !== $adminLevels = $address->getAdminLevels()) {
                 $result[] = '<label>Admin Levels</label>';
                 foreach ($adminLevels as $adminLevel) {
                     $result[] = sprintf(' - <label>%s</label>: <value>%s</value>', $adminLevel->getCode(), $adminLevel->getName());
                 }
-            }            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $geocoded->getCountry()->toString());
-            $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $geocoded->getCountryCode());
-            $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $geocoded->getTimezone());
+            }
+            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $address->getCountry()->getName());
+            $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $address->getCountryCode());
+            $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $address->getTimezone());
         } elseif ($input->getOption('json')) {
-            $result = sprintf('<value>%s</value>', json_encode($geocoded->toArray()));
+            $result = sprintf('<value>%s</value>', json_encode($address->toArray()));
         } elseif ($input->getOption('dumper')) {
             $dumper = $this->getDumper($input->getOption('dumper'));
             $dumper = new $dumper;
-            $result = sprintf('<value>%s</value>', $dumper->dump($geocoded));
+            $result = sprintf('<value>%s</value>', $dumper->dump($address));
         } else {
-            $result = sprintf('<value>%s, %s</value>', $geocoded->getLatitude(), $geocoded->getLongitude());
+            $result = sprintf('<value>%s, %s</value>', $address->getLatitude(), $address->getLongitude());
         }
 
         $output->writeln($result);

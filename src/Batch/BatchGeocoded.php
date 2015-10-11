@@ -176,7 +176,7 @@ class BatchGeocoded
      *
      * @param array $data
      */
-    public function fromArray(array $data = array())
+    public function fromArray(array $data = [])
     {
         if (isset($data['providerName'])) {
             $this->providerName = $data['providerName'];
@@ -189,8 +189,7 @@ class BatchGeocoded
         }
 
         // Shortcut to create the address and set it in this class
-        $addressFactory = new AddressFactory();
-        $this->setAddress($addressFactory->createFromArray([$data])->first());
+        $this->setAddress((new AddressFactory)->createFromArray([$data['address']])->first());
     }
 
 	/**
@@ -206,7 +205,6 @@ class BatchGeocoded
             return null;
         }
 
-        return call_user_func_array(array($this->address, $method), $args);
+        return call_user_func_array([$this->address, $method], $args);
     }
-
 }

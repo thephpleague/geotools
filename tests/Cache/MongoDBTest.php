@@ -113,44 +113,50 @@ class MongoDBTest extends \League\Geotools\Tests\TestCase
 
     public function testIsCachedReturnsBatchGeocodedObject()
     {
-        $array = array(
+        $array = [
             'id'               => 'f2dcb93aa43e3ad731d54143d2a4a373',
             'providerName'     => 'google_maps',
             'query'            => 'Paris, France',
             'exceptionMessage' => '',
             'coordinates'      =>
-                array (
+                [
                     0 => 48.856614,
                     1 => 2.3522219,
-                ),
+                ],
             'latitude'  => 48.856614,
             'longitude' => 2.3522219,
-            'bounds' =>
-                array (
-                    'south' => 48.815573,
-                    'west'  => 2.224199,
-                    'north' => 48.9021449,
-                    'east'  => 2.4699208,
-                ),
-            'streetNumber' => null,
-            'streetName'   => null,
-            'locality'     => 'Paris',
-            'postalCode'   => null,
-            'subLocality'  => null,
-            'adminLevels' => array(
-                1 => array(
-                    'code' => 'NY',
-                    'name' => 'New York'
-                ),
-                2 => array(
-                    'code' => 'New York County',
-                    'name' => 'New York County'
-                )
-            ),
-            'country'      => 'France',
-            'countryCode'  => 'FR',
-            'timezone'     => null,
-        );
+            'address' => [
+                'latitude'  => 48.856614,
+                'longitude' => 2.3522219,
+                'bounds' =>
+                    [
+                        'south' => 48.815573,
+                        'west'  => 2.224199,
+                        'north' => 48.9021449,
+                        'east'  => 2.4699208,
+                    ],
+                'streetNumber' => null,
+                'streetName'   => null,
+                'locality'     => 'Paris',
+                'postalCode'   => null,
+                'subLocality'  => null,
+                'adminLevels' => [
+                    1 => [
+                        'level' => 1,
+                        'code'  => 'NY',
+                        'name'  => 'New York'
+                    ],
+                    2 => [
+                        'level' => 2,
+                        'code'  => 'New York County',
+                        'name'  => 'New York County'
+                    ],
+                ],
+                'country'      => 'France',
+                'countryCode'  => 'FR',
+                'timezone'     => null,
+            ],
+        ];
 
         try {
             $mockMongo = $this->getMock('\Mongo', array('findOne'));

@@ -30,11 +30,12 @@ class BatchGeocodedTest extends \League\Geotools\Tests\TestCase
 
 	public function testFromArray()
 	{
-		$array = array(
+		$array = [
 			'providerName' => 'Foo provider foo',
 			'query'        => 'Bar query bar',
 			'exception'    => 'Baz exception baz',
-		);
+			'address'      => [],
+		];
 
 		$this->batchGeocoded->fromArray($array);
 
@@ -49,7 +50,7 @@ class BatchGeocodedTest extends \League\Geotools\Tests\TestCase
 
 	public function testOtherMethodsAreCalledFromTheAddressObject()
 	{
-		$this->batchGeocoded->fromArray([]);
+		$this->batchGeocoded->fromArray(['address' => []]);
 
 		$this->assertNull($this->batchGeocoded->getProviderName());
 		$this->assertNull($this->batchGeocoded->getQuery());

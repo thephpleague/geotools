@@ -17,7 +17,7 @@ use League\Geotools\Point\Point;
 use League\Geotools\Batch\Batch;
 use League\Geotools\Geohash\Geohash;
 use League\Geotools\Convert\Convert;
-use Geocoder\Geocoder as GeocoderInterface;
+use Geocoder\Geocoder;
 
 /**
  * Geotools class
@@ -52,7 +52,7 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     /**
      * {@inheritDoc}
      */
-    public function batch(GeocoderInterface $geocoder)
+    public function batch(Geocoder $geocoder)
     {
         return new Batch($geocoder);
     }
