@@ -40,6 +40,7 @@ coordinate, read more in [wikipedia](http://en.wikipedia.org/wiki/Cardinal_direc
 * Compute the **destination point** (coordinate) with given bearing in degrees and a distance in meters. [»](#point)
 * Encode a coordinate to a **geo hash** string and decode it to a coordinate, read more in
 [wikipedia](http://en.wikipedia.org/wiki/Geohash) and on [geohash.org](http://geohash.org/). [»](#geohash)
+* Encode a coordinate via the 10:10 algorithm. [»](#1010)
 * **Polygon** class provides methods to check either a poing (coordinate) is in, or on the polygon's boundaries.
 [»](#polygon)
 * A **command-line interface** (CLI) for **Distance**, **Point**, **Geohash** and **Convert** classes. [»](#cli)
@@ -425,6 +426,18 @@ printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&bo
     $southWest->getLongitude(), $southWest->getLatitude(),
     $northEast->getLongitude(), $northEast->getLatitude()
 ); // http://www.openstreetmap.org/?minlon=5.3695678710938&minlat=43.295745849609&maxlon=5.3709411621094&maxlat=43.297119140625&box=yes
+```
+
+## 10:10 ##
+
+Represent a location with 10m accuracy using a 10 character code that includes features to prevent errors in
+entering the code. Read more about the algorithm [here](http://blog.jgc.org/2006/07/simple-code-for-entering-latitude-and.html).
+
+```php
+<?php
+
+$tenten = new \League\Geotools\Tests\Geohash\TenTen;
+$tenten->encode(new Coordinate([51.09559, 1.12207])); // MEQ N6G 7NY5
 ```
 
 ## Polygon ##
