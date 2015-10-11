@@ -28,19 +28,25 @@ class AbstractCacheTest extends \League\Geotools\Tests\TestCase
      */
     protected $json;
 
+    /**
+     * @var BatchGeocoded
+     */
+    protected $batchGeocoded;
+
+    /**
+     * @var array
+     */
+    protected $expectedArray;
+
     protected function setUp()
     {
         $this->testableAbstractCache = new TestableAbstractCache;
 
         $this->json = <<<JSON
-{"providerName":"google_maps","query":"Tagensvej 47, K\u00f8benhavn","exceptionMessage":null,"address":{"coordinates":{"latitude":55.699953,"longitude":12.552736},"latitude":55.699953,"longitude":12.552736,"bounds":{"south":55.699953,"west":12.552736,"north":55.699953,"east":12.552736,"defined":true},"streetNumber":"47","streetName":"Tagensvej","locality":"K\u00f8benhavn","postalCode":"2200","subLocality":"K\u00f8benhavn N","adminLevels":{"2":{"level":2,"name":"K\u00f8benhavn","code":"K\u00f8benhavn"}},"countryCode":"DK","timezone":null},"coordinates":{"latitude":55.699953,"longitude":12.552736},"latitude":55.699953,"longitude":12.552736}
+{"providerName":"google_maps","query":"Tagensvej 47, K\u00f8benhavn","exceptionMessage":null,"address":{"coordinates":{"latitude":55.699953,"longitude":12.552736},"latitude":55.699953,"longitude":12.552736,"bounds":{"south":55.699953,"west":12.552736,"north":55.699953,"east":12.552736,"defined":true},"streetNumber":"47","streetName":"Tagensvej","locality":"K\u00f8benhavn","postalCode":"2200","subLocality":"K\u00f8benhavn N","adminLevels":{"2":{"level":2,"name":"K\u00f8benhavn","code":"K\u00f8benhavn"}},"country":"Denmark","countryCode":"DK","timezone":null},"coordinates":{"latitude":55.699953,"longitude":12.552736},"latitude":55.699953,"longitude":12.552736}
 JSON;
-    }
-
-    public function testSerialize()
-    {
-        $batchGeocoded = new BatchGeocoded;
-        $batchGeocoded->fromArray([
+        $this->batchGeocoded = new BatchGeocoded;
+        $this->batchGeocoded->fromArray([
             'providerName'     => 'google_maps',
             'query'            => 'Tagensvej 47, København',
             'exceptionMessage' => null,
@@ -65,20 +71,13 @@ JSON;
                         'level' => 2,
                     ],
                 ],
-                'country'     => 'Denmark', // this is not serialized correctly and is ignored in the serializer
+                'country'     => 'Denmark',
                 'countryCode' => 'DK',
                 'timezone'    => null,
             ],
         ]);
 
-        $serialized = $this->testableAbstractCache->serialize($batchGeocoded);
-        $this->assertSame($this->json, $serialized);
-
-    }
-
-    public function testDeserialize()
-    {
-        $array = [
+        $this->expectedArray = [
             'providerName'     => 'google_maps',
             'query'            => 'Tagensvej 47, København',
             'exceptionMessage' => null,
@@ -104,7 +103,7 @@ JSON;
                         'code'  => 'København',
                     ],
                 ],
-                // 'country'     => 'Denmark',
+                'country'     => 'Denmark',
                 'countryCode' => 'DK',
                 'timezone'    => null,
                 'coordinates' => [
@@ -119,14 +118,35 @@ JSON;
             'latitude'  => 55.699953,
             'longitude' => 12.552736,
         ];
+    }
 
+    public function testNormalize()
+    {
+        $normalized = $this->testableAbstractCache->normalize($this->batchGeocoded);
+        $this->assertEquals($this->expectedArray, $normalized);
+    }
+
+    public function testSerialize()
+    {
+        $serialized = $this->testableAbstractCache->serialize($this->batchGeocoded);
+        $this->assertSame($this->json, $serialized);
+
+    }
+
+    public function testDeserialize()
+    {
         $deserialized = $this->testableAbstractCache->deserialize($this->json);
-        $this->assertEquals($array, $deserialized);
+        $this->assertEquals($this->expectedArray, $deserialized);
     }
 }
 
 class TestableAbstractCache extends \League\Geotools\Cache\AbstractCache
 {
+    public function normalize($object)
+    {
+        return parent::normalize($object);
+    }
+
     public function serialize($object)
     {
         return parent::serialize($object);

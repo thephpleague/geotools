@@ -33,11 +33,14 @@ abstract class AbstractCache
     {
         $serializer = new Serializer([new ObjectNormalizer]);
 
-        return $serializer->normalize($object);
+        return $this->fixSerialization($serializer->normalize($object));
     }
 
     /**
      * Serialize an object to json.
+     *
+     * @todo There is an issue while serializing the Country object in JSON.
+     * The country has the Country object (name and code) instead to have the country name.
      *
      * @param BatchGeocoded $object The BatchGeocoded object to serialize.
      *
@@ -45,12 +48,13 @@ abstract class AbstractCache
      */
     protected function serialize($object)
     {
-        $normalizer = new ObjectNormalizer;
-        // there is an issue while serializing the country object
-        $normalizer->setIgnoredAttributes(['country']);
-        $serializer = new Serializer([$normalizer], [new JsonEncoder]);
+        $serializer = new Serializer([new ObjectNormalizer], [new JsonEncoder]);
+        $serialized = $serializer->serialize($object, 'json');
 
-        return $serializer->serialize($object, 'json');
+        // transform to array to fix the serialization issue
+        $serialized = json_decode($serialized, true);
+
+        return json_encode($this->fixSerialization($serialized));
     }
 
     /**
@@ -63,5 +67,12 @@ abstract class AbstractCache
     protected function deserialize($json)
     {
         return json_decode($json, true);
+    }
+
+    private function fixSerialization(array $serialized)
+    {
+        $serialized['address']['country'] = $serialized['address']['country']['name'];
+
+        return $serialized;
     }
 }

@@ -438,6 +438,8 @@ First you need to create the polygon, you can provide:
 - a `CoordinateCollection`
 
 ```php
+<?php
+
 $polygon = new \League\Geotools\Polygon([
     [48.9675969, 1.7440796],
     [48.4711003, 2.5268555],
