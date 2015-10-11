@@ -72,7 +72,7 @@ abstract class AbstractCache
      */
     protected function setAdminLevels($array)
     {
-        foreach ($array['adminLevels'] as $level => &$adminLevel) {
+        foreach ($array['address']['adminLevels'] as $level => &$adminLevel) {
             $adminLevel['level'] = $level;
         }
 
