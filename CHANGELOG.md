@@ -1,10 +1,13 @@
 CHANGELOG
 =========
 
-0.5.1 (xxxx-xx-xx)
+0.6.0 (2015-10-11)
 ------------------
 
-n/a
+* Fixed: cache layer: Redis, Memcached and MongoDB
+* Added: cache possibility in CLI
+* Added: 10:10 algorithm
+* Updated: symfony console, serializer and property-access to ~2.7
 
 0.5.0 (2015-10-10)
 ------------------
