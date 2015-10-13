@@ -372,18 +372,18 @@ the *middle point* and the *destination point*. The middle and the destination p
 $geotools = new \League\Geotools\Geotools();
 $coordA   = new \League\Geotools\Coordinate\Coordinate([48.8234055, 2.3072664]);
 $coordB   = new \League\Geotools\Coordinate\Coordinate([43.296482, 5.36978]);
-$point    =  $geotools->point()->setFrom($coordA)->setTo($coordB);
+$vertex    =  $geotools->vertex()->setFrom($coordA)->setTo($coordB);
 
-printf("%d\n", $point->initialBearing()); // 157 (degrees)
-printf("%s\n", $point->initialCardinal()); // SSE (SouthSouthEast)
-printf("%d\n", $point->finalBearing()); // 160 (degrees)
-printf("%s\n", $point->finalCardinal()); // SSE (SouthSouthEast)
+printf("%d\n", $vertex->initialBearing()); // 157 (degrees)
+printf("%s\n", $vertex->initialCardinal()); // SSE (SouthSouthEast)
+printf("%d\n", $vertex->finalBearing()); // 160 (degrees)
+printf("%s\n", $vertex->finalCardinal()); // SSE (SouthSouthEast)
 
-$middlePoint = $point->middle(); // \League\Geotools\Coordinate\Coordinate
+$middlePoint = $vertex->middle(); // \League\Geotools\Coordinate\Coordinate
 printf("%s\n", $middlePoint->getLatitude()); // 46.070143125815
 printf("%s\n", $middlePoint->getLongitude()); // 3.9152401085931
 
-$destinationPoint = $geotools->point()->setFrom($coordA)->destination(180, 200000); // \League\Geotools\Coordinate\Coordinate
+$destinationPoint = $geotools->vertex()->setFrom($coordA)->destination(180, 200000); // \League\Geotools\Coordinate\Coordinate
 printf("%s\n", $destinationPoint->getLatitude()); // 47.026774650075
 printf("%s\n", $destinationPoint->getLongitude()); // 2.3072664
 ```
