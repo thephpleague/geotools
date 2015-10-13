@@ -54,7 +54,7 @@ EOT
         $to        = new Coordinate($input->getArgument('destination'), $ellipsoid);
 
         $geotools = new Geotools;
-        $middle   = $geotools->point()->setFrom($from)->setTo($to)->middle();
+        $middle   = $geotools->vertex()->setFrom($from)->setTo($to)->middle();
 
         $output->writeln(sprintf(
             '<value>%s, %s</value>',

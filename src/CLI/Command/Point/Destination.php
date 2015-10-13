@@ -53,7 +53,7 @@ EOT
         $from     = new Coordinate($input->getArgument('origin'), Ellipsoid::createFromName($input->getOption('ellipsoid')));
         $geotools = new Geotools;
 
-        $destination = $geotools->point()->setFrom($from);
+        $destination = $geotools->vertex()->setFrom($from);
         $destination = $destination->destination($input->getArgument('bearing'), $input->getArgument('distance'));
 
         $output->writeln(sprintf(

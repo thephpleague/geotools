@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Tests\Point;
+namespace League\Geotools\Tests\Vertex;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
-use League\Geotools\Vertex\Point;
+use League\Geotools\Vertex\Vertex;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class PointTest extends \League\Geotools\Tests\TestCase
+class VertexTest extends \League\Geotools\Tests\TestCase
 {
     protected $point;
     protected $from;
@@ -26,7 +26,7 @@ class PointTest extends \League\Geotools\Tests\TestCase
 
     protected function setUp()
     {
-        $this->point = new Point;
+        $this->point = new Vertex;
         $this->from  = $this->getStubCoordinate();
         $this->to    = $this->getStubCoordinate();
         }
@@ -45,7 +45,7 @@ class PointTest extends \League\Geotools\Tests\TestCase
         $point = $this->point->setFrom($this->from);
 
         $this->assertTrue(is_object($point));
-        $this->assertInstanceOf('League\Geotools\Vertex\Point', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $point);
         $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $point);
         $this->assertSame($this->point, $point);
     }
@@ -64,7 +64,7 @@ class PointTest extends \League\Geotools\Tests\TestCase
         $point = $this->point->setTo($this->to);
 
         $this->assertTrue(is_object($point));
-        $this->assertInstanceOf('League\Geotools\Vertex\Point', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $point);
         $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $point);
         $this->assertSame($this->point, $point);
     }

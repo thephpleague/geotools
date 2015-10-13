@@ -57,7 +57,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->point()->setFrom($from)->setTo($to)->finalBearing()
+            $geotools->vertex()->setFrom($from)->setTo($to)->finalBearing()
         ));
     }
 }

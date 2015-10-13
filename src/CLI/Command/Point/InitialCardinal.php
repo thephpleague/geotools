@@ -57,7 +57,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->point()->setFrom($from)->setTo($to)->initialCardinal()
+            $geotools->vertex()->setFrom($from)->setTo($to)->initialCardinal()
         ));
     }
 }

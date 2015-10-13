@@ -37,10 +37,10 @@ class GeotoolsTest extends TestCase
 
     public function testPointShouldReturnANewPointInstance()
     {
-        $point = $this->geotools->point();
+        $point = $this->geotools->vertex();
 
         $this->assertTrue(is_object($point));
-        $this->assertInstanceOf('League\Geotools\Vertex\Point', $point);
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $point);
         $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $point);
     }
 
