@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Tests\CLI\Command\Point;
+namespace League\Geotools\Tests\CLI\Command\Vertex;
 
 use League\Geotools\CLI\Application;
-use League\Geotools\CLI\Command\Point\InitialBearing;
+use League\Geotools\CLI\Command\Vertex\FinalBearing;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class InitialBearingTest extends \League\Geotools\Tests\TestCase
+class FinalBearingTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,9 +27,9 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
     protected function setUp()
     {
         $this->application = new Application;
-        $this->application->add(new InitialBearing);
+        $this->application->add(new FinalBearing);
 
-        $this->command = $this->application->find('point:initial-bearing');
+        $this->command = $this->application->find('vertex:final-bearing');
 
         $this->commandTester = new CommandTester($this->command);
     }
@@ -67,7 +67,7 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/87/', $this->commandTester->getDisplay());
+        $this->assertRegExp('/118/', $this->commandTester->getDisplay());
     }
 
     /**
@@ -104,10 +104,10 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
             'destination' => '30°16′57″N 029°48′32″W',
-            '--ellipsoid' => 'FISCHER_1968',
+            '--ellipsoid' => 'GRS_1980',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/87/', $this->commandTester->getDisplay());
+        $this->assertSame('<value>118</value>', trim($this->commandTester->getDisplay()));
     }
 }

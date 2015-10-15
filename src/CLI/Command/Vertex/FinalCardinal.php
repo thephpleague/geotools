@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\CLI\Command\Point;
+namespace League\Geotools\CLI\Command\Vertex;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
@@ -20,19 +20,19 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command-line point:initial-cardinal class
+ * Command-line vertex:final-cardinal class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class InitialCardinal extends \Symfony\Component\Console\Command\Command
+class FinalCardinal extends \Symfony\Component\Console\Command\Command
 {
     protected function configure()
     {
         $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
 
         $this
-            ->setName('point:initial-cardinal')
-            ->setDescription('Compute the initial cardinal point (direction) between 2 coordinates')
+            ->setName('vertex:final-cardinal')
+            ->setDescription('Compute the final cardinal point (direction) between 2 coordinates')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
             ->addOption('ellipsoid', null, InputOption::VALUE_REQUIRED,
@@ -40,9 +40,9 @@ class InitialCardinal extends \Symfony\Component\Console\Command\Command
             ->setHelp(<<<EOT
 <info>Available ellipsoids</info>: $availableEllipsoids
 
-<info>Example with INTERNATIONAL ellipsoid</info>:
+<info>Example with GRS_1967 ellipsoid</info>:
 
-    %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--ellipsoid=INTERNATIONAL</comment>
+    %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--ellipsoid=GRS_1967</comment>
 EOT
             );
     }
@@ -57,7 +57,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->vertex()->setFrom($from)->setTo($to)->initialCardinal()
+            $geotools->vertex()->setFrom($from)->setTo($to)->finalCardinal()
         ));
     }
 }

@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Tests\CLI\Command\Point;
+namespace League\Geotools\Tests\CLI\Command\Vertex;
 
 use League\Geotools\CLI\Application;
-use League\Geotools\CLI\Command\Point\Destination;
+use League\Geotools\CLI\Command\Vertex\FinalCardinal;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class DestinationTest extends \League\Geotools\Tests\TestCase
+class FinalCardinalTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,9 +27,9 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
     protected function setUp()
     {
         $this->application = new Application;
-        $this->application->add(new Destination);
+        $this->application->add(new FinalCardinal);
 
-        $this->command = $this->application->find('point:destination');
+        $this->command = $this->application->find('vertex:final-cardinal');
 
         $this->commandTester = new CommandTester($this->command);
     }
@@ -52,24 +52,22 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
     public function testExecuteInvalidArguments()
     {
         $this->commandTester->execute(array(
-            'command'  => $this->command->getName(),
-            'origin'   => 'foo, bar',
-            'bearing'  => ' ',
-            'distance' => '',
+            'command'     => $this->command->getName(),
+            'origin'      => 'foo, bar',
+            'destination' => ' ',
         ));
     }
 
     public function testExecute()
     {
         $this->commandTester->execute(array(
-            'command'  => $this->command->getName(),
-            'origin'   => '48.8234055, 2.3072664',
-            'bearing'  => 180,
-            'distance' => 200000,
+            'command'     => $this->command->getName(),
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/47\.026774650075, 2\.3072664/', $this->commandTester->getDisplay());
+        $this->assertSame('<value>ESE</value>', trim($this->commandTester->getDisplay()));
     }
 
     /**
@@ -80,9 +78,8 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
     {
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
-            'origin'      => '48.8234055, 2.3072664',
-            'bearing'     => 180,
-            'distance'    => 200000,
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
             '--ellipsoid' => ' ',
         ));
     }
@@ -95,52 +92,22 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
     {
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
-            'origin'      => '48.8234055, 2.3072664',
-            'bearing'     => 180,
-            'distance'    => 200000,
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
             '--ellipsoid' => 'foo',
         ));
     }
 
-    public function testExecuteWithEllipsoid_GRS_1980()
+    public function testExecuteWithEllipsoid()
     {
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
-            'origin'      => '48.8234055, 2.3072664',
-            'bearing'     => 110,
-            'distance'    => 2000000,
-            '--ellipsoid' => 'GRS_1980',
+            'origin'      => '40° 26.7717, -79° 56.93172',
+            'destination' => '30°16′57″N 029°48′32″W',
+            '--ellipsoid' => 'FISCHER_1968',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40\.279971519453, 24\.637336894406/', $this->commandTester->getDisplay());
-    }
-
-    public function testExecuteWithEllipsoid_AUSTRALIAN_NATIONAL()
-    {
-        $this->commandTester->execute(array(
-            'command'     => $this->command->getName(),
-            'origin'      => '48.8234055, 2.3072664',
-            'bearing'     => 110,
-            'distance'    => 2000000,
-            '--ellipsoid' => 'AUSTRALIAN_NATIONAL',
-        ));
-
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40\.280009426711, 24\.637268024987/', $this->commandTester->getDisplay());
-    }
-
-    public function testExecuteWithEllipsoid_BESSEL_1841()
-    {
-        $this->commandTester->execute(array(
-            'command'     => $this->command->getName(),
-            'origin'      => '48.8234055, 2.3072664',
-            'bearing'     => 110,
-            'distance'    => 2000000,
-            '--ellipsoid' => 'BESSEL_1841',
-        ));
-
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40\.278751982466, 24\.639552452771/', $this->commandTester->getDisplay());
+        $this->assertSame('<value>ESE</value>', trim($this->commandTester->getDisplay()));
     }
 }

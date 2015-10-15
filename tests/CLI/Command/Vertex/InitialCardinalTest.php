@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Tests\CLI\Command\Point;
+namespace League\Geotools\Tests\CLI\Command\Vertex;
 
 use League\Geotools\CLI\Application;
-use League\Geotools\CLI\Command\Point\Middle;
+use League\Geotools\CLI\Command\Vertex\InitialCardinal;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class MiddleTest extends \League\Geotools\Tests\TestCase
+class InitialCardinalTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,9 +27,9 @@ class MiddleTest extends \League\Geotools\Tests\TestCase
     protected function setUp()
     {
         $this->application = new Application;
-        $this->application->add(new Middle);
+        $this->application->add(new InitialCardinal);
 
-        $this->command = $this->application->find('point:middle');
+        $this->command = $this->application->find('vertex:initial-cardinal');
 
         $this->commandTester = new CommandTester($this->command);
     }
@@ -67,7 +67,7 @@ class MiddleTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/38\.068139209793, -53\.187718854545/', $this->commandTester->getDisplay());
+        $this->assertSame('<value>E</value>', trim($this->commandTester->getDisplay()));
     }
 
     /**
@@ -104,10 +104,10 @@ class MiddleTest extends \League\Geotools\Tests\TestCase
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
             'destination' => '30°16′57″N 029°48′32″W',
-            '--ellipsoid' => 'KRASSOVSKY',
+            '--ellipsoid' => 'INTERNATIONAL',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/38\.068139209793, -53\.187718854545/', $this->commandTester->getDisplay());
+        $this->assertSame('<value>E</value>', trim($this->commandTester->getDisplay()));
     }
 }

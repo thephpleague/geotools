@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\CLI\Command\Point;
+namespace League\Geotools\CLI\Command\Vertex;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
@@ -20,19 +20,19 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command-line point:final-bearing class
+ * Command-line vertex:middle class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class FinalBearing extends \Symfony\Component\Console\Command\Command
+class Middle extends \Symfony\Component\Console\Command\Command
 {
     protected function configure()
     {
         $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
 
         $this
-            ->setName('point:final-bearing')
-            ->setDescription('Compute the final bearing in degrees between 2 coordinates')
+            ->setName('vertex:middle')
+            ->setDescription('Compute the half-way coordinate between 2 coordinates')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
             ->addOption('ellipsoid', null, InputOption::VALUE_REQUIRED,
@@ -40,9 +40,9 @@ class FinalBearing extends \Symfony\Component\Console\Command\Command
             ->setHelp(<<<EOT
 <info>Available ellipsoids</info>: $availableEllipsoids
 
-<info>Example with GRS_1980 ellipsoid</info>:
+<info>Example with KRASSOVSKY ellipsoid</info>:
 
-    %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--ellipsoid=GRS_1980</comment>
+    %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--ellipsoid=KRASSOVSKY</comment>
 EOT
             );
     }
@@ -54,10 +54,11 @@ EOT
         $to        = new Coordinate($input->getArgument('destination'), $ellipsoid);
 
         $geotools = new Geotools;
+        $middle   = $geotools->vertex()->setFrom($from)->setTo($to)->middle();
 
         $output->writeln(sprintf(
-            '<value>%s</value>',
-            $geotools->vertex()->setFrom($from)->setTo($to)->finalBearing()
+            '<value>%s, %s</value>',
+            $middle->getLatitude(), $middle->getLongitude()
         ));
     }
 }
