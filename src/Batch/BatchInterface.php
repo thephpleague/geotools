@@ -36,7 +36,7 @@ interface BatchInterface
      * Set an array of closures to reverse geocode.
      * If a provider throws an exception it will return an empty AddressCollection.
      *
-     * @param CoordinateInterface|array $coordinates A coordinate or an array of coordinates to reverse.
+     * @param \League\Geotools\Coordinate\CoordinateInterface|array $coordinates A coordinate or an array of coordinates to reverse.
      *
      * @return BatchInterface
      *
