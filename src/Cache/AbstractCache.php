@@ -25,7 +25,7 @@ abstract class AbstractCache
     /**
      * Normalize an object to array.
      *
-     * @param BatchGeocoded $object The BatchGeocoded object to normalize.
+     * @param \League\Geotools\Batch\BatchGeocoded $object The BatchGeocoded object to normalize.
      *
      * @return array The normalized object.
      */
