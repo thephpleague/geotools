@@ -42,7 +42,7 @@ abstract class AbstractCache
      * @todo There is an issue while serializing the Country object in JSON.
      * The country has the Country object (name and code) instead to have the country name.
      *
-     * @param BatchGeocoded $object The BatchGeocoded object to serialize.
+     * @param \League\Geotools\Batch\BatchGeocoded $object The BatchGeocoded object to serialize.
      *
      * @return string The serialized object in json.
      */
