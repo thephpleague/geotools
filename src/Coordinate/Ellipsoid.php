@@ -11,7 +11,6 @@
 
 namespace League\Geotools\Coordinate;
 
-use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Exception\InvalidArgumentException;
 use League\Geotools\Exception\NotMatchingEllipsoidException;
 
