@@ -217,7 +217,7 @@ class Convert extends AbstractGeotools implements ConvertInterface
         }
 
         return sprintf('%d%s %d %d',
-            $zone, $this->latitudeBands[(int) ($this->coordinates->getLatitude() + 80) / 8], $easting, $northing
+            $zone, $this->latitudeBands[(int) (($this->coordinates->getLatitude() + 80) / 8)], $easting, $northing
         );
     }
 
