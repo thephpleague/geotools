@@ -9,64 +9,64 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Tests\Point;
+namespace League\Geotools\Tests\Vertex;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
-use League\Geotools\Point\Point;
+use League\Geotools\Vertex\Vertex;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class PointTest extends \League\Geotools\Tests\TestCase
+class VertexTest extends \League\Geotools\Tests\TestCase
 {
-    protected $point;
+    protected $vertex;
     protected $from;
     protected $to;
 
     protected function setUp()
     {
-        $this->point = new Point;
+        $this->vertex = new Vertex;
         $this->from  = $this->getStubCoordinate();
         $this->to    = $this->getStubCoordinate();
         }
 
     public function testSetFromValueShouldBeACoordinateInterface()
     {
-        $this->point->setFrom($this->from);
-        $from = $this->point->getFrom();
+        $this->vertex->setFrom($this->from);
+        $from = $this->vertex->getFrom();
 
         $this->assertTrue(is_object($from));
         $this->assertInstanceOf('League\Geotools\Coordinate\CoordinateInterface', $from);
     }
 
-    public function testSetFromShouldReturnTheSamePointInstance()
+    public function testSetFromShouldReturnTheSameVertexInstance()
     {
-        $point = $this->point->setFrom($this->from);
+        $vertex = $this->vertex->setFrom($this->from);
 
-        $this->assertTrue(is_object($point));
-        $this->assertInstanceOf('League\Geotools\Point\Point', $point);
-        $this->assertInstanceOf('League\Geotools\Point\PointInterface', $point);
-        $this->assertSame($this->point, $point);
+        $this->assertTrue(is_object($vertex));
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $vertex);
+        $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $vertex);
+        $this->assertSame($this->vertex, $vertex);
     }
 
     public function testSetToValueShouldBeACoordinateInterface()
     {
-        $this->point->setTo($this->to);
-        $to = $this->point->getTo();
+        $this->vertex->setTo($this->to);
+        $to = $this->vertex->getTo();
 
         $this->assertTrue(is_object($to));
         $this->assertInstanceOf('League\Geotools\Coordinate\CoordinateInterface', $to);
     }
 
-    public function testSetToShouldReturnTheSamePointInstance()
+    public function testSetToShouldReturnTheSameVertexInstance()
     {
-        $point = $this->point->setTo($this->to);
+        $vertex = $this->vertex->setTo($this->to);
 
-        $this->assertTrue(is_object($point));
-        $this->assertInstanceOf('League\Geotools\Point\Point', $point);
-        $this->assertInstanceOf('League\Geotools\Point\PointInterface', $point);
-        $this->assertSame($this->point, $point);
+        $this->assertTrue(is_object($vertex));
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $vertex);
+        $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $vertex);
+        $this->assertSame($this->vertex, $vertex);
     }
 
     /**
@@ -74,10 +74,10 @@ class PointTest extends \League\Geotools\Tests\TestCase
      */
     public function testInitialBearing($from, $to, $expectedDegree)
     {
-        $this->point->setFrom($this->getMockCoordinateReturns($from));
-        $this->point->setTo($this->getMockCoordinateReturns($to));
+        $this->vertex->setFrom($this->getMockCoordinateReturns($from));
+        $this->vertex->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedDegree, $this->point->initialBearing());
+        $this->assertEquals($expectedDegree, $this->vertex->initialBearing());
     }
 
     public function coordinatesAndExpectedDegreeForInitialBearingProvider()
@@ -116,10 +116,10 @@ class PointTest extends \League\Geotools\Tests\TestCase
      */
     public function testFinalBearing($from, $to, $expectedDegree)
     {
-        $this->point->setFrom($this->getMockCoordinateReturns($from));
-        $this->point->setTo($this->getMockCoordinateReturns($to));
+        $this->vertex->setFrom($this->getMockCoordinateReturns($from));
+        $this->vertex->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedDegree, $this->point->finalBearing());
+        $this->assertEquals($expectedDegree, $this->vertex->finalBearing());
     }
 
     public function coordinatesAndExpectedDegreeForFinalBearingProvider()
@@ -158,10 +158,10 @@ class PointTest extends \League\Geotools\Tests\TestCase
      */
     public function testInitialCardinal($from, $to, $expectedCardinal)
     {
-        $this->point->setFrom($this->getMockCoordinateReturns($from));
-        $this->point->setTo($this->getMockCoordinateReturns($to));
+        $this->vertex->setFrom($this->getMockCoordinateReturns($from));
+        $this->vertex->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedCardinal, $this->point->initialCardinal());
+        $this->assertEquals($expectedCardinal, $this->vertex->initialCardinal());
     }
 
     public function coordinatesAndExpectedInitialCardinalProvider()
@@ -200,10 +200,10 @@ class PointTest extends \League\Geotools\Tests\TestCase
      */
     public function testFinalCardinal($from, $to, $expectedCardinal)
     {
-        $this->point->setFrom($this->getMockCoordinateReturns($from));
-        $this->point->setTo($this->getMockCoordinateReturns($to));
+        $this->vertex->setFrom($this->getMockCoordinateReturns($from));
+        $this->vertex->setTo($this->getMockCoordinateReturns($to));
 
-        $this->assertEquals($expectedCardinal, $this->point->finalCardinal());
+        $this->assertEquals($expectedCardinal, $this->vertex->finalCardinal());
     }
 
     public function coordinatesAndExpectedFinalCardinalProvider()
@@ -242,9 +242,9 @@ class PointTest extends \League\Geotools\Tests\TestCase
      */
     public function testMiddle($from, $to, $expectedMiddlePoint)
     {
-        $this->point->setFrom($this->getMockCoordinateReturns($from));
-        $this->point->setTo($this->getMockCoordinateReturns($to));
-        $middlePoint = $this->point->middle();
+        $this->vertex->setFrom($this->getMockCoordinateReturns($from));
+        $this->vertex->setTo($this->getMockCoordinateReturns($to));
+        $middlePoint = $this->vertex->middle();
 
         $this->assertTrue(is_object($middlePoint));
         $this->assertInstanceOf('League\Geotools\Coordinate\Coordinate', $middlePoint);
@@ -287,10 +287,10 @@ class PointTest extends \League\Geotools\Tests\TestCase
             'invF' => 456.0
         ));
 
-        $this->point->setFrom($this->getMockCoordinateReturns(array(1, 2), $FOO));
-        $this->point->setTo($this->getMockCoordinateReturns(array(3, 4), $FOO));
+        $this->vertex->setFrom($this->getMockCoordinateReturns(array(1, 2), $FOO));
+        $this->vertex->setTo($this->getMockCoordinateReturns(array(3, 4), $FOO));
 
-        $this->assertSame($this->point->middle()->getEllipsoid(), $FOO);
+        $this->assertSame($this->vertex->middle()->getEllipsoid(), $FOO);
     }
 
     /**
@@ -300,8 +300,8 @@ class PointTest extends \League\Geotools\Tests\TestCase
     {
         $WGS84 = Ellipsoid::createFromName(Ellipsoid::WGS84);
 
-        $this->point->setFrom($this->getMockCoordinateReturns($from, $WGS84));
-        $destinationPoint = $this->point->destination($bearing, $distance);
+        $this->vertex->setFrom($this->getMockCoordinateReturns($from, $WGS84));
+        $destinationPoint = $this->vertex->destination($bearing, $distance);
 
         $this->assertTrue(is_object($destinationPoint));
         $this->assertInstanceOf('League\Geotools\Coordinate\Coordinate', $destinationPoint);
@@ -348,8 +348,8 @@ class PointTest extends \League\Geotools\Tests\TestCase
             'invF' => 456.0
         ));
 
-        $this->point->setFrom($this->getMockCoordinateReturns(array(1, 2), $FOO));
+        $this->vertex->setFrom($this->getMockCoordinateReturns(array(1, 2), $FOO));
 
-        $this->assertSame($this->point->destination(123, 456)->getEllipsoid(), $FOO);
+        $this->assertSame($this->vertex->destination(123, 456)->getEllipsoid(), $FOO);
     }
 }

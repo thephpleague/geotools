@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\CLI\Command\Point;
+namespace League\Geotools\CLI\Command\Vertex;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command-line point:final-cardinal class
+ * Command-line vertex:final-cardinal class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
@@ -31,7 +31,7 @@ class FinalCardinal extends \Symfony\Component\Console\Command\Command
         $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
 
         $this
-            ->setName('point:final-cardinal')
+            ->setName('vertex:final-cardinal')
             ->setDescription('Compute the final cardinal point (direction) between 2 coordinates')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
@@ -57,7 +57,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->point()->setFrom($from)->setTo($to)->finalCardinal()
+            $geotools->vertex()->setFrom($from)->setTo($to)->finalCardinal()
         ));
     }
 }

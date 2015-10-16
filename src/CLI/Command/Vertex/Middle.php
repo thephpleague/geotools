@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\CLI\Command\Point;
+namespace League\Geotools\CLI\Command\Vertex;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command-line point:middle class
+ * Command-line vertex:middle class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
@@ -31,7 +31,7 @@ class Middle extends \Symfony\Component\Console\Command\Command
         $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
 
         $this
-            ->setName('point:middle')
+            ->setName('vertex:middle')
             ->setDescription('Compute the half-way coordinate between 2 coordinates')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
@@ -54,7 +54,7 @@ EOT
         $to        = new Coordinate($input->getArgument('destination'), $ellipsoid);
 
         $geotools = new Geotools;
-        $middle   = $geotools->point()->setFrom($from)->setTo($to)->middle();
+        $middle   = $geotools->vertex()->setFrom($from)->setTo($to)->middle();
 
         $output->writeln(sprintf(
             '<value>%s, %s</value>',

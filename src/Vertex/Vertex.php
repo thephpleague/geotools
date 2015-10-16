@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Point;
+namespace League\Geotools\Vertex;
 
 use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\Coordinate;
@@ -17,11 +17,11 @@ use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
 
 /**
- * Point class
+ * Vertex class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Point extends AbstractGeotools implements PointInterface
+class Vertex extends AbstractGeotools implements VertexInterface
 {
     /**
      * {@inheritDoc}

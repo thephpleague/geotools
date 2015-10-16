@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\CLI\Command\Point;
+namespace League\Geotools\CLI\Command\Vertex;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command-line point:initial-bearing class
+ * Command-line vertex:initial-bearing class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
@@ -31,7 +31,7 @@ class InitialBearing extends \Symfony\Component\Console\Command\Command
         $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
 
         $this
-            ->setName('point:initial-bearing')
+            ->setName('vertex:initial-bearing')
             ->setDescription('Compute the initial bearing in degrees between 2 coordinates')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
@@ -57,7 +57,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->point()->setFrom($from)->setTo($to)->initialBearing()
+            $geotools->vertex()->setFrom($from)->setTo($to)->initialBearing()
         ));
     }
 }

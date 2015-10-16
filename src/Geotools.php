@@ -13,7 +13,7 @@ namespace League\Geotools;
 
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Distance\Distance;
-use League\Geotools\Point\Point;
+use League\Geotools\Vertex\Vertex;
 use League\Geotools\Batch\Batch;
 use League\Geotools\Geohash\Geohash;
 use League\Geotools\Convert\Convert;
@@ -44,9 +44,9 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     /**
      * {@inheritDoc}
      */
-    public function point()
+    public function vertex()
     {
-        return new Point;
+        return new Vertex;
     }
 
     /**

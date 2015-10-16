@@ -29,11 +29,11 @@ interface GeotoolsInterface
     public function distance();
 
     /**
-     * Returns an instance of Point.
+     * Returns an instance of Vertex.
      *
-     * @return PointInterface
+     * @return VertexInterface
      */
-    public function point();
+    public function vertex();
 
     /**
      * Returns an instance of Batch.
