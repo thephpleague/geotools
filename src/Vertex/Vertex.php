@@ -24,12 +24,33 @@ use League\Geotools\Coordinate\Ellipsoid;
 class Vertex extends AbstractGeotools implements VertexInterface
 {
     /**
+     * @var integer
+     */
+    protected $gradient;
+
+    /**
+     * @var integer
+     */
+    protected $ordinateIntercept;
+
+    /**
+     * @var integer
+     */
+    private $precision = 8;
+
+    /**
      * {@inheritDoc}
      */
     public function setFrom(CoordinateInterface $from)
     {
         $this->from = $from;
 
+        if (empty($this->to) || ($this->to->getLatitude() - $this->from->getLatitude() === 0)) {
+            return $this;
+        }
+
+        $this->gradient = ($this->to->getLongitude() - $this->from->getLongitude()) / ($this->to->getLatitude() - $this->from->getLatitude());
+        $this->ordinateIntercept = $this->from->getLongitude() - $this->from->getLatitude() * $this->gradient;
         return $this;
     }
 
@@ -48,6 +69,14 @@ class Vertex extends AbstractGeotools implements VertexInterface
     {
         $this->to = $to;
 
+        if (empty($this->from) || ($this->to->getLatitude() - $this->from->getLatitude() === 0)) {
+            return $this;
+        }
+
+        $this->gradient = ($this->to->getLongitude() - $this->from->getLongitude()) / ($this->to->getLatitude() - $this->from->getLatitude());
+        // var_dump($this->gradient);
+        $this->ordinateIntercept = $this->from->getLongitude() - $this->from->getLatitude() * $this->gradient;
+        // var_dump($this->ordinateIntercept);
         return $this;
     }
 
@@ -57,6 +86,41 @@ class Vertex extends AbstractGeotools implements VertexInterface
     public function getTo()
     {
         return $this->to;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getGradient()
+    {
+        return $this->gradient;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getOrdinateIntercept()
+    {
+        return $this->ordinateIntercept;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getPrecision()
+    {
+        return $this->precision;
+    }
+
+    /**
+     * @param  integer $precision
+     * @return $this
+     */
+    public function setPrecision($precision)
+    {
+        $this->precision = $precision;
+
+        return $this;
     }
 
     /**
@@ -174,4 +238,26 @@ class Vertex extends AbstractGeotools implements VertexInterface
 
         return new Coordinate(array(rad2deg($endLat), rad2deg($endLon)), $this->from->getEllipsoid());
     }
+
+    /**
+     * Returns true if the vertex passed on argument is on the same line as this object
+     *
+     * @param  Vertex  $vertex The vertex to compare
+     * @return boolean
+     */
+    public function isOnSameLine(Vertex $vertex) {
+        if (is_null($this->getGradient()) && is_null($vertex->getGradient()) && $this->from->getLongitude() == $vertex->getFrom()->getLongitude()) {
+            return true;
+        } elseif (!is_null($this->getGradient()) && !is_null($vertex->getGradient())) {
+            return (
+                bccomp($this->getGradient(), $vertex->getGradient(), $this->getPrecision()) === 0
+                &&
+                bccomp($this->getOrdinateIntercept(), $vertex->getOrdinateIntercept(), $this->getPrecision()) ===0
+            );
+        } else {
+            return false;
+        }
+    }
+
+
 }

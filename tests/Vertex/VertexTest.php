@@ -352,4 +352,83 @@ class VertexTest extends \League\Geotools\Tests\TestCase
 
         $this->assertSame($this->vertex->destination(123, 456)->getEllipsoid(), $FOO);
     }
+
+
+    /**
+     * @dataProvider VertexCoordinatesAndExpectedSameLineStatusProvider
+     */
+    public function testSameLine($vertexCoordinatesFirst, $vertexCoordinatesSecond, $sameLineStatus)
+    {
+        $this->vertex->setFrom($this->getMockCoordinateReturns($vertexCoordinatesFirst['from']));
+        $this->vertex->setTo($this->getMockCoordinateReturns($vertexCoordinatesFirst['to']));
+        $vertexToComp = new Vertex;
+        $vertexToComp->setFrom($this->getMockCoordinateReturns($vertexCoordinatesSecond['from']));
+        $vertexToComp->setTo($this->getMockCoordinateReturns($vertexCoordinatesSecond['to']));
+
+        $this->assertTrue(is_object($vertexToComp));
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $this->vertex);
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $vertexToComp);
+        $this->assertEquals($sameLineStatus, $this->vertex->isOnSameLine($vertexToComp));
+    }
+
+    public function VertexCoordinatesAndExpectedSameLineStatusProvider()
+    {
+        return array(
+            array(
+                array(
+                    'from' => array(2, 5),
+                    'to' => array(3, 7)
+                ),
+                array(
+                    'from' => array(14, 29),
+                    'to' => array(-35, -69)
+                ),
+                true
+            ),
+            array(
+                array(
+                    'from' => array(48.8234055, 2.3072664),
+                    'to' => array(43.296482, 5.36978)
+                ),
+                array(
+                    'from' => array(56.2615, -1.8142427115944),
+                    'to' => array(15.55886, 20.739423637488)
+                ),
+                true
+            ),
+            array(
+                array(
+                    'from' => array(1, 4),
+                    'to' => array(2, 8)
+                ),
+                array(
+                    'from' => array(1, 4),
+                    'to' => array(2, 7)
+                ),
+                false
+            ),
+            array(
+                array(
+                    'from' => array(48.8234055, 2.3072664),
+                    'to' => array(43.296482, 5.36978)
+                ),
+                array(
+                    'from' => array(4.26116, 2.3072664),
+                    'to' => array(68.5, 8.79635)
+                ),
+                false
+            ),
+            array(
+                array(
+                    'from' => array(48.8234055, 2.3072664),
+                    'to' => array(43.296482, 5.36978)
+                ),
+                array(
+                    'from' => array(48.8234055, 2.3072664),
+                    'to' => array(null, null)
+                ),
+                false
+            ),
+        );
+    }
 }
