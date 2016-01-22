@@ -27,9 +27,9 @@
         "php"                     : ">=5.4",
         "willdurand/geocoder"     : "~3.2",
         "react/promise"           : "~2.2",
-        "symfony/console"         : "~2.7",
-        "symfony/property-access" : "~2.7",
-        "symfony/serializer"      : "~2.7",
+        "symfony/console"         : "~2.7|~3.0",
+        "symfony/property-access" : "~2.7|~3.0",
+        "symfony/serializer"      : "~2.7|~3.0",
         "react/event-loop"        : "0.4.*"
     },
 
