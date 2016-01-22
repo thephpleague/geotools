@@ -36,7 +36,7 @@ class DMTest extends \League\Geotools\Tests\TestCase
 
     /**
      * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments.
+     * @expectedExceptionMessage Not enough arguments
      */
     public function testExecuteWithoutArguments()
     {

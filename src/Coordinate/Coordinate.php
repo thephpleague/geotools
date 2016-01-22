@@ -19,7 +19,7 @@ use League\Geotools\Exception\InvalidArgumentException;
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Coordinate implements CoordinateInterface
+class Coordinate implements CoordinateInterface, \JsonSerializable
 {
     /**
      * The latitude of the coordinate.
@@ -223,5 +223,13 @@ class Coordinate implements CoordinateInterface
         throw new InvalidArgumentException(
             'It should be a valid and acceptable ways to write geographic coordinates !'
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize()
+    {
+        return [$this->latitude, $this->longitude];
     }
 }
