@@ -37,7 +37,7 @@
         "kriswallsmith/buzz"      : "~0.10",
         "guzzle/guzzle"           : "~3.7",
         "zendframework/zend-http" : "~2.2",
-        "predis/predis"           : "~0.8"
+        "predis/predis"           : "~1.0"
     },
 
     "autoload" : {
