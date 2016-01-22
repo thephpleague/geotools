@@ -51,4 +51,18 @@ interface VertexInterface
      * @return CoordinateInterface
      */
     public function getTo();
+
+    /**
+     * Get the gradient (slope) of the vertex.
+     *
+     * @return integer
+     */
+    public function getGradient();
+
+    /**
+     * Get the ordinate (longitude) of the point where vertex intersects with the ordinate-axis (Prime-Meridian) of the coordinate system.
+     *
+     * @return integer
+     */
+    public function getOrdinateIntercept();
 }
