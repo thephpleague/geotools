@@ -25,7 +25,7 @@ class Redis extends AbstractCache implements CacheInterface
     /**
      * The redis cache.
      *
-     * @var Predis
+     * @var \Predis\Client
      */
     protected $redis;
 

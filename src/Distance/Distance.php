@@ -11,7 +11,7 @@
 
 namespace League\Geotools\Distance;
 
-use League\Geootols\Exception\NotConvergingException;
+use League\Geotools\Exception\NotConvergingException;
 use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
