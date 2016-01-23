@@ -29,11 +29,7 @@ class RedisTest extends \League\Geotools\Tests\TestCase
         $this->redis = new TestableRedis;
     }
 
-    /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMEssage Invalid URI: foo.bar
-     */
-    public function testConstructorThrowsInvalidArgumentException()
+    public function testConstructorDoesNotThrowInvalidArgumentException()
     {
         new Redis(array('foo.bar'));
     }

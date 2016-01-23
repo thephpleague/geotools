@@ -11,7 +11,6 @@
 
 namespace League\Geotools\Cache;
 
-use League\Geotools\Exception\InvalidArgumentException;
 use League\Geotools\Batch\BatchGeocoded;
 use Predis\Client;
 
@@ -42,17 +41,11 @@ class Redis extends AbstractCache implements CacheInterface
      *
      * @param array   $client The client information (optional).
      * @param integer $expire The expire value in seconds (optional).
-     *
-     * @throws InvalidArgumentException
      */
     public function __construct(array $client = array(), $expire = 0)
     {
-        try {
-            $this->redis  = new Client($client);
-            $this->expire = (int) $expire;
-        } catch (\Exception $e) {
-            throw new InvalidArgumentException($e->getMessage());
-        }
+        $this->redis  = new Client($client);
+        $this->expire = (int) $expire;
     }
 
     /**
