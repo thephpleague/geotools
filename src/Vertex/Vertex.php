@@ -74,9 +74,8 @@ class Vertex extends AbstractGeotools implements VertexInterface
         }
 
         $this->gradient = ($this->to->getLongitude() - $this->from->getLongitude()) / ($this->to->getLatitude() - $this->from->getLatitude());
-        // var_dump($this->gradient);
         $this->ordinateIntercept = $this->from->getLongitude() - $this->from->getLatitude() * $this->gradient;
-        // var_dump($this->ordinateIntercept);
+
         return $this;
     }
 
