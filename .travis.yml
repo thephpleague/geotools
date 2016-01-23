@@ -11,6 +11,7 @@ sudo: false
 
 cache:
   directories:
+    - vendor
     - $HOME/.composer/cache
 
 matrix:
