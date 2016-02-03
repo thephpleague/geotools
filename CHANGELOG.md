@@ -1,10 +1,14 @@
 CHANGELOG
 =========
 
-0.6.1 (xxxx-xx-xx)
+0.7.0 (2016-02-03)
 ------------------
 
-n/a
+* Updated: `Point` is now `Vertex` [BC break]
+* Updated: use `Predis` 1.0 version
+* Updated: tests against PHP7
+* Updated: documentation and badges
+* Added: allow Symfony console, property-access and serializer ~3.0
 
 0.6.0 (2015-10-11)
 ------------------
