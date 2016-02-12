@@ -353,7 +353,6 @@ class VertexTest extends \League\Geotools\Tests\TestCase
         $this->assertSame($this->vertex->destination(123, 456)->getEllipsoid(), $FOO);
     }
 
-
     /**
      * @dataProvider VertexCoordinatesAndExpectedSameLineStatusProvider
      */
@@ -431,4 +430,47 @@ class VertexTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
+
+    /**
+     * @dataProvider VertexCoordinatesOriginalCoordinatesAndOtherOneProvider
+     */
+    public function testGetOtherCoordinate($vertexCoordinates, $oneCoordinate, $otherCoordinate)
+    {
+        $this->vertex->setFrom($vertexCoordinates['from']);
+        $this->vertex->setTo($vertexCoordinates['to']);
+
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $this->vertex);
+        $this->assertEquals($otherCoordinate, $this->vertex->getOtherCoordinate($oneCoordinate));
+    }
+
+    public function VertexCoordinatesOriginalCoordinatesAndOtherOneProvider()
+    {
+        return array(
+            array(
+                array(
+                    'from' => new Coordinate(array(48.8234055, 2.3072664)),
+                    'to' => new Coordinate(array(43.296482, 5.36978))
+                ),
+                new Coordinate(array(48.8234055, 2.3072664)),
+                new Coordinate(array(43.296482, 5.36978))
+            ),
+            array(
+                array(
+                    'from' => new Coordinate(array(48.8234055, 2.3072664)),
+                    'to' => new Coordinate(array(43.296482, 5.36978))
+                ),
+                new Coordinate(array(43.296482, 5.36978)),
+                new Coordinate(array(48.8234055, 2.3072664))
+            ),
+            array(
+                array(
+                    'from' => new Coordinate(array(48.8234055, 2.3072664)),
+                    'to' => new Coordinate(array(43.296482, 5.36978))
+                ),
+                new Coordinate(array(2, 5)),
+                null
+            ),
+        );
+    }
+
 }
