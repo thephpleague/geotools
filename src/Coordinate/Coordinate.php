@@ -44,6 +44,13 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
 
 
     /**
+     * The precision to use to compare big numbers
+     *
+     * @var integer
+     */
+    private $precision = 8;
+
+    /**
      * Set the latitude and the longitude of the coordinates into an selected ellipsoid.
      *
      * @param Address|array|string         $coordinates The coordinates.
@@ -156,6 +163,26 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
     }
 
     /**
+     * @return integer
+     */
+    public function getPrecision()
+    {
+        return $this->precision;
+    }
+
+    /**
+     * @param  integer $precision
+     * @return $this
+     */
+    public function setPrecision($precision)
+    {
+        $this->precision = $precision;
+
+        return $this;
+    }
+
+
+    /**
      * Converts a valid and acceptable geographic coordinates to decimal degrees coordinate.
      *
      * @param string $coordinates A valid and acceptable geographic coordinates.
@@ -231,5 +258,14 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
     public function jsonSerialize()
     {
         return [$this->latitude, $this->longitude];
+    }
+
+    /**
+     * Returns a boolean determining coordinates equality
+     * @param  Coordinate  $coordinate
+     * @return boolean
+     */
+    public function isEqual(Coordinate $coordinate) {
+        return bccomp($this->latitude, $coordinate->getLatitude(), $this->getPrecision()) === 0 && bccomp($this->longitude, $coordinate->getLongitude(), $this->getPrecision()) === 0;
     }
 }

@@ -258,5 +258,18 @@ class Vertex extends AbstractGeotools implements VertexInterface
         }
     }
 
+    /**
+     * Returns the other coordinate who is not the coordinate passed on argument
+     * @param  Coordinate $point
+     * @return null|Coordinate
+     */
+    public function getOtherCoordinate(CoordinateInterface $coordinate) {
+        if ($coordinate->isEqual($this->from)) {
+            return $this->to;
+        } else if ($coordinate->isEqual($this->to)) {
+            return $this->from;
+        }
+        return null;
+    }
 
 }
