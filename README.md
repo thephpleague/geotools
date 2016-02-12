@@ -438,6 +438,21 @@ $tenten = new \League\Geotools\Tests\Geohash\TenTen;
 $tenten->encode(new Coordinate([51.09559, 1.12207])); // MEQ N6G 7NY5
 ```
 
+## Vertex ##
+
+Represents a segment with a direction.
+You can find if two vertexes are on the same line.
+
+```php
+<?php
+	$vertexA->setFrom(48.8234055);
+	$vertexA->setTo(2.3072664);
+
+	$vertexB->setFrom(48.8234055);
+	$vertexB->setTo(2.3072664);
+	$vertexA->isOnSameLine($vertexB);
+```
+
 ## Polygon ##
 
 It helps you to know if a point (coordinate) is in a Polygon or on the Polygon's boundaries and if this in on
