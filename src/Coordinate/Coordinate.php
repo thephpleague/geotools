@@ -204,7 +204,9 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
         if (preg_match('/(\-?[0-9]{1,2})\D+([0-9]{1,2}\.?\d*)[, ] ?(\-?[0-9]{1,3})\D+([0-9]{1,2}\.?\d*)$/i',
             $coordinates, $match)) {
             return array(
-                $match[1] + $match[2] / 60,
+                $match[1] < 0
+                    ? $match[1] - $match[2] / 60
+                    : $match[1] + $match[2] / 60
                 $match[3] < 0
                     ? $match[3] - $match[4] / 60
                     : $match[3] + $match[4] / 60
