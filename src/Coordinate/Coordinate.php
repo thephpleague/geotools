@@ -206,7 +206,7 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
             return array(
                 $match[1] < 0
                     ? $match[1] - $match[2] / 60
-                    : $match[1] + $match[2] / 60
+                    : $match[1] + $match[2] / 60,
                 $match[3] < 0
                     ? $match[3] - $match[4] / 60
                     : $match[3] + $match[4] / 60
