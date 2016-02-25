@@ -24,12 +24,12 @@ use League\Geotools\Coordinate\Ellipsoid;
 class Vertex extends AbstractGeotools implements VertexInterface
 {
     /**
-     * @var integer
+     * @var double
      */
     protected $gradient;
 
     /**
-     * @var integer
+     * @var double
      */
     protected $ordinateIntercept;
 
@@ -260,7 +260,7 @@ class Vertex extends AbstractGeotools implements VertexInterface
 
     /**
      * Returns the other coordinate who is not the coordinate passed on argument
-     * @param  Coordinate $point
+     * @param  CoordinateInterface $coordinate
      * @return null|Coordinate
      */
     public function getOtherCoordinate(CoordinateInterface $coordinate) {

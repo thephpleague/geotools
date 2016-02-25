@@ -13,6 +13,7 @@ namespace League\Geotools;
 
 use Geocoder\Geocoder as GeocoderInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Vertex\VertexInterface;
 
 /**
  * Geotools interface
