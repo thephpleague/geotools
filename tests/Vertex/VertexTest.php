@@ -473,4 +473,71 @@ class VertexTest extends \League\Geotools\Tests\TestCase
         );
     }
 
+    /**
+     * @dataProvider VertexCoordinatesAndExpectedDeterminantValueProvider
+     */
+    public function testGetDeterminant($vertexCoordinatesFirst, $vertexCoordinatesSecond, $determinantValue)
+    {
+        $this->vertex->setFrom($this->getMockCoordinateReturns($vertexCoordinatesFirst['from']));
+        $this->vertex->setTo($this->getMockCoordinateReturns($vertexCoordinatesFirst['to']));
+
+        $vertexToComp = new Vertex;
+        $vertexToComp->setFrom($this->getMockCoordinateReturns($vertexCoordinatesSecond['from']));
+        $vertexToComp->setTo($this->getMockCoordinateReturns($vertexCoordinatesSecond['to']));
+
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $this->vertex);
+        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $vertexToComp);
+        $this->assertEquals($determinantValue, $this->vertex->getDeterminant($vertexToComp));
+    }
+
+    public function VertexCoordinatesAndExpectedDeterminantValueProvider()
+    {
+        return array(
+            array(
+                array(
+                    'from' => array(2, 5),
+                    'to' => array(3, 7)
+                ),
+                array(
+                    'from' => array(14, 29),
+                    'to' => array(-35, -69)
+                ),
+                0
+            ),
+            array(
+                array(
+                    'from' => array(48.8234055, 2.3072664),
+                    'to' => array(15.55886, 20.739423637488)
+                ),
+                array(
+                    'from' => array(56.2615, -1.8142427115944),
+                    'to' => array(73.588101,45.703125)
+                ),
+                '-1900.01027430'
+            ),
+            array(
+                array(
+                    'from' => array(1, 4),
+                    'to' => array(2, 8)
+                ),
+                array(
+                    'from' => array(1, 4),
+                    'to' => array(2, 7)
+                ),
+                '-1'
+            ),
+            array(
+                array(
+                    'from' => array(48.8234055, 2.3072664),
+                    'to' => array(43.296482, 5.36978)
+                ),
+                array(
+                    'from' => array(4.26116, 2.3072664),
+                    'to' => array(68.5, 8.79635)
+                ),
+                '-232.59698978'
+            ),
+        );
+    }
+
 }
