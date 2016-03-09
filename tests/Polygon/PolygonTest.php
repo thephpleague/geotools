@@ -47,16 +47,16 @@ class PolygonTest extends \League\Geotools\Tests\TestCase
 
     public function polygonCoordinates()
     {
-        return array(
-            array(
-                'polygonCoordinates' => array(
-                    array(48.9675969, 1.7440796),
-                    array(48.4711003, 2.5268555),
-                    array(48.9279131, 3.1448364),
-                    array(49.3895245, 2.6119995)
-                ),
-            ),
-        );
+        return [
+            [
+                'polygonCoordinates' => [
+                    [48.9675969, 1.7440796],
+                    [48.4711003, 2.5268555],
+                    [48.9279131, 3.1448364],
+                    [49.3895245, 2.6119995]
+                ],
+            ],
+        ];
     }
 
     /**
@@ -85,17 +85,17 @@ class PolygonTest extends \League\Geotools\Tests\TestCase
 
     public function polygonAndVertexCoordinate()
     {
-        return array(
-            array(
-                'polygonCoordinates' => array(
-                    array(48.9675969, 1.7440796),
-                    array(48.4711003, 2.5268555),
-                    array(48.9279131, 3.1448364),
-                    array(49.3895245, 2.6119995)
-                ),
-                'vertexCoordinate' => array(48.4711003, 2.5268555),
-            ),
-        );
+        return [
+            [
+                'polygonCoordinates' => [
+                    [48.9675969, 1.7440796],
+                    [48.4711003, 2.5268555],
+                    [48.9279131, 3.1448364],
+                    [49.3895245, 2.6119995]
+                ],
+                'vertexCoordinate' => [48.4711003, 2.5268555],
+            ],
+        ];
     }
 
     /**
@@ -116,33 +116,33 @@ class PolygonTest extends \League\Geotools\Tests\TestCase
     public function testPointNotOnVertex($polygonCoordinates)
     {
         $this->polygon->set($polygonCoordinates);
-        $this->assertFalse($this->polygon->pointOnVertex(new Coordinate(array(0, 0))));
+        $this->assertFalse($this->polygon->pointOnVertex(new Coordinate([0, 0])));
     }
 
     public function polygonAndPointOnBoundaryCoordinate()
     {
-        return array(
-            array(
-                'polygonCoordinates' => array(
-                    array(48.9675969, 1.7440796),
-                    array(48.4711003, 2.5268555),
-                    array(48.9279131, 3.1448364),
-                    array(49.3895245, 2.6119995)
-                ),
-                'pointOnBoundaryCoordinates' => array(
-                    array(48.7193486, 2.13546755),
-                    array(48.6995067, 2.83584595),
-                    array(49.1587188, 2.87841795),
-                    array(49.1785607, 2.17803955),
-                ),
-                'pointNotOnBoundaryCoordinates' => array(
-                    array(43.7193486, 2.13546755),
-                    array(45.6995067, 2.83584595),
-                    array(47.1587188, 2.87841795),
-                    array(20.1785607, 2.17803955),
-                ),
-            ),
-        );
+        return [
+            [
+                'polygonCoordinates' => [
+                    [48.9675969, 1.7440796],
+                    [48.4711003, 2.5268555],
+                    [48.9279131, 3.1448364],
+                    [49.3895245, 2.6119995]
+                ],
+                'pointOnBoundaryCoordinates' => [
+                    [48.7193486, 2.13546755],
+                    [48.6995067, 2.83584595],
+                    [49.1587188, 2.87841795],
+                    [49.1785607, 2.17803955],
+                ],
+                'pointNotOnBoundaryCoordinates' => [
+                    [43.7193486, 2.13546755],
+                    [45.6995067, 2.83584595],
+                    [47.1587188, 2.87841795],
+                    [20.1785607, 2.17803955],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -177,26 +177,26 @@ class PolygonTest extends \League\Geotools\Tests\TestCase
 
     public function polygonAndPointInPolygonCoordinate()
     {
-        return array(
-            array(
-                'polygonCoordinates' => array(
-                    array(48.9675969, 1.7440796),
-                    array(48.4711003, 2.5268555),
-                    array(48.9279131, 3.1448364),
-                    array(49.3895245, 2.6119995)
-                ),
-                'pointInPolygonCoordinates' => array(
-                    array(49.1785607, 2.4444580),
-                    array(49.1785607, 2.0000000),
-                    array(49.1785607, 1.7440796),
-                    array(48.9279131, 2.4444580),
-                ),
-                'pointNotInPolygonCoordinates' => array(
-                    array(49.1785607, 5),
-                    array(50, 2.4444580),
-                )
-            ),
-        );
+        return [
+            [
+                'polygonCoordinates' => [
+                    [48.9675969, 1.7440796],
+                    [48.4711003, 2.5268555],
+                    [48.9279131, 3.1448364],
+                    [49.3895245, 2.6119995]
+                ],
+                'pointInPolygonCoordinates' => [
+                    [49.1785607, 2.4444580],
+                    [49.1785607, 2.0000000],
+                    [49.1785607, 1.7440796],
+                    [48.9279131, 2.4444580],
+                ],
+                'pointNotInPolygonCoordinates' => [
+                    [49.1785607, 5],
+                    [50, 2.4444580],
+                ]
+            ],
+        ];
     }
 
     /**

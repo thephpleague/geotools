@@ -12,7 +12,12 @@
 namespace League\Geotools;
 
 use Geocoder\Geocoder as GeocoderInterface;
+use League\Geotools\Batch\BatchInterface;
+use League\Geotools\Convert\ConvertInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Distance\DistanceInterface;
+use League\Geotools\Edge\EdgeInterface;
+use League\Geotools\Geohash\GeohashInterface;
 
 /**
  * Geotools interface
@@ -29,11 +34,11 @@ interface GeotoolsInterface
     public function distance();
 
     /**
-     * Returns an instance of Vertex.
+     * Returns an instance of Edge.
      *
-     * @return VertexInterface
+     * @return EdgeInterface
      */
-    public function vertex();
+    public function edge();
 
     /**
      * Returns an instance of Batch.

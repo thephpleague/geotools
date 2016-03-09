@@ -9,16 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Tests\CLI\Command\Vertex;
+namespace League\Geotools\Tests\CLI\Command\Edge;
 
 use League\Geotools\CLI\Application;
-use League\Geotools\CLI\Command\Vertex\InitialBearing;
+use League\Geotools\CLI\Command\Edge\InitialCardinal;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class InitialBearingTest extends \League\Geotools\Tests\TestCase
+class InitialCardinalTest extends \League\Geotools\Tests\TestCase
 {
     protected $application;
     protected $command;
@@ -27,9 +27,9 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
     protected function setUp()
     {
         $this->application = new Application;
-        $this->application->add(new InitialBearing);
+        $this->application->add(new InitialCardinal);
 
-        $this->command = $this->application->find('vertex:initial-bearing');
+        $this->command = $this->application->find('edge:initial-cardinal');
 
         $this->commandTester = new CommandTester($this->command);
     }
@@ -67,7 +67,7 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/87/', $this->commandTester->getDisplay());
+        $this->assertSame('<value>E</value>', trim($this->commandTester->getDisplay()));
     }
 
     /**
@@ -104,10 +104,10 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
             'destination' => '30°16′57″N 029°48′32″W',
-            '--ellipsoid' => 'FISCHER_1968',
+            '--ellipsoid' => 'INTERNATIONAL',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/87/', $this->commandTester->getDisplay());
+        $this->assertSame('<value>E</value>', trim($this->commandTester->getDisplay()));
     }
 }

@@ -11,13 +11,13 @@
 
 namespace League\Geotools;
 
+use Geocoder\Geocoder;
+use League\Geotools\Batch\Batch;
+use League\Geotools\Convert\Convert;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Distance\Distance;
-use League\Geotools\Vertex\Vertex;
-use League\Geotools\Batch\Batch;
+use League\Geotools\Edge\Edge;
 use League\Geotools\Geohash\Geohash;
-use League\Geotools\Convert\Convert;
-use Geocoder\Geocoder;
 
 /**
  * Geotools class
@@ -44,9 +44,9 @@ class Geotools extends AbstractGeotools implements GeotoolsInterface
     /**
      * {@inheritDoc}
      */
-    public function vertex()
+    public function edge()
     {
-        return new Vertex;
+        return new Edge;
     }
 
     /**
