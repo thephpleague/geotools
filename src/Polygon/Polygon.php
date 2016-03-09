@@ -20,8 +20,7 @@ use League\Geotools\Coordinate\CoordinateInterface;
 /**
  * @author Gabriel Bull <me@gabrielbull.com>
  */
-class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterface, \Countable, \IteratorAggregate,
-    \ArrayAccess, \JsonSerializable
+class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerializable
 {
     /**
      * @var CoordinateCollection|CoordinateInterface[]

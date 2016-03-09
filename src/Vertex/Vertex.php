@@ -11,18 +11,21 @@
 
 namespace League\Geotools\Vertex;
 
-use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\CoordinateCouple;
+use League\Geotools\Geotools;
 
 /**
  * Vertex class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Vertex extends AbstractGeotools implements VertexInterface
+class Vertex implements VertexInterface
 {
+    use CoordinateCouple;
+
     /**
      * @var integer
      */
@@ -173,7 +176,7 @@ class Vertex extends AbstractGeotools implements VertexInterface
     {
         Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
 
-        return $this->cardinalPoints[(integer) round($this->initialBearing() / 22.5)];
+        return Geotools::$cardinalPoints[(integer) round($this->initialBearing() / 22.5)];
     }
 
     /**
@@ -187,7 +190,7 @@ class Vertex extends AbstractGeotools implements VertexInterface
     {
         Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
 
-        return $this->cardinalPoints[(integer) round($this->finalBearing() / 22.5)];
+        return Geotools::$cardinalPoints[(integer) round($this->finalBearing() / 22.5)];
     }
 
     /**
@@ -211,7 +214,7 @@ class Vertex extends AbstractGeotools implements VertexInterface
         $lat3 = rad2deg(atan2(sin($latA) + sin($latB), sqrt((cos($latA) + $bx) * (cos($latA) + $bx) + $by * $by)));
         $lng3 = rad2deg($lngA + atan2($by, cos($latA) + $bx));
 
-        return new Coordinate(array($lat3, $lng3), $this->from->getEllipsoid());
+        return new Coordinate([$lat3, $lng3], $this->from->getEllipsoid());
     }
 
     /**
@@ -235,7 +238,7 @@ class Vertex extends AbstractGeotools implements VertexInterface
         $endLon = $lng + atan2(sin($bearing) * sin($distance / $this->from->getEllipsoid()->getA()) * cos($lat),
             cos($distance / $this->from->getEllipsoid()->getA()) - sin($lat) * sin($endLat));
 
-        return new Coordinate(array(rad2deg($endLat), rad2deg($endLon)), $this->from->getEllipsoid());
+        return new Coordinate([rad2deg($endLat), rad2deg($endLon)], $this->from->getEllipsoid());
     }
 
     /**

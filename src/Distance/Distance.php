@@ -11,18 +11,21 @@
 
 namespace League\Geotools\Distance;
 
+use League\Geotools\CoordinateCouple;
 use League\Geotools\Exception\NotConvergingException;
-use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\GeotoolsInterface;
 
 /**
  * Distance class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Distance extends AbstractGeotools implements DistanceInterface
+class Distance implements DistanceInterface
 {
+    use CoordinateCouple;
+
     /**
      * The user unit.
      *
@@ -229,12 +232,12 @@ class Distance extends AbstractGeotools implements DistanceInterface
     protected function convertToUserUnit($meters)
     {
         switch ($this->unit) {
-            case AbstractGeotools::KILOMETER_UNIT:
+            case GeotoolsInterface::KILOMETER_UNIT:
                 return $meters / 1000;
-            case AbstractGeotools::MILE_UNIT:
-                return $meters / AbstractGeotools::METERS_PER_MILE;
-            case AbstractGeotools::FOOT_UNIT:
-                return $meters / AbstractGeotools::FEET_PER_METER;
+            case GeotoolsInterface::MILE_UNIT:
+                return $meters / GeotoolsInterface::METERS_PER_MILE;
+            case GeotoolsInterface::FOOT_UNIT:
+                return $meters / GeotoolsInterface::FEET_PER_METER;
             default:
                 return $meters;
         }

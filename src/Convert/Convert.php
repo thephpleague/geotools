@@ -11,15 +11,16 @@
 
 namespace League\Geotools\Convert;
 
-use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Geotools;
+use League\Geotools\GeotoolsInterface;
 
 /**
  * Convert class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Convert extends AbstractGeotools implements ConvertInterface
+class Convert implements ConvertInterface
 {
     /**
      * The coordinate to convert.
@@ -51,7 +52,7 @@ class Convert extends AbstractGeotools implements ConvertInterface
         list($degrees) = explode('.', abs($coordinate));
         list($minutes) = explode('.', (abs($coordinate) - $degrees) * 60);
 
-        return array(
+        return [
             'positive'       => $coordinate >= 0,
             'degrees'        => (string) $degrees,
             'decimalMinutes' => (string) round((abs($coordinate) - $degrees) * 60,
@@ -59,7 +60,7 @@ class Convert extends AbstractGeotools implements ConvertInterface
                 ConvertInterface::DECIMAL_MINUTES_MODE),
             'minutes'        => (string) $minutes,
             'seconds'        => (string) round(((abs($coordinate) - $degrees) * 60 - $minutes) * 60),
-        );
+        ];
     }
 
     /**
@@ -70,7 +71,7 @@ class Convert extends AbstractGeotools implements ConvertInterface
         $latitude  = $this->parseCoordinate($this->coordinates->getLatitude());
         $longitude = $this->parseCoordinate($this->coordinates->getLongitude());
 
-        return strtr($format, array(
+        return strtr($format, [
             ConvertInterface::LATITUDE_SIGN       => $latitude['positive'] ? '' : '-',
             ConvertInterface::LATITUDE_DIRECTION  => $latitude['positive'] ? 'N' : 'S',
             ConvertInterface::LATITUDE_DEGREES    => $latitude['degrees'],
@@ -81,7 +82,7 @@ class Convert extends AbstractGeotools implements ConvertInterface
             ConvertInterface::LONGITUDE_DEGREES   => $longitude['degrees'],
             ConvertInterface::LONGITUDE_MINUTES   => $longitude['minutes'],
             ConvertInterface::LONGITUDE_SECONDS   => $longitude['seconds'],
-        ));
+        ]);
     }
 
     /**
@@ -104,7 +105,7 @@ class Convert extends AbstractGeotools implements ConvertInterface
         $latitude  = $this->parseCoordinate($this->coordinates->getLatitude());
         $longitude = $this->parseCoordinate($this->coordinates->getLongitude());
 
-        return strtr($format, array(
+        return strtr($format, [
             ConvertInterface::LATITUDE_SIGN             => $latitude['positive'] ? '' : '-',
             ConvertInterface::LATITUDE_DIRECTION        => $latitude['positive'] ? 'N' : 'S',
             ConvertInterface::LATITUDE_DEGREES          => $latitude['degrees'],
@@ -113,7 +114,7 @@ class Convert extends AbstractGeotools implements ConvertInterface
             ConvertInterface::LONGITUDE_DIRECTION       => $longitude['positive'] ? 'E' : 'W',
             ConvertInterface::LONGITUDE_DEGREES         => $longitude['degrees'],
             ConvertInterface::LONGITUDE_DECIMAL_MINUTES => $longitude['decimalMinutes'],
-        ));
+        ]);
     }
 
     /**
@@ -210,14 +211,14 @@ class Convert extends AbstractGeotools implements ConvertInterface
             + ($t / 40320.0 * $nN * pow(cos($phi), 8.0) * $l8coef * pow($l, 8.0));
 
         // Adjust easting and northing for UTM system.
-        $easting = $easting * AbstractGeotools::UTM_SCALE_FACTOR + 500000.0;
-        $northing = $northing * AbstractGeotools::UTM_SCALE_FACTOR;
+        $easting = $easting * GeotoolsInterface::UTM_SCALE_FACTOR + 500000.0;
+        $northing = $northing * GeotoolsInterface::UTM_SCALE_FACTOR;
         if ($northing < 0.0) {
             $northing += 10000000.0;
         }
 
         return sprintf('%d%s %d %d',
-            $zone, $this->latitudeBands[(int) (($this->coordinates->getLatitude() + 80) / 8)], $easting, $northing
+            $zone, Geotools::$latitudeBands[(int) (($this->coordinates->getLatitude() + 80) / 8)], $easting, $northing
         );
     }
 
