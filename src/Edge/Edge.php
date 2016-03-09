@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Vertex;
+namespace League\Geotools\Edge;
 
 use League\Geotools\AbstractGeotools;
 use League\Geotools\Coordinate\Coordinate;
@@ -17,11 +17,11 @@ use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
 
 /**
- * Vertex class
+ * Edge class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Vertex extends AbstractGeotools implements VertexInterface
+class Edge extends AbstractGeotools implements EdgeInterface
 {
     /**
      * @var integer
@@ -211,7 +211,7 @@ class Vertex extends AbstractGeotools implements VertexInterface
         $lat3 = rad2deg(atan2(sin($latA) + sin($latB), sqrt((cos($latA) + $bx) * (cos($latA) + $bx) + $by * $by)));
         $lng3 = rad2deg($lngA + atan2($by, cos($latA) + $bx));
 
-        return new Coordinate(array($lat3, $lng3), $this->from->getEllipsoid());
+        return new Coordinate([$lat3, $lng3], $this->from->getEllipsoid());
     }
 
     /**
@@ -235,23 +235,24 @@ class Vertex extends AbstractGeotools implements VertexInterface
         $endLon = $lng + atan2(sin($bearing) * sin($distance / $this->from->getEllipsoid()->getA()) * cos($lat),
             cos($distance / $this->from->getEllipsoid()->getA()) - sin($lat) * sin($endLat));
 
-        return new Coordinate(array(rad2deg($endLat), rad2deg($endLon)), $this->from->getEllipsoid());
+        return new Coordinate([rad2deg($endLat), rad2deg($endLon)], $this->from->getEllipsoid());
     }
 
     /**
-     * Returns true if the vertex passed on argument is on the same line as this object
+     * Returns true if the edge passed on argument is on the same line as this object
      *
-     * @param  Vertex  $vertex The vertex to compare
-     * @return boolean
+     * @param  Edge  $edge The edge to compare
+     *
+*@return boolean
      */
-    public function isOnSameLine(Vertex $vertex) {
-        if (is_null($this->getGradient()) && is_null($vertex->getGradient()) && $this->from->getLongitude() == $vertex->getFrom()->getLongitude()) {
+    public function isOnSameLine(Edge $edge) {
+        if (is_null($this->getGradient()) && is_null($edge->getGradient()) && $this->from->getLongitude() == $edge->getFrom()->getLongitude()) {
             return true;
-        } elseif (!is_null($this->getGradient()) && !is_null($vertex->getGradient())) {
+        } elseif (!is_null($this->getGradient()) && !is_null($edge->getGradient())) {
             return (
-                bccomp($this->getGradient(), $vertex->getGradient(), $this->getPrecision()) === 0
+                bccomp($this->getGradient(), $edge->getGradient(), $this->getPrecision()) === 0
                 &&
-                bccomp($this->getOrdinateIntercept(), $vertex->getOrdinateIntercept(), $this->getPrecision()) ===0
+                bccomp($this->getOrdinateIntercept(), $edge->getOrdinateIntercept(), $this->getPrecision()) ===0
             );
         } else {
             return false;

@@ -9,23 +9,23 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Vertex;
+namespace League\Geotools\Edge;
 
 use League\Geotools\Coordinate\CoordinateInterface;
 
 /**
- * Vertex interface
+ * Edge interface
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-interface VertexInterface
+interface EdgeInterface
 {
     /**
      * Set the origin coordinate.
      *
      * @param CoordinateInterface $from The origin coordinate.
      *
-     * @return VertexInterface
+     * @return EdgeInterface
      */
     public function setFrom(CoordinateInterface $from);
 
@@ -41,7 +41,7 @@ interface VertexInterface
      *
      * @param CoordinateInterface $to The destination coordinate.
      *
-     * @return VertexInterface
+     * @return EdgeInterface
      */
     public function setTo(CoordinateInterface $to);
 
@@ -53,14 +53,14 @@ interface VertexInterface
     public function getTo();
 
     /**
-     * Get the gradient (slope) of the vertex.
+     * Get the gradient (slope) of the edge.
      *
      * @return integer
      */
     public function getGradient();
 
     /**
-     * Get the ordinate (longitude) of the point where vertex intersects with the ordinate-axis (Prime-Meridian) of the coordinate system.
+     * Get the ordinate (longitude) of the point where edge intersects with the ordinate-axis (Prime-Meridian) of the coordinate system.
      *
      * @return integer
      */

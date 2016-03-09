@@ -370,18 +370,18 @@ the *middle point* and the *destination point*. The middle and the destination p
 $geotools = new \League\Geotools\Geotools();
 $coordA   = new \League\Geotools\Coordinate\Coordinate([48.8234055, 2.3072664]);
 $coordB   = new \League\Geotools\Coordinate\Coordinate([43.296482, 5.36978]);
-$vertex    =  $geotools->vertex()->setFrom($coordA)->setTo($coordB);
+$edge     =  $geotools->edge()->setFrom($coordA)->setTo($coordB);
 
-printf("%d\n", $vertex->initialBearing()); // 157 (degrees)
-printf("%s\n", $vertex->initialCardinal()); // SSE (SouthSouthEast)
-printf("%d\n", $vertex->finalBearing()); // 160 (degrees)
-printf("%s\n", $vertex->finalCardinal()); // SSE (SouthSouthEast)
+printf("%d\n", $edge->initialBearing()); // 157 (degrees)
+printf("%s\n", $edge->initialCardinal()); // SSE (SouthSouthEast)
+printf("%d\n", $edge->finalBearing()); // 160 (degrees)
+printf("%s\n", $edge->finalCardinal()); // SSE (SouthSouthEast)
 
-$middlePoint = $vertex->middle(); // \League\Geotools\Coordinate\Coordinate
+$middlePoint = $edge->middle(); // \League\Geotools\Coordinate\Coordinate
 printf("%s\n", $middlePoint->getLatitude()); // 46.070143125815
 printf("%s\n", $middlePoint->getLongitude()); // 3.9152401085931
 
-$destinationPoint = $geotools->vertex()->setFrom($coordA)->destination(180, 200000); // \League\Geotools\Coordinate\Coordinate
+$destinationPoint = $geotools->edge()->setFrom($coordA)->destination(180, 200000); // \League\Geotools\Coordinate\Coordinate
 printf("%s\n", $destinationPoint->getLatitude()); // 47.026774650075
 printf("%s\n", $destinationPoint->getLongitude()); // 2.3072664
 ```
@@ -438,19 +438,19 @@ $tenten = new \League\Geotools\Tests\Geohash\TenTen;
 $tenten->encode(new Coordinate([51.09559, 1.12207])); // MEQ N6G 7NY5
 ```
 
-## Vertex ##
+## Edge ##
 
 Represents a segment with a direction.
-You can find if two vertexes are on the same line.
+You can find if two edges are on the same line.
 
 ```php
 <?php
-	$vertexA->setFrom(48.8234055);
-	$vertexA->setTo(2.3072664);
+	$edgeA->setFrom(48.8234055);
+	$edgeA->setTo(2.3072664);
 
-	$vertexB->setFrom(48.8234055);
-	$vertexB->setTo(2.3072664);
-	$vertexA->isOnSameLine($vertexB);
+	$edgeB->setFrom(48.8234055);
+	$edgeB->setTo(2.3072664);
+	$edgeA->isOnSameLine($edgeB);
 ```
 
 ## Polygon ##

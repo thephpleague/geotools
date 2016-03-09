@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\CLI\Command\Vertex;
+namespace League\Geotools\CLI\Command\Edge;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command-line vertex:final-bearing class
+ * Command-line edge:final-bearing class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
@@ -31,7 +31,7 @@ class FinalBearing extends \Symfony\Component\Console\Command\Command
         $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
 
         $this
-            ->setName('vertex:final-bearing')
+            ->setName('edge:final-bearing')
             ->setDescription('Compute the final bearing in degrees between 2 coordinates')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
             ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
@@ -57,7 +57,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->vertex()->setFrom($from)->setTo($to)->finalBearing()
+            $geotools->edge()->setFrom($from)->setTo($to)->finalBearing()
         ));
     }
 }

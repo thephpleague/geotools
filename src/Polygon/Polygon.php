@@ -350,7 +350,7 @@ class Polygon extends \League\Geotools\AbstractGeotools implements PolygonInterf
         if (is_array($key)) {
             $values = $key;
         } elseif (null !== $coordinate) {
-            $values = array($key => $coordinate);
+            $values = [$key => $coordinate];
         } else {
             throw new \InvalidArgumentException;
         }

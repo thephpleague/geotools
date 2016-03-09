@@ -35,13 +35,13 @@ class GeotoolsTest extends TestCase
         $this->assertInstanceOf('League\Geotools\Distance\DistanceInterface', $distance);
     }
 
-    public function testVertexShouldReturnANewVertexInstance()
+    public function testEdgeShouldReturnANewEdgeInstance()
     {
-        $vertex = $this->geotools->vertex();
+        $edge = $this->geotools->edge();
 
-        $this->assertTrue(is_object($vertex));
-        $this->assertInstanceOf('League\Geotools\Vertex\Vertex', $vertex);
-        $this->assertInstanceOf('League\Geotools\Vertex\VertexInterface', $vertex);
+        $this->assertTrue(is_object($edge));
+        $this->assertInstanceOf('League\Geotools\Edge\Edge', $edge);
+        $this->assertInstanceOf('League\Geotools\Edge\EdgeInterface', $edge);
     }
 
     public function testBatchShouldReturnANewBatchInstance()

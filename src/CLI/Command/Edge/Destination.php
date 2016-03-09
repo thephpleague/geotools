@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\CLI\Command\Vertex;
+namespace League\Geotools\CLI\Command\Edge;
 
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
@@ -20,45 +20,45 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Command-line vertex:middle class
+ * Command-line point:destination class
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Middle extends \Symfony\Component\Console\Command\Command
+class Destination extends \Symfony\Component\Console\Command\Command
 {
     protected function configure()
     {
         $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
 
         $this
-            ->setName('vertex:middle')
-            ->setDescription('Compute the half-way coordinate between 2 coordinates')
+            ->setName('edge:destination')
+            ->setDescription('Compute the destination coordinate with given bearing in degrees and a distance in meters')
             ->addArgument('origin', InputArgument::REQUIRED, 'The origin "Lat,Long" coordinate')
-            ->addArgument('destination', InputArgument::REQUIRED, 'The destination "Lat,Long" coordinate')
+            ->addArgument('bearing', InputArgument::REQUIRED, 'The initial bearing in degrees')
+            ->addArgument('distance', InputArgument::REQUIRED, 'The distance from the origin coordinate in meters')
             ->addOption('ellipsoid', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the ellipsoid to use', Ellipsoid::WGS84)
             ->setHelp(<<<EOT
 <info>Available ellipsoids</info>: $availableEllipsoids
 
-<info>Example with KRASSOVSKY ellipsoid</info>:
+<info>Example with SOUTH_AMERICAN_1969 ellipsoid, 25 degrees and 10000 meters</info>:
 
-    %command.full_name% "40° 26.7717, -79° 56.93172" "30°16′57″N 029°48′32″W" <comment>--ellipsoid=KRASSOVSKY</comment>
+    %command.full_name% "40° 26.7717, -79° 56.93172" 25 10000 <comment>--ellipsoid=SOUTH_AMERICAN_1969</comment>
 EOT
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $ellipsoid = Ellipsoid::createFromName($input->getOption('ellipsoid'));
-        $from      = new Coordinate($input->getArgument('origin'), $ellipsoid);
-        $to        = new Coordinate($input->getArgument('destination'), $ellipsoid);
-
+        $from     = new Coordinate($input->getArgument('origin'), Ellipsoid::createFromName($input->getOption('ellipsoid')));
         $geotools = new Geotools;
-        $middle   = $geotools->vertex()->setFrom($from)->setTo($to)->middle();
+
+        $destination = $geotools->edge()->setFrom($from);
+        $destination = $destination->destination($input->getArgument('bearing'), $input->getArgument('distance'));
 
         $output->writeln(sprintf(
             '<value>%s, %s</value>',
-            $middle->getLatitude(), $middle->getLongitude()
+            $destination->getLatitude(), $destination->getLongitude()
         ));
     }
 }
