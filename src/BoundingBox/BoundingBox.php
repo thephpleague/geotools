@@ -11,7 +11,12 @@
 
 namespace League\Geotools\BoundingBox;
 
+use League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Coordinate\CoordinateCollection;
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Coordinate\Ellipsoid;
+use League\Geotools\Exception\InvalidArgumentException;
+use League\Geotools\Polygon\Polygon;
 use League\Geotools\Polygon\PolygonInterface;
 
 /**
@@ -19,11 +24,6 @@ use League\Geotools\Polygon\PolygonInterface;
  */
 class BoundingBox implements BoundingBoxInterface
 {
-    /**
-     * @var PolygonInterface
-     */
-    private $polygon;
-
     /**
      * The latitude of the north coordinate
      *
@@ -58,6 +58,11 @@ class BoundingBox implements BoundingBoxInterface
     private $hasCoordinate = false;
 
     /**
+     * @var Ellipsoid
+     */
+    private $ellipsoid;
+
+    /**
      * @var integer
      */
     private $precision = 8;
@@ -76,11 +81,11 @@ class BoundingBox implements BoundingBoxInterface
         }
     }
 
-    private function createBoundingBoxForPolygon()
+    private function createBoundingBoxForPolygon(PolygonInterface $polygon)
     {
         $this->hasCoordinate = false;
         $this->west = $this->east = $this->north = $this->south = null;
-        foreach ($this->polygon->getCoordinates() as $coordinate) {
+        foreach ($polygon->getCoordinates() as $coordinate) {
             $this->addCoordinate($coordinate);
         }
     }
@@ -90,6 +95,12 @@ class BoundingBox implements BoundingBoxInterface
      */
     private function addCoordinate(CoordinateInterface $coordinate)
     {
+        if ($this->ellipsoid === null) {
+            $this->ellipsoid = $coordinate->getEllipsoid();
+        } elseif ($this->ellipsoid != $coordinate->getEllipsoid()) {
+            throw new InvalidArgumentException("Ellipsoids don't match");
+        }
+
         $latitude  = $coordinate->getLatitude();
         $longitude = $coordinate->getLongitude();
 
@@ -122,8 +133,7 @@ class BoundingBox implements BoundingBoxInterface
      */
     public function pointInBoundingBox(CoordinateInterface $coordinate)
     {
-        if (
-            bccomp($coordinate->getLatitude(), $this->getSouth(), $this->getPrecision()) === -1 ||
+        if (bccomp($coordinate->getLatitude(), $this->getSouth(), $this->getPrecision()) === -1 ||
             bccomp($coordinate->getLatitude(), $this->getNorth(), $this->getPrecision()) === 1 ||
             bccomp($coordinate->getLongitude(), $this->getEast(), $this->getPrecision()) === 1 ||
             bccomp($coordinate->getLongitude(), $this->getWest(), $this->getPrecision()) === -1
@@ -137,9 +147,26 @@ class BoundingBox implements BoundingBoxInterface
     /**
      * @return PolygonInterface
      */
-    public function getPolygon()
+    public function getAsPolygon()
     {
-        return $this->polygon;
+        if (!$this->hasCoordinate) {
+            return null;
+        }
+
+        $nw = new Coordinate(array($this->north, $this->west), $this->ellipsoid);
+
+        return new Polygon(
+            new CoordinateCollection(
+                array(
+                    $nw,
+                    new Coordinate(array($this->north, $this->east), $this->ellipsoid),
+                    new Coordinate(array($this->south, $this->east), $this->ellipsoid),
+                    new Coordinate(array($this->south, $this->west), $this->ellipsoid),
+                    $nw
+                ),
+                $this->ellipsoid
+            )
+        );
     }
 
     /**
@@ -148,8 +175,7 @@ class BoundingBox implements BoundingBoxInterface
      */
     public function setPolygon(PolygonInterface $polygon)
     {
-        $this->polygon = $polygon;
-        $this->createBoundingBoxForPolygon();
+        $this->createBoundingBoxForPolygon($polygon);
 
         return $this;
     }
@@ -247,5 +273,21 @@ class BoundingBox implements BoundingBoxInterface
         $this->precision = $precision;
 
         return $this;
+    }
+
+    /**
+     * @param  BoundingBoxInterface $boundingBox
+     * @return BoundingBoxInterface
+     */
+    public function merge(BoundingBoxInterface $boundingBox)
+    {
+        $bbox = clone $this;
+
+        $newCoordinates = $boundingBox->getAsPolygon()->getCoordinates();
+        foreach ($newCoordinates as $coordinate) {
+            $bbox->addCoordinate($coordinate);
+        }
+
+        return $bbox;
     }
 }
