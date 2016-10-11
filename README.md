@@ -466,7 +466,7 @@ First you need to create the polygon, you can provide:
 ```php
 <?php
 
-$polygon = new \League\Geotools\Polygon([
+$polygon = new \League\Geotools\Polygon\Polygon([
     [48.9675969, 1.7440796],
     [48.4711003, 2.5268555],
     [48.9279131, 3.1448364],
