@@ -26,7 +26,7 @@ interface CoordinateInterface
      *
      * @return double
      */
-    public function normalizeLatitude($latitude);
+    public static function normalizeLatitude($latitude);
 
     /**
      * Normalizes a longitude to the (-180, 180) range.
@@ -36,7 +36,7 @@ interface CoordinateInterface
      *
      * @return double
      */
-    public function normalizeLongitude($longitude);
+    public static function normalizeLongitude($longitude);
 
     /**
      * Set the latitude.

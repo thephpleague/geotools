@@ -80,7 +80,7 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function normalizeLatitude($latitude)
+    public static function normalizeLatitude($latitude)
     {
         return (double) max(-90, min(90, $latitude));
     }
@@ -88,7 +88,7 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function normalizeLongitude($longitude)
+    public static function normalizeLongitude($longitude)
     {
         if (180 === $longitude % 360) {
             return 180.0;
