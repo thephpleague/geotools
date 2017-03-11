@@ -52,8 +52,14 @@ class Vertex implements VertexInterface
             return $this;
         }
 
-        $this->gradient = ($this->to->getLongitude() - $this->from->getLongitude()) / ($this->to->getLatitude() - $this->from->getLatitude());
-        $this->ordinateIntercept = $this->from->getLongitude() - $this->from->getLatitude() * $this->gradient;
+        if ($this->to->getLatitude() !== $this->from->getLatitude()) {
+            $this->gradient = ($this->to->getLongitude() - $this->from->getLongitude()) / ($this->to->getLatitude() - $this->from->getLatitude());
+            $this->ordinateIntercept = $this->from->getLongitude() - $this->from->getLatitude() * $this->gradient;
+        } else {
+            $this->gradient = null;
+            $this->ordinateIntercept = null;
+        }
+
         return $this;
     }
 
@@ -76,8 +82,13 @@ class Vertex implements VertexInterface
             return $this;
         }
 
-        $this->gradient = ($this->to->getLongitude() - $this->from->getLongitude()) / ($this->to->getLatitude() - $this->from->getLatitude());
-        $this->ordinateIntercept = $this->from->getLongitude() - $this->from->getLatitude() * $this->gradient;
+        if ($this->to->getLatitude() !== $this->from->getLatitude()) {
+            $this->gradient = ($this->to->getLongitude() - $this->from->getLongitude()) / ($this->to->getLatitude() - $this->from->getLatitude());
+            $this->ordinateIntercept = $this->from->getLongitude() - $this->from->getLatitude() * $this->gradient;
+        } else {
+            $this->gradient = null;
+            $this->ordinateIntercept = null;
+        }
 
         return $this;
     }
