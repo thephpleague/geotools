@@ -2,7 +2,7 @@ language: php
 
 php:
   - 7.0
-  - hhvm
+  - 7.1
 
 sudo: false
 
@@ -14,6 +14,10 @@ cache:
 matrix:
   allow_failures:
     - php: hhvm
+      dist: trusty
+  include:
+    - php: hhvm
+      dist: trusty
 
 services: mongodb
 
