@@ -11,7 +11,7 @@
 
 namespace League\Geotools\Batch;
 
-use Geocoder\Model\Address;
+use Geocoder\Location;
 
 /**
  * BatchResult class
@@ -59,7 +59,7 @@ class BatchResult
     /**
      * {@inheritDoc}
      */
-    public function createFromAddress(Address $address)
+    public function createFromAddress(Location $address)
     {
         $result = $this->newInstance();
         $result->setAddress($address);

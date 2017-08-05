@@ -12,6 +12,7 @@
 namespace League\Geotools\Batch;
 
 use Geocoder\Geocoder;
+use Geocoder\ProviderAggregator;
 use League\Geotools\Cache\CacheInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Exception\InvalidArgumentException;
@@ -28,7 +29,7 @@ class Batch implements BatchInterface
     /**
      * The Geocoder instance to use.
      *
-     * @var Geocoder
+     * @var ProviderAggregator
      */
     protected $geocoder;
 
@@ -49,9 +50,9 @@ class Batch implements BatchInterface
     /**
      * Set the Geocoder instance to use.
      *
-     * @param Geocoder $geocoder The Geocoder instance to use.
+     * @param ProviderAggregator $geocoder The Geocoder instance to use.
      */
-    public function __construct(Geocoder $geocoder)
+    public function __construct(ProviderAggregator $geocoder)
     {
         $this->geocoder = $geocoder;
     }

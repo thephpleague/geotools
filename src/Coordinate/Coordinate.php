@@ -11,7 +11,7 @@
 
 namespace League\Geotools\Coordinate;
 
-use Geocoder\Model\Address;
+use Geocoder\Location;
 use League\Geotools\Exception\InvalidArgumentException;
 
 /**
@@ -53,16 +53,18 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
     /**
      * Set the latitude and the longitude of the coordinates into an selected ellipsoid.
      *
-     * @param Address|array|string         $coordinates The coordinates.
+     * @param Location|array|string         $coordinates The coordinates.
      * @param Ellipsoid                    $ellipsoid   The selected ellipsoid (WGS84 by default).
      *
      * @throws InvalidArgumentException
      */
     public function __construct($coordinates, Ellipsoid $ellipsoid = null)
     {
-        if ($coordinates instanceof Address) {
-            $this->setLatitude($coordinates->getLatitude());
-            $this->setLongitude($coordinates->getLongitude());
+        if ($coordinates instanceof Location) {
+            if (null !== $coords = $coordinates->getCoordinates()) {
+                $this->setLatitude($coords->getLatitude());
+                $this->setLongitude($coords->getLongitude());
+            }
         } elseif (is_array($coordinates) && 2 === count($coordinates)) {
             $this->setLatitude($coordinates[0]);
             $this->setLongitude($coordinates[1]);

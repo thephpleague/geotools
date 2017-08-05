@@ -12,7 +12,12 @@
 namespace League\Geotools;
 
 use Geocoder\Geocoder as GeocoderInterface;
+use League\Geotools\Batch\BatchInterface;
+use League\Geotools\Convert\ConvertInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Distance\DistanceInterface;
+use League\Geotools\Geohash\GeohashInterface;
+use League\Geotools\Vertex\VertexInterface;
 
 /**
  * Geotools interface

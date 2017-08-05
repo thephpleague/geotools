@@ -13,8 +13,9 @@ namespace League\Geotools\Tests;
 
 use Geocoder\Model\Address;
 use Geocoder\Model\AddressCollection;
-use Geocoder\Model\AddressFactory;
+use Geocoder\ProviderAggregator;
 use League\Geotools\Batch\BatchGeocoded;
+use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
 
 /**
@@ -23,12 +24,12 @@ use League\Geotools\Coordinate\Ellipsoid;
 class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @return GeocoderInterface
+     * @return ProviderAggregator
      */
     protected function getStubGeocoder()
     {
         $stub = $this
-            ->getMockBuilder('\Geocoder\Geocoder')
+            ->getMockBuilder('\Geocoder\ProviderAggregator')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -39,17 +40,17 @@ class TestCase extends \PHPUnit_Framework_TestCase
      * @param array $providers
      * @param array $data
      *
-     * @return GeocoderInterface
+     * @return ProviderAggregator
      */
     protected function getMockGeocoderReturns(array $providers, array $data = array())
     {
         $addresses = new AddressCollection();
 
         if (!empty($data)) {
-            $addresses = (new AddressFactory())->createFromArray([ $data ]);
+            $addresses = new AddressCollection([Address::createFromArray($data)]);
         }
 
-        $mock = $this->getMock('\Geocoder\ProviderAggregator');
+        $mock = $this->getMockBuilder('\Geocoder\ProviderAggregator')->getMock();
         $mock
             ->expects($this->any())
             ->method('getProviders')
@@ -73,7 +74,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     /**
      * @param array $providers
      *
-     * @return GeocoderInterface
+     * @return ProviderAggregator
      */
     protected function getMockGeocoderThrowException(array $providers)
     {
@@ -99,14 +100,23 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param float|null $lat
+     * @param float|null $lng
      * @return CoordinateInterface
      */
-    protected function getStubCoordinate()
+    protected function getStubCoordinate($lat = null, $lng = null)
     {
         $stub = $this
             ->getMockBuilder('\League\Geotools\Coordinate\CoordinateInterface')
             ->disableOriginalConstructor()
             ->getMock();
+
+        if (null !== $lat) {
+            $stub->method('getLatitude')->willReturn($lat);
+        }
+        if (null !== $lng) {
+            $stub->method('getLongitude')->willReturn($lng);
+        }
 
         return $stub;
     }
@@ -230,8 +240,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function createAddress(array $data)
     {
-        $addresses = (new AddressFactory())->createFromArray([ $data ]);
-        return 0 === count($addresses) ? null : $addresses->first();
+        return Address::createFromArray($data);
     }
 
 	/**
