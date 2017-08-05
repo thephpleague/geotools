@@ -61,9 +61,9 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
     public function __construct($coordinates, Ellipsoid $ellipsoid = null)
     {
         if ($coordinates instanceof Location) {
-            if (null !== $coords = $coordinates->getCoordinates()) {
-                $this->setLatitude($coords->getLatitude());
-                $this->setLongitude($coords->getLongitude());
+            if (null !== $locationCoordinates = $coordinates->getCoordinates()) {
+                $this->setLatitude($locationCoordinates->getLatitude());
+                $this->setLongitude($locationCoordinates->getLongitude());
             }
         } elseif (is_array($coordinates) && 2 === count($coordinates)) {
             $this->setLatitude($coordinates[0]);

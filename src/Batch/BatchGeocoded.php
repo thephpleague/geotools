@@ -151,11 +151,11 @@ class BatchGeocoded
      */
     public function getLatitude()
     {
-        if (null === $coords = $this->getCoordinates()) {
+        if (null === $coordinates = $this->getCoordinates()) {
             return null;
         }
 
-        return $coords->getLatitude();
+        return $coordinates->getLatitude();
     }
 
     /**
@@ -165,11 +165,11 @@ class BatchGeocoded
      */
     public function getLongitude()
     {
-        if (null === $coords = $this->getCoordinates()) {
+        if (null === $coordinates = $this->getCoordinates()) {
             return null;
         }
 
-        return $coords->getLongitude();
+        return $coordinates->getLongitude();
     }
 
     /**
