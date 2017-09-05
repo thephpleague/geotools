@@ -1,11 +1,8 @@
 language: php
 
 php:
-  - 5.4
-  - 5.5
-  - 5.6
   - 7.0
-  - hhvm
+  - 7.1
 
 sudo: false
 
@@ -17,6 +14,10 @@ cache:
 matrix:
   allow_failures:
     - php: hhvm
+      dist: trusty
+  include:
+    - php: hhvm
+      dist: trusty
 
 services: mongodb
 
@@ -27,8 +28,8 @@ before_script:
   - travis_retry composer install --no-interaction --prefer-source
 
 script:
-  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then phpunit --coverage-text --coverage-clover=coverage.clover; fi
-  - if [[ "$TRAVIS_PHP_VERSION" == "hhvm" ]]; then phpunit; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
+  - if [[ "$TRAVIS_PHP_VERSION" == "hhvm" ]]; then ./vendor/bin/phpunit; fi
 
 after_script:
   - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi

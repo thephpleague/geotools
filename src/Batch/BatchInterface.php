@@ -11,7 +11,9 @@
 
 namespace League\Geotools\Batch;
 
+use Geocoder\Collection;
 use League\Geotools\Cache\CacheInterface;
+use League\Geotools\Exception\InvalidArgumentException;
 
 /**
  * Batch interface
@@ -47,7 +49,7 @@ interface BatchInterface
     /**
      * Returns an array of AddressCollection processed in serie.
      *
-     * @return AddressCollection[]
+     * @return Collection[]
      *
      * @throws \Exception
      */
@@ -56,7 +58,7 @@ interface BatchInterface
     /**
      * Returns an array of AddressCollection processed in parallel.
      *
-     * @return AddressCollection[]
+     * @return Collection[]
      *
      * @throws \Exception
      */

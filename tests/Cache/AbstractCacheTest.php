@@ -43,7 +43,7 @@ class AbstractCacheTest extends \League\Geotools\Tests\TestCase
         $this->testableAbstractCache = new TestableAbstractCache;
 
         $this->json = <<<JSON
-{"providerName":"google_maps","query":"Tagensvej 47, K\u00f8benhavn","exceptionMessage":null,"address":{"coordinates":{"latitude":55.699953,"longitude":12.552736},"latitude":55.699953,"longitude":12.552736,"bounds":{"south":55.699953,"west":12.552736,"north":55.699953,"east":12.552736,"defined":true},"streetNumber":"47","streetName":"Tagensvej","locality":"K\u00f8benhavn","postalCode":"2200","subLocality":"K\u00f8benhavn N","adminLevels":{"2":{"level":2,"name":"K\u00f8benhavn","code":"K\u00f8benhavn"}},"country":"Denmark","countryCode":"DK","timezone":null},"coordinates":{"latitude":55.699953,"longitude":12.552736},"latitude":55.699953,"longitude":12.552736}
+{"providerName":"google_maps","query":"Tagensvej 47, K\u00f8benhavn","exceptionMessage":null,"address":{"providedBy":"n\/a","coordinates":{"latitude":55.699953,"longitude":12.552736},"bounds":{"south":55.699953,"west":12.552736,"north":55.699953,"east":12.552736},"streetNumber":"47","streetName":"Tagensvej","locality":"K\u00f8benhavn","postalCode":"2200","subLocality":"K\u00f8benhavn N","adminLevels":{"2":{"level":2,"name":"K\u00f8benhavn","code":"K\u00f8benhavn"}},"country":"Denmark","timezone":null},"coordinates":{"latitude":55.699953,"longitude":12.552736},"latitude":55.699953,"longitude":12.552736}
 JSON;
         $this->batchGeocoded = new BatchGeocoded;
         $this->batchGeocoded->fromArray([
@@ -72,7 +72,6 @@ JSON;
                     ],
                 ],
                 'country'     => 'Denmark',
-                'countryCode' => 'DK',
                 'timezone'    => null,
             ],
         ]);
@@ -82,14 +81,12 @@ JSON;
             'query'            => 'Tagensvej 47, København',
             'exceptionMessage' => null,
             'address'          => [
-                'latitude'  => 55.699953,
-                'longitude' => 12.552736,
+                'providedBy' => 'n/a',
                 'bounds'    => [
                     'south'   => 55.699953,
                     'west'    => 12.552736,
                     'north'   => 55.699953,
                     'east'    => 12.552736,
-                    'defined' => true,
                 ],
                 'streetNumber' => '47',
                 'streetName'   => 'Tagensvej',
@@ -104,7 +101,6 @@ JSON;
                     ],
                 ],
                 'country'     => 'Denmark',
-                'countryCode' => 'DK',
                 'timezone'    => null,
                 'coordinates' => [
                     'latitude'  => 55.699953,

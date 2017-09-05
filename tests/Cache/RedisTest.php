@@ -169,7 +169,7 @@ JSON
         $this->assertEquals('New York County', $adminLevels[2]->getName());
         $this->assertEquals('New York County', $adminLevels[2]->getCode());
         $this->assertEquals('France', $cached->getCountry()->getName());
-        $this->assertEquals('FR', $cached->getCountryCode());
+        $this->assertEquals('FR', $cached->getCountry()->getCode());
         $this->assertNull($cached->getTimezone());
     }
 

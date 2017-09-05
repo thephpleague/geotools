@@ -11,8 +11,11 @@
 
 namespace League\Geotools\Tests\Batch;
 
+use Geocoder\Collection;
 use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\Provider as ProviderInterface;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Query\ReverseQuery;
 use League\Geotools\Batch\Batch;
 
 /**
@@ -31,7 +34,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     {
         $this->data = array(
             'latitude'  => 48.8234055,
-            'longitude' => '2.3072664',
+            'longitude' => 2.3072664,
         );
 
         $this->providers = array(
@@ -256,7 +259,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     {
         $geocoder = $this->getMockGeocoderReturns($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
-        $resultComputedInSerie = $batch->reverse($this->getStubCoordinate())->serie();
+        $resultComputedInSerie = $batch->reverse($this->getStubCoordinate($this->data['latitude'], $this->data['longitude']))->serie();
 
         $this->assertCount(count($this->providers), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
@@ -388,7 +391,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     {
         $geocoder = $this->getMockGeocoderReturns($this->providers, $this->data);
         $batch = new TestableBatch($geocoder);
-        $resultComputedInSerie = $batch->reverse($this->getStubCoordinate())->parallel();
+        $resultComputedInSerie = $batch->reverse($this->getStubCoordinate($this->data['latitude'], $this->data['longitude']))->parallel();
 
         $this->assertCount(count($this->providers), $resultComputedInSerie);
         foreach ($resultComputedInSerie as $providerResult) {
@@ -853,18 +856,20 @@ class MockProvider extends AbstractProvider implements ProviderInterface
         $this->name = $name;
     }
 
-    public function geocode($address)
-    {
-        return array();
-    }
-
-    public function reverse($latitude, $longitude)
-    {
-        return array();
-    }
-
-    public function getName()
+    public function getName():string
     {
         return $this->name;
     }
+
+    public function geocodeQuery(GeocodeQuery $query): Collection
+    {
+        return new Collection([]);
+    }
+
+    public function reverseQuery(ReverseQuery $query): Collection
+    {
+        return new Collection([]);
+    }
+
+
 }
