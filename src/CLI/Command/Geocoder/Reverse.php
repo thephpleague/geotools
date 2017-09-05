@@ -88,7 +88,7 @@ EOT
         }
 
         $reversed = $batch->reverse($coordinate)->parallel();
-        $address = $reversed[0]->getAddress();
+        $address = $reversed[0]->first();
 
         if ($input->getOption('raw')) {
             $result = array();
@@ -99,9 +99,10 @@ EOT
                 $result[] = sprintf('<label>Arguments</label>:     <value>%s</value>', $args);
             }
             $result[] = '---';
-            $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', $address->getLatitude());
-            $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', $address->getLongitude());
-            if ($address->getBounds()->isDefined()) {
+            $coordinates = $address->getCoordinates();
+            $result[] = sprintf('<label>Latitude</label>:      <value>%s</value>', null !== $coordinates ? $coordinates->getLatitude() : '');
+            $result[] = sprintf('<label>Longitude</label>:     <value>%s</value>', null !== $coordinates ? $coordinates->getLongitude() : '');
+            if ($address->getBounds()) {
                 $bounds = $address->getBounds()->toArray();
                 $result[] = '<label>Bounds</label>';
                 $result[] = sprintf(' - <label>South</label>: <value>%s</value>', $bounds['south']);
@@ -120,8 +121,9 @@ EOT
                     $result[] = sprintf(' - <label>%s</label>: <value>%s</value>', $adminLevel->getCode(), $adminLevel->getName());
                 }
             }
-            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', $address->getCountry()->toString());
-            $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', $address->getCountryCode());
+            $country = $address->getCountry();
+            $result[] = sprintf('<label>Country</label>:       <value>%s</value>', null !== $country ? $country->getName() : '');
+            $result[] = sprintf('<label>Country Code</label>:  <value>%s</value>', null !== $country ? $country->getCode() : '');
             $result[] = sprintf('<label>Timezone</label>:      <value>%s</value>', $address->getTimezone());
         } elseif ($input->getOption('json')) {
             $result = sprintf('<value>%s</value>', json_encode($address->toArray()));

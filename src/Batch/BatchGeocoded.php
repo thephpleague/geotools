@@ -11,8 +11,9 @@
 
 namespace League\Geotools\Batch;
 
+use Geocoder\Location;
 use Geocoder\Model\Address;
-use Geocoder\Model\AddressFactory;
+use Geocoder\Model\Coordinates;
 
 /**
  * BatchGeocoded class
@@ -43,9 +44,9 @@ class BatchGeocoded
     protected $exception;
 
     /**
-     * The address object.
+     * The Location object.
      *
-     * @var Address
+     * @var Location
      */
     protected $address;
 
@@ -112,7 +113,7 @@ class BatchGeocoded
     /**
      * Get the address
      *
-     * @return Address
+     * @return Location
      */
     public function getAddress()
     {
@@ -122,7 +123,7 @@ class BatchGeocoded
     /**
      * Set the address
      *
-     * @param Address $address
+     * @param Location $address
      */
     public function setAddress($address)
     {
@@ -132,7 +133,7 @@ class BatchGeocoded
     /**
      * Returns an array of coordinates (latitude, longitude).
      *
-     * @return Coordinates
+     * @return Coordinates|null
      */
     public function getCoordinates()
     {
@@ -150,11 +151,11 @@ class BatchGeocoded
      */
     public function getLatitude()
     {
-        if (null === $this->address) {
+        if (null === $coordinates = $this->getCoordinates()) {
             return null;
         }
 
-        return $this->address->getLatitude();
+        return $coordinates->getLatitude();
     }
 
     /**
@@ -164,11 +165,11 @@ class BatchGeocoded
      */
     public function getLongitude()
     {
-        if (null === $this->address) {
+        if (null === $coordinates = $this->getCoordinates()) {
             return null;
         }
 
-        return $this->address->getLongitude();
+        return $coordinates->getLongitude();
     }
 
     /**
@@ -189,7 +190,7 @@ class BatchGeocoded
         }
 
         // Shortcut to create the address and set it in this class
-        $this->setAddress((new AddressFactory)->createFromArray([$data['address']])->first());
+        $this->setAddress(Address::createFromArray($data['address']));
     }
 
 	/**

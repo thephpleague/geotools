@@ -48,7 +48,7 @@ class Vertex implements VertexInterface
     {
         $this->from = $from;
 
-        if (empty($this->to) || ($this->to->getLatitude() - $this->from->getLatitude() === 0)) {
+        if (empty($this->to) || ($this->to->getLatitude() - $this->from->getLatitude() === 0)) {
             return $this;
         }
 
