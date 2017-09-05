@@ -275,4 +275,23 @@ class Vertex implements VertexInterface
         return null;
     }
 
+    /**
+     * Returns the determinant value between $this (vertex) and another vertex.
+     *
+     * @param  Vertex $vertex [description]
+     * @return [type]         [description]
+     */
+    public function getDeterminant(Vertex $vertex) {
+        $abscissaVertexOne = $this->to->getLatitude() - $this->from->getLatitude();
+        $ordinateVertexOne = $this->to->getLongitude() - $this->from->getLongitude();
+        $abscissaVertexSecond = $vertex->getTo()->getLatitude() - $vertex->getFrom()->getLatitude();
+        $ordinateVertexSecond = $vertex->getTo()->getLongitude() - $vertex->getFrom()->getLongitude();
+
+        return bcsub(
+            bcmul($abscissaVertexOne, $ordinateVertexSecond, $this->precision),
+            bcmul($abscissaVertexSecond, $ordinateVertexOne, $this->precision),
+            $this->precision
+        );
+    }
+
 }
