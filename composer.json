@@ -1,7 +1,7 @@
 {
     "name"        : "league/geotools",
     "type"        : "library",
-    "description" : "Geo-related tools PHP 5.4+ library (use 0.4 if you're using PHP 5.3)",
+    "description" : "Geo-related tools PHP 7.0+ library",
     "keywords"    : ["geotools", "geometry", "geocoder", "geocoding", "geoip", "bounds", "distance", "batch", "async"],
     "homepage"    : "http://geotools-php.org/",
     "license"     : "MIT",
