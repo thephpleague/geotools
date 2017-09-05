@@ -12,8 +12,12 @@
 namespace League\Geotools;
 
 use Geocoder\Geocoder as GeocoderInterface;
+use League\Geotools\Batch\BatchInterface;
+use League\Geotools\Convert\ConvertInterface;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Vertex\VertexInterface;
+use League\Geotools\Distance\DistanceInterface;
+use League\Geotools\Geohash\GeohashInterface;
 
 /**
  * Geotools interface
@@ -22,6 +26,49 @@ use League\Geotools\Vertex\VertexInterface;
  */
 interface GeotoolsInterface
 {
+    /**
+     * Transverse Mercator is not the same as UTM.
+     * A scale factor is required to convert between them.
+     *
+     * @var double
+     */
+    const UTM_SCALE_FACTOR = 0.9996;
+
+    /**
+     * The ratio meters per mile.
+     *
+     * @var double
+     */
+    const METERS_PER_MILE = 1609.344;
+
+    /**
+     * The ratio feet per meter.
+     *
+     * @var double
+     */
+    const FEET_PER_METER = 0.3048;
+
+    /**
+     * The kilometer unit.
+     *
+     * @var string
+     */
+    const KILOMETER_UNIT = 'km';
+
+    /**
+     * The mile unit.
+     *
+     * @var string
+     */
+    const MILE_UNIT = 'mi';
+
+    /**
+     * The feet unit.
+     *
+     * @var string
+     */
+    const FOOT_UNIT = 'ft';
+
     /**
      * Returns an instance of Distance.
      *
