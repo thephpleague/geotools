@@ -141,4 +141,23 @@ class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \
 
         return null;
     }
+
+    /**
+     * @param ArrayCollection $collection
+     * @return ArrayCollection
+     */
+    public function merge(ArrayCollection $collection)
+    {
+        $merged = clone $this;
+
+        foreach ($collection as $key => $element) {
+            if (is_int($key)) {
+                $merged->add($element);
+            } else {
+                $merged->set($key, $element);
+            }
+        }
+
+        return $merged;
+    }
 }
