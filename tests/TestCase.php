@@ -20,7 +20,7 @@ use League\Geotools\Coordinate\Ellipsoid;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * @return GeocoderInterface

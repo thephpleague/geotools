@@ -16,14 +16,17 @@ use League\Geotools\BoundingBox\BoundingBoxInterface;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\CoordinateCollection;
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Coordinate\Ellipsoid;
 
 /**
  * @author Gabriel Bull <me@gabrielbull.com>
  */
 class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerializable
 {
+    const TYPE = 'POLYGON';
+
     /**
-     * @var CoordinateCollection|CoordinateInterface[]
+     * @var CoordinateCollection
      */
     private $coordinates;
 
@@ -51,6 +54,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
             $this->coordinates = new CoordinateCollection;
         } elseif ($coordinates instanceof CoordinateCollection) {
             $this->coordinates = $coordinates;
+            $this->hasCoordinate = $coordinates->count() > 0;
         } else {
             throw new \InvalidArgumentException;
         }
@@ -61,6 +65,39 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
             $this->set($coordinates);
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getGeometryType()
+    {
+        return self::TYPE;
+    }
+
+    /**
+     * @return Ellipsoid
+     */
+    public function getEllipsoid()
+    {
+        return $this->coordinates->getEllipsoid();
+    }
+
+    /**
+     * @return Coordinate
+     */
+    public function getCoordinate()
+    {
+        return $this->coordinates->offsetGet(0);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEmpty()
+    {
+        return !$this->hasCoordinate;
+    }
+
 
     /**
      * @param  CoordinateInterface $coordinate
@@ -90,12 +127,11 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
             $currentVertex = $this->get($i - 1);
             $nextVertex = $this->get($i);
 
-            if (
-                bccomp(
-                    $coordinate->getLatitude(),
-                    min($currentVertex->getLatitude(), $nextVertex->getLatitude()),
-                    $this->getPrecision()
-                ) === 1 &&
+            if (bccomp(
+                $coordinate->getLatitude(),
+                min($currentVertex->getLatitude(), $nextVertex->getLatitude()),
+                $this->getPrecision()
+            ) === 1 &&
                 bccomp(
                     $coordinate->getLatitude(),
                     max($currentVertex->getLatitude(), $nextVertex->getLatitude()),
@@ -118,12 +154,11 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
                     ($nextVertex->getLatitude() - $currentVertex->getLatitude()) +
                     $currentVertex->getLongitude();
 
-                if (
-                    bccomp(
-                        $currentVertex->getLongitude(),
-                        $nextVertex->getLongitude(),
-                        $this->getPrecision()
-                    ) === 0 ||
+                if (bccomp(
+                    $currentVertex->getLongitude(),
+                    $nextVertex->getLongitude(),
+                    $this->getPrecision()
+                ) === 0 ||
                     bccomp(
                         $coordinate->getLongitude(),
                         $xinters,
@@ -158,12 +193,11 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
             }
 
             // Check if coordinate is on a horizontal boundary
-            if (
-                bccomp(
-                    $currentVertex->getLatitude(),
-                    $nextVertex->getLatitude(),
-                    $this->getPrecision()
-                ) === 0 &&
+            if (bccomp(
+                $currentVertex->getLatitude(),
+                $nextVertex->getLatitude(),
+                $this->getPrecision()
+            ) === 0 &&
                 bccomp(
                     $currentVertex->getLatitude(),
                     $coordinate->getLatitude(),
@@ -184,12 +218,11 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
             }
 
             // Check if coordinate is on a boundary
-            if (
-                bccomp(
-                    $coordinate->getLatitude(),
-                    min($currentVertex->getLatitude(), $nextVertex->getLatitude()),
-                    $this->getPrecision()
-                ) === 1 &&
+            if (bccomp(
+                $coordinate->getLatitude(),
+                min($currentVertex->getLatitude(), $nextVertex->getLatitude()),
+                $this->getPrecision()
+            ) === 1 &&
                 bccomp(
                     $coordinate->getLatitude(),
                     max($currentVertex->getLatitude(), $nextVertex->getLatitude()),
@@ -228,12 +261,11 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     public function pointOnVertex(CoordinateInterface $coordinate)
     {
         foreach ($this->coordinates as $vertexCoordinate) {
-            if (
-                bccomp(
-                    $vertexCoordinate->getLatitude(),
-                    $coordinate->getLatitude(),
-                    $this->getPrecision()
-                ) === 0 &&
+            if (bccomp(
+                $vertexCoordinate->getLatitude(),
+                $coordinate->getLatitude(),
+                $this->getPrecision()
+            ) === 0 &&
                 bccomp(
                     $vertexCoordinate->getLongitude(),
                     $coordinate->getLongitude(),

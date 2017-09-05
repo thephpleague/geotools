@@ -11,46 +11,29 @@
 
 namespace League\Geotools\Polygon;
 
-use League\Geotools\Coordinate\CoordinateCollection;
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\GeometryInterface;
 
 /**
  * @author Gabriel Bull <me@gabrielbull.com>
  */
-interface PolygonInterface
+interface PolygonInterface extends GeometryInterface
 {
     /**
-     * @return CoordinateCollection
+     * @param  CoordinateInterface $coordinate
+     * @return boolean
      */
-    public function getCoordinates();
-
-    /**
-     * @param  CoordinateCollection $coordinates
-     * @return $this
-     */
-    public function setCoordinates(CoordinateCollection $coordinates);
-
-    /**
-     * @param  string                   $key
-     * @return null|CoordinateInterface
-     */
-    public function get($key);
-
-    /**
-     * @param string              $key
-     * @param CoordinateInterface $coordinate
-     */
-    public function set($key, CoordinateInterface $coordinate);
+    public function pointInPolygon(CoordinateInterface $coordinate);
 
     /**
      * @param  CoordinateInterface $coordinate
      * @return boolean
      */
-    public function add(CoordinateInterface $coordinate);
+    public function pointOnBoundary(CoordinateInterface $coordinate);
 
     /**
-     * @param  string                   $key
-     * @return null|CoordinateInterface
+     * @param  CoordinateInterface $coordinate
+     * @return boolean
      */
-    public function remove($key);
+    public function pointOnVertex(CoordinateInterface $coordinate);
 }
