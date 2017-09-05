@@ -13,6 +13,7 @@ namespace League\Geotools\Tests;
 
 use League\Geotools\Geotools;
 use Geocoder\ProviderAggregator as Geocoder;
+use League\Geotools\GeotoolsInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -24,6 +25,28 @@ class GeotoolsTest extends TestCase
     protected function setUp()
     {
         $this->geotools = new Geotools();
+    }
+
+    public function testConsts()
+    {
+        $this->assertSame(0.9996, GeotoolsInterface::UTM_SCALE_FACTOR);
+        $this->assertSame(1609.344, GeotoolsInterface::METERS_PER_MILE);
+        $this->assertSame(0.3048, GeotoolsInterface::FEET_PER_METER);
+        $this->assertSame('km', GeotoolsInterface::KILOMETER_UNIT);
+        $this->assertSame('mi', GeotoolsInterface::MILE_UNIT);
+        $this->assertSame('ft', GeotoolsInterface::FOOT_UNIT);
+    }
+
+    public function testCardinalPoints()
+    {
+        $this->assertTrue(is_array(Geotools::$cardinalPoints));
+        $this->assertCount(17, Geotools::$cardinalPoints);
+    }
+
+    public function testLatitudeBands()
+    {
+        $this->assertTrue(is_array(Geotools::$latitudeBands));
+        $this->assertCount(21, Geotools::$latitudeBands);
     }
 
     public function testDistanceShouldReturnANewDistanceInstance()

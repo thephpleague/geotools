@@ -24,13 +24,37 @@ use Geocoder\Geocoder;
  *
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Geotools extends AbstractGeotools implements GeotoolsInterface
+class Geotools implements GeotoolsInterface
 {
     /**
      * Version.
      * @see http://semver.org/
      */
     const VERSION = '0.7.1-dev';
+
+    /**
+     * The cardinal points / directions (the four cardinal directions,
+     * the four ordinal directions, plus eight further divisions).
+     *
+     * @var array
+     */
+    public static $cardinalPoints = array(
+        'N', 'NNE', 'NE', 'ENE',
+        'E', 'ESE', 'SE', 'SSE',
+        'S', 'SSW', 'SW', 'WSW',
+        'W', 'WNW', 'NW', 'NNW',
+        'N'
+    );
+
+    /**
+     * Latitude bands in the UTM coordinate system.
+     * @see http://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system
+     *
+     * @var array
+     */
+    public static $latitudeBands = array(
+        'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'X'
+    );
 
 
     /**
