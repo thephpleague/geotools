@@ -17,6 +17,7 @@ use Geocoder\Provider\Provider as ProviderInterface;
 use Geocoder\Query\GeocodeQuery;
 use Geocoder\Query\ReverseQuery;
 use League\Geotools\Batch\Batch;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -818,7 +819,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->assertInstanceOf('League\Geotools\Batch\BatchInterface', $batchWithCache);
         $this->assertSame($batch, $batchWithCache);
         $this->assertTrue(is_object($batchWithCache->getCache()));
-        $this->assertInstanceOf('League\Geotools\Cache\CacheInterface', $batchWithCache->getCache());
+        $this->assertInstanceOf(CacheItemPoolInterface::class, $batchWithCache->getCache());
     }
 }
 

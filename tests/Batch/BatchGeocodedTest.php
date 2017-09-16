@@ -62,7 +62,7 @@ class BatchGeocodedTest extends \League\Geotools\Tests\TestCase
 		$this->assertInstanceOf('\Geocoder\Model\Address', $address);
 		$this->assertNull($address->getCoordinates());
         $this->assertNull($address->getBounds());
-        $this->assertInstanceOf('\Geocoder\Model\Country', $address->getCountry());
+        $this->assertNull($address->getCountry());
         $this->assertInstanceOf('\Geocoder\Model\AdminLevelCollection', $address->getAdminLevels());
 	}
 }

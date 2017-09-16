@@ -17,6 +17,7 @@ use Geocoder\ProviderAggregator;
 use League\Geotools\Batch\BatchGeocoded;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
@@ -208,7 +209,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     protected function getStubCache()
     {
         $stub = $this
-            ->getMockBuilder('\League\Geotools\Cache\CacheInterface')
+            ->getMockBuilder(CacheItemPoolInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -223,7 +224,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockCacheReturns($method, $returnValue)
     {
-        $mock = $this->getMock('\League\Geotools\Cache\CacheInterface');
+        $mock = $this->getMock(CacheItemPoolInterface::class);
         $mock
             ->expects($this->atLeastOnce())
             ->method($method)
