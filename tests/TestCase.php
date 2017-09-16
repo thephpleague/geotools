@@ -17,6 +17,7 @@ use Geocoder\ProviderAggregator;
 use League\Geotools\Batch\BatchGeocoded;
 use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
+use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
@@ -177,7 +178,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocodedReturns(array $coordinate)
     {
-        $mock = $this->getMock('\League\Geotools\Batch\BatchGeocoded');
+        $mock = $this->getMockBuilder('\League\Geotools\Batch\BatchGeocoded')->getMock();
         $mock
             ->expects($this->atLeastOnce())
             ->method('getLatitude')
@@ -200,35 +201,38 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        return $stub;
-    }
-
-    /**
-     * @return CacheInterface
-     */
-    protected function getStubCache()
-    {
-        $stub = $this
-            ->getMockBuilder(CacheItemPoolInterface::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $stub->expects($this->any())
+            ->method('getProviderName')
+            ->willReturn('provider');
+        $stub->expects($this->any())
+            ->method('getQuery')
+            ->willReturn('query');
 
         return $stub;
     }
 
     /**
-     * @param string $method
-     * @param $returnValue
+     * @param mixed $returnValue
      *
-     * @return CacheInterface
+     * @return CacheItemPoolInterface
      */
-    protected function getMockCacheReturns($method, $returnValue)
+    protected function getMockCacheReturns($returnValue)
     {
-        $mock = $this->getMock(CacheItemPoolInterface::class);
+        $item = $this->getMockBuilder(CacheItemInterface::class)->getMock();
+        $item
+            ->expects($this->any())
+            ->method('get')
+            ->willReturn($returnValue);
+        $item
+            ->expects($this->any())
+            ->method('isHit')
+            ->willReturn(true);
+
+        $mock = $this->getMockBuilder(CacheItemPoolInterface::class)->getMock();
         $mock
             ->expects($this->atLeastOnce())
-            ->method($method)
-            ->will($this->returnValue($returnValue));
+            ->method('getItem')
+            ->willReturn($item);
 
         return $mock;
     }

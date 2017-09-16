@@ -36,7 +36,7 @@ class Geocode extends Command
             ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the adapter to use, cURL by default', 'curl')
             ->addOption('cache', null, InputOption::VALUE_REQUIRED,
-                'If set, the name of the cache to use, Redis by default')
+                'If set, the name of a factory method that will create a PSR-6 cache. "Example\Acme::create"')
             ->addOption('raw', null, InputOption::VALUE_NONE,
                 'If set, the raw format of the reverse geocoding result')
             ->addOption('json', null, InputOption::VALUE_NONE,
@@ -49,7 +49,6 @@ class Geocode extends Command
 <info>Available adapters</info>:   {$this->getAdapters()}
 <info>Available providers</info>:  {$this->getProviders()} <comment>(some providers need arguments)</comment>
 <info>Available dumpers</info>:    {$this->getDumpers()}
-<info>Available caches</info>:     {$this->getCaches()}
 
 <info>Use the default provider with the socket adapter and dump the output in WKT standard</info>:
 
@@ -87,8 +86,7 @@ EOT
 
         $batch = new Batch($geocoder);
         if ($input->getOption('cache')) {
-            $cache = $this->getCache($input->getOption('cache'));
-            $batch->setCache(new $cache());
+            $batch->setCache($this->getCache($input->getOption('cache')));
         }
 
         $geocoded = $batch->geocode($input->getArgument('value'))->parallel();

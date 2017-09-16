@@ -11,6 +11,8 @@
 
 namespace League\Geotools\CLI\Command\Geocoder;
 
+use Psr\Cache\CacheItemPoolInterface;
+
 /**
  * Command class
  *
@@ -18,17 +20,6 @@ namespace League\Geotools\CLI\Command\Geocoder;
  */
 class Command extends \Symfony\Component\Console\Command\Command
 {
-    /**
-     * Available caches.
-     *
-     * @var array
-     */
-    private $caches = [
-        'memcached' => 'Memcached',
-        'mongodb'   => 'MongoDB',
-        'redis'     => 'Redis',
-    ];
-
     /**
      * Available adapters.
      *
@@ -89,33 +80,23 @@ class Command extends \Symfony\Component\Console\Command\Command
 
 
     /**
-     * Returns the cache class name.
-     * The default cache is Redis.
+     * @param  string $factoryCallable
      *
-     * @param  string $cache The name of the cache to use.
-     *
-     * @return string The name of the cache to use.
+     * @return CacheItemPoolInterface
      */
-    protected function getCache($cache)
+    protected function getCache($factoryCallable)
     {
-        $cache = $this->lowerize((trim($cache)));
-        $cache = array_key_exists($cache, $this->caches)
-            ? $this->caches[$cache]
-            : $this->caches['redis'];
+        $factoryCallable = $this->lowerize((trim($factoryCallable)));
+        if (!is_callable($factoryCallable)) {
+            throw new \LogicException(sprintf('Cache must be called with a valid callable on the format "Example\Acme::create". "%s" given.', $factoryCallable));
+        }
 
-        return '\\League\\Geotools\\Cache\\' . $cache;
-    }
+        $psr6 = call_user_func($factoryCallable);
+        if (!$psr6 instanceof CacheItemPoolInterface) {
+            throw new \LogicException('Return value of factory callable must be a CacheItemPoolInterface');
+        }
 
-    /**
-     * Returns the list of available caches sorted by alphabetical order.
-     *
-     * @return string The list of available caches comma separated.
-     */
-    protected function getCaches()
-    {
-        ksort($this->caches);
-
-        return implode(', ', array_keys($this->caches));
+        return $psr6;
     }
 
     /**

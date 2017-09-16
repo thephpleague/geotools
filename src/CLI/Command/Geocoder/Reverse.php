@@ -51,7 +51,6 @@ class Reverse extends Command
 <info>Available adapters</info>:   {$this->getAdapters()}
 <info>Available providers</info>:  {$this->getProviders()} <comment>(some providers need arguments)</comment>
 <info>Available dumpers</info>:    {$this->getDumpers()}
-<info>Available caches</info>:     {$this->getCaches()}
 
 <info>Use the default provider with the socket adapter and format the output</info>:
 
@@ -83,8 +82,7 @@ EOT
 
         $batch = new Batch($geocoder);
         if ($input->getOption('cache')) {
-            $cache = $this->getCache($input->getOption('cache'));
-            $batch->setCache(new $cache());
+            $batch->setCache( $this->getCache($input->getOption('cache')));
         }
 
         $reversed = $batch->reverse($coordinate)->parallel();

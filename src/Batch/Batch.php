@@ -67,7 +67,17 @@ class Batch implements BatchInterface
      */
     public function isCached($providerName, $query)
     {
-        return isset($this->cache) ? $this->cache->hasItem($this->getCacheKey($providerName, $query)) : false;
+        if (null === $this->cache) {
+            return false;
+        }
+
+        $item = $this->cache->getItem($this->getCacheKey($providerName, $query));
+
+        if ($item->isHit()) {
+            return $item->get();
+        }
+
+        return false;
     }
 
 

@@ -11,6 +11,7 @@
 
 namespace League\Geotools\Tests\Batch;
 
+use Cache\Adapter\PHPArray\ArrayCachePool;
 use Geocoder\Collection;
 use Geocoder\Provider\AbstractProvider;
 use Geocoder\Provider\Provider as ProviderInterface;
@@ -211,7 +212,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->geocode('foo')
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->serie();
 
         $this->assertCount(count($this->providers), $resultComputedInSerie);
@@ -244,7 +245,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->geocode($this->values)
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->serie();
 
         $this->assertCount(count($this->providers) * count($this->values), $resultComputedInSerie);
@@ -277,7 +278,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->reverse($this->getStubCoordinate())
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->serie();
 
         $this->assertCount(count($this->providers), $resultComputedInSerie);
@@ -310,7 +311,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->reverse($this->coordinates)
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->serie();
 
         $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
@@ -343,7 +344,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInParallel = $batch
             ->geocode('foo')
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->parallel();
 
         $this->assertCount(count($this->providers), $resultComputedInParallel);
@@ -376,7 +377,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInParallel = $batch
             ->geocode($this->values)
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->parallel();
 
         $this->assertCount(count($this->providers) * count($this->values), $resultComputedInParallel);
@@ -409,7 +410,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->reverse($this->getStubCoordinate())
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->parallel();
 
         $this->assertCount(count($this->providers), $resultComputedInSerie);
@@ -442,7 +443,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->reverse($this->coordinates)
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->parallel();
 
         $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
@@ -477,7 +478,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->geocode('foo')
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->serie();
 
         $this->assertCount(count($this->providers), $resultComputedInSerie);
@@ -512,7 +513,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInParallel = $batch
             ->geocode('foo')
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->parallel();
 
         $this->assertCount(count($this->providers), $resultComputedInParallel);
@@ -547,7 +548,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->geocode($this->values)
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->serie();
 
         $this->assertCount(count($this->providers) * count($this->values), $resultComputedInSerie);
@@ -582,7 +583,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInParallel = $batch
             ->geocode($this->values)
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->parallel();
 
         $this->assertCount(count($this->providers) * count($this->values), $resultComputedInParallel);
@@ -617,7 +618,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->reverse($this->getMockCoordinateReturns(array(1, 2)))
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->serie();
 
         $this->assertCount(count($this->providers), $resultComputedInSerie);
@@ -652,7 +653,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInParallel = $batch
             ->reverse($this->getMockCoordinateReturns(array(1, 2)))
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->parallel();
 
         $this->assertCount(count($this->providers), $resultComputedInParallel);
@@ -687,7 +688,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInSerie = $batch
             ->reverse($this->coordinates)
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->serie();
 
         $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInSerie);
@@ -722,7 +723,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $batch = new TestableBatch($geocoder);
         $resultComputedInParallel = $batch
             ->reverse($this->coordinates)
-            ->setCache($this->getMockCacheReturns('isCached', $this->getMockGeocodedReturns($this->data)))
+            ->setCache($this->getMockCacheReturns($this->getMockGeocodedReturns($this->data)))
             ->parallel();
 
         $this->assertCount(count($this->providers) * count($this->coordinates), $resultComputedInParallel);
@@ -786,7 +787,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     public function testIsCachedShouldReturnBatchGeocoded()
     {
         $batch  = new TestableBatch($this->geocoder);
-        $cached = $batch->setCache($this->getMockCacheReturns('isCached', $this->getStubBatchGeocoded()))->isCached('foo', 'bar');
+        $cached = $batch->setCache($this->getMockCacheReturns($this->getStubBatchGeocoded()))->isCached('foo', 'bar');
 
         $this->assertTrue(is_object($cached));
         $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $cached);
@@ -803,7 +804,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     public function testCacheShouldReturnBatchGeocoded()
     {
         $batch   = new TestableBatch($this->geocoder);
-        $caching = $batch->setCache($this->getMockCacheReturns('cache', 'foo'))->cache($this->getStubBatchGeocoded());
+        $caching = $batch->setCache($this->getMockCacheReturns('foo'))->cache($this->getStubBatchGeocoded());
 
         $this->assertTrue(is_object($caching));
         $this->assertInstanceOf('League\Geotools\Batch\BatchGeocoded', $caching);
@@ -812,7 +813,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     public function testSetCacheShouldReturnBatchInterface()
     {
         $batch          = new TestableBatch($this->geocoder);
-        $batchWithCache = $batch->setCache($this->getStubCache());
+        $batchWithCache = $batch->setCache(new ArrayCachePool());
 
         $this->assertTrue(is_object($batchWithCache));
         $this->assertInstanceOf('League\Geotools\Batch\Batch', $batchWithCache);
