@@ -12,6 +12,7 @@
 namespace League\Geotools\CLI\Command\Geocoder;
 
 use Geocoder\ProviderAggregator;
+use Http\Discovery\HttpClientDiscovery;
 use League\Geotools\Batch\Batch;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -33,8 +34,6 @@ class Geocode extends Command
             ->addArgument('value', InputArgument::REQUIRED, 'The street-address, IPv4 or IPv6 to geocode')
             ->addOption('provider', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of the provider to use, Google Maps by default', 'google_maps')
-            ->addOption('adapter', null, InputOption::VALUE_REQUIRED,
-                'If set, the name of the adapter to use, cURL by default', 'curl')
             ->addOption('cache', null, InputOption::VALUE_REQUIRED,
                 'If set, the name of a factory method that will create a PSR-6 cache. "Example\Acme::create"')
             ->addOption('raw', null, InputOption::VALUE_NONE,
@@ -46,7 +45,6 @@ class Geocode extends Command
             ->addOption('args', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
                 'If set, the provider constructor arguments like api key, locale, region, ssl, toponym and service')
             ->setHelp(<<<EOT
-<info>Available adapters</info>:   {$this->getAdapters()}
 <info>Available providers</info>:  {$this->getProviders()} <comment>(some providers need arguments)</comment>
 <info>Available dumpers</info>:    {$this->getDumpers()}
 
@@ -72,16 +70,16 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $geocoder = new ProviderAggregator;
-        $adapter  = $this->getAdapter($input->getOption('adapter'));
+        $httpClient = HttpClientDiscovery::find();
         $provider = $this->getProvider($input->getOption('provider'));
 
         if ($input->getOption('args')) {
             $args = is_array($input->getOption('args'))
                 ? implode(',', $input->getOption('args'))
                 : $input->getOption('args');
-            $geocoder->registerProvider(new $provider(new $adapter(), $args));
+            $geocoder->registerProvider(new $provider(new $httpClient(), $args));
         } else {
-            $geocoder->registerProvider(new $provider(new $adapter()));
+            $geocoder->registerProvider(new $provider(new $httpClient()));
         }
 
         $batch = new Batch($geocoder);
@@ -94,7 +92,7 @@ EOT
 
         if ($input->getOption('raw')) {
             $result = array();
-            $result[] = sprintf('<label>Adapter</label>:       <value>%s</value>', $adapter);
+            $result[] = sprintf('<label>HttpClient</label>:       <value>%s</value>', $httpClient);
             $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
             $result[] = sprintf('<label>Cache</label>:         <value>%s</value>', isset($cache) ? $cache : 'None');
             if ($input->getOption('args')) {
