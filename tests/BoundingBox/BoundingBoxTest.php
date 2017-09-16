@@ -118,7 +118,7 @@ class BoundingBoxTest extends \League\Geotools\Tests\TestCase
         );
         $polygon = new Polygon([new Coordinate([-1, -2], Ellipsoid::createFromName(Ellipsoid::WGS84))]);
 
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         $bb->setPolygon($polygon);
     }
 
