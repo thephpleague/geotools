@@ -124,7 +124,7 @@ class GeometryCollectionTest extends TestCase
     {
         $array = ['a'];
 
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
 
         $collection = new SimpleGeometryCollection($array);
     }
@@ -149,7 +149,7 @@ class GeometryCollectionTest extends TestCase
             )
         );
 
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
 
         $collection->add($secondGeometry);
     }
@@ -226,7 +226,7 @@ class GeometryCollectionTest extends TestCase
         $collection1 = new SimpleGeometryCollection($array1);
         $collection2 = new OtherGeometryCollection($array2);
 
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
 
         $collection1->merge($collection2);
     }
