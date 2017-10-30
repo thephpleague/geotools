@@ -54,12 +54,16 @@ class MemcachedTest extends \League\Geotools\Tests\TestCase
             ->method('set');
 
         $this->memcached->setMemcached($mockMemcached);
-        $this->memcached->cache($this->getMock('\League\Geotools\Batch\BatchGeocoded'));
+        $this->memcached->cache($this->createMock('\League\Geotools\Batch\BatchGeocoded'));
     }
 
     public function testIsCachedReturnsFalse()
     {
-        $mockMemcached = $this->getMock('\Memcached', array('get'));
+        $mockMemcached = $this->getMockBuilder('\Memcached')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock();
+
         $mockMemcached
             ->expects($this->once())
             ->method('get')
@@ -115,7 +119,11 @@ class MemcachedTest extends \League\Geotools\Tests\TestCase
 JSON
         ;
 
-        $mockMemcached = $this->getMock('\Memcached', array('get'));
+        $mockMemcached = $this->getMockBuilder('\Memcached')
+            ->disableOriginalConstructor()
+            ->setMethods(array('get'))
+            ->getMock();
+
         $mockMemcached
             ->expects($this->once())
             ->method('get')
@@ -162,7 +170,11 @@ JSON
 
     public function testFlush()
     {
-        $mockMemcached = $this->getMock('\Memcached', array('flush'));
+        $mockMemcached = $this->getMockBuilder('\Memcached')
+            ->disableOriginalConstructor()
+            ->setMethods(array('flush'))
+            ->getMock();
+
         $mockMemcached
             ->expects($this->once())
             ->method('flush');

@@ -44,7 +44,11 @@ class RedisTest extends \League\Geotools\Tests\TestCase
 
     public function testCache()
     {
-        $mockRedis = $this->getMock('\Predis\Client', array('set', 'expire'));
+        $mockRedis = $this->getMockBuilder('\Predis\Client')
+            ->disableOriginalConstructor()
+            ->setMethods(array('set', 'expire'))
+            ->getMock();
+
         $mockRedis
             ->expects($this->once())
             ->method('set');
@@ -54,7 +58,7 @@ class RedisTest extends \League\Geotools\Tests\TestCase
 
         $this->redis->setRedis($mockRedis);
 
-        $mockGeocoded = $this->getMock('\League\Geotools\Batch\BatchGeocoded');
+        $mockGeocoded = $this->createMock('\League\Geotools\Batch\BatchGeocoded');
         $mockGeocoded
             ->expects($this->atLeastOnce())
             ->method('getProviderName');
@@ -68,7 +72,11 @@ class RedisTest extends \League\Geotools\Tests\TestCase
 
     public function testIsCachedReturnsFalse()
     {
-        $mockRedis = $this->getMock('\Predis\Client', array('exists'));
+        $mockRedis = $this->getMockBuilder('\Predis\Client')
+            ->disableOriginalConstructor()
+            ->setMethods(array('exists'))
+            ->getMock();
+
         $mockRedis
             ->expects($this->once())
             ->method('exists')
@@ -124,7 +132,11 @@ class RedisTest extends \League\Geotools\Tests\TestCase
 JSON
         ;
 
-        $mockRedis = $this->getMock('\Predis\Client', array('exists', 'get'));
+        $mockRedis = $this->getMockBuilder('\Predis\Client')
+            ->disableOriginalConstructor()
+            ->setMethods(array('exists', 'get'))
+            ->getMock();
+
         $mockRedis
             ->expects($this->atLeastOnce())
             ->method('exists')
@@ -175,7 +187,11 @@ JSON
 
     public function testFlush()
     {
-        $mockRedis = $this->getMock('\Predis\Client', array('flushDb'));
+        $mockRedis = $this->getMockBuilder('\Predis\Client')
+            ->disableOriginalConstructor()
+            ->setMethods(array('flushDb'))
+            ->getMock();
+
         $mockRedis
             ->expects($this->once())
             ->method('flushDb');
