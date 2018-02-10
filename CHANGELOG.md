@@ -1,10 +1,35 @@
 CHANGELOG
 =========
 
-0.7.1 (xxxx-xx-xx)
+0.8.0 (2018-02-20)
 -----------------
 
-n/a
+### Added
+
+- We use `willdurand/geocoder` 4. 
+- Add a method to vertex to compute the determinant with another vertex
+- `ArrayCollection::merge`
+- `BoundingBox::merge`
+- `BoundingBoxInterface::merge`
+- `BoundingBoxInterface::getAsPolygon`
+- Added abstract class `GeometryCollection`
+- Added `GeometryInterface`
+- Added `MultiPolygon`
+
+### Changes
+
+- Renamed `BoundingBox::getPolygon` to `BoundingBox::getAsPolygon`
+- `PolygonInterface` extends `GeometryInterface`
+
+### Fixed
+
+- Decimal-Degrees parser from Decimal-Minutes 
+
+### Removed
+
+- Removed `AbstractGeotools` class in favor of `CoordinateCouple`. Also added constants to `GeotoolsInterface`.
+- Our HTTP layer in favor of HTTPlug
+- Our cache layer in favor of PSR-6
 
 0.7.0 (2016-02-03)
 ------------------
