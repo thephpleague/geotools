@@ -26,11 +26,11 @@
     "require" : {
         "php"                     : "^7.0",
         "psr/cache"               : "^1.0",
-        "willdurand/geocoder"     : "~4.0",
-        "react/promise"           : "~2.2",
-        "symfony/console"         : "~2.7 || ^3.0 || ^4.0",
-        "symfony/property-access" : "~2.7 || ^3.0 || ^4.0",
-        "symfony/serializer"      : "~2.7 || ^3.0 || ^4.0",
+        "willdurand/geocoder"     : "^4.2",
+        "react/promise"           : "^2.2",
+        "symfony/console"         : "^2.7 || ^3.0 || ^4.0",
+        "symfony/property-access" : "^2.7 || ^3.0 || ^4.0",
+        "symfony/serializer"      : "^2.7 || ^3.0 || ^4.0",
         "react/event-loop"        : "0.4.*",
         "php-http/discovery"      : "^1.0",
         "cache/array-adapter"     : "^1.0"
