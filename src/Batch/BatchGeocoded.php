@@ -189,6 +189,10 @@ class BatchGeocoded
             $this->exception = $data['exception'];
         }
 
+        //GeoCoder Address::createFromArray expects longitude/latitude keys
+        $data['address']['longitude'] = $data['address']['coordinates']['longitude'] ?? null;
+        $data['address']['latitude'] = $data['address']['coordinates']['latitude'] ?? null;
+
         // Shortcut to create the address and set it in this class
         $this->setAddress(Address::createFromArray($data['address']));
     }
