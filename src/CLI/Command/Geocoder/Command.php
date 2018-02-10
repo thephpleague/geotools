@@ -21,19 +21,6 @@ use Psr\Cache\CacheItemPoolInterface;
 class Command extends \Symfony\Component\Console\Command\Command
 {
     /**
-     * Available adapters.
-     *
-     * @var array
-     */
-    private $adapters = [
-        'buzz'    => 'BuzzHttpAdapter',
-        'curl'    => 'CurlHttpAdapter',
-        'guzzle'  => 'GuzzleHttpAdapter',
-        'socket'  => 'SocketHttpAdapter',
-        'zend'    => 'ZendHttpAdapter',
-    ];
-
-    /**
      * Available providers.
      *
      * @var array
@@ -97,36 +84,6 @@ class Command extends \Symfony\Component\Console\Command\Command
         }
 
         return $psr6;
-    }
-
-    /**
-     * Returns the adapter class name.
-     * The default adapter is cURL.
-     *
-     * @param string $adapter The name of the adapter to use.
-     *
-     * @return string The name of the adapter class to use.
-     */
-    protected function getAdapter($adapter)
-    {
-        $adapter = $this->lowerize((trim($adapter)));
-        $adapter = array_key_exists($adapter, $this->adapters)
-            ? $this->adapters[$adapter]
-            : $this->adapters['curl'];
-
-        return '\\Ivory\\HttpAdapter\\' . $adapter;
-    }
-
-    /**
-     * Returns the list of available adapters sorted by alphabetical order.
-     *
-     * @return string The list of available adapters comma separated.
-     */
-    protected function getAdapters()
-    {
-        ksort($this->adapters);
-
-        return implode(', ', array_keys($this->adapters));
     }
 
     /**
