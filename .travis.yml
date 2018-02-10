@@ -1,31 +1,56 @@
 language: php
-
-php:
-  - 7.0
-  - 7.1
-
 sudo: false
-
 cache:
-  directories:
-    - vendor
-    - $HOME/.composer/cache
+    directories:
+        - $HOME/.composer/cache/files
+        - $HOME/symfony-bridge/.phpunit
+
+env:
+    global:
+        - PHPUNIT_FLAGS="-v"
+        - SYMFONY_PHPUNIT_DIR="$HOME/symfony-bridge/.phpunit"
 
 matrix:
-  allow_failures:
-    - php: hhvm
-      dist: trusty
-  include:
-    - php: hhvm
-      dist: trusty
+    fast_finish: true
+    include:
+          # Minimum supported dependencies with the latest and oldest PHP version
+        - php: 7.2
+          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
+        - php: 7.0
+          env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
 
-before_script:
-  - travis_retry composer install --no-interaction --prefer-dist
+          # Test the latest stable release
+        - php: 7.0
+        - php: 7.1
+        - php: 7.2
+          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+
+        - php: 7.2
+          env: DEPENDENCIES="dunglas/symfony-lock:^2"
+        - php: 7.2
+          env: DEPENDENCIES="dunglas/symfony-lock:^3"
+
+          # Latest commit to master
+        - php: 7.2
+          env: STABILITY="dev"
+
+    allow_failures:
+          # Dev-master is allowed to fail.
+        - env: STABILITY="dev"
+
+before_install:
+    - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
+    - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
+    - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+
+install:
+    # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
+    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
+    - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
+    - ./vendor/bin/simple-phpunit install
 
 script:
-  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover; fi
-  - if [[ "$TRAVIS_PHP_VERSION" == "hhvm" ]]; then ./vendor/bin/phpunit; fi
-
-after_script:
-  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
-  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi
+    - composer validate --strict --no-check-lock
+    # simple-phpunit is the PHPUnit wrapper provided by the PHPUnit Bridge component and
+    # it helps with testing legacy code and deprecations (composer require symfony/phpunit-bridge)
+    - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
