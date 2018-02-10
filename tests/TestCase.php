@@ -19,11 +19,12 @@ use League\Geotools\Coordinate\CoordinateInterface;
 use League\Geotools\Coordinate\Ellipsoid;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends PHPUnitTestCase
 {
     /**
      * @return ProviderAggregator
@@ -80,7 +81,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockGeocoderThrowException(array $providers)
     {
-        $mock = $this->getMock('\Geocoder\ProviderAggregator');
+        $mock = $this->getMockBuilder('\Geocoder\ProviderAggregator')->getMock();
         $mock
             ->expects($this->once())
             ->method('getProviders')
@@ -131,7 +132,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
      */
     protected function getMockCoordinateReturns(array $coordinate, Ellipsoid $ellipsoid = null)
     {
-        $mock = $this->getMock('\League\Geotools\Coordinate\CoordinateInterface');
+        $mock = $this->getMockBuilder('\League\Geotools\Coordinate\CoordinateInterface')->getMock();
         $mock
             ->expects($this->any())
             ->method('getLatitude')
@@ -162,7 +163,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
             $expects = $this->once();
         }
 
-        $mock = $this->getMock('\League\Geotools\Batch\BatchGeocoded');
+        $mock = $this->getMockBuilder('\League\Geotools\Batch\BatchGeocoded')->getMock();
         $mock
             ->expects($expects)
             ->method('getCoordinates')
