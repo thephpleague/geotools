@@ -77,9 +77,9 @@ EOT
             $args = is_array($input->getOption('args'))
                 ? implode(',', $input->getOption('args'))
                 : $input->getOption('args');
-            $geocoder->registerProvider(new $provider(new $httpClient(), $args));
+            $geocoder->registerProvider(new $provider($httpClient, $args));
         } else {
-            $geocoder->registerProvider(new $provider(new $httpClient()));
+            $geocoder->registerProvider(new $provider($httpClient));
         }
 
         $batch = new Batch($geocoder);
@@ -92,7 +92,7 @@ EOT
 
         if ($input->getOption('raw')) {
             $result = array();
-            $result[] = sprintf('<label>HttpClient</label>:       <value>%s</value>', $httpClient);
+            $result[] = sprintf('<label>HttpClient</label>:       <value>%s</value>', get_class($httpClient));
             $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
             $result[] = sprintf('<label>Cache</label>:         <value>%s</value>', isset($cache) ? $cache : 'None');
             if ($input->getOption('args')) {
