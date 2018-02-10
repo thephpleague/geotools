@@ -531,8 +531,8 @@ $ php geotools geocoder:geocode Paris --args="fr_FR" --args="France" --args="tru
 $ php geotools geocoder:geocode Paris --dumper=wkt // POINT(2.352222 48.856614)
 ...
 $ php geotools geocoder:reverse "48.8631507, 2.388911" // Avenue Gambetta 10, 75020 Paris
-$ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" // Paris, Île-De-France, France
-$ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %R, %C" --provider="openstreetmaps"
+$ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %A1, %C" // Paris, Île-De-France, France
+$ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %A1, %C" --provider="openstreetmaps"
 // Paris, Île-De-France, France Métropolitaine
 ...
 $ php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket --cache=redis
