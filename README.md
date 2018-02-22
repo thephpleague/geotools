@@ -16,8 +16,7 @@ Features
 
 * **Batch** geocode & reverse geocoding request(s) in **series** / in **parallel** against one or a
 **set of providers**. [»](#batch)
-* **Cache** geocode & reverse geocoding result(s) with **Redis**, **Memcached** or **MongoDB**
-to improve performances. [»](#batch)
+* **Cache** geocode & reverse geocoding result(s) with **PSR-6** to improve performances. [»](#batch)
 * Compute geocode & reverse geocoding in the **command-line interface** (CLI) + dumpers and formatters. [»](#cli)
 * Accept **almost** all kind of WGS84
 [geographic coordinates](http://en.wikipedia.org/wiki/Geographic_coordinate_conversion) as coordinates.
@@ -205,26 +204,7 @@ It's possible to batch *one request* (a string) or a *set of request* (an array)
 You can use a provided **cache engine** or use your own by setting a cache object which should implement
 `League\Geotools\Cache\CacheInterface` and extend `League\Geotools\Cache\AbstractCache` if needed.
 
-At the moment Geotools supports:
-* **[Redis](http://redis.io/)**, [packagist](https://packagist.org/packages/predis/predis) and
-[github](https://github.com/nrk/predis)
-    * `Redis(array $client = [], $expire = 0)`
-    * `$client` should be an array with `host`, `port` and `database` keys
-    * `$expire` should be an integer, no expire value by default
-    * `flush()` method deletes all the keys of the currently selected database which is `0` by default
-* **[Memcached](http://memcached.org/)**, [php.net](http://fr.php.net/manual/fr/book.memcached.php)
-    * `Memcached($server = self::DEFAULT_SERVER, $port = self::DEFAULT_PORT, $expire = 0)`
-    * `$server` can be address like `example.com` or an IP, localhost is the default one
-    * `$port` can be an integer like `11211` (by default)
-    * `$expire` should be an integer, no expire value by default
-    * `flush()` method invalidates all items in the cache
-* **[MongoDB](http://www.mongodb.org/)**, [driver](http://docs.mongodb.org/ecosystem/drivers/php/) and
-[php.net](http://us2.php.net/mongo)
-    * `MongoDB($server = null, $database = self::DATABASE, $collection = self::COLLECTION)`
-    * `$server` can be a string like `mongodb://example.com:65432`
-    * `$database` can be a string like `geotools` (by default)
-    * `$collection` can be a string like `geotools_cache` (by default)
-    * `flush()` method drops the current collection
+At the moment Geotools supports any PSR-6 cache. 
 
 NB: Before you implement caching in your app please be sure that doing so does not violate the Terms of Service
 for your(s) geocoding provider(s).
@@ -233,26 +213,21 @@ for your(s) geocoding provider(s).
 <?php
 
 $geocoder = new \Geocoder\ProviderAggregator(); // or \Geocoder\TimedGeocoder
-$adapter  = new \Ivory\HttpAdapter\CurlHttpAdapter();
+$httpClient  = HttpClientDiscovery:::find();
 
 $geocoder->registerProviders([
-    new \Geocoder\Provider\GoogleMapsProvider($adapter),
-    new \Geocoder\Provider\OpenStreetMapProvider($adapter),
-    new \Geocoder\Provider\BingMapsProvider($adapter, '<FAKE_API_KEY>'), // throws InvalidCredentialsException
-    new \Geocoder\Provider\YandexProvider($adapter),
-    new \Geocoder\Provider\FreeGeoIpProvider($adapter),
-    new \Geocoder\Provider\GeoipProvider(),
+    new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient),
+    new \Geocoder\Provider\OpenStreetMap\OpenStreetMap($httpClient),
+    new \Geocoder\Provider\BingMaps\BingMaps($httpClient, '<FAKE_API_KEY>'), // throws InvalidCredentialsException
+    new \Geocoder\Provider\Yandex\Yandex($httpClient),
+    new \Geocoder\Provider\FreeGeoIp\FreeGeoIp($httpClient),
+    new \Geocoder\Provider\Geoip\Geoip(),
 ]);
 
 try {
     $geotools = new \League\Geotools\Geotools();
-    $cache    = new \League\Geotools\Cache\MongoDB();
-    // or
-    $cache    = new \League\Geotools\Cache\Redis([
-        'host'     => '127.0.0.1',
-        'port'     => 6379,
-        'database' => 15 // the last database ID
-    ]);
+    $cache    = new \Cache\Adapter\PHPArray\ArrayCachePool();
+  
     $results  = $geotools->batch($geocoder)->setCache($cache)->geocode([
         'Paris, France',
         'Copenhagen, Denmark',
@@ -510,10 +485,8 @@ $ php geotools c:u "60.3912628, 5.3220544" --ellipsoid=AIRY // 32V 297371 670013
 Compute street addresses, IPv4s or IPv6s geocoding and reverse geocoding right in your console.
 
 It's possible to define and precise your request through these options:
-* `--adapter`: `socket`, `buzz`, `zend`, `guzzle` or `curl` by default.
 * `--provider`: `bing_maps`, `yahoo`, `maxmind`... `google_maps` is the default one. See the full list
 [here](https://github.com/willdurand/Geocoder#providers).
-* `--cache`: `mongodb`, `memcached` or `redis` as a fallback.
 * `--raw`: the result output in RAW format, shows Adapter, Provider and Arguments if any.
 * `--json`: the result output in JSON string format.
 * `--args`: this option accepts multiple values (e.g. --args="API_KEY" --args="LOCALE") if your provider needs or
@@ -526,7 +499,7 @@ Read more [here](https://github.com/willdurand/Geocoder#dumpers).
 ```bash
 $ php geotools help geocoder:geocode // get the help
 $ php geotools geocoder:geocode "Copenhagen, Denmark" // 55.6760968, 12.5683371
-$ php geotools geocoder:geocode "74.200.247.59" --provider="free_geo_ip" --adapter="socket" // 37.7484, -122.4156
+$ php geotools geocoder:geocode "74.200.247.59" --provider="free_geo_ip" // 37.7484, -122.4156
 $ php geotools geocoder:geocode Paris --args="fr_FR" --args="France" --args="true" // 48.856614, 2.3522219
 $ php geotools geocoder:geocode Paris --dumper=wkt // POINT(2.352222 48.856614)
 ...
@@ -535,13 +508,13 @@ $ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %A1, %C" //
 $ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %A1, %C" --provider="openstreetmaps"
 // Paris, Île-De-France, France Métropolitaine
 ...
-$ php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark --adapter=socket --cache=redis
+$ php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark
 ```
 
 The last command will show an output like this:
 
 ```
-Adapter:       \Ivory\HttpAdapter\SocketHttpAdapter
+HttpClient:    \Http\Client\Curl\Client
 Provider:      \Geocoder\Provider\GoogleMaps
 Cache:         \League\Geotools\Cache\Redis
 Arguments:     da_DK,Denmark
