@@ -2,7 +2,7 @@
     "name"        : "league/geotools",
     "type"        : "library",
     "description" : "Geo-related tools PHP 7.0+ library",
-    "keywords"    : ["geotools", "geometry", "geocoder", "geocoding", "geoip", "bounds", "distance", "batch", "async"],
+    "keywords"    : ["geotools", "geometry", "geocoder", "geocoding", "geoip", "bounds", "distance", "batch", "async", "geohash", "geolocation", "latlong", "latitude", "longitude"],
     "homepage"    : "http://geotools-php.org/",
     "license"     : "MIT",
 
