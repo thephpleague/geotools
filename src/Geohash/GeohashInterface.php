@@ -30,7 +30,7 @@ interface GeohashInterface
      *
      * @throws InvalidArgumentException
      */
-    public function encode(CoordinateInterface $coordinate, $length = self::MAX_LENGTH);
+    public function encode(CoordinateInterface $coordinate, $length);
 
     /**
      * Returns the decoded geo hash to it's center.
