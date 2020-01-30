@@ -25,13 +25,13 @@ matrix:
           env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
 
         - php: 7.2
-          env: DEPENDENCIES="dunglas/symfony-lock:^2"
+          env: SYMFONY_REQUIRE="~2.8"
         - php: 7.2
-          env: DEPENDENCIES="dunglas/symfony-lock:^3"
+          env: SYMFONY_REQUIRE="~3.4"
         - php: 7.2
-          env: DEPENDENCIES="dunglas/symfony-lock:^4"
+          env: SYMFONY_REQUIRE="~4.4"
         - php: 7.2
-          env: DEPENDENCIES="dunglas/symfony-lock:^5"
+          env: SYMFONY_REQUIRE="~5.0"
           # Latest commit to master
         - php: 7.2
           env: STABILITY="dev"
@@ -43,7 +43,7 @@ matrix:
 before_install:
     - if [[ $COVERAGE != true ]]; then phpenv config-rm xdebug.ini || true; fi
     - if ! [ -z "$STABILITY" ]; then composer config minimum-stability ${STABILITY}; fi;
-    - if ! [ -v "$DEPENDENCIES" ]; then composer require --no-update ${DEPENDENCIES}; fi;
+    - if [ "$SYMFONY_REQUIRE" != "" ]; then composer global require --no-scripts symfony/flex; fi
 
 install:
     # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
