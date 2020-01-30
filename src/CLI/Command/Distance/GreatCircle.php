@@ -72,5 +72,6 @@ EOT
         }
 
         $output->writeln(sprintf('<value>%s</value>', $distance->greatCircle()));
+        return 0;
     }
 }
