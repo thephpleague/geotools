@@ -524,7 +524,7 @@ class VertexTest extends \League\Geotools\Tests\TestCase
                     'from' => array(1, 4),
                     'to' => array(2, 7)
                 ),
-                '-1'
+                '-1.00000000'
             ),
             array(
                 array(
