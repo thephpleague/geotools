@@ -59,5 +59,6 @@ EOT
             '<value>%s</value>',
             $geotools->vertex()->setFrom($from)->setTo($to)->initialCardinal()
         ));
+        return 0;
     }
 }

@@ -50,5 +50,6 @@ EOT
             '<value>%s</value>',
             $geotools->geohash()->encode($coordinate, $input->getOption('length'))->getGeohash()
         ));
+        return 0;
     }
 }

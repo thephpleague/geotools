@@ -63,5 +63,6 @@ EOT
             '<value>%s</value>',
             $geotools->convert($coordinate)->toDM($input->getOption('format'))
         ));
+        return 0;
     }
 }

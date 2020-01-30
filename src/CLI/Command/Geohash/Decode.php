@@ -44,5 +44,6 @@ EOT
             '<value>%s, %s</value>',
             $coordinate->getLatitude(), $coordinate->getLongitude()
         ));
+        return 0;
     }
 }
