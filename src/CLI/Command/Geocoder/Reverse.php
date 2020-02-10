@@ -128,5 +128,6 @@ EOT
         }
 
         $output->writeln($result);
+        return 0;
     }
 }

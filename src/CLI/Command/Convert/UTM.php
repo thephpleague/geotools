@@ -56,5 +56,6 @@ EOT
             '<value>%s</value>',
             $geotools->convert($coordinate)->toUTM()
         ));
+        return 0;
     }
 }

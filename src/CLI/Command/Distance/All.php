@@ -77,5 +77,6 @@ EOT
         $result[] = sprintf('<label>Vincenty:</label>  <value>%s</value>', $distance->vincenty());
 
         $output->writeln($result);
+        return 0;
     }
 }

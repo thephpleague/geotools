@@ -60,5 +60,6 @@ EOT
             '<value>%s, %s</value>',
             $destination->getLatitude(), $destination->getLongitude()
         ));
+        return 0;
     }
 }
