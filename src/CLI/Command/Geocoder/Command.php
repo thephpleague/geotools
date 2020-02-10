@@ -101,7 +101,7 @@ class Command extends \Symfony\Component\Console\Command\Command
             ? $this->providers[$provider]
             : $this->providers['google_maps'];
 
-        return '\\Geocoder\\Provider\\' . $provider . $provider;
+        return '\\Geocoder\\Provider\\' . $provider . '\\' . $provider;
     }
 
     /**
