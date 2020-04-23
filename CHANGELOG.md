@@ -1,35 +1,43 @@
 CHANGELOG
 =========
 
+1.0.0 (2020-xx-xx)
+-----------------
+
+### Changes
+* Upgraded react/event-loop to stable version
+* Dropped support for PHP <7.2, added json extension as requirement in composer
+* Minor fixes in documentation
+
 0.8.0 (2018-02-22)
 -----------------
 
 ### Added
 
-- We use `willdurand/geocoder` 4. 
-- Add a method to vertex to compute the determinant with another vertex
-- `ArrayCollection::merge`
-- `BoundingBox::merge`
-- `BoundingBoxInterface::merge`
-- `BoundingBoxInterface::getAsPolygon`
-- Added abstract class `GeometryCollection`
-- Added `GeometryInterface`
-- Added `MultiPolygon`
+* We use `willdurand/geocoder` 4. 
+* Add a method to vertex to compute the determinant with another vertex
+* `ArrayCollection::merge`
+* `BoundingBox::merge`
+* `BoundingBoxInterface::merge`
+* `BoundingBoxInterface::getAsPolygon`
+* Added abstract class `GeometryCollection`
+* Added `GeometryInterface`
+* Added `MultiPolygon`
 
 ### Changes
 
-- Renamed `BoundingBox::getPolygon` to `BoundingBox::getAsPolygon`
-- `PolygonInterface` extends `GeometryInterface`
+* Renamed `BoundingBox::getPolygon` to `BoundingBox::getAsPolygon`
+* `PolygonInterface` extends `GeometryInterface`
 
 ### Fixed
 
-- Decimal-Degrees parser from Decimal-Minutes 
+* Decimal-Degrees parser from Decimal-Minutes 
 
 ### Removed
 
-- Removed `AbstractGeotools` class in favor of `CoordinateCouple`. Also added constants to `GeotoolsInterface`.
-- Our HTTP layer in favor of HTTPlug
-- Our cache layer in favor of PSR-6
+* Removed `AbstractGeotools` class in favor of `CoordinateCouple`. Also added constants to `GeotoolsInterface`.
+* Our HTTP layer in favor of HTTPlug
+* Our cache layer in favor of PSR-6
 
 0.7.0 (2016-02-03)
 ------------------

@@ -46,7 +46,7 @@ use League\Geotools\Geotools;
 
 $geotools = new Geotools;
 $console = new Application;
-$console->setName('Geotools :: Geo-related tools PHP 5.3+ library');
+$console->setName('Geotools :: Geo-related tools PHP 7.2+ library');
 $console->setVersion($geotools::VERSION);
 $console->add(new Convert\DM);
 $console->add(new Convert\DMS);
