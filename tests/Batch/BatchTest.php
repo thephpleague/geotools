@@ -113,7 +113,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The argument should be a string or an array of strings to geocode.
      * @dataProvider invalidValuesProvider
      */
@@ -168,7 +168,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The argument should be a Coordinate instance or an array of Coordinate instances to reverse.
      * @dataProvider coordinatesProvider
      */
@@ -736,7 +736,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage booooooooooo!
      */
     public function testSeriesShouldThrowException()
@@ -756,7 +756,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage booooooooooo!
      */
     public function testParallelShouldThrowException()

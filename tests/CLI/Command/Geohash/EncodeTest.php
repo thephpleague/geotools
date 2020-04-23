@@ -13,7 +13,6 @@ namespace League\Geotools\Tests\CLI\Command\Geohash;
 
 use League\Geotools\CLI\Application;
 use League\Geotools\CLI\Command\Geohash\Encode;
-use League\Geotools\Geohash\Geohash;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -47,7 +46,7 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
      */
     public function testExecuteInvalidArguments()
@@ -71,7 +70,7 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The length should be between 1 and 12.
      */
     public function testExecuteInvalidLengthOption()
@@ -96,7 +95,7 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The length should be between 1 and 12.
      */
     public function testExecuteWithEmptyLengthOption()

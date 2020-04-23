@@ -213,7 +213,7 @@ for your(s) geocoding provider(s).
 <?php
 
 $geocoder = new \Geocoder\ProviderAggregator(); // or \Geocoder\TimedGeocoder
-$httpClient  = HttpClientDiscovery:::find();
+$httpClient  = HttpClientDiscovery::find();
 
 $geocoder->registerProviders([
     new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient),
@@ -299,7 +299,7 @@ try {
 $coordinates = [
     new \League\Geotools\Coordinate\Coordinate([2.307266, 48.823405]),
     new \League\Geotools\Coordinate\Coordinate([12.568337, 55.676097]),
-    new \League\Geotools\Coordinate\Coordinate('-74.005973 40.714353')),
+    new \League\Geotools\Coordinate\Coordinate('-74.005973 40.714353'),
 ];
 $results = $geotools->batch($geocoder)->reverse($coordinates)->parallel();
 // ...

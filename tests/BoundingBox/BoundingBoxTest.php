@@ -14,7 +14,6 @@ namespace League\Geotools\Tests\BoundingBox;
 use League\Geotools\BoundingBox\BoundingBox;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
-use League\Geotools\Exception\InvalidArgumentException;
 use League\Geotools\Polygon\Polygon;
 
 /**

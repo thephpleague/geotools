@@ -20,7 +20,7 @@ use League\Geotools\Coordinate\Ellipsoid;
 class CoordinateTest extends \League\Geotools\Tests\TestCase
 {
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage It should be a string, an array or a class which implements Geocoder\Model\Address !
      * @dataProvider invalidCoordinatesProvider
      */
@@ -45,7 +45,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
      * @dataProvider invalidStringCoordinatesProvider
      */
@@ -319,7 +319,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The given coordinates should be a string !
      */
     public function testCreateFromStringWithoutAString()
@@ -329,7 +329,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
      */
     public function testCreateFromStringWithInvalidCoordinateString()

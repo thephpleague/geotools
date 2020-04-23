@@ -28,7 +28,7 @@ interface GeohashInterface
      *
      * @return GeohashInterface
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function encode(CoordinateInterface $coordinate, $length = self::MAX_LENGTH);
 
@@ -42,8 +42,8 @@ interface GeohashInterface
      *
      * @return GeohashInterface
      *
-     * @throws InvalidArgumentException
-     * @throws RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \RuntimeException
      */
     public function decode($geohash);
 }

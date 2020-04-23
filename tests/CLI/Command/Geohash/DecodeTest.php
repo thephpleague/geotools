@@ -46,7 +46,7 @@ class DecodeTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\RuntimeException
+     * @expectedException \League\Geotools\Exception\RuntimeException
      * @expectedExceptionMessage This geo hash is invalid.
      */
     public function testExecuteInvalidArguments()

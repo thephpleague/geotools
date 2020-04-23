@@ -46,7 +46,7 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
      */
     public function testExecuteInvalidArguments()

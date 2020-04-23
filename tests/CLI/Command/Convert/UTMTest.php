@@ -46,7 +46,7 @@ class UTMTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
      */
     public function testExecuteInvalidArguments()
@@ -69,7 +69,7 @@ class UTMTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage Please provide an ellipsoid name !
      */
     public function testExecuteWithEmptyEllipsoidOption()
@@ -82,7 +82,7 @@ class UTMTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
      */
     public function testExecuteWithoutAvailableEllipsoidOption()

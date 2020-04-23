@@ -26,7 +26,7 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The length should be between 1 and 12.
      * @dataProvider lengthsProvider
      */
@@ -60,7 +60,7 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The geo hash should be a string.
      * @dataProvider invalidStringGeoHashesProvider
      */
@@ -80,7 +80,7 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The length of the geo hash should be between 1 and 12.
      * @dataProvider invalidRangeGeoHashesProvider
      */
@@ -100,7 +100,7 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\RuntimeException
+     * @expectedException \League\Geotools\Exception\RuntimeException
      * @expectedExceptionMessage This geo hash is invalid.
      * @dataProvider invalidCharGeoHashesProvider
      */

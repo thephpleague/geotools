@@ -95,7 +95,7 @@ EOT
             $result[] = sprintf('<label>HttpClient</label>:       <value>%s</value>', get_class($httpClient));
             $result[] = sprintf('<label>Provider</label>:      <value>%s</value>', $provider);
             $result[] = sprintf('<label>Cache</label>:         <value>%s</value>', isset($cache) ? $cache : 'None');
-            if ($input->getOption('args')) {
+            if ($args = $input->getOption('args')) {
                 $result[] = sprintf('<label>Arguments</label>:     <value>%s</value>', $args);
             }
             $result[] = '---';

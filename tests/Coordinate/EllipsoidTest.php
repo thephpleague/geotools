@@ -19,7 +19,7 @@ use League\Geotools\Coordinate\Ellipsoid;
 class EllipsoidTest extends \League\Geotools\Tests\TestCase
 {
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage The inverse flattening cannot be negative or equal to zero !
      * @dataProvider constructorArgumentsWhichThrowException
      */
@@ -66,7 +66,7 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
      */
     public function testCreateFromNameUnavailableEllipsoidThrowsException()
@@ -75,7 +75,7 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage Please provide an ellipsoid name !
      */
     public function testCreateFromNameEmptyNameThrowsException()
@@ -97,7 +97,7 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
+     * @expectedException \League\Geotools\Exception\InvalidArgumentException
      * @expectedExceptionMessage Ellipsoid arrays should contain `name`, `a` and `invF` keys !
      * @dataProvider createFromArrayProvider
      */
@@ -156,7 +156,7 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
 
 
     /**
-     * @expectedException League\Geotools\Exception\NotMatchingEllipsoidException
+     * @expectedException \League\Geotools\Exception\NotMatchingEllipsoidException
      * @expectedExceptionMessage The ellipsoids for both coordinates must match !
      */
     public function testCoordinatesWithDifferentEllipsoids()
