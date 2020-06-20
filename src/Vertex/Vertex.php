@@ -118,7 +118,7 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * @return integer
+     * {@inheritDoc}
      */
     public function getPrecision()
     {
@@ -126,8 +126,7 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * @param  integer $precision
-     * @return $this
+     * {@inheritDoc}
      */
     public function setPrecision($precision)
     {
@@ -137,10 +136,7 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns the initial bearing from the origin coordinate
-     * to the destination coordinate in degrees.
-     *
-     * @return float The initial bearing in degrees
+     * {@inheritDoc}
      */
     public function initialBearing()
     {
@@ -157,10 +153,7 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns the final bearing from the origin coordinate
-     * to the destination coordinate in degrees.
-     *
-     * @return float The final bearing in degrees
+     * {@inheritDoc}
      */
     public function finalBearing()
     {
@@ -177,11 +170,7 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns the initial cardinal point / direction from the origin coordinate to
-     * the destination coordinate.
-     * @see http://en.wikipedia.org/wiki/Cardinal_direction
-     *
-     * @return string The initial cardinal point / direction
+     * {@inheritDoc}
      */
     public function initialCardinal()
     {
@@ -191,11 +180,7 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns the final cardinal point / direction from the origin coordinate to
-     * the destination coordinate.
-     * @see http://en.wikipedia.org/wiki/Cardinal_direction
-     *
-     * @return string The final cardinal point / direction
+     * {@inheritDoc}
      */
     public function finalCardinal()
     {
@@ -205,10 +190,7 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns the half-way point / coordinate along a great circle
-     * path between the origin and the destination coordinates.
-     *
-     * @return CoordinateInterface
+     * {@inheritDoc}
      */
     public function middle()
     {
@@ -229,13 +211,7 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns the destination point with a given bearing in degrees travelling along a
-     * (shortest distance) great circle arc and a distance in meters.
-     *
-     * @param integer $bearing  The bearing of the origin in degrees.
-     * @param integer $distance The distance from the origin in meters.
-     *
-     * @return CoordinateInterface
+     * {@inheritDoc}
      */
     public function destination($bearing, $distance)
     {
@@ -253,12 +229,10 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns true if the vertex passed on argument is on the same line as this object
-     *
-     * @param  Vertex  $vertex The vertex to compare
-     * @return boolean
+     * {@inheritDoc}
      */
-    public function isOnSameLine(Vertex $vertex) {
+    public function isOnSameLine(Vertex $vertex)
+    {
         if (is_null($this->getGradient()) && is_null($vertex->getGradient()) && $this->from->getLongitude() == $vertex->getFrom()->getLongitude()) {
             return true;
         } elseif (!is_null($this->getGradient()) && !is_null($vertex->getGradient())) {
@@ -273,11 +247,10 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns the other coordinate who is not the coordinate passed on argument
-     * @param  CoordinateInterface $coordinate
-     * @return null|Coordinate
+     * {@inheritDoc}
      */
-    public function getOtherCoordinate(CoordinateInterface $coordinate) {
+    public function getOtherCoordinate(CoordinateInterface $coordinate)
+    {
         if ($coordinate->isEqual($this->from)) {
             return $this->to;
         } else if ($coordinate->isEqual($this->to)) {
@@ -287,12 +260,10 @@ class Vertex implements VertexInterface
     }
 
     /**
-     * Returns the determinant value between $this (vertex) and another vertex.
-     *
-     * @param  Vertex $vertex [description]
-     * @return [type]         [description]
+     * {@inheritDoc}
      */
-    public function getDeterminant(Vertex $vertex) {
+    public function getDeterminant(Vertex $vertex)
+    {
         $abscissaVertexOne = $this->to->getLatitude() - $this->from->getLatitude();
         $ordinateVertexOne = $this->to->getLongitude() - $this->from->getLongitude();
         $abscissaVertexSecond = $vertex->getTo()->getLatitude() - $vertex->getFrom()->getLatitude();
