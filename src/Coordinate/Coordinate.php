@@ -200,6 +200,20 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
      */
     private function toDecimalDegrees($coordinates)
     {
+        // Degrees, Decimal Minutes format (DD MM.mmm)
+        // N 40°26.7717 E 79°56.93172
+        // N40°26.7717E79°56.93172
+        // N 25°59.86′, W 21°09.81′
+        if (preg_match('/([ns]{1})\s?([0-9]{1,2})\D+([0-9]{1,2}\.?\d*)\D*[, ]?([we]{1})\s? ?([0-9]{1,3})\D+([0-9]{1,2}\.?\d*)\D*$/i', $coordinates, $match)) {
+            $latitude  = $match[2] + $match[3] / 60;
+            $longitude = $match[5] + $match[6] / 60;
+
+            return [
+                'N' === strtoupper($match[1]) ? $latitude : -$latitude,
+                'E' === strtoupper($match[4]) ? $longitude : -$longitude,
+            ];
+        }
+    
         // 40.446195, -79.948862
         if (preg_match('/(\-?[0-9]{1,2}\.?\d*)[, ] ?(\-?[0-9]{1,3}\.?\d*)$/', $coordinates, $match)) {
             return array($match[1], $match[2]);
@@ -247,7 +261,6 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
             $coordinates, $match)) {
             $latitude  = $match[1] + ($match[2] * 60 + $match[3]) / 3600;
             $longitude = $match[5] + ($match[6] * 60 + $match[7]) / 3600;
-
             return array(
                 'N' === strtoupper($match[4]) ? $latitude  : -$latitude,
                 'E' === strtoupper($match[8]) ? $longitude : -$longitude
