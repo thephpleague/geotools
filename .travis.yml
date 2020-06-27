@@ -1,5 +1,5 @@
 language: php
-sudo: false
+
 cache:
     directories:
         - $HOME/.composer/cache/files
@@ -13,27 +13,35 @@ matrix:
     fast_finish: true
     include:
           # Minimum supported dependencies with the latest and oldest PHP version
-        - php: 7.2
+        - php: 7.3
           env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
-        - php: 7.0
+        - php: 7.4
           env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" SYMFONY_DEPRECATIONS_HELPER="weak_vendors"
 
           # Test the latest stable release
-        - php: 7.0
-        - php: 7.1
-        - php: 7.2
+        - php: 7.3
+          env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
+        - php: 7.4
           env: COVERAGE=true PHPUNIT_FLAGS="-v --coverage-text"
 
-        - php: 7.2
-          env: SYMFONY_REQUIRE="~2.8"
-        - php: 7.2
+        - php: 7.3
           env: SYMFONY_REQUIRE="~3.4"
-        - php: 7.2
+        - php: 7.3
           env: SYMFONY_REQUIRE="~4.4"
-        - php: 7.2
+        - php: 7.3
           env: SYMFONY_REQUIRE="~5.0"
+
+        - php: 7.4
+          env: SYMFONY_REQUIRE="~3.4"
+        - php: 7.4
+          env: SYMFONY_REQUIRE="~4.4"
+        - php: 7.4
+          env: SYMFONY_REQUIRE="~5.0"
+
           # Latest commit to master
-        - php: 7.2
+        - php: 7.3
+          env: STABILITY="dev"
+        - php: 7.4
           env: STABILITY="dev"
 
     allow_failures:
@@ -46,8 +54,6 @@ before_install:
     - if [ "$SYMFONY_REQUIRE" != "" ]; then composer global require --no-scripts symfony/flex; fi
 
 install:
-    # To be removed when this issue will be resolved: https://github.com/composer/composer/issues/5355
-    - if [[ "$COMPOSER_FLAGS" == *"--prefer-lowest"* ]]; then composer update --prefer-dist --no-interaction --prefer-stable --quiet; fi
     - composer update ${COMPOSER_FLAGS} --prefer-dist --no-interaction
 
 script:
