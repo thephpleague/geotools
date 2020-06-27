@@ -32,7 +32,7 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     protected $values;
     protected $coordinates;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->data = array(
             'latitude'  => 48.8234055,

@@ -25,7 +25,7 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
     protected $coordA;
     protected $coordB;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->distance = new TestableDistance;
         $this->from     = $this->getStubCoordinate();
