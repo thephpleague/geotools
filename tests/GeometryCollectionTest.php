@@ -14,7 +14,7 @@ class GeometryCollectionTest extends TestCase
 
     private $secondGeometry;
 
-    public function setUp()
+    public function setup(): void
     {
         $this->firstGeometry = new Polygon(new CoordinateCollection([new Coordinate([1, 1])]));
         $this->secondGeometry = new Polygon(new CoordinateCollection([new Coordinate([2, 2])]));

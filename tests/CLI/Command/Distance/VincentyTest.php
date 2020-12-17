@@ -24,7 +24,7 @@ class VincentyTest extends \League\Geotools\Tests\TestCase
     protected $command;
     protected $commandTester;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->application = new Application;
         $this->application->add(new Vincenty);

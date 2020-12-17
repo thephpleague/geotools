@@ -20,7 +20,7 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
 {
     protected $geohash;
 
-    protected function setUp()
+    protected function setup(): void
     {
         $this->geohash = new Geohash;
     }
