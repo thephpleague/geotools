@@ -26,12 +26,12 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The length should be between 1 and 12.
      * @dataProvider lengthsProvider
      */
     public function testEncodeShouldThrowException($length)
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The length should be between 1 and 12.');
         $this->geohash->encode($this->getStubCoordinate(), $length);
     }
 
@@ -60,12 +60,12 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The geo hash should be a string.
      * @dataProvider invalidStringGeoHashesProvider
      */
     public function testDecodeShouldThrowStringException($geohash)
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The geo hash should be a string.');
         $this->geohash->decode($geohash);
     }
 
@@ -80,12 +80,12 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The length of the geo hash should be between 1 and 12.
      * @dataProvider invalidRangeGeoHashesProvider
      */
     public function testDecodeShouldThrowRangeException($geohash)
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The length of the geo hash should be between 1 and 12.');
         $this->geohash->decode($geohash);
     }
 
@@ -100,12 +100,12 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\RuntimeException
-     * @expectedExceptionMessage This geo hash is invalid.
      * @dataProvider invalidCharGeoHashesProvider
      */
     public function testDecodeShouldThrowRuntimeException($geohash)
     {
+        $this->expectException(\League\Geotools\Exception\RuntimeException::class);
+        $this->expectExceptionMessage('This geo hash is invalid.');
         $this->geohash->decode($geohash);
     }
 
@@ -154,14 +154,14 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
         $this->assertTrue(is_object($boundingBox[0]));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $boundingBox[0]);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $boundingBox[0]);
-        $this->assertEquals($expectedBoundingBox[0][0], $boundingBox[0]->getLatitude(), '', 0.1);
-        $this->assertEquals($expectedBoundingBox[0][1], $boundingBox[0]->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta($expectedBoundingBox[0][0], $boundingBox[0]->getLatitude(), 0.1, '');
+        $this->assertEqualsWithDelta($expectedBoundingBox[0][1], $boundingBox[0]->getLongitude(), 0.1, '');
 
         $this->assertTrue(is_object($boundingBox[1]));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $boundingBox[1]);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $boundingBox[1]);
-        $this->assertEquals($expectedBoundingBox[1][0], $boundingBox[1]->getLatitude(), '', 0.1);
-        $this->assertEquals($expectedBoundingBox[1][1], $boundingBox[1]->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta($expectedBoundingBox[1][0], $boundingBox[1]->getLatitude(), 0.1, '');
+        $this->assertEqualsWithDelta($expectedBoundingBox[1][1], $boundingBox[1]->getLongitude(), 0.1, '');
     }
 
     public function coordinatesAndExpectedGeohashesAndBoundingBoxesProvider()
@@ -207,8 +207,8 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
         $this->assertTrue(is_object($coordinate));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $coordinate);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $coordinate);
-        $this->assertEquals($expectedCoordinate[0], $coordinate->getLatitude(), '', 0.1);
-        $this->assertEquals($expectedCoordinate[1], $coordinate->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta($expectedCoordinate[0], $coordinate->getLatitude(), 0.1, '');
+        $this->assertEqualsWithDelta($expectedCoordinate[1], $coordinate->getLongitude(), 0.1, '');
     }
 
     /**
@@ -222,14 +222,14 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
         $this->assertTrue(is_object($boundingBox[0]));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $boundingBox[0]);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $boundingBox[0]);
-        $this->assertEquals($expectedBoundingBox[0][0], $boundingBox[0]->getLatitude(), '', 0.1);
-        $this->assertEquals($expectedBoundingBox[0][1], $boundingBox[0]->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta($expectedBoundingBox[0][0], $boundingBox[0]->getLatitude(), 0.1, '');
+        $this->assertEqualsWithDelta($expectedBoundingBox[0][1], $boundingBox[0]->getLongitude(), 0.1, '');
 
         $this->assertTrue(is_object($boundingBox[1]));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $boundingBox[1]);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $boundingBox[1]);
-        $this->assertEquals($expectedBoundingBox[1][0], $boundingBox[1]->getLatitude(), '', 0.1);
-        $this->assertEquals($expectedBoundingBox[1][1], $boundingBox[1]->getLongitude(), '', 0.1);
+        $this->assertEqualsWithDelta($expectedBoundingBox[1][0], $boundingBox[1]->getLatitude(), 0.1, '');
+        $this->assertEqualsWithDelta($expectedBoundingBox[1][1], $boundingBox[1]->getLongitude(), 0.1, '');
     }
 
     public function geohashesAndExpectedCoordinatesAndBoundingBoxesProvider()

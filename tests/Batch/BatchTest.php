@@ -67,6 +67,9 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         $this->geocoder = $this->getMockGeocoderReturns($this->providers);
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConstructorShouldAcceptGeocoderInterface()
     {
         new TestableBatch($this->getStubGeocoder());
@@ -113,12 +116,12 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The argument should be a string or an array of strings to geocode.
      * @dataProvider invalidValuesProvider
      */
     public function testGeocodeShouldThrowInvalidArgumentException($values)
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The argument should be a string or an array of strings to geocode.');
         $batch = new TestableBatch($this->geocoder);
         $batch->geocode($values);
     }
@@ -168,12 +171,12 @@ class BatchTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The argument should be a Coordinate instance or an array of Coordinate instances to reverse.
      * @dataProvider coordinatesProvider
      */
     public function testReverseShouldThrowInvalidArgumentException($coordinates)
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The argument should be a Coordinate instance or an array of Coordinate instances to reverse.');
         $batch = new TestableBatch($this->geocoder);
         $batch->reverse($coordinates);
     }
@@ -735,12 +738,10 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         }
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage booooooooooo!
-     */
     public function testSeriesShouldThrowException()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('booooooooooo!');
         $batch = new TestableBatch($this->geocoder);
         $batch->setTasks($tasks = array(
             function () {
@@ -755,12 +756,10 @@ class BatchTest extends \League\Geotools\Tests\TestCase
         ))->geocode('foo')->serie();
     }
 
-    /**
-     * @expectedException RuntimeException
-     * @expectedExceptionMessage booooooooooo!
-     */
     public function testParallelShouldThrowException()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('booooooooooo!');
         $called = 0;
 
         $batch = new TestableBatch($this->geocoder);

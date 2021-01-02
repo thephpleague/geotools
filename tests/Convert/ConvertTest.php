@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace League\Geotools\Tests;
+namespace League\Geotools\Tests\Convert;
 
 use League\Geotools\Convert\Convert;
 use League\Geotools\Coordinate\Coordinate;
@@ -19,6 +19,9 @@ use League\Geotools\Coordinate\Coordinate;
 */
 class ConvertTest extends \League\Geotools\Tests\TestCase
 {
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testConstructorShouldAcceptCoordinateInterface()
     {
         new TestableConvert($this->getStubCoordinate());

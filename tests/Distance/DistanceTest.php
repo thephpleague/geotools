@@ -96,19 +96,19 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['flat']['m'], $this->distance->flat(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['flat']['m'], $this->distance->flat(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['flat']['km'], $this->distance->in('km')->flat(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['flat']['km'], $this->distance->in('km')->flat(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['flat']['mi'], $this->distance->in('mi')->flat(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['flat']['mi'], $this->distance->in('mi')->flat(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['flat']['ft'], $this->distance->in('ft')->flat(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['flat']['ft'], $this->distance->in('ft')->flat(), 0.00001, '');
     }
 
     /**
@@ -118,19 +118,19 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['greatCircle']['m'], $this->distance->greatCircle(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['greatCircle']['m'], $this->distance->greatCircle(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['greatCircle']['km'], $this->distance->in('km')->greatCircle(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['greatCircle']['km'], $this->distance->in('km')->greatCircle(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['greatCircle']['mi'], $this->distance->in('mi')->greatCircle(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['greatCircle']['mi'], $this->distance->in('mi')->greatCircle(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['greatCircle']['ft'], $this->distance->in('ft')->greatCircle(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['greatCircle']['ft'], $this->distance->in('ft')->greatCircle(), 0.00001, '');
     }
 
     /**
@@ -140,19 +140,19 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['haversine']['m'], $this->distance->haversine(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['haversine']['m'], $this->distance->haversine(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['haversine']['km'], $this->distance->in('km')->haversine(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['haversine']['km'], $this->distance->in('km')->haversine(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['haversine']['mi'], $this->distance->in('mi')->haversine(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['haversine']['mi'], $this->distance->in('mi')->haversine(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['haversine']['ft'], $this->distance->in('ft')->haversine(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['haversine']['ft'], $this->distance->in('ft')->haversine(), 0.00001, '');
     }
 
     /**
@@ -162,19 +162,19 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['vincenty']['m'], $this->distance->vincenty(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['vincenty']['m'], $this->distance->vincenty(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['vincenty']['km'], $this->distance->in('km')->vincenty(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['vincenty']['km'], $this->distance->in('km')->vincenty(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['vincenty']['mi'], $this->distance->in('mi')->vincenty(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['vincenty']['mi'], $this->distance->in('mi')->vincenty(), 0.00001, '');
 
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
-        $this->assertEquals($result['vincenty']['ft'], $this->distance->in('ft')->vincenty(), '', 0.00001);
+        $this->assertEqualsWithDelta($result['vincenty']['ft'], $this->distance->in('ft')->vincenty(), 0.00001, '');
     }
 
     public function ellipsoidInstanceAndExpectedResultProvider()

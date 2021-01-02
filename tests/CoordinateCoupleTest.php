@@ -16,7 +16,7 @@ use League\Geotools\CoordinateCouple;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class CoordinateCoupeTest extends TestCase
+class CoordinateCoupleTest extends TestCase
 {
     protected $geotools;
 
