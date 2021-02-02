@@ -34,23 +34,19 @@ class AllTest extends \League\Geotools\Tests\TestCase
         $this->commandTester = new CommandTester($this->command);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments
-     */
     public function testExecuteWithoutArguments()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Not enough arguments');
         $this->commandTester->execute(array(
             'command' => $this->command->getName(),
         ));
     }
 
-    /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
-     */
     public function testExecuteInvalidArguments()
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('It should be a valid and acceptable ways to write geographic coordinates !');
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => 'foo, bar',
@@ -136,12 +132,10 @@ EOF;
         $this->assertSame($expected, $this->commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage Please provide an ellipsoid name !
-     */
     public function testExecuteWithEmptyEllipsoidOption()
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Please provide an ellipsoid name !');
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',
@@ -150,12 +144,10 @@ EOF;
         ));
     }
 
-    /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage foo ellipsoid does not exist in selected reference ellipsoids !
-     */
     public function testExecuteWithoutAvailableEllipsoidOption()
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('foo ellipsoid does not exist in selected reference ellipsoids !');
         $this->commandTester->execute(array(
             'command'     => $this->command->getName(),
             'origin'      => '40° 26.7717, -79° 56.93172',

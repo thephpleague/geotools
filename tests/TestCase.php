@@ -31,10 +31,7 @@ abstract class TestCase extends PHPUnitTestCase
      */
     protected function getStubGeocoder()
     {
-        $stub = $this
-            ->getMockBuilder('\Geocoder\ProviderAggregator')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $stub = $this->createMock('\Geocoder\ProviderAggregator');
 
         return $stub;
     }
@@ -53,21 +50,17 @@ abstract class TestCase extends PHPUnitTestCase
             $addresses = new AddressCollection([Address::createFromArray($data)]);
         }
 
-        $mock = $this->getMockBuilder('\Geocoder\ProviderAggregator')->getMock();
+        $mock = $this->createMock('\Geocoder\ProviderAggregator');
         $mock
-            ->expects($this->any())
             ->method('getProviders')
             ->will($this->returnValue($providers));
         $mock
-            ->expects($this->any())
             ->method('using')
             ->will($this->returnSelf());
         $mock
-            ->expects($this->any())
             ->method('geocode')
             ->will($this->returnValue($addresses));
         $mock
-            ->expects($this->any())
             ->method('reverse')
             ->will($this->returnValue($addresses));
 
@@ -81,21 +74,18 @@ abstract class TestCase extends PHPUnitTestCase
      */
     protected function getMockGeocoderThrowException(array $providers)
     {
-        $mock = $this->getMockBuilder('\Geocoder\ProviderAggregator')->getMock();
+        $mock = $this->createMock('\Geocoder\ProviderAggregator');
         $mock
             ->expects($this->once())
             ->method('getProviders')
             ->will($this->returnValue($providers));
         $mock
-            ->expects($this->any())
             ->method('using')
             ->will($this->returnSelf());
         $mock
-            ->expects($this->any())
             ->method('geocode')
             ->will($this->throwException(new \Exception));
         $mock
-            ->expects($this->any())
             ->method('reverse')
             ->will($this->throwException(new \Exception));
 
@@ -109,10 +99,7 @@ abstract class TestCase extends PHPUnitTestCase
      */
     protected function getStubCoordinate($lat = null, $lng = null)
     {
-        $stub = $this
-            ->getMockBuilder('\League\Geotools\Coordinate\CoordinateInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $stub = $this->createMock('\League\Geotools\Coordinate\CoordinateInterface');
 
         if (null !== $lat) {
             $stub->method('getLatitude')->willReturn($lat);
@@ -132,13 +119,11 @@ abstract class TestCase extends PHPUnitTestCase
      */
     protected function getMockCoordinateReturns(array $coordinate, Ellipsoid $ellipsoid = null)
     {
-        $mock = $this->getMockBuilder('\League\Geotools\Coordinate\CoordinateInterface')->getMock();
+        $mock = $this->createMock('\League\Geotools\Coordinate\CoordinateInterface');
         $mock
-            ->expects($this->any())
             ->method('getLatitude')
             ->will($this->returnValue($coordinate[0]));
         $mock
-            ->expects($this->any())
             ->method('getLongitude')
             ->will($this->returnValue($coordinate[1]));
 
@@ -163,7 +148,7 @@ abstract class TestCase extends PHPUnitTestCase
             $expects = $this->once();
         }
 
-        $mock = $this->getMockBuilder('\League\Geotools\Batch\BatchGeocoded')->getMock();
+        $mock = $this->createMock('\League\Geotools\Batch\BatchGeocoded');
         $mock
             ->expects($expects)
             ->method('getCoordinates')
@@ -179,7 +164,7 @@ abstract class TestCase extends PHPUnitTestCase
      */
     protected function getMockGeocodedReturns(array $coordinate)
     {
-        $mock = $this->getMockBuilder('\League\Geotools\Batch\BatchGeocoded')->getMock();
+        $mock = $this->createMock('\League\Geotools\Batch\BatchGeocoded');
         $mock
             ->expects($this->atLeastOnce())
             ->method('getLatitude')
@@ -197,15 +182,12 @@ abstract class TestCase extends PHPUnitTestCase
      */
     protected function getStubBatchGeocoded()
     {
-        $stub = $this
-            ->getMockBuilder('\League\Geotools\Batch\BatchGeocoded')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $stub = $this->createMock('\League\Geotools\Batch\BatchGeocoded');
 
-        $stub->expects($this->any())
+        $stub
             ->method('getProviderName')
             ->willReturn('provider');
-        $stub->expects($this->any())
+        $stub
             ->method('getQuery')
             ->willReturn('query');
 
@@ -219,17 +201,15 @@ abstract class TestCase extends PHPUnitTestCase
      */
     protected function getMockCacheReturns($returnValue)
     {
-        $item = $this->getMockBuilder(CacheItemInterface::class)->getMock();
+        $item = $this->createMock(CacheItemInterface::class);
         $item
-            ->expects($this->any())
             ->method('get')
             ->willReturn($returnValue);
         $item
-            ->expects($this->any())
             ->method('isHit')
             ->willReturn(true);
 
-        $mock = $this->getMockBuilder(CacheItemPoolInterface::class)->getMock();
+        $mock = $this->createMock(CacheItemPoolInterface::class);
         $mock
             ->expects($this->atLeastOnce())
             ->method('getItem')

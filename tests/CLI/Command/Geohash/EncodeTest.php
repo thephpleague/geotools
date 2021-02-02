@@ -35,23 +35,19 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
         $this->commandTester = new CommandTester($this->command);
     }
 
-    /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Not enough arguments
-     */
     public function testExecuteWithoutArguments()
     {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Not enough arguments');
         $this->commandTester->execute(array(
             'command' => $this->command->getName(),
         ));
     }
 
-    /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage It should be a valid and acceptable ways to write geographic coordinates !
-     */
     public function testExecuteInvalidArguments()
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('It should be a valid and acceptable ways to write geographic coordinates !');
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => 'foo, bar',
@@ -70,12 +66,10 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
         $this->assertRegExp('/u09tu800gnqw/', $this->commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The length should be between 1 and 12.
-     */
     public function testExecuteInvalidLengthOption()
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The length should be between 1 and 12.');
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '48.8234055, 2.3072664',
@@ -95,12 +89,10 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
         $this->assertRegExp('/<value>dppn<\/value>/', $this->commandTester->getDisplay());
     }
 
-    /**
-     * @expectedException League\Geotools\Exception\InvalidArgumentException
-     * @expectedExceptionMessage The length should be between 1 and 12.
-     */
     public function testExecuteWithEmptyLengthOption()
     {
+        $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The length should be between 1 and 12.');
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '40° 26.7717, -79° 56.93172',

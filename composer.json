@@ -22,7 +22,7 @@
     },
 
     "require" : {
-        "php"                     : "^7.3 || ^7.4",
+        "php"                     : "^7.3 || ^7.4 || ^8.0",
         "psr/cache"               : "^1.0",
         "willdurand/geocoder"     : "^4.2",
         "react/promise"           : "^2.2",
