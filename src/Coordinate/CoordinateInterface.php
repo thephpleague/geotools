@@ -24,7 +24,7 @@ interface CoordinateInterface
      *
      * @param double $latitude The latitude to normalize
      *
-     * @return double
+     * @return string
      */
     public function normalizeLatitude($latitude);
 
@@ -34,7 +34,7 @@ interface CoordinateInterface
      *
      * @param double $longitude The longitude to normalize
      *
-     * @return double
+     * @return string
      */
     public function normalizeLongitude($longitude);
 
@@ -48,7 +48,7 @@ interface CoordinateInterface
     /**
      * Get the latitude.
      *
-     * @return double
+     * @return string
      */
     public function getLatitude();
 
@@ -62,7 +62,7 @@ interface CoordinateInterface
     /**
      * Get the longitude.
      *
-     * @return double
+     * @return string
      */
     public function getLongitude();
 
