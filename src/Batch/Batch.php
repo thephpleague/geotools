@@ -260,7 +260,7 @@ class Batch implements BatchInterface
         $computedInParallel = array();
 
         foreach ($this->tasks as $task) {
-            $loop->nextTick(function () use ($task, &$computedInParallel) {
+            $loop->futureTick(function () use ($task, &$computedInParallel) {
                 $task()->then(function($result) use (&$computedInParallel) {
                     $computedInParallel[] = $result;
                 }, function ($emptyResult) use (&$computedInParallel) {
