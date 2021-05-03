@@ -213,7 +213,7 @@ for your(s) geocoding provider(s).
 <?php
 
 $geocoder = new \Geocoder\ProviderAggregator(); // or \Geocoder\TimedGeocoder
-$httpClient  = HttpClientDiscovery:::find();
+$httpClient  = HttpClientDiscovery::find();
 
 $geocoder->registerProviders([
     new \Geocoder\Provider\GoogleMaps\GoogleMaps($httpClient),
