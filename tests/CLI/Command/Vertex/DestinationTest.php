@@ -65,7 +65,7 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/47\.0267746500751, 2\.3072664/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/47\.0267746500751, 2\.3072664/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -105,7 +105,7 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40\.2799715194531, 24\.6373368944057/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/40\.2799715194531, 24\.6373368944057/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEllipsoid_AUSTRALIAN_NATIONAL()
@@ -119,7 +119,7 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40\.2800094267106, 24\.6372680249866/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/40\.2800094267106, 24\.6372680249866/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEllipsoid_BESSEL_1841()
@@ -133,6 +133,6 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40\.2787519824662, 24\.6395524527712/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/40\.2787519824662, 24\.6395524527712/', $this->commandTester->getDisplay());
     }
 }

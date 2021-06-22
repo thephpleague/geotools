@@ -62,7 +62,7 @@ class DMTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/48 49\.40433N, 2 18\.43598E/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/48 49\.40433N, 2 18\.43598E/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithFormatOption()
@@ -74,7 +74,7 @@ class DMTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40°26\.7717 -79°56\.93172/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/40°26\.7717 -79°56\.93172/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyFormatOption()
@@ -86,7 +86,7 @@ class DMTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/<value> <\/value>/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/<value> <\/value>/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -120,6 +120,6 @@ class DMTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40 26\.7717N, -79 56\.93172W/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/40 26\.7717N, -79 56\.93172W/', $this->commandTester->getDisplay());
     }
 }

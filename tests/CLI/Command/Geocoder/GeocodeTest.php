@@ -53,7 +53,7 @@ class GeocodeTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/55\.6760968, 12\.5683371/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/55\.6760968, 12\.5683371/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteStreetAddressWithDefaultProviderAndAdapterAndArguments()
@@ -71,7 +71,7 @@ class GeocodeTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/55\.6760968, 12\.5683371/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/55\.6760968, 12\.5683371/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteIPv4AgainstFreeGeoIpProviderWithBuzzAdapter()
@@ -86,7 +86,7 @@ class GeocodeTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/33\.035, -96\.814/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/33\.035, -96\.814/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteIPv6AgainstFreeGeoIpProviderWithDefaultAdapter()
@@ -100,7 +100,7 @@ class GeocodeTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/33\.035, -96\.814/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/33\.035, -96\.814/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteStreetAddressWithDefaultDumper()

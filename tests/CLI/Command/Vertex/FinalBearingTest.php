@@ -63,7 +63,7 @@ class FinalBearingTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/118/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/118/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()

@@ -63,7 +63,7 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/u09tu800gnqw/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/u09tu800gnqw/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteInvalidLengthOption()
@@ -86,7 +86,7 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/<value>dppn<\/value>/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/<value>dppn<\/value>/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyLengthOption()

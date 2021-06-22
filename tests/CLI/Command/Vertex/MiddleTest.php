@@ -63,7 +63,7 @@ class MiddleTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/38\.0681392097933, -53\.1877188545446/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/38\.0681392097933, -53\.1877188545446/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -100,6 +100,6 @@ class MiddleTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/38\.0681392097933, -53\.1877188545446/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/38\.0681392097933, -53\.1877188545446/', $this->commandTester->getDisplay());
     }
 }

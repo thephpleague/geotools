@@ -63,7 +63,7 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/Avenue Gambetta 1, 75020 Paris/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Avenue Gambetta 1, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteReverseWithDefaultProviderAndSocketAdapterAndArguments()
@@ -82,7 +82,7 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/Avenue Gambetta 1, 75020 Paris/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Avenue Gambetta 1, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteReverseAgainstOpenStreetMapsProviderWithDefaultAdapterAndDefaultFormatter()
@@ -96,7 +96,7 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/Avenue Gambetta 8, 75020 Paris/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Avenue Gambetta 8, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteReverseAgainstOpenStreetMapsProviderWithDefaultAdapterAndFormatter()
@@ -111,7 +111,7 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/Paris, Île-de-France/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/Paris, Île-de-France/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteRawOptionAndLocalArgument()
