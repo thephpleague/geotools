@@ -1,8 +1,39 @@
 CHANGELOG
 =========
 
+0.8.3
+-----
+
+### Fixed
+
+- Fix incompatibility with PHP >= 7.4 by saving longitude and latitude as a string
+
+### Changed
+
+- Use react/event-loop: 1.0
+
+0.8.2
+-----
+
+### Fixed 
+
+- Fix namespace issue when creating provider class name
+- PHPUnit deprecations
+
+### Changed
+
+- Supported PHP versions >= 7.3
+- PHPUnit 8.5
+
+0.8.1
+-----
+
+### Fixed 
+
+- Symfony 5 support.
+
 0.8.0 (2018-02-22)
------------------
+------------------
 
 ### Added
 
