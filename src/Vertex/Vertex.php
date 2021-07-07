@@ -153,7 +153,7 @@ class Vertex implements VertexInterface
         $y = sin($dLng) * cos($latB);
         $x = cos($latA) * sin($latB) - sin($latA) * cos($latB) * cos($dLng);
 
-        return (float) (rad2deg(atan2($y, $x)) + 360) % 360;
+        return fmod(rad2deg(atan2($y, $x)) + 360, 360);
     }
 
     /**
@@ -173,7 +173,7 @@ class Vertex implements VertexInterface
         $y = sin($dLng) * cos($latB);
         $x = cos($latA) * sin($latB) - sin($latA) * cos($latB) * cos($dLng);
 
-        return (float) ((rad2deg(atan2($y, $x)) + 360) % 360 + 180 ) % 360;
+        return fmod(fmod(rad2deg(atan2($y, $x)) + 360, 360) + 180, 360);
     }
 
     /**

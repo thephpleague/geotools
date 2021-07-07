@@ -100,6 +100,6 @@ class FinalBearingTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertSame('<value>118</value>', trim($this->commandTester->getDisplay()));
+        $this->assertSame('<value>118.27876133414</value>', trim($this->commandTester->getDisplay()));
     }
 }
