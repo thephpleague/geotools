@@ -63,7 +63,7 @@ class HaversineTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4625820\.4879867/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4625820\.4879867/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -76,7 +76,7 @@ class HaversineTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4625\.8204879867/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4625\.8204879867/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -89,7 +89,7 @@ class HaversineTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2874\.3515916962/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/2874\.3515916962/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithFtOption()
@@ -102,7 +102,7 @@ class HaversineTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/15176576\.404156/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/15176576\.404156/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -140,6 +140,6 @@ class HaversineTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2874\.0577024979/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/2874\.0577024979/', $this->commandTester->getDisplay());
     }
 }

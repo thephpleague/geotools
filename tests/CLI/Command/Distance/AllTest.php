@@ -63,9 +63,9 @@ class AllTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690203\.070290/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/4625820\.4879867/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/4629758\.7977236/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4690203\.070290/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4625820\.4879867/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4629758\.7977236/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -78,9 +78,9 @@ class AllTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690\.2030702905/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/4625\.8204879867/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/4629\.7587977236/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4690\.2030702905/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4625\.8204879867/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4629\.7587977236/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -93,9 +93,9 @@ class AllTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2914\.3570736216/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/2874\.3515916962/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/2876\.7987439128/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/2914\.3570736216/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/2874\.3515916962/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/2876\.7987439128/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithFtOption()
@@ -108,9 +108,9 @@ class AllTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/15387805\.348722/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/15176576\.404156/', $this->commandTester->getDisplay());
-        $this->assertRegExp('/15189497\.36786/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/15387805\.348722/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/15176576\.404156/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/15189497\.36786/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteOutput()

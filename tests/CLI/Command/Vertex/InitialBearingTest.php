@@ -63,7 +63,7 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/87/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/87/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -100,6 +100,6 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/87/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/87/', $this->commandTester->getDisplay());
     }
 }

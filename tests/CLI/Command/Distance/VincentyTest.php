@@ -63,7 +63,7 @@ class VincentyTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4629758\.7977236/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4629758\.7977236/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -76,7 +76,7 @@ class VincentyTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4629\.7587977236/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4629\.7587977236/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -89,7 +89,7 @@ class VincentyTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2876\.7987439128/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/2876\.7987439128/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithFtOption()
@@ -102,7 +102,7 @@ class VincentyTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/15189497\.36786/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/15189497\.36786/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -140,6 +140,6 @@ class VincentyTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/15189808\.665879/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/15189808\.665879/', $this->commandTester->getDisplay());
     }
 }

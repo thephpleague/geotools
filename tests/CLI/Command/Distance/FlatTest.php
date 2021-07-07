@@ -63,7 +63,7 @@ class FlatTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690203\.0702905/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4690203\.0702905/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithKmOption()
@@ -76,7 +76,7 @@ class FlatTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690\.2030702905/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4690\.2030702905/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithMileOption()
@@ -89,7 +89,7 @@ class FlatTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/2914\.3570736216/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/2914\.3570736216/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithFtOption()
@@ -102,7 +102,7 @@ class FlatTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/15387805\.348722/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/15387805\.348722/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -139,6 +139,6 @@ class FlatTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/4690217\.0420619/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/4690217\.0420619/', $this->commandTester->getDisplay());
     }
 }

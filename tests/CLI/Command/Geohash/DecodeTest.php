@@ -61,7 +61,7 @@ class DecodeTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/42\.1875, -84\.375/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/42\.1875, -84\.375/', $this->commandTester->getDisplay());
     }
 
     public function testExecuteLongGeohash()
@@ -72,6 +72,6 @@ class DecodeTest extends \League\Geotools\Tests\TestCase
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertRegExp('/40\.4461950715631, -79\.9488621018827/', $this->commandTester->getDisplay());
+        $this->assertMatchesRegularExpression('/40\.4461950715631, -79\.9488621018827/', $this->commandTester->getDisplay());
     }
 }
