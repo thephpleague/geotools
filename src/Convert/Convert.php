@@ -154,18 +154,6 @@ class Convert implements ConvertInterface
     }
 
     /**
-     * Alias of toDegreeDecimalMinutes function.
-     *
-     * @param string $format The way to format the DDM coordinate.
-     *
-     * @return string Converted and formatted string.
-     */
-    public function toDDM($format = ConvertInterface::DEFAULT_DDM_FORMAT)
-    {
-        return $this->toDegreeDecimalMinutes($format);
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function toUniversalTransverseMercator()

@@ -163,18 +163,18 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
 
 
     /**
-     * @dataProvider coordinatesToDDMProvider
+     * @dataProvider coordinatesToDegreeDecimalMinutesProvider
      */
-    public function testToDDM($coordinates, $expectedResult)
+    public function testToDegreeDecimalMinutes($coordinates, $expectedResult)
     {
         $convert = new TestableConvert(new Coordinate($coordinates));
-        $converted = $convert->toDDM();
+        $converted = $convert->toDegreeDecimalMinutes();
 
         $this->assertTrue(is_string($converted));
         $this->assertSame($expectedResult, $converted);
     }
 
-    public function coordinatesToDDMProvider()
+    public function coordinatesToDegreeDecimalMinutesProvider()
     {
         return array(
             array(
