@@ -90,6 +90,8 @@ class Convert implements ConvertInterface
      *
      * @param string $format The way to format the DMS coordinate.
      *
+     * @deprecated This alias is deprecated, use toDegreesMinutesSeconds()
+     *
      * @return string Converted and formatted string.
      */
     public function toDMS($format = ConvertInterface::DEFAULT_DMS_FORMAT)
@@ -121,6 +123,8 @@ class Convert implements ConvertInterface
      * Alias of toDecimalMinutes function.
      *
      * @param string $format The way to format the DMS coordinate.
+     *
+     * @deprecated This alias is deprecated, use toDecimalMinutes()
      *
      * @return string Converted and formatted string.
      */
@@ -224,6 +228,8 @@ class Convert implements ConvertInterface
 
     /**
      * Alias of toUniversalTransverseMercator function.
+     *
+     * @deprecated This alias is deprecated, use toUniversalTransverseMercator()
      *
      * @return string The converted UTM coordinate in meters
      */
