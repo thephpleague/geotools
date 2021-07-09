@@ -62,7 +62,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->convert($coordinate)->toDMS($input->getOption('format'))
+            $geotools->convert($coordinate)->toDegreesMinutesSeconds($input->getOption('format'))
         ));
         return 0;
     }

@@ -146,10 +146,10 @@ class Distance implements DistanceInterface
         $dLat = $latB - $latA;
         $dLon = $lngB - $lngA;
 
-        $a = sin($dLat / 2) * sin($dLat / 2) + cos($latA) * cos($latB) * sin($dLon / 2) * sin($dLon / 2);
-        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+        $a = (sin($dLat / 2) ** 2) + cos($latA) * cos($latB) * (sin($dLon / 2) ** 2);
+        $c = 2 * asin(sqrt($a));
 
-        return $this->convertToUserUnit($this->from->getEllipsoid()->getA() * $c);
+        return $this->convertToUserUnit($this->from->getEllipsoid()->getArithmeticMeanRadius() * $c);
     }
 
     /**

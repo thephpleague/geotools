@@ -61,7 +61,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->convert($coordinate)->toDM($input->getOption('format'))
+            $geotools->convert($coordinate)->toDecimalMinutes($input->getOption('format'))
         ));
         return 0;
     }

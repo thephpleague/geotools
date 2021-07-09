@@ -61,8 +61,7 @@ class DMTest extends \League\Geotools\Tests\TestCase
             'coordinate' => '48.8234055, 2.3072664',
         ));
 
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertMatchesRegularExpression('/48 49\.40433N, 2 18\.43598E/', $this->commandTester->getDisplay());
+        $this->assertEquals(0, $this->commandTester->getStatusCode());
     }
 
     public function testExecuteWithFormatOption()
@@ -73,8 +72,7 @@ class DMTest extends \League\Geotools\Tests\TestCase
             '--format'   => '%P%D°%N %p%d°%n',
         ));
 
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertMatchesRegularExpression('/40°26\.7717 -79°56\.93172/', $this->commandTester->getDisplay());
+        $this->assertEquals(0, $this->commandTester->getStatusCode());
     }
 
     public function testExecuteWithEmptyFormatOption()
@@ -85,8 +83,7 @@ class DMTest extends \League\Geotools\Tests\TestCase
             '--format'   => ' ',
         ));
 
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertMatchesRegularExpression('/<value> <\/value>/', $this->commandTester->getDisplay());
+        $this->assertEquals(0, $this->commandTester->getStatusCode());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -119,7 +116,6 @@ class DMTest extends \League\Geotools\Tests\TestCase
             '--ellipsoid' => 'AUSTRALIAN_NATIONAL',
         ));
 
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertMatchesRegularExpression('/40 26\.7717N, -79 56\.93172W/', $this->commandTester->getDisplay());
+        $this->assertEquals(0, $this->commandTester->getStatusCode());
     }
 }

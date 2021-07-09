@@ -54,7 +54,7 @@ EOT
 
         $output->writeln(sprintf(
             '<value>%s</value>',
-            $geotools->convert($coordinate)->toUTM()
+            $geotools->convert($coordinate)->toUniversalTransverseMercator()
         ));
         return 0;
     }
