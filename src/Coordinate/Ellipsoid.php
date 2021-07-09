@@ -199,7 +199,7 @@ class Ellipsoid
         ),
         self::WGS84 => array(
             'name' => 'WGS 84',
-            'a'    => 6378136.0,
+            'a'    => 6378137.0,
             'invF' => 298.257223563,
         ),
     );

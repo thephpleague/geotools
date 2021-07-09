@@ -86,10 +86,10 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
         $this->assertTrue(is_object($ellipsoid));
         $this->assertInstanceOf('League\Geotools\Coordinate\Ellipsoid', $ellipsoid);
         $this->assertSame('WGS 84', $ellipsoid->getName());
-        $this->assertSame(6378136.0, $ellipsoid->getA());
-        $this->assertEqualsWithDelta(6356751.317598, $ellipsoid->getB(), 0.0001, '');
+        $this->assertSame(6378137.0, $ellipsoid->getA());
+        $this->assertEqualsWithDelta(6356752.314245179, $ellipsoid->getB(), 0.0001, '');
         $this->assertSame(298.257223563, $ellipsoid->getInvF());
-        $this->assertEqualsWithDelta(6371007.7725327, $ellipsoid->getArithmeticMeanRadius(), 0.0001, '');
+        $this->assertEqualsWithDelta(6371008.771415059, $ellipsoid->getArithmeticMeanRadius(), 0.0001, '');
     }
 
     /**

@@ -48,18 +48,6 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
         $this->assertSame($expectedResult, $converted);
     }
 
-    /**
-     * @dataProvider coordinatesToDMSProvider
-     */
-    public function testToDMS($coordinates, $format, $expectedResult)
-    {
-        $convert = new TestableConvert(new Coordinate($coordinates));
-        $converted = $convert->toDMS($format);
-
-        $this->assertTrue(is_string($converted));
-        $this->assertSame($expectedResult, $converted);
-    }
-
     public function coordinatesToDMSProvider()
     {
         return array(
@@ -103,18 +91,6 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
     {
         $convert = new TestableConvert(new Coordinate($coordinates));
         $converted = $convert->toDecimalMinutes($format);
-
-        $this->assertTrue(is_string($converted));
-        $this->assertSame($expectedResult, $converted);
-    }
-
-    /**
-     * @dataProvider coordinatesToDMProvider
-     */
-    public function testToDM($coordinates, $format, $expectedResult)
-    {
-        $convert = new TestableConvert(new Coordinate($coordinates));
-        $converted = $convert->toDM($format);
 
         $this->assertTrue(is_string($converted));
         $this->assertSame($expectedResult, $converted);
@@ -208,18 +184,6 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
         $this->assertSame($expectedResult, $converted);
     }
 
-    /**
-     * @dataProvider coordinatesToUTMProvider
-     */
-    public function testToUTM($coordinates, $expectedResult)
-    {
-        $convert = new TestableConvert(new Coordinate($coordinates));
-        $converted = $convert->toUTM();
-
-        $this->assertTrue(is_string($converted));
-        $this->assertSame($expectedResult, $converted);
-    }
-
     public function coordinatesToUTMProvider()
     {
         return array(
@@ -233,7 +197,7 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
             ),
             array(
                 '48°49′24″N, 2°18′26″E',
-                '31U 449149 5408047'
+                '31U 449149 5408048'
             ),
             array(
                 '40d 26′ 47″ N 079d 58′ 36″ W',
@@ -241,15 +205,15 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
             ),
             array(
                 '80, 180',
-                '61X 441867 8883083'
+                '61X 441867 8883084'
             ),
             array(
                 '84, 184',
-                '1X 511669 9328193'
+                '1X 511669 9328195'
             ),
             array(
                 '84, -176',
-                '1X 511669 9328193'
+                '1X 511669 9328195'
             ),
             array(
                 '0, 0',
@@ -258,28 +222,28 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
             // Special zone for South Norway. Ex: Bergen.
             array(
                 '60.3912628, 5.3220544',
-                '32V 297351 6700643'
+                '32V 297351 6700644'
             ),
             array(
                 '60.3912628, -5.3220544',
-                '30V 372031 6697240'
+                '30V 372031 6697241'
             ),
             // Special zone for Svalbard. 4 cases.
             array(
                 '72.0, 0',
-                '31X 396566 7991507'
+                '31X 396566 7991508'
             ),
             array(
                 '72.0, 9.0',
-                '33X 293363 7999232'
+                '33X 293363 7999233'
             ),
             array(
                 '72.0, 21.0',
-                '35X 293363 7999232'
+                '35X 293363 7999233'
             ),
             array(
                 '72.0, 41.999999',
-                '37X 603433 7991507'
+                '37X 603433 7991508'
             ),
         );
     }

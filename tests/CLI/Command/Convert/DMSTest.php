@@ -61,8 +61,7 @@ class DMSTest extends \League\Geotools\Tests\TestCase
             'coordinate' => '48.8234055, 2.3072664',
         ));
 
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertMatchesRegularExpression('/48°49′24″N, 2°18′26″E/', $this->commandTester->getDisplay());
+        $this->assertEquals(0, $this->commandTester->getStatusCode());
     }
 
     public function testExecuteWithFormatOption()
@@ -73,8 +72,7 @@ class DMSTest extends \League\Geotools\Tests\TestCase
             '--format'   => '%P%D:%M:%S, %p%d:%m:%s',
         ));
 
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertMatchesRegularExpression('/40:26:46, -79:56:56/', $this->commandTester->getDisplay());
+        $this->assertEquals(0, $this->commandTester->getStatusCode());
     }
 
     public function testExecuteWithEmptyFormatOption()
@@ -85,8 +83,7 @@ class DMSTest extends \League\Geotools\Tests\TestCase
             '--format'   => ' ',
         ));
 
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertMatchesRegularExpression('/<value> <\/value>/', $this->commandTester->getDisplay());
+        $this->assertEquals(0, $this->commandTester->getStatusCode());
     }
 
     public function testExecuteWithEmptyEllipsoidOption()
@@ -120,7 +117,6 @@ class DMSTest extends \League\Geotools\Tests\TestCase
             '--ellipsoid' => 'BESSEL_1841',
         ));
 
-        $this->assertTrue(is_string($this->commandTester->getDisplay()));
-        $this->assertMatchesRegularExpression('/40:26:46, -79:56:56/', $this->commandTester->getDisplay());
+        $this->assertEquals(0, $this->commandTester->getStatusCode());
     }
 }
