@@ -26,6 +26,13 @@ interface ConvertInterface
     const DECIMAL_MINUTES_PRECISION = 5;
 
     /**
+     * Round precision for degree decimal minutes values.
+     *
+     * @var integer
+     */
+    const DEGREE_DECIMAL_MINUTES_PRECISION = 3;
+
+    /**
      * Round mode ofr decimal minutes values.
      *
      * @var string
@@ -45,6 +52,13 @@ interface ConvertInterface
      * @var string
      */
     const DEFAULT_DM_FORMAT = '%P%D %N%L, %p%d %n%l';
+
+    /**
+     * The default format for degree decimal minutes coordinates.
+     *
+     * @var string
+     */
+    const DEFAULT_DDM_FORMAT = '%L %P%D° %N %l %p%d° %n';
 
     /**
      * The sign of the latitude.
@@ -147,6 +161,15 @@ interface ConvertInterface
      * @return string Converted and formatted string.
      */
     public function toDecimalMinutes($format = ConvertInterface::DEFAULT_DM_FORMAT);
+
+    /**
+     * Convert and format a decimal degree coordinate to degree decimal minutes coordinate.
+     *
+     * @param string $format The way to format the DDM coordinate.
+     *
+     * @return string Converted and formatted string.
+     */
+    public function toDegreeDecimalMinutes($format = ConvertInterface::DEFAULT_DDM_FORMAT);
 
     /**
      * Converts a WGS84 decimal degrees coordinate in the Universal Transverse Mercator projection (UTM).

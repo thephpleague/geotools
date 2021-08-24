@@ -161,8 +161,43 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
         );
     }
 
+
     /**
-     * @dataProvider coordinatesToUTMrovider
+     * @dataProvider coordinatesToDegreeDecimalMinutesProvider
+     */
+    public function testToDegreeDecimalMinutes($coordinates, $expectedResult)
+    {
+        $convert = new TestableConvert(new Coordinate($coordinates));
+        $converted = $convert->toDegreeDecimalMinutes();
+
+        $this->assertTrue(is_string($converted));
+        $this->assertSame($expectedResult, $converted);
+    }
+
+    public function coordinatesToDegreeDecimalMinutesProvider()
+    {
+        return array(
+            array(
+                '48 2',
+                'N 48° 0.000 E 2° 0.000'
+            ),
+            array(
+                'N 48 49.2 E 2 8.26',
+                'N 48° 49.200 E 2° 8.260'
+            ),
+            array(
+                'N 48 49.27444 E 2 8.255555',
+                'N 48° 49.274 E 2° 8.256'
+            ),
+            array(
+                'N 48° 49.2 E 2° 8.26',
+                'N 48° 49.200 E 2° 8.260'
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider coordinatesToUTMProvider
      */
     public function testToUniversalTransverseMercator($coordinates, $expectedResult)
     {
@@ -174,7 +209,7 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
     }
 
     /**
-     * @dataProvider coordinatesToUTMrovider
+     * @dataProvider coordinatesToUTMProvider
      */
     public function testToUTM($coordinates, $expectedResult)
     {
@@ -185,7 +220,7 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
         $this->assertSame($expectedResult, $converted);
     }
 
-    public function coordinatesToUTMrovider()
+    public function coordinatesToUTMProvider()
     {
         return array(
             array(

@@ -125,6 +125,14 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
                 array('40.446195', '-79.948862')
             ),
             array(
+                'N40°26.7717W79°56.93172',
+                array('40.446195', '-79.948862')
+            ),
+            array(
+                'N 40° 26.7717 W 79° 56.93172',
+                array('40.446195', '-79.948862')
+            ),
+            array(
                 '40.446195N,79.948862W',
                 array('40.446195', '-79.948862')
             ),

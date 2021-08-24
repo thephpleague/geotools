@@ -136,6 +136,30 @@ class Convert implements ConvertInterface
     /**
      * {@inheritDoc}
      */
+    public function toDegreeDecimalMinutes($format = ConvertInterface::DEFAULT_DDM_FORMAT)
+    {
+        $latitude  = $this->parseCoordinate($this->coordinates->getLatitude());
+        $longitude = $this->parseCoordinate($this->coordinates->getLongitude());
+
+        $decimalPrecisionFormat = sprintf('%%0.%df', ConvertInterface::DEGREE_DECIMAL_MINUTES_PRECISION);
+        $latitude['decimalMinutes']  = sprintf($decimalPrecisionFormat, $latitude['decimalMinutes']);
+        $longitude['decimalMinutes'] = sprintf($decimalPrecisionFormat, $longitude['decimalMinutes']);
+
+        return strtr($format, [
+            ConvertInterface::LATITUDE_SIGN             => $latitude['positive'] ? '' : '-',
+            ConvertInterface::LATITUDE_DIRECTION        => $latitude['positive'] ? 'N' : 'S',
+            ConvertInterface::LATITUDE_DEGREES          => $latitude['degrees'],
+            ConvertInterface::LATITUDE_DECIMAL_MINUTES  => $latitude['decimalMinutes'],
+            ConvertInterface::LONGITUDE_SIGN            => $longitude['positive'] ? '' : '-',
+            ConvertInterface::LONGITUDE_DIRECTION       => $longitude['positive'] ? 'E' : 'W',
+            ConvertInterface::LONGITUDE_DEGREES         => $longitude['degrees'],
+            ConvertInterface::LONGITUDE_DECIMAL_MINUTES => $longitude['decimalMinutes'],
+        ]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function toUniversalTransverseMercator()
     {
         // Convert decimal degrees coordinates to radian.
