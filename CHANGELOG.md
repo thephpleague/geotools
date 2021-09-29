@@ -1,6 +1,26 @@
 CHANGELOG
 =========
 
+
+1.0.0
+-----
+### Fixed
+
+ - greatCircle calculator returned NAN #159
+ - Suppressed deprecation warning for JsonSerializable in PHP 8.1 #167
+ - Added floor on implicit float to in conversion #166
+ - Haversine distance calculation #158
+
+### Added
+
+- New coordinate format "Degree Decimal Minutes" available with `toDegreeDecimalMinutes()` [BC break]
+- Support PHP 8.1
+- Support Symfony 6, removed Symfony 3.4
+
+### Change
+
+- Increased precision of `initialBearing()` and `finalBearing()`
+
 0.8.3
 -----
 
