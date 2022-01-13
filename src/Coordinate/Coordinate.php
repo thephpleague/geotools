@@ -94,7 +94,7 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
      */
     public function normalizeLongitude($longitude)
     {
-        if (180 === $longitude % 360) {
+        if (180 === floor($longitude) % 360) {
             return '180.0';
         }
 
@@ -213,7 +213,7 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
                 'E' === strtoupper($match[4]) ? $longitude : -$longitude,
             ];
         }
-    
+
         // 40.446195, -79.948862
         if (preg_match('/(\-?[0-9]{1,2}\.?\d*)[, ] ?(\-?[0-9]{1,3}\.?\d*)$/', $coordinates, $match)) {
             return array($match[1], $match[2]);
