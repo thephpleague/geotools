@@ -32,7 +32,8 @@
         "react/event-loop"        : "^1.0",
         "php-http/discovery"      : "^1.0",
         "cache/array-adapter"     : "^1.0",
-        "ext-bcmath": "*"
+        "ext-bcmath": "*",
+        "ext-json": "*"
     },
 
     "require-dev" : {
