@@ -275,6 +275,7 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return [$this->latitude, $this->longitude];
