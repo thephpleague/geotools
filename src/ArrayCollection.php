@@ -40,6 +40,7 @@ class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->elements;
