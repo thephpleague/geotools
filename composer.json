@@ -47,11 +47,5 @@
         }
     },
 
-    "bin" : ["bin/geotools"],
-
-    "extra" : {
-        "branch-alias" : {
-            "dev-master" : "0.7-dev"
-        }
-    }
+    "bin" : ["bin/geotools"]
 }
