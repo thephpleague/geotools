@@ -117,6 +117,10 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
     public function testGreatCircleDistance($ellipsoid, $result)
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
+        $this->assertEquals(0.0, $this->distance->greatCircle());
+        
+        $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['greatCircle']['m'], $this->distance->greatCircle(), 0.00001, '');
 
