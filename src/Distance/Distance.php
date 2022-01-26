@@ -124,6 +124,10 @@ class Distance implements DistanceInterface
 
         $degrees = acos(sin($latA) * sin($latB) + cos($latA) * cos($latB) * cos($lngB - $lngA));
 
+        if (is_nan($degrees)) {
+            return 0.0;
+        }
+
         return $this->convertToUserUnit($degrees * $this->from->getEllipsoid()->getA());
     }
 
