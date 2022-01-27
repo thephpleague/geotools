@@ -36,7 +36,7 @@ EOT
     );
 }
 
-use League\Geotools\CLI\Application;
+use League\Geotools\CLI\GeotoolsApplication;
 use League\Geotools\CLI\Command\Convert;
 use League\Geotools\CLI\Command\Distance;
 use League\Geotools\CLI\Command\Geocoder;
@@ -44,10 +44,9 @@ use League\Geotools\CLI\Command\Geohash;
 use League\Geotools\CLI\Command\Vertex;
 use League\Geotools\Geotools;
 
-$geotools = new Geotools;
-$console = new Application;
-$console->setName('Geotools :: Geo-related tools PHP 5.3+ library');
-$console->setVersion($geotools::VERSION);
+$geotools = new Geotools();
+$console = new GeotoolsApplication();
+$console->setName('Geotools :: Geo-related tools PHP library');
 $console->add(new Convert\DM);
 $console->add(new Convert\DMS);
 $console->add(new Convert\UTM);

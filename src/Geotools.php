@@ -27,12 +27,6 @@ use Geocoder\Geocoder;
 class Geotools implements GeotoolsInterface
 {
     /**
-     * Version.
-     * @see http://semver.org/
-     */
-    const VERSION = '0.7.1-dev';
-
-    /**
      * The cardinal points / directions (the four cardinal directions,
      * the four ordinal directions, plus eight further divisions).
      *
