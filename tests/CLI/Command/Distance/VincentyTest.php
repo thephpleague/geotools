@@ -11,7 +11,7 @@
 
 namespace League\Geotools\Tests\CLI\Command\Distance;
 
-use League\Geotools\CLI\Application;
+use League\Geotools\CLI\GeotoolsApplication;
 use League\Geotools\CLI\Command\Distance\Vincenty;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -26,7 +26,7 @@ class VincentyTest extends \League\Geotools\Tests\TestCase
 
     protected function setup(): void
     {
-        $this->application = new Application;
+        $this->application = new GeotoolsApplication();
         $this->application->add(new Vincenty);
 
         $this->command = $this->application->find('distance:vincenty');

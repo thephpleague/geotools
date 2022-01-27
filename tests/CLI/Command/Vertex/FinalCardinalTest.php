@@ -11,7 +11,7 @@
 
 namespace League\Geotools\Tests\CLI\Command\Vertex;
 
-use League\Geotools\CLI\Application;
+use League\Geotools\CLI\GeotoolsApplication;
 use League\Geotools\CLI\Command\Vertex\FinalCardinal;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -26,7 +26,7 @@ class FinalCardinalTest extends \League\Geotools\Tests\TestCase
 
     protected function setup(): void
     {
-        $this->application = new Application;
+        $this->application = new GeotoolsApplication();
         $this->application->add(new FinalCardinal);
 
         $this->command = $this->application->find('vertex:final-cardinal');

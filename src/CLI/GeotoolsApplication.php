@@ -14,11 +14,11 @@ namespace League\Geotools\CLI;
 use League\Geotools\CLI\Output\ConsoleOutput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
+use Symfony\Component\Console\Application;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
-class Application extends \Symfony\Component\Console\Application
+class GeotoolsApplication extends Application
 {
     /**
      * @var string
@@ -46,6 +46,6 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function run(InputInterface $input = null, OutputInterface $output = null): int
     {
-        parent::run($input, new ConsoleOutput);
+        return parent::run($input, new ConsoleOutput);
     }
 }
