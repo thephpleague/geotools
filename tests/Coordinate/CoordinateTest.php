@@ -361,4 +361,34 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
         $this->assertSame('40.4463888888889', $coordinate->getLatitude());
         $this->assertSame('-79.9766666666667', $coordinate->getLongitude());
     }
+
+    public function testSetCoordinateWithLocaleThatUsesDecimalPointAsDecimalSeparator()
+    {
+        $this->setLocale(LC_NUMERIC, 'en_US');
+
+        $latitude = "59.3293235";
+        $longitude = "18.0685808";            
+
+        $coordinate = new Coordinate($this->createEmptyAddress());
+        $coordinate->setLatitude($latitude);
+        $coordinate->setLongitude($longitude);
+
+        $this->assertSame($latitude, $coordinate->getLatitude());
+        $this->assertSame($longitude, $coordinate->getLongitude());
+    }
+
+    public function testSetCoordinateWithLocaleThatUsesDecimalCommaAsDecimalSeparator()
+    {
+        $this->setLocale(LC_NUMERIC, 'sv_SE');
+
+        $latitude = "59.3293235";
+        $longitude = "18.0685808";            
+
+        $coordinate = new Coordinate($this->createEmptyAddress());
+        $coordinate->setLatitude($latitude);
+        $coordinate->setLongitude($longitude);
+
+        $this->assertSame($latitude, $coordinate->getLatitude());
+        $this->assertSame($longitude, $coordinate->getLongitude());
+    }
 }

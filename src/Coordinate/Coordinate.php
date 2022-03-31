@@ -84,7 +84,7 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
      */
     public function normalizeLatitude($latitude)
     {
-        $latitude = rtrim(sprintf('%.13f', max(-90, min(90, $latitude))), 0);
+        $latitude = rtrim(sprintf('%.13F', max(-90, min(90, $latitude))), 0);
 
         return '.' === substr($latitude, -1) ? $latitude . '0' : $latitude;
     }
@@ -100,7 +100,7 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
 
         $mod       = fmod($longitude, 360);
         $longitude = $mod < -180 ? $mod + 360 : ($mod > 180 ? $mod - 360 : $mod);
-        $longitude = rtrim(sprintf('%.13f', $longitude), 0);
+        $longitude = rtrim(sprintf('%.13F', $longitude), 0);
 
         return '.' === substr($longitude, -1) ? $longitude . '0' : $longitude;
     }
