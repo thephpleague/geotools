@@ -28,14 +28,14 @@ class Geohash implements GeohashInterface
      *
      * @var integer
      */
-    const MIN_LENGTH = 1;
+    public const MIN_LENGTH = 1;
 
     /**
      * The maximum length of the geo hash.
      *
      * @var integer
      */
-    const MAX_LENGTH = 12;
+    public const MAX_LENGTH = 12;
 
 
     /**
@@ -43,7 +43,7 @@ class Geohash implements GeohashInterface
      *
      * @var string
      */
-    protected $geohash;
+    protected $geohash = '';
 
     /**
      * The interval of latitudes in degrees.
@@ -82,7 +82,7 @@ class Geohash implements GeohashInterface
      *
      * @return string
      */
-    public function getGeohash()
+    public function getGeohash(): string
     {
         return $this->geohash;
     }
@@ -105,7 +105,7 @@ class Geohash implements GeohashInterface
      *
      * @return CoordinateInterface[]
      */
-    public function getBoundingBox()
+    public function getBoundingBox(): array
     {
         return array(
             new Coordinate(array(
@@ -125,9 +125,10 @@ class Geohash implements GeohashInterface
      * @see http://en.wikipedia.org/wiki/Geohash
      * @see http://geohash.org/
      */
-    public function encode(CoordinateInterface $coordinate, $length = self::MAX_LENGTH)
+    public function encode(CoordinateInterface $coordinate, $length = self::MAX_LENGTH): GeohashInterface
     {
-        if ((int) $length < self::MIN_LENGTH || (int) $length > self::MAX_LENGTH) {
+        $length = (int) $length;
+        if ($length < self::MIN_LENGTH || $length > self::MAX_LENGTH) {
             throw new InvalidArgumentException('The length should be between 1 and 12.');
         }
 
@@ -159,12 +160,12 @@ class Geohash implements GeohashInterface
             if ($bit < 4) {
                 $bit++;
             } else {
-                $this->geohash = $this->geohash . $this->base32Chars[$charIndex];
+                $this->geohash .= $this->base32Chars[$charIndex];
                 $bit           = 0;
                 $charIndex     = 0;
             }
 
-            $isEven = $isEven ? false : true;
+            $isEven = !$isEven;
         }
 
         $this->latitudeInterval  = $latitudeInterval;
@@ -176,7 +177,7 @@ class Geohash implements GeohashInterface
     /**
      * {@inheritDoc}
      */
-    public function decode($geohash)
+    public function decode($geohash): GeohashInterface
     {
         if (!is_string($geohash)) {
             throw new InvalidArgumentException('The geo hash should be a string.');
@@ -223,7 +224,7 @@ class Geohash implements GeohashInterface
                     }
                 }
 
-                $isEven = $isEven ? false : true;
+                $isEven = !$isEven;
             }
         }
 
