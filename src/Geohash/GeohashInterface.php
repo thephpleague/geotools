@@ -12,6 +12,8 @@
 namespace League\Geotools\Geohash;
 
 use League\Geotools\Coordinate\CoordinateInterface;
+use League\Geotools\Exception\InvalidArgumentException;
+use League\Geotools\Exception\RuntimeException;
 
 /**
  * Geohash interface
@@ -24,13 +26,13 @@ interface GeohashInterface
      * Returns a geo hash string.
      *
      * @param CoordinateInterface $coordinate The coordinate to encode.
-     * @param integer             $length     The length of the hash between 1 to 12 by default (optional).
+     * @param int                 $length     The length of the hash between 1 and 12 by default.
      *
      * @return GeohashInterface
      *
      * @throws InvalidArgumentException
      */
-    public function encode(CoordinateInterface $coordinate, $length = self::MAX_LENGTH);
+    public function encode(CoordinateInterface $coordinate, $length): GeohashInterface;
 
     /**
      * Returns the decoded geo hash to it's center.
@@ -45,5 +47,5 @@ interface GeohashInterface
      * @throws InvalidArgumentException
      * @throws RuntimeException
      */
-    public function decode($geohash);
+    public function decode($geohash): GeohashInterface;
 }
