@@ -49,6 +49,7 @@ class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->elements[$offset]) || array_key_exists($offset, $this->elements);
@@ -57,6 +58,7 @@ class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -65,6 +67,7 @@ class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->set($offset, $value);
@@ -73,6 +76,7 @@ class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         return $this->remove($offset);
@@ -81,6 +85,7 @@ class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->elements);
@@ -89,6 +94,7 @@ class ArrayCollection implements \Countable, \IteratorAggregate, \ArrayAccess, \
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->elements);

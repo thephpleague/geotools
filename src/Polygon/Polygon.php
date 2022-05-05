@@ -318,6 +318,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return $this->coordinates->offsetExists($offset);
@@ -326,6 +327,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->coordinates->offsetGet($offset);
@@ -334,6 +336,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         $this->coordinates->offsetSet($offset, $value);
@@ -343,6 +346,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         $retval = $this->coordinates->offsetUnset($offset);
@@ -353,6 +357,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return $this->coordinates->count();
@@ -361,6 +366,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     /**
      * {@inheritDoc}
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->coordinates->getIterator();
