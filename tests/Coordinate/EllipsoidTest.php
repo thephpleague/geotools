@@ -61,7 +61,7 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
         return array(
             array('name', 'a', 1, array('name', 0.0, 0.0, 1.0, 0.0)),
             array('foo', 'bar', 123, array('foo', 0.0, 0.0, 123.0, 0.0)),
-            array(123, 456, 789, array(123, 456.0, 455.42205323194, 789.0, 455.80735107731)),
+            array(123, 456, 789, array(123, 456.0, 455.4220532319391, 789.0, 455.80735107731306)),
         );
     }
 
