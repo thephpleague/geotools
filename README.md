@@ -117,7 +117,7 @@ like:
 * 40.446195, -79.948862
 * 40° 26.7717, -79° 56.93172
 
-Latitudes below -90.0 or above 90.0 degrees are *capped* through `\League\Geotools\Coordinate\Coordinate::normalizeLatitude()`.  
+Latitudes below -90.0 or above 90.0 degrees are *capped* through `\League\Geotools\Coordinate\Coordinate::normalizeLatitude()`.
 Longitudes below -180.0 or above 180.0 degrees are *wrapped* through `\League\Geotools\Coordinate\Coordinate::normalizeLongitude()`.
 
 ```php
@@ -192,7 +192,7 @@ Seconds | `%S` | `%s`
 ## Batch ##
 
 It provides a very handy way to batch geocode and reverse geocoding requests in *serie* or in *parallel* against
-a set of providers.  
+a set of providers.
 Thanks to [Geocoder](https://github.com/willdurand/Geocoder) and [React](https://github.com/reactphp/react) libraries.
 
 It's possible to batch *one request* (a string) or a *set of request* (an array) against *one provider* or
@@ -201,7 +201,7 @@ It's possible to batch *one request* (a string) or a *set of request* (an array)
 You can use a provided **cache engine** or use your own by setting a cache object which should implement
 `League\Geotools\Cache\CacheInterface` and extend `League\Geotools\Cache\AbstractCache` if needed.
 
-At the moment Geotools supports any PSR-6 cache. 
+At the moment Geotools supports any PSR-6 cache.
 
 NB: Before you implement caching in your app please be sure that doing so does not violate the Terms of Service
 for your(s) geocoding provider(s).
@@ -224,7 +224,7 @@ $geocoder->registerProviders([
 try {
     $geotools = new \League\Geotools\Geotools();
     $cache    = new \Cache\Adapter\PHPArray\ArrayCachePool();
-  
+
     $results  = $geotools->batch($geocoder)->setCache($cache)->geocode([
         'Paris, France',
         'Copenhagen, Denmark',
@@ -629,8 +629,8 @@ reported by opening an issue or contacting one or more of the project
 maintainers.
 
 This Code of Conduct is adapted from the [Contributor
-Covenant](http:contributor-covenant.org), version 1.0.0, available at
-[http://contributor-covenant.org/version/1/0/0/](http://contributor-covenant.org/version/1/0/0/)
+Covenant](https://contributor-covenant.org), version 1.0.0, available at
+[https://contributor-covenant.org/version/1/0/0/](https://contributor-covenant.org/version/1/0/0/)
 
 License
 -------
