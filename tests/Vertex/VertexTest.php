@@ -259,12 +259,12 @@ class VertexTest extends \League\Geotools\Tests\TestCase
             array(
                 array(48.8234055, 2.3072664),
                 array(43.296482, 5.36978),
-                $this->getMockCoordinateReturns(array(46.070143125815, 3.9152401085931))
+                $this->getMockCoordinateReturns(array(46.0701431258146, 3.9152401085931))
             ),
             array(
                 array('28.8234055', '1.3072664'),
                 array('43.296482', '5.36978'),
-                $this->getMockCoordinateReturns(array(36.076935937133, 3.1506401291113))
+                $this->getMockCoordinateReturns(array(36.0769359371328, 3.1506401291113))
             ),
             array(
                 array(43.296482, 5.36978),
@@ -274,7 +274,7 @@ class VertexTest extends \League\Geotools\Tests\TestCase
             array(
                 array(-13.296482, -5.36978),
                 array(-38.8234055, -4.3072664),
-                $this->getMockCoordinateReturns(array(-26.060903849478, -4.8973756901009))
+                $this->getMockCoordinateReturns(array(-26.0609038494776, -4.8973756901009))
             ),
         );
     }
