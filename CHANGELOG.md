@@ -2,6 +2,14 @@ CHANGELOG
 =========
 
 
+1.1.0
+-----
+### Fixed
+
+ - Suppressed of deprecation warnings
+ - increased precision in calculation
+ - Compatility with different locales
+
 1.0.0
 -----
 ### Fixed
