@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.3', '7.4', '8.0', '8.1']
+        php: [ '7.3', '7.4', '8.0', '8.1', '8.2']
         strategy: [ 'highest' ]
         sf_version: ['']
         include:
@@ -22,11 +22,13 @@ jobs:
               sf_version: '6.*'
             - php: 8.1
               sf_version: '6.*'
+            - php: 8.2
+              sf_version: '6.*'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-    
+
       - name: Generate locales
         run: sudo apt-get update && sudo apt-get install tzdata locales -y && sudo locale-gen sv_SE && sudo locale-gen sv_SE.UTF-8 && sudo locale-gen en_US && sudo locale-gen en_US.UTF-8
 
