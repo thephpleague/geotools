@@ -42,8 +42,13 @@
 
     "autoload" : {
         "psr-4" : {
-            "League\\Geotools\\"        : "src",
-            "League\\Geotools\\Tests\\" : "tests"
+            "League\\Geotools\\"        : "src"
+        }
+    },
+
+    "autoload-dev" : {
+        "psr-4" : {
+             "League\\Geotools\\Tests\\" : "tests"
         }
     },
 
