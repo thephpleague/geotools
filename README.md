@@ -398,6 +398,35 @@ printf("http://www.openstreetmap.org/?minlon=%s&minlat=%s&maxlon=%s&maxlat=%s&bo
 ); // http://www.openstreetmap.org/?minlon=5.3695678710938&minlat=43.295745849609&maxlon=5.3709411621094&maxlat=43.297119140625&box=yes
 ```
 
+You can also get information about neighbor points ([image](art/geohash_neighbor_points.png)).
+
+```php
+<?php
+
+$geotools = new \League\Geotools\Geotools();
+
+// decoding
+$decoded = $geotools->geohash()->decode('spey61y');
+// get neighbor geohash
+printf("%s\n", $decoded->getNeighbor(\League\Geotools\Geohash\Geohash::DIRECTION_NORTH)); // spey64n
+printf("%s\n", $decoded->getNeighbor(\League\Geotools\Geohash\Geohash::DIRECTION_SOUTH_EAST)); // spey61x
+// get all neighbor geohashes
+print_r($decoded->getNeighbors(true));
+/**
+ * Array
+ * (
+ *     [north] => spey64n
+ *     [south] => spey61w
+ *     [west] => spey61v
+ *     [east] => spey61z
+ *     [north_west] => spey64j
+ *     [north_east] => spey64p
+ *     [south_west] => spey61t
+ *     [south_east] => spey61x
+ * )
+ */
+```
+
 ## 10:10 ##
 
 Represent a location with 10m accuracy using a 10 character code that includes features to prevent errors in

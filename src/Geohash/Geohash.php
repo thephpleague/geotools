@@ -37,6 +37,15 @@ class Geohash implements GeohashInterface
      */
     public const MAX_LENGTH = 12;
 
+    public const DIRECTION_NORTH = 'north';
+    public const DIRECTION_SOUTH = 'south';
+    public const DIRECTION_WEST = 'west';
+    public const DIRECTION_EAST = 'east';
+
+    public const DIRECTION_NORTH_WEST = 'north_west';
+    public const DIRECTION_NORTH_EAST = 'north_east';
+    public const DIRECTION_SOUTH_WEST = 'south_west';
+    public const DIRECTION_SOUTH_EAST = 'south_east';
 
     /**
      * The geo hash.
@@ -74,6 +83,44 @@ class Geohash implements GeohashInterface
     protected $base32Chars = array(
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'b', 'c', 'd', 'e', 'f', 'g',
         'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+    );
+
+    private $neighbors = array(
+        'north' => array(
+            'even' => 'p0r21436x8zb9dcf5h7kjnmqesgutwvy',
+            'odd'  => 'bc01fg45238967deuvhjyznpkmstqrwx',
+        ),
+        'south' => array(
+            'even' => '14365h7k9dcfesgujnmqp0r2twvyx8zb',
+            'odd'  => '238967debc01fg45kmstqrwxuvhjyznp',
+        ),
+        'west' => array(
+            'even' => '238967debc01fg45kmstqrwxuvhjyznp',
+            'odd'  => '14365h7k9dcfesgujnmqp0r2twvyx8zb',
+        ),
+        'east' => array(
+            'even' => 'bc01fg45238967deuvhjyznpkmstqrwx',
+            'odd'  => 'p0r21436x8zb9dcf5h7kjnmqesgutwvy',
+        ),
+    );
+
+    private $borders = array(
+        'north' => array(
+            'even' => 'prxz',
+            'odd'  => 'bcfguvyz',
+        ),
+        'south' => array(
+            'even' => '028b',
+            'odd'  => '0145hjnp',
+        ),
+        'west' => array(
+            'even' => '0145hjnp',
+            'odd'  => '028b',
+        ),
+        'east' => array(
+            'even' => 'bcfguvyz',
+            'odd'  => 'prxz',
+        ),
     );
 
 
@@ -117,6 +164,71 @@ class Geohash implements GeohashInterface
                 $this->longitudeInterval[1]
             ))
         );
+    }
+
+    /**
+     * Returns the code of the adjacent area
+     *
+     * @param  string  $direction
+     *
+     * @return string
+     */
+    public function getNeighbor(string $direction): string
+    {
+        $geohash = $this->getGeohash();
+
+        if (in_array($direction, [self::DIRECTION_NORTH_WEST, self::DIRECTION_NORTH_EAST])) {
+            $geohash = $this->calculateAdjacent($geohash, self::DIRECTION_NORTH);
+        }
+
+        if (in_array($direction, [self::DIRECTION_SOUTH_WEST, self::DIRECTION_SOUTH_EAST])) {
+            $geohash = $this->calculateAdjacent($geohash, self::DIRECTION_SOUTH);
+        }
+
+        if (in_array($direction, [self::DIRECTION_NORTH_WEST, self::DIRECTION_SOUTH_WEST])) {
+            $direction = self::DIRECTION_WEST;
+        }
+
+        if (in_array($direction, [self::DIRECTION_NORTH_EAST, self::DIRECTION_SOUTH_EAST])) {
+            $direction = self::DIRECTION_EAST;
+        }
+
+        return $this->calculateAdjacent($geohash, $direction);
+    }
+
+    /**
+     * Returns neighboring area codes
+     *
+     * @param  bool  $includingCornerNeighbors
+     *
+     * @return array
+     */
+    public function getNeighbors(bool $includingCornerNeighbors = false): array
+    {
+        $geohash = $this->getGeohash();
+
+        $north = $this->calculateAdjacent($geohash, self::DIRECTION_NORTH);
+        $south = $this->calculateAdjacent($geohash, self::DIRECTION_SOUTH);
+        $west = $this->calculateAdjacent($geohash, self::DIRECTION_WEST);
+        $east = $this->calculateAdjacent($geohash, self::DIRECTION_EAST);
+
+        $neighbors = array(
+            self::DIRECTION_NORTH => $north,
+            self::DIRECTION_SOUTH => $south,
+            self::DIRECTION_WEST  => $west,
+            self::DIRECTION_EAST  => $east,
+        );
+
+        if ($includingCornerNeighbors) {
+            $neighbors = array_merge($neighbors, array(
+                self::DIRECTION_NORTH_WEST => $this->calculateAdjacent($north, self::DIRECTION_WEST),
+                self::DIRECTION_NORTH_EAST => $this->calculateAdjacent($north, self::DIRECTION_EAST),
+                self::DIRECTION_SOUTH_WEST => $this->calculateAdjacent($south, self::DIRECTION_WEST),
+                self::DIRECTION_SOUTH_EAST => $this->calculateAdjacent($south, self::DIRECTION_EAST),
+            ));
+        }
+
+        return $neighbors;
     }
 
     /**
@@ -228,9 +340,25 @@ class Geohash implements GeohashInterface
             }
         }
 
+        $this->geohash = $geohash;
+
         $this->latitudeInterval  = $latitudeInterval;
         $this->longitudeInterval = $longitudeInterval;
 
         return $this;
+    }
+
+    protected function calculateAdjacent(string $geohash, string $direction): string
+    {
+        $geohash = strtolower($geohash);
+        $lastChr = $geohash[strlen($geohash) - 1];
+        $type = (strlen($geohash) % 2) ? 'odd' : 'even';
+        $base = substr($geohash, 0, strlen($geohash) - 1);
+
+        if (!empty($base) && strpos($this->borders[$direction][$type], $lastChr) !== false) {
+            $base = $this->calculateAdjacent($base, $direction);
+        }
+
+        return $base.$this->base32Chars[strpos($this->neighbors[$direction][$type], $lastChr)];
     }
 }

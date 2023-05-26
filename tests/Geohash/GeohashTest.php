@@ -261,4 +261,72 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
+
+    /**
+     * @dataProvider geohashesAndExpectedNeighborProvider
+     */
+    public function testGetNeighbors($geoHash, $expectedNeighbors)
+    {
+        $coordinate = $this->geohash->decode($geoHash);
+
+        $this->assertEquals($expectedNeighbors, $coordinate->getNeighbors(true));
+    }
+
+    public function geohashesAndExpectedNeighborProvider()
+    {
+        return array(
+            array(
+                'b',
+                array(
+                    Geohash::DIRECTION_NORTH      => '0',
+                    Geohash::DIRECTION_SOUTH      => '8',
+                    Geohash::DIRECTION_WEST       => 'z',
+                    Geohash::DIRECTION_EAST       => 'c',
+                    Geohash::DIRECTION_NORTH_WEST => 'p',
+                    Geohash::DIRECTION_NORTH_EAST => '1',
+                    Geohash::DIRECTION_SOUTH_WEST => 'x',
+                    Geohash::DIRECTION_SOUTH_EAST => '9',
+                ),
+            ),
+            array(
+                'u8vwy',
+                array(
+                    Geohash::DIRECTION_NORTH      => 'u8vxn',
+                    Geohash::DIRECTION_SOUTH      => 'u8vww',
+                    Geohash::DIRECTION_WEST       => 'u8vwv',
+                    Geohash::DIRECTION_EAST       => 'u8vwz',
+                    Geohash::DIRECTION_NORTH_WEST => 'u8vxj',
+                    Geohash::DIRECTION_NORTH_EAST => 'u8vxp',
+                    Geohash::DIRECTION_SOUTH_WEST => 'u8vwt',
+                    Geohash::DIRECTION_SOUTH_EAST => 'u8vwx',
+                ),
+            ),
+            array(
+                'gcpvj0e5',
+                array(
+                    Geohash::DIRECTION_NORTH      => 'gcpvj0eh',
+                    Geohash::DIRECTION_SOUTH      => 'gcpvj0e4',
+                    Geohash::DIRECTION_WEST       => 'gcpvj0dg',
+                    Geohash::DIRECTION_EAST       => 'gcpvj0e7',
+                    Geohash::DIRECTION_NORTH_WEST => 'gcpvj0du',
+                    Geohash::DIRECTION_NORTH_EAST => 'gcpvj0ek',
+                    Geohash::DIRECTION_SOUTH_WEST => 'gcpvj0df',
+                    Geohash::DIRECTION_SOUTH_EAST => 'gcpvj0e6',
+                ),
+            ),
+            array(
+                's0000000',
+                array(
+                    Geohash::DIRECTION_NORTH      => 's0000001',
+                    Geohash::DIRECTION_SOUTH      => 'kpbpbpbp',
+                    Geohash::DIRECTION_WEST       => 'ebpbpbpb',
+                    Geohash::DIRECTION_EAST       => 's0000002',
+                    Geohash::DIRECTION_NORTH_WEST => 'ebpbpbpc',
+                    Geohash::DIRECTION_NORTH_EAST => 's0000003',
+                    Geohash::DIRECTION_SOUTH_WEST => '7zzzzzzz',
+                    Geohash::DIRECTION_SOUTH_EAST => 'kpbpbpbr',
+                ),
+            ),
+        );
+    }
 }
