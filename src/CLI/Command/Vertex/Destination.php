@@ -48,7 +48,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $from     = new Coordinate($input->getArgument('origin'), Ellipsoid::createFromName($input->getOption('ellipsoid')));
         $geotools = new Geotools;

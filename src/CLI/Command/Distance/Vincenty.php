@@ -50,7 +50,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $ellipsoid = Ellipsoid::createFromName($input->getOption('ellipsoid'));
         $from      = new Coordinate($input->getArgument('origin'), $ellipsoid);

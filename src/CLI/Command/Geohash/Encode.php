@@ -41,7 +41,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $coordinate = new Coordinate($input->getArgument('coordinate'));
         $geotools   = new Geotools;
