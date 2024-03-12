@@ -67,7 +67,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $geocoder = new ProviderAggregator;
         $httpClient = HttpClientDiscovery::find();

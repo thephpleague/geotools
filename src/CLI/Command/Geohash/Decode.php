@@ -35,7 +35,7 @@ EOT
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $geotools   = new Geotools;
         $coordinate = $geotools->geohash()->decode($input->getArgument('geohash'))->getCoordinate();
