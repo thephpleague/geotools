@@ -52,5 +52,10 @@
         }
     },
 
-    "bin" : ["bin/geotools"]
+    "bin" : ["bin/geotools"],
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
 }
