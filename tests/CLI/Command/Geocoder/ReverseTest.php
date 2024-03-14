@@ -85,28 +85,28 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
         $this->assertMatchesRegularExpression('/Avenue Gambetta 1, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteReverseAgainstOpenStreetMapsProviderWithDefaultAdapterAndDefaultFormatter()
+    public function testExecuteReverseAgainstOpenStreetMapProviderWithDefaultAdapterAndDefaultFormatter()
     {
         $this->markTestIncomplete();
 
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '48.8631507, 2.388911',
-            '--provider' => 'openstreetmaps',
+            '--provider' => 'openstreetmap',
         ));
 
         $this->assertTrue(is_string($this->commandTester->getDisplay()));
         $this->assertMatchesRegularExpression('/Avenue Gambetta 8, 75020 Paris/', $this->commandTester->getDisplay());
     }
 
-    public function testExecuteReverseAgainstOpenStreetMapsProviderWithDefaultAdapterAndFormatter()
+    public function testExecuteReverseAgainstOpenStreetMapProviderWithDefaultAdapterAndFormatter()
     {
         $this->markTestIncomplete();
 
         $this->commandTester->execute(array(
             'command'    => $this->command->getName(),
             'coordinate' => '48.8631507, 2.388911',
-            '--provider' => 'openstreetmaps',
+            '--provider' => 'openstreetmap',
             '--format'   => '%L, %A1, %C',
         ));
 

@@ -32,7 +32,7 @@ class Command extends \Symfony\Component\Console\Command\Command
         'google_maps'          => 'GoogleMaps',
         'google_maps_business' => 'GoogleMapsBusiness',
         'bing_maps'            => 'BingMaps',
-        'openstreetmaps'       => 'OpenStreetMap',
+        'openstreetmap'        => 'OpenStreetMap',
         'cloudmade'            => 'CloudMade',
         'geoip'                => 'Geoip',
         'map_quest'            => 'MapQuest',
