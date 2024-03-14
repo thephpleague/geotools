@@ -4,12 +4,9 @@ Geotools
 **Geotools** is a PHP geo-related library, built atop [Geocoder](https://github.com/willdurand/Geocoder) and
 [React](https://github.com/reactphp/react) libraries.
 
-[![Build Status](https://img.shields.io/travis/thephpleague/geotools/master.svg)](https://travis-ci.org/thephpleague/geotools)
 [![Latest Version](https://poser.pugx.org/league/geotools/v/stable)](https://github.com/thephpleague/geotools/releases)
 [![Total Downloads](https://poser.pugx.org/league/geotools/downloads)](https://packagist.org/packages/league/geotools)
 [![Quality Score](https://img.shields.io/scrutinizer/g/thephpleague/geotools.svg?style=flat-square)](https://scrutinizer-ci.com/g/thephpleague/geotools/?branch=master)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/7d2b448f-b223-4db9-9fab-96cdededf03d.svg?style=flat-square)](https://insight.sensiolabs.com/projects/7d2b448f-b223-4db9-9fab-96cdededf03d)
-[![PHP7 Ready](https://img.shields.io/badge/PHP7-ready-green.svg)](https://packagist.org/packages/league/geotools)
 
 Features
 --------
