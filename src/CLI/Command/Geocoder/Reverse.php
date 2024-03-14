@@ -54,9 +54,9 @@ class Reverse extends Command
 
     %command.full_name% "48.8631507, 2.388911" <comment>--format="%L, %R, %C" --adapter=socket</comment>
 
-<info>Use the OpenStreetMaps provider with the default adapter</info>:
+<info>Use the OpenStreetMap provider with the default adapter</info>:
 
-    %command.full_name% "48.8631507, 2.388911" <comment>--provider=openstreetmaps</comment>
+    %command.full_name% "48.8631507, 2.388911" <comment>--provider=openstreetmap</comment>
 EOT
             );
     }

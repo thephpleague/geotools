@@ -256,10 +256,10 @@ google_maps|Paris, France|POINT(2.352222 48.856614)
 google_maps|Copenhagen, Denmark|POINT(12.568337 55.676097)
 google_maps|74.200.247.59|The GoogleMapsProvider does not support IP addresses.
 google_maps|::ffff:66.147.244.214|The GoogleMapsProvider does not support IP addresses.
-openstreetmaps|Paris, France|POINT(2.352133 48.856506)
-openstreetmaps|Copenhagen, Denmark|POINT(12.570072 55.686724)
-openstreetmaps|74.200.247.59|Could not execute query http://nominatim.openstreetmap.org/search?q=74.200.247.59&format=xml&addressdetails=1&limit=1
-openstreetmaps|::ffff:66.147.244.214|The OpenStreetMapProvider does not support IPv6 addresses.
+openstreetmap|Paris, France|POINT(2.352133 48.856506)
+openstreetmap|Copenhagen, Denmark|POINT(12.570072 55.686724)
+openstreetmap|74.200.247.59|Could not execute query http://nominatim.openstreetmap.org/search?q=74.200.247.59&format=xml&addressdetails=1&limit=1
+openstreetmap|::ffff:66.147.244.214|The OpenStreetMapProvider does not support IPv6 addresses.
 bing_maps|Paris, France|Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=Paris%2C+France&key=<FAKE_API_KEY>
 bing_maps|Copenhagen, Denmark|Could not execute query http://dev.virtualearth.net/REST/v1/Locations/?q=Copenhagen%2C+Denmark&key=<FAKE_API_KEY>
 bing_maps|74.200.247.59|The BingMapsProvider does not support IP addresses.
@@ -502,7 +502,7 @@ $ php geotools geocoder:geocode Paris --dumper=wkt // POINT(2.352222 48.856614)
 ...
 $ php geotools geocoder:reverse "48.8631507, 2.388911" // Avenue Gambetta 10, 75020 Paris
 $ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %A1, %C" // Paris, Île-De-France, France
-$ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %A1, %C" --provider="openstreetmaps"
+$ php geotools geocoder:reverse "48.8631507, 2.388911" --format="%L, %A1, %C" --provider="openstreetmap"
 // Paris, Île-De-France, France Métropolitaine
 ...
 $ php geotools geocoder:geocode "Tagensvej 47, Copenhagen" --raw --args=da_DK --args=Denmark

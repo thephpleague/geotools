@@ -52,9 +52,9 @@ class Geocode extends Command
 
     %command.full_name% paris <comment>--adapter=socket --dumper=wkt</comment>
 
-<info>Use the OpenStreetMaps provider with the default adapter</info>:
+<info>Use the OpenStreetMap provider with the default adapter</info>:
 
-    %command.full_name% paris <comment>--provider=openstreetmaps</comment>
+    %command.full_name% paris <comment>--provider=openstreetmap</comment>
 
 <info>Use the FreeGeoIp provider with the socket adapter</info>
 
