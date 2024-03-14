@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+1.2.0
+-----
+### Fixed
+
+ - PHP 8.2 CI support by @phpfui in #184
+ - Add support for Symfony 7/Laravel 11 by @dwightwatson in #188
+ - OpenStreetMap typo fixed #187. by @Surfoo in #189
+ - Ability to receive codes of neighboring points by @OleksandrWebLab in #185
 
 1.1.0
 -----

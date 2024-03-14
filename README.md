@@ -54,20 +54,15 @@ The recommended way to install **Geotools** is through [composer](http://getcomp
 Run the following on the command line:
 
 ```
-php composer require league/geotools=@stable
+composer require league/geotools
 ```
-
-**Protip:** you should browse the
-[`league/geotools`](https://packagist.org/packages/league/geotools)
-page to choose a stable version to use, avoid the `@stable` meta constraint.
 
 **Important:** you should use the `0.4` version if you use Geocoder `2.x` or/and PHP `5.3`.
 
 And install dependencies:
 
-```bash
-$ curl -sS https://getcomposer.org/installer | php
-$ php composer.phar install
+```
+composer install
 ```
 
 Now you can add the autoloader, and you will have access to the library:
@@ -82,7 +77,7 @@ require 'vendor/autoload.php';
 Usage & API
 -----------
 
-## Coordinate & Ellipsoid ##
+## Coordinate & Ellipsoid
 
 The default geodetic datum is [WGS84](http://en.wikipedia.org/wiki/World_Geodetic_System) and coordinates are in
 decimal degrees.
@@ -150,7 +145,7 @@ printf("Latitude: %F\n", $coordinate->getLatitude()); // 40.446388888889
 printf("Longitude: %F\n", $coordinate->getLongitude()); // -79.976666666667
 ```
 
-## Convert ##
+## Convert
 
 It provides methods (and aliases) to convert *decimal degrees* WGS84 coordinates to *degrees minutes seconds*
 or *decimal minutes* WGS84 coordinates. You can format the output string easily.
@@ -189,7 +184,7 @@ Degrees | `%D` | `%d`
 Minutes | `%M` | `%m`
 Seconds | `%S` | `%s`
 
-## Batch ##
+## Batch
 
 It provides a very handy way to batch geocode and reverse geocoding requests in *serie* or in *parallel* against
 a set of providers.
@@ -308,7 +303,7 @@ To optimize batch requests you need to register providers according to their **c
 **looking for** (geocode street addresses, geocode IPv4, geocode IPv6 or reverse geocoding),
 please read more at the [Geocoder library doc](https://github.com/willdurand/Geocoder#freegeoipprovider).
 
-## Distance ##
+## Distance
 
 It provides methods to compute the distance in *meter* (by default), *km*, *mi* or *ft* between two coordinates
 using *flat* (most performant), *great circle*, *haversine* or *vincenty* (most accurate) algorithms.
@@ -330,7 +325,7 @@ printf("%s\n",$distance->in('mi')->vincenty()); // 409.05330679648
 printf("%s\n",$distance->in('ft')->flat()); // 2162619.7519272
 ```
 
-## Point ##
+## Point
 
 It provides methods to compute the initial and final *bearing* in degrees, the initial and final *cardinal direction*,
 the *middle point* and the *destination point*. The middle and the destination points returns a
@@ -358,8 +353,7 @@ printf("%s\n", $destinationPoint->getLatitude()); // 47.026774650075
 printf("%s\n", $destinationPoint->getLongitude()); // 2.3072664
 ```
 
-
-## Geohash ##
+## Geohash
 
 It provides methods to get the *geo hash* and its *bounding box's coordinates* (SouthWest & NorthEast)
 of a coordinate and the *coordinate* and its *bounding box's coordinates* (SouthWest & NorthEast) of a geo hash.
@@ -427,7 +421,7 @@ print_r($decoded->getNeighbors(true));
  */
 ```
 
-## 10:10 ##
+## 10:10
 
 Represent a location with 10m accuracy using a 10 character code that includes features to prevent errors in
 entering the code. Read more about the algorithm [here](http://blog.jgc.org/2006/07/simple-code-for-entering-latitude-and.html).
@@ -439,7 +433,7 @@ $tenten = new \League\Geotools\Tests\Geohash\TenTen;
 $tenten->encode(new Coordinate([51.09559, 1.12207])); // MEQ N6G 7NY5
 ```
 
-## Vertex ##
+## Vertex
 
 Represents a segment with a direction.
 You can find if two vertexes are on the same line.
@@ -454,7 +448,7 @@ You can find if two vertexes are on the same line.
 	$vertexA->isOnSameLine($vertexB);
 ```
 
-## Polygon ##
+## Polygon
 
 It helps you to know if a point (coordinate) is in a Polygon or on the Polygon's boundaries and if this in on
 a Polygon's vertex.
@@ -484,7 +478,7 @@ $polygon->pointOnVertex(new \League\Geotools\Coordinate\Coordinate([49.1785607, 
 $polygon->getBoundingBox(); // return the BoundingBox object
 ```
 
-## CLI ##
+## CLI
 
 It provides command lines to compute methods provided by **Distance**, **Point**, **Geohash** and **Convert** classes.
 Thanks to the [Symfony Console Component](https://github.com/symfony/Console).
