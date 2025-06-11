@@ -37,9 +37,9 @@ abstract class GeometryCollection extends ArrayCollection implements GeometryInt
      * CoordinateCollection constructor.
      *
      * @param GeometryInterface[] $geometries
-     * @param Ellipsoid             $ellipsoid
+     * @param ?Ellipsoid          $ellipsoid
      */
-    public function __construct(array $geometries = array(), Ellipsoid $ellipsoid = null)
+    public function __construct(array $geometries = array(), ?Ellipsoid $ellipsoid = null)
     {
         $this->precision = -1;
 

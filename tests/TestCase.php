@@ -113,11 +113,11 @@ abstract class TestCase extends PHPUnitTestCase
 
     /**
      * @param array $coordinate
-     * @param Ellipsoid $ellipsoid
+     * @param ?Ellipsoid $ellipsoid
      *
      * @return CoordinateInterface
      */
-    protected function getMockCoordinateReturns(array $coordinate, Ellipsoid $ellipsoid = null)
+    protected function getMockCoordinateReturns(array $coordinate, ?Ellipsoid $ellipsoid = null)
     {
         $mock = $this->createMock('\League\Geotools\Coordinate\CoordinateInterface');
         $mock
