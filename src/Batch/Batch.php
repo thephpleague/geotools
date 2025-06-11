@@ -124,7 +124,7 @@ class Batch implements BatchInterface
                             }
                         } catch (\Exception $e) {
                             $batchGeocoded = new BatchResult($provider->getName(), $value, $e->getMessage());
-                            $deferred->reject($batchGeocoded->newInstance());
+                            $deferred->resolve($batchGeocoded->newInstance());
                         }
 
                         return $deferred->promise();
@@ -144,7 +144,7 @@ class Batch implements BatchInterface
                         }
                     } catch (\Exception $e) {
                         $batchGeocoded = new BatchResult($provider->getName(), $values, $e->getMessage());
-                        $deferred->reject($batchGeocoded->newInstance());
+                        $deferred->resolve($batchGeocoded->newInstance());
                     }
 
                     return $deferred->promise();
@@ -188,7 +188,7 @@ class Batch implements BatchInterface
                             }
                         } catch (\Exception $e) {
                             $batchGeocoded = new BatchResult($provider->getName(), $valueCoordinates, $e->getMessage());
-                            $deferred->reject($batchGeocoded->newInstance());
+                            $deferred->resolve($batchGeocoded->newInstance());
                         }
 
                         return $deferred->promise();
@@ -212,7 +212,7 @@ class Batch implements BatchInterface
                         }
                     } catch (\Exception $e) {
                         $batchGeocoded = new BatchResult($provider->getName(), $valueCoordinates, $e->getMessage());
-                        $deferred->reject($batchGeocoded->newInstance());
+                        $deferred->resolve($batchGeocoded->newInstance());
                     }
 
                     return $deferred->promise();

@@ -28,9 +28,9 @@ class CoordinateCollection extends ArrayCollection
      * CoordinateCollection constructor.
      *
      * @param CoordinateInterface[] $coordinates
-     * @param Ellipsoid             $ellipsoid
+     * @param ?Ellipsoid            $ellipsoid
      */
-    public function __construct(array $coordinates = array(), Ellipsoid $ellipsoid = null)
+    public function __construct(array $coordinates = array(), ?Ellipsoid $ellipsoid = null)
     {
         if ($ellipsoid) {
             $this->ellipsoid = $ellipsoid;

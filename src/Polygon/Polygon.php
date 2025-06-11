@@ -383,7 +383,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     /**
      * {@inheritDoc}
      */
-    public function set($key, CoordinateInterface $coordinate = null)
+    public function set($key, ?CoordinateInterface $coordinate = null)
     {
         if (is_array($key)) {
             $values = $key;

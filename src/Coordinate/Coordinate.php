@@ -54,11 +54,11 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
      * Set the latitude and the longitude of the coordinates into an selected ellipsoid.
      *
      * @param Location|array|string         $coordinates The coordinates.
-     * @param Ellipsoid                    $ellipsoid   The selected ellipsoid (WGS84 by default).
+     * @param Ellipsoid|null                $ellipsoid   The selected ellipsoid (WGS84 by default).
      *
      * @throws InvalidArgumentException
      */
-    public function __construct($coordinates, Ellipsoid $ellipsoid = null)
+    public function __construct($coordinates, ?Ellipsoid $ellipsoid = null)
     {
         if ($coordinates instanceof Location) {
             if (null !== $locationCoordinates = $coordinates->getCoordinates()) {

@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+1.3.0
+-----
+### Fixed
+
+- PHP 8.4 support by @batyrmastyr in #194
+
 1.2.0
 -----
 ### Fixed
