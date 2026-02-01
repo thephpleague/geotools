@@ -30,21 +30,21 @@ interface GeotoolsInterface
      * Transverse Mercator is not the same as UTM.
      * A scale factor is required to convert between them.
      *
-     * @var double
+     * @var float
      */
     const UTM_SCALE_FACTOR = 0.9996;
 
     /**
      * The ratio meters per mile.
      *
-     * @var double
+     * @var float
      */
     const METERS_PER_MILE = 1609.344;
 
     /**
      * The ratio feet per meter.
      *
-     * @var double
+     * @var float
      */
     const FEET_PER_METER = 0.3048;
 

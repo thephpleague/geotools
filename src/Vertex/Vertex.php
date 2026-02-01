@@ -27,12 +27,12 @@ class Vertex implements VertexInterface
     use CoordinateCouple;
 
     /**
-     * @var double
+     * @var float
      */
     protected $gradient;
 
     /**
-     * @var double
+     * @var float
      */
     protected $ordinateIntercept;
 
@@ -187,7 +187,7 @@ class Vertex implements VertexInterface
     {
         Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
 
-        return Geotools::$cardinalPoints[(integer) round($this->initialBearing() / 22.5)];
+        return Geotools::$cardinalPoints[(int) round($this->initialBearing() / 22.5)];
     }
 
     /**
@@ -201,7 +201,7 @@ class Vertex implements VertexInterface
     {
         Ellipsoid::checkCoordinatesEllipsoid($this->from, $this->to);
 
-        return Geotools::$cardinalPoints[(integer) round($this->finalBearing() / 22.5)];
+        return Geotools::$cardinalPoints[(int) round($this->finalBearing() / 22.5)];
     }
 
     /**

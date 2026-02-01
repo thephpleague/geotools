@@ -147,7 +147,7 @@ class BatchGeocoded
     /**
      * Returns the latitude value.
      *
-     * @return double
+     * @return float
      */
     public function getLatitude()
     {
@@ -161,7 +161,7 @@ class BatchGeocoded
     /**
      * Returns the longitude value.
      *
-     * @return double
+     * @return float
      */
     public function getLongitude()
     {

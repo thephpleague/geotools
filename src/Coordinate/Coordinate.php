@@ -24,14 +24,14 @@ class Coordinate implements CoordinateInterface, \JsonSerializable
     /**
      * The latitude of the coordinate.
      *
-     * @var double
+     * @var float
      */
     protected $latitude;
 
     /**
      * The longitude of the coordinate.
      *
-     * @var double
+     * @var float
      */
     protected $longitude;
 

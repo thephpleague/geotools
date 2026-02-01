@@ -86,7 +86,7 @@ class Distance implements DistanceInterface
      * @see http://en.wikipedia.org/wiki/Pythagorean_theorem
      * @see http://en.wikipedia.org/wiki/Equirectangular_projection
      *
-     * @return double The distance in meters
+     * @return float The distance in meters
      */
     public function flat()
     {
@@ -111,7 +111,7 @@ class Distance implements DistanceInterface
      * @see http://www.ga.gov.au/earth-monitoring/geodesy/geodetic-techniques/distance-calculation-algorithms.html#circle
      * @see http://en.wikipedia.org/wiki/Cosine_law
      *
-     * @return double The distance in meters
+     * @return float The distance in meters
      */
     public function greatCircle()
     {
@@ -136,7 +136,7 @@ class Distance implements DistanceInterface
     * two coordinates using the Haversine formula which is accurate to around 0.3%.
     * @see http://www.movable-type.co.uk/scripts/latlong.html
     *
-    * @return double The distance in meters
+    * @return float The distance in meters
     */
     public function haversine()
     {
@@ -161,7 +161,7 @@ class Distance implements DistanceInterface
     * formula for ellipsoids which is accurate to within 0.5mm.
     * @see http://www.movable-type.co.uk/scripts/latlong-vincenty.html
     *
-    * @return double The distance in meters
+    * @return float The distance in meters
     */
     public function vincenty()
     {
@@ -229,9 +229,9 @@ class Distance implements DistanceInterface
      * Converts results in meters to user's unit (if any).
      * The default returned value is in meters.
      *
-     * @param double $meters
+     * @param float $meters
      *
-     * @return double
+     * @return float
      */
     protected function convertToUserUnit($meters)
     {
