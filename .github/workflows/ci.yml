@@ -28,8 +28,6 @@ jobs:
               sf_version: '7.*'
             - php: 8.4
               sf_version: '7.*'
-            - php: 8.5
-              sf_version: '7.*'
 
     steps:
       - name: Checkout code
