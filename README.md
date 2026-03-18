@@ -473,7 +473,18 @@ $polygon->pointOnBoundary(new \League\Geotools\Coordinate\Coordinate([47.1587188
 $polygon->pointOnVertex(new \League\Geotools\Coordinate\Coordinate([48.4711003, 2.5268555])); // true
 $polygon->pointOnVertex(new \League\Geotools\Coordinate\Coordinate([49.1785607, 2.4444580])); // false
 $polygon->getBoundingBox(); // return the BoundingBox object
+$polygon->getCenter(); // return a Coordinate representing the geographic centroid of the polygon
+$polygon->getRadius(); // return the radius in meters (max haversine distance from centroid to any vertex)
 ```
+
+`getCenter()` computes the centroid by averaging the unit-sphere (x, y, z) vectors of all
+vertices and projecting the result back to (latitude, longitude).  Running sums of x/y/z are
+maintained incrementally as coordinates are added or removed via `add()` and `remove()`, so
+repeated calls after single-step mutations are O(1).
+
+`getRadius()` returns the maximum haversine distance (in metres) between the centroid and any
+vertex, which can be used to detect when a sliding-window polygon has grown beyond a desired
+size.
 
 ## CLI
 
