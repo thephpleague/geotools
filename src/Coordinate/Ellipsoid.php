@@ -65,7 +65,7 @@ class Ellipsoid
      * @see http://en.wikipedia.org/wiki/Earth_radius
      * @see http://home.online.no/~sigurdhu/WGS84_Eng.html
      *
-     * @var double
+     * @var float
      */
     protected $a;
 
@@ -73,7 +73,7 @@ class Ellipsoid
      * The inverse flattening.
      * @see http://home.online.no/~sigurdhu/WGS84_Eng.html
      *
-     * @var double
+     * @var float
      */
     protected $invF;
 
@@ -209,14 +209,14 @@ class Ellipsoid
      * Create a new ellipsoid.
      *
      * @param string $name The name of the ellipsoid to create.
-     * @param double $a    The semi-major axis (equatorial radius) in meters.
-     * @param double $invF The inverse flattening.
+     * @param float $a    The semi-major axis (equatorial radius) in meters.
+     * @param float $invF The inverse flattening.
      *
      * @throws InvalidArgumentException
      */
     public function __construct($name, $a, $invF)
     {
-        if (0.0 >= (double) $invF) {
+        if (0.0 >= (float) $invF) {
             throw new InvalidArgumentException('The inverse flattening cannot be negative or equal to zero !');
         }
 
@@ -294,43 +294,43 @@ class Ellipsoid
     /**
      * Returns the semi-major axis (equatorial radius) in meters.
      *
-     * @return double
+     * @return float
      */
     public function getA()
     {
-        return (double) $this->a;
+        return (float) $this->a;
     }
 
     /**
      * Computes and returns the semi-minor axis (polar distance) in meters.
      * @see http://home.online.no/~sigurdhu/WGS84_Eng.html
      *
-     * @return double
+     * @return float
      */
     public function getB()
     {
-        return (double) $this->a * (1 - 1 / $this->invF);
+        return (float) $this->a * (1 - 1 / $this->invF);
     }
 
     /**
      * Returns the inverse flattening.
      *
-     * @return double
+     * @return float
      */
     public function getInvF()
     {
-        return (double) $this->invF;
+        return (float) $this->invF;
     }
 
     /**
      * Computes and returns the arithmetic mean radius in meters.
      * @see http://home.online.no/~sigurdhu/WGS84_Eng.html
      *
-     * @return double
+     * @return float
      */
     public function getArithmeticMeanRadius()
     {
-        return (double) $this->a * (1 - 1 / $this->invF / 3);
+        return (float) $this->a * (1 - 1 / $this->invF / 3);
     }
 
     /**
