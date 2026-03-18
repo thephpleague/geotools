@@ -23,6 +23,7 @@ use League\Geotools\Coordinate\Ellipsoid;
  */
 class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \ArrayAccess, \JsonSerializable
 {
+    use PolygonCenterTrait;
     const TYPE = 'POLYGON';
 
     /**
@@ -46,6 +47,27 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     private $precision = 8;
 
     /**
+     * Running sum of the x-components of coordinates on the unit sphere.
+     *
+     * @var float
+     */
+    private $sumX = 0.0;
+
+    /**
+     * Running sum of the y-components of coordinates on the unit sphere.
+     *
+     * @var float
+     */
+    private $sumY = 0.0;
+
+    /**
+     * Running sum of the z-components of coordinates on the unit sphere.
+     *
+     * @var float
+     */
+    private $sumZ = 0.0;
+
+    /**
      * @param null|array|CoordinateCollection $coordinates
      */
     public function __construct($coordinates = null)
@@ -55,6 +77,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
         } elseif ($coordinates instanceof CoordinateCollection) {
             $this->coordinates = $coordinates;
             $this->hasCoordinate = $coordinates->count() > 0;
+            $this->recalculateSums();
         } else {
             throw new \InvalidArgumentException;
         }
@@ -294,6 +317,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     {
         $this->coordinates = $coordinates;
         $this->boundingBox->setPolygon($this);
+        $this->recalculateSums();
 
         return $this;
     }
@@ -339,7 +363,12 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
+        $existing = $this->coordinates->get($offset);
+        if ($existing !== null) {
+            $this->subtractFromSums($existing);
+        }
         $this->coordinates->offsetSet($offset, $value);
+        $this->addToSums($value);
         $this->boundingBox->setPolygon($this);
     }
 
@@ -349,6 +378,10 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
+        $existing = $this->coordinates->get($offset);
+        if ($existing !== null) {
+            $this->subtractFromSums($existing);
+        }
         $retval = $this->coordinates->offsetUnset($offset);
         $this->boundingBox->setPolygon($this);
         return $retval;
@@ -402,6 +435,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
 
         $this->hasCoordinate = true;
         $this->boundingBox->setPolygon($this);
+        $this->recalculateSums();
     }
 
     /**
@@ -413,6 +447,7 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
 
         $this->hasCoordinate = true;
         $this->boundingBox->setPolygon($this);
+        $this->addToSums($coordinate);
 
         return $retval;
     }
@@ -422,14 +457,118 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
      */
     public function remove($key)
     {
+        $coordinate = $this->coordinates->get($key);
         $retval = $this->coordinates->remove($key);
 
         if (!count($this->coordinates)) {
             $this->hasCoordinate = false;
+            $this->sumX = $this->sumY = $this->sumZ = 0.0;
+        } elseif ($coordinate !== null) {
+            $this->subtractFromSums($coordinate);
         }
         $this->boundingBox->setPolygon($this);
 
         return $retval;
+    }
+
+    /**
+     * Returns the geographic centroid of the polygon's coordinates.
+     *
+     * The centroid is computed by averaging the unit-sphere (x, y, z) vectors
+     * of all vertices and projecting the result back to a (latitude, longitude)
+     * coordinate.  Running sums of x/y/z are maintained incrementally so that
+     * repeated calls are O(1) after the initial population.
+     *
+     * @return CoordinateInterface|null  null when the polygon is empty
+     */
+    public function getCenter(): ?CoordinateInterface
+    {
+        $count = $this->count();
+        if ($count === 0) {
+            return null;
+        }
+
+        $x = $this->sumX / $count;
+        $y = $this->sumY / $count;
+        $z = $this->sumZ / $count;
+
+        $lng = rad2deg(atan2($y, $x));
+        $hyp = sqrt($x * $x + $y * $y);
+        $lat = rad2deg(atan2($z, $hyp));
+
+        return new Coordinate([$lat, $lng], $this->getEllipsoid());
+    }
+
+    /**
+     * Returns the radius of the polygon in meters, defined as the maximum
+     * haversine distance from the centroid to any vertex.
+     *
+     * @return float
+     */
+    public function getRadius(): float
+    {
+        $center = $this->getCenter();
+        if ($center === null) {
+            return 0.0;
+        }
+
+        $radius = 0.0;
+        $R = $center->getEllipsoid()->getArithmeticMeanRadius();
+        $latC = deg2rad($center->getLatitude());
+        $lngC = deg2rad($center->getLongitude());
+
+        foreach ($this->coordinates as $coordinate) {
+            $d = $this->haversineDistance(
+                $R,
+                $latC,
+                $lngC,
+                deg2rad($coordinate->getLatitude()),
+                deg2rad($coordinate->getLongitude())
+            );
+
+            if ($d > $radius) {
+                $radius = $d;
+            }
+        }
+
+        return $radius;
+    }
+
+    /**
+     * Adds a coordinate's unit-sphere contribution to the running sums.
+     *
+     * @param CoordinateInterface $coordinate
+     */
+    private function addToSums(CoordinateInterface $coordinate): void
+    {
+        [$x, $y, $z] = $this->coordinateToXYZ($coordinate);
+        $this->sumX += $x;
+        $this->sumY += $y;
+        $this->sumZ += $z;
+    }
+
+    /**
+     * Subtracts a coordinate's unit-sphere contribution from the running sums.
+     *
+     * @param CoordinateInterface $coordinate
+     */
+    private function subtractFromSums(CoordinateInterface $coordinate): void
+    {
+        [$x, $y, $z] = $this->coordinateToXYZ($coordinate);
+        $this->sumX -= $x;
+        $this->sumY -= $y;
+        $this->sumZ -= $z;
+    }
+
+    /**
+     * Recalculates the running sums from scratch based on current coordinates.
+     */
+    private function recalculateSums(): void
+    {
+        $this->sumX = $this->sumY = $this->sumZ = 0.0;
+        foreach ($this->coordinates as $coordinate) {
+            $this->addToSums($coordinate);
+        }
     }
 
     /**

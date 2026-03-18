@@ -36,4 +36,20 @@ interface PolygonInterface extends GeometryInterface
      * @return boolean
      */
     public function pointOnVertex(CoordinateInterface $coordinate);
+
+    /**
+     * Returns the geographic centroid of the polygon's coordinates,
+     * calculated by averaging x/y/z unit-sphere vectors.
+     *
+     * @return CoordinateInterface|null  null when the polygon is empty
+     */
+    public function getCenter(): ?CoordinateInterface;
+
+    /**
+     * Returns the radius of the polygon in meters, defined as the maximum
+     * haversine distance from the centroid to any vertex.
+     *
+     * @return float
+     */
+    public function getRadius(): float;
 }
