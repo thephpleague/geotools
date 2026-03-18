@@ -27,7 +27,7 @@ class DMSTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new DMS);
+        $this->application->addCommand(new DMS);
 
         $this->command = $this->application->find('convert:dms');
 

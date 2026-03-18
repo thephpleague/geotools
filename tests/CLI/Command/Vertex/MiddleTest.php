@@ -27,7 +27,7 @@ class MiddleTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new Middle);
+        $this->application->addCommand(new Middle);
 
         $this->command = $this->application->find('vertex:middle');
 

@@ -12,30 +12,25 @@
 namespace League\Geotools\Tests\Geohash;
 
 use League\Geotools\Geohash\Geohash;
-
+use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class GeohashTest extends \League\Geotools\Tests\TestCase
 {
     protected $geohash;
-
     protected function setup(): void
     {
         $this->geohash = new Geohash;
     }
-
-    /**
-     * @dataProvider lengthsProvider
-     */
+    #[DataProvider('lengthsProvider')]
     public function testEncodeShouldThrowException($length)
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('The length should be between 1 and 12.');
         $this->geohash->encode($this->getStubCoordinate(), $length);
     }
-
-    public function lengthsProvider()
+    public static function lengthsProvider()
     {
         return array(
             array(-1),
@@ -48,28 +43,22 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
             array('13'),
         );
     }
-
     public function testEncodeShouldReturnTheSameGeohashInstance()
     {
         $encoded = $this->geohash->encode($this->getStubCoordinate());
-
         $this->assertTrue(is_object($encoded));
         $this->assertInstanceOf('\League\Geotools\Geohash\Geohash', $encoded);
         $this->assertInstanceOf('\League\Geotools\Geohash\GeohashInterface', $encoded);
         $this->assertSame($this->geohash, $encoded);
     }
-
-    /**
-     * @dataProvider invalidStringGeoHashesProvider
-     */
+    #[DataProvider('invalidStringGeoHashesProvider')]
     public function testDecodeShouldThrowStringException($geohash)
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('The geo hash should be a string.');
         $this->geohash->decode($geohash);
     }
-
-    public function invalidStringGeoHashesProvider()
+    public static function invalidStringGeoHashesProvider()
     {
         return array(
             array(-1),
@@ -78,18 +67,14 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
             array(array()),
         );
     }
-
-    /**
-     * @dataProvider invalidRangeGeoHashesProvider
-     */
+    #[DataProvider('invalidRangeGeoHashesProvider')]
     public function testDecodeShouldThrowRangeException($geohash)
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('The length of the geo hash should be between 1 and 12.');
         $this->geohash->decode($geohash);
     }
-
-    public function invalidRangeGeoHashesProvider()
+    public static function invalidRangeGeoHashesProvider()
     {
         return array(
             array(''),
@@ -98,18 +83,14 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
             array('bcd04324kmnpz'),
         );
     }
-
-    /**
-     * @dataProvider invalidCharGeoHashesProvider
-     */
+    #[DataProvider('invalidCharGeoHashesProvider')]
     public function testDecodeShouldThrowRuntimeException($geohash)
     {
         $this->expectException(\League\Geotools\Exception\RuntimeException::class);
         $this->expectExceptionMessage('This geo hash is invalid.');
         $this->geohash->decode($geohash);
     }
-
-    public function invalidCharGeoHashesProvider()
+    public static function invalidCharGeoHashesProvider()
     {
         return array(
             array(' '),
@@ -121,50 +102,38 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
             array('å'),
         );
     }
-
     public function testDecodeShouldReturnTheSameGeohashInstance()
     {
         $decoded = $this->geohash->decode('u09tu800gnqw');
-
         $this->assertTrue(is_object($decoded));
         $this->assertInstanceOf('\League\Geotools\Geohash\Geohash', $decoded);
         $this->assertInstanceOf('\League\Geotools\Geohash\GeohashInterface', $decoded);
         $this->assertSame($this->geohash, $decoded);
     }
-
-    /**
-     * @dataProvider coordinatesAndExpectedGeohashesAndBoundingBoxesProvider
-     */
+    #[DataProvider('coordinatesAndExpectedGeohashesAndBoundingBoxesProvider')]
     public function testEncodedGetGeoHash($coordinate, $length, $expectedGeoHash)
     {
         $geohash = $this->geohash->encode($this->getMockCoordinateReturns($coordinate), $length)->getGeohash();
-
         $this->assertSame($length, strlen($geohash));
         $this->assertSame($expectedGeoHash, $geohash);
     }
-
-    /**
-     * @dataProvider coordinatesAndExpectedGeohashesAndBoundingBoxesProvider
-     */
+    #[DataProvider('coordinatesAndExpectedGeohashesAndBoundingBoxesProvider')]
     public function testEncodedGetBoundingBox($coordinate, $length, $expectedGeoHash, $expectedBoundingBox)
     {
         $boundingBox = $this->geohash->encode($this->getMockCoordinateReturns($coordinate), $length)->getBoundingBox();
-
         $this->assertTrue(is_array($boundingBox));
         $this->assertTrue(is_object($boundingBox[0]));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $boundingBox[0]);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $boundingBox[0]);
         $this->assertEqualsWithDelta($expectedBoundingBox[0][0], $boundingBox[0]->getLatitude(), 0.1, '');
         $this->assertEqualsWithDelta($expectedBoundingBox[0][1], $boundingBox[0]->getLongitude(), 0.1, '');
-
         $this->assertTrue(is_object($boundingBox[1]));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $boundingBox[1]);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $boundingBox[1]);
         $this->assertEqualsWithDelta($expectedBoundingBox[1][0], $boundingBox[1]->getLatitude(), 0.1, '');
         $this->assertEqualsWithDelta($expectedBoundingBox[1][1], $boundingBox[1]->getLongitude(), 0.1, '');
     }
-
-    public function coordinatesAndExpectedGeohashesAndBoundingBoxesProvider()
+    public static function coordinatesAndExpectedGeohashesAndBoundingBoxesProvider()
     {
         return array(
             array(
@@ -196,43 +165,33 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-    /**
-     * @dataProvider geohashesAndExpectedCoordinatesAndBoundingBoxesProvider
-     */
+    #[DataProvider('geohashesAndExpectedCoordinatesAndBoundingBoxesProvider')]
     public function testDecodedGetCoordinate($geoHash, $expectedCoordinate)
     {
         $coordinate = $this->geohash->decode($geoHash)->getCoordinate();
-
         $this->assertTrue(is_object($coordinate));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $coordinate);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $coordinate);
         $this->assertEqualsWithDelta($expectedCoordinate[0], $coordinate->getLatitude(), 0.1, '');
         $this->assertEqualsWithDelta($expectedCoordinate[1], $coordinate->getLongitude(), 0.1, '');
     }
-
-    /**
-     * @dataProvider geohashesAndExpectedCoordinatesAndBoundingBoxesProvider
-     */
+    #[DataProvider('geohashesAndExpectedCoordinatesAndBoundingBoxesProvider')]
     public function testDecodedGetBoundingBox($geoHash, $expectedCoordinate, $expectedBoundingBox)
     {
         $boundingBox = $this->geohash->decode($geoHash)->getBoundingBox();
-
         $this->assertTrue(is_array($boundingBox));
         $this->assertTrue(is_object($boundingBox[0]));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $boundingBox[0]);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $boundingBox[0]);
         $this->assertEqualsWithDelta($expectedBoundingBox[0][0], $boundingBox[0]->getLatitude(), 0.1, '');
         $this->assertEqualsWithDelta($expectedBoundingBox[0][1], $boundingBox[0]->getLongitude(), 0.1, '');
-
         $this->assertTrue(is_object($boundingBox[1]));
         $this->assertInstanceOf('\League\Geotools\Coordinate\Coordinate', $boundingBox[1]);
         $this->assertInstanceOf('\League\Geotools\Coordinate\CoordinateInterface', $boundingBox[1]);
         $this->assertEqualsWithDelta($expectedBoundingBox[1][0], $boundingBox[1]->getLatitude(), 0.1, '');
         $this->assertEqualsWithDelta($expectedBoundingBox[1][1], $boundingBox[1]->getLongitude(), 0.1, '');
     }
-
-    public function geohashesAndExpectedCoordinatesAndBoundingBoxesProvider()
+    public static function geohashesAndExpectedCoordinatesAndBoundingBoxesProvider()
     {
         return array(
             array(
@@ -261,18 +220,13 @@ class GeohashTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-    /**
-     * @dataProvider geohashesAndExpectedNeighborProvider
-     */
+    #[DataProvider('geohashesAndExpectedNeighborProvider')]
     public function testGetNeighbors($geoHash, $expectedNeighbors)
     {
         $coordinate = $this->geohash->decode($geoHash);
-
         $this->assertEquals($expectedNeighbors, $coordinate->getNeighbors(true));
     }
-
-    public function geohashesAndExpectedNeighborProvider()
+    public static function geohashesAndExpectedNeighborProvider()
     {
         return array(
             array(

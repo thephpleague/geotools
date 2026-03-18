@@ -28,7 +28,7 @@ class EncodeTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new Encode);
+        $this->application->addCommand(new Encode);
 
         $this->command = $this->application->find('geohash:encode');
 

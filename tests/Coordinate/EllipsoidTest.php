@@ -12,23 +12,20 @@
 namespace League\Geotools\Tests\Coordinate;
 
 use League\Geotools\Coordinate\Ellipsoid;
-
+use PHPUnit\Framework\Attributes\DataProvider;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class EllipsoidTest extends \League\Geotools\Tests\TestCase
 {
-    /**
-     * @dataProvider constructorArgumentsWhichThrowException
-     */
+    #[DataProvider('constructorArgumentsWhichThrowException')]
     public function testConstructWithInverseFlatteningEqualsToZero($invF)
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('The inverse flattening cannot be negative or equal to zero !');
         new Ellipsoid('foo', 'bar', $invF);
     }
-
-    public function constructorArgumentsWhichThrowException()
+    public static function constructorArgumentsWhichThrowException()
     {
         return array(
             array(-123),
@@ -41,22 +38,17 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
             array(null),
         );
     }
-
-    /**
-     * @dataProvider constructorArgumentsProvider
-     */
+    #[DataProvider('constructorArgumentsProvider')]
     public function testConstructor($name, $a, $invF, $expected)
     {
         $ellipsoid = new Ellipsoid($name, $a, $invF);
-
         $this->assertSame($expected[0], $ellipsoid->getName());
         $this->assertSame($expected[1], $ellipsoid->getA());
         $this->assertSame($expected[2], $ellipsoid->getB());
         $this->assertSame($expected[3], $ellipsoid->getInvF());
         $this->assertSame($expected[4], $ellipsoid->getArithmeticMeanRadius());
     }
-
-    public function constructorArgumentsProvider()
+    public static function constructorArgumentsProvider()
     {
         return array(
             array('name', 'a', 1, array('name', 0.0, 0.0, 1.0, 0.0)),
@@ -64,25 +56,21 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
             array(123, 456, 789, array(123, 456.0, 455.4220532319391, 789.0, 455.80735107731306)),
         );
     }
-
     public function testCreateFromNameUnavailableEllipsoidThrowsException()
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('foo ellipsoid does not exist in selected reference ellipsoids !');
         Ellipsoid::createFromName('foo');
     }
-
     public function testCreateFromNameEmptyNameThrowsException()
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Please provide an ellipsoid name !');
         Ellipsoid::createFromName(' ');
     }
-
     public function testCreateFromName()
     {
         $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
-
         $this->assertTrue(is_object($ellipsoid));
         $this->assertInstanceOf('League\Geotools\Coordinate\Ellipsoid', $ellipsoid);
         $this->assertSame('WGS 84', $ellipsoid->getName());
@@ -91,18 +79,14 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
         $this->assertSame(298.257223563, $ellipsoid->getInvF());
         $this->assertEqualsWithDelta(6371008.771415059, $ellipsoid->getArithmeticMeanRadius(), 0.0001, '');
     }
-
-    /**
-     * @dataProvider createFromArrayProvider
-     */
+    #[DataProvider('createFromArrayProvider')]
     public function testCreateFromArrayThrowsException($newEllipsoid)
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('Ellipsoid arrays should contain `name`, `a` and `invF` keys !');
         Ellipsoid::createFromArray($newEllipsoid);
     }
-
-    public function createFromArrayProvider()
+    public static function createFromArrayProvider()
     {
         return array(
             array(
@@ -130,7 +114,6 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
     public function testCreateFromArray()
     {
         $newEllipsoid = array(
@@ -138,9 +121,7 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
             'a'    => 6378136.0,
             'invF' => 298.257223563,
         );
-
         $ellipsoid = Ellipsoid::createFromArray($newEllipsoid);
-
         $this->assertTrue(is_object($ellipsoid));
         $this->assertInstanceOf('League\Geotools\Coordinate\Ellipsoid', $ellipsoid);
         $this->assertSame('foo ellipsoid', $ellipsoid->getName());
@@ -149,8 +130,6 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
         $this->assertSame(298.257223563, $ellipsoid->getInvF());
         $this->assertEqualsWithDelta(6371007.7725327, $ellipsoid->getArithmeticMeanRadius(), 0.0001, '');
     }
-
-
     public function testCoordinatesWithDifferentEllipsoids()
     {
         $this->expectException(\League\Geotools\Exception\NotMatchingEllipsoidException::class);
@@ -161,10 +140,8 @@ class EllipsoidTest extends \League\Geotools\Tests\TestCase
             'a'    => 123.0,
             'invF' => 456.0
         ));
-
         $a = $this->getMockCoordinateReturns(array(1, 2), $WGS84);
         $b = $this->getMockCoordinateReturns(array(3, 4), $ANOTHER_ONE);
-
         Ellipsoid::checkCoordinatesEllipsoid($a, $b);
     }
 }

@@ -53,16 +53,16 @@ abstract class TestCase extends PHPUnitTestCase
         $mock = $this->createMock('\Geocoder\ProviderAggregator');
         $mock
             ->method('getProviders')
-            ->will($this->returnValue($providers));
+            ->willReturn($providers);
         $mock
             ->method('using')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $mock
             ->method('geocode')
-            ->will($this->returnValue($addresses));
+            ->willReturn($addresses);
         $mock
             ->method('reverse')
-            ->will($this->returnValue($addresses));
+            ->willReturn($addresses);
 
         return $mock;
     }
@@ -78,16 +78,16 @@ abstract class TestCase extends PHPUnitTestCase
         $mock
             ->expects($this->once())
             ->method('getProviders')
-            ->will($this->returnValue($providers));
+            ->willReturn($providers);
         $mock
             ->method('using')
-            ->will($this->returnSelf());
+            ->willReturnSelf();
         $mock
             ->method('geocode')
-            ->will($this->throwException(new \Exception));
+            ->willThrowException(new \Exception);
         $mock
             ->method('reverse')
-            ->will($this->throwException(new \Exception));
+            ->willThrowException(new \Exception);
 
         return $mock;
     }
@@ -122,16 +122,16 @@ abstract class TestCase extends PHPUnitTestCase
         $mock = $this->createMock('\League\Geotools\Coordinate\CoordinateInterface');
         $mock
             ->method('getLatitude')
-            ->will($this->returnValue($coordinate[0]));
+            ->willReturn($coordinate[0]);
         $mock
             ->method('getLongitude')
-            ->will($this->returnValue($coordinate[1]));
+            ->willReturn($coordinate[1]);
 
         if ($ellipsoid) {
             $mock
                 ->expects($this->atLeastOnce())
                 ->method('getEllipsoid')
-                ->will($this->returnValue($ellipsoid));
+                ->willReturn($ellipsoid);
         }
 
         return $mock;
@@ -152,7 +152,7 @@ abstract class TestCase extends PHPUnitTestCase
         $mock
             ->expects($expects)
             ->method('getCoordinates')
-            ->will($this->returnArgument(0));
+            ->willReturnArgument(0);
 
         return $mock;
     }
@@ -168,11 +168,11 @@ abstract class TestCase extends PHPUnitTestCase
         $mock
             ->expects($this->atLeastOnce())
             ->method('getLatitude')
-            ->will($this->returnValue($coordinate['latitude']));
+            ->willReturn($coordinate['latitude']);
         $mock
             ->expects($this->atLeastOnce())
             ->method('getLongitude')
-            ->will($this->returnValue($coordinate['longitude']));
+            ->willReturn($coordinate['longitude']);
 
         return $mock;
     }

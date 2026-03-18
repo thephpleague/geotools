@@ -11,44 +11,36 @@
 
 namespace League\Geotools\Tests\Convert;
 
-use League\Geotools\Convert\Convert;
 use League\Geotools\Coordinate\Coordinate;
-
+use PHPUnit\Framework\Attributes\DataProvider;
+use League\Geotools\Convert\Convert;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 /**
 * @author Antoine Corcy <contact@sbin.dk>
 */
 class ConvertTest extends \League\Geotools\Tests\TestCase
 {
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testConstructorShouldAcceptCoordinateInterface()
     {
         new TestableConvert($this->getStubCoordinate());
     }
-
     public function testConstructorShouldSetCoordinateInterface()
     {
         $convert = new TestableConvert($this->getStubCoordinate());
         $coordinates = $convert->getCoordinates();
-
         $this->assertTrue(is_object($coordinates));
         $this->assertInstanceOf('League\Geotools\Coordinate\CoordinateInterface', $coordinates);
     }
-
-    /**
-     * @dataProvider coordinatesToDMSProvider
-     */
+    #[DataProvider('coordinatesToDMSProvider')]
     public function testToDegreesMinutesSeconds($coordinates, $format, $expectedResult)
     {
         $convert = new TestableConvert(new Coordinate($coordinates));
         $converted = $convert->toDegreesMinutesSeconds($format);
-
         $this->assertTrue(is_string($converted));
         $this->assertSame($expectedResult, $converted);
     }
-
-    public function coordinatesToDMSProvider()
+    public static function coordinatesToDMSProvider()
     {
         return array(
             array(
@@ -83,20 +75,15 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-    /**
-     * @dataProvider coordinatesToDMProvider
-     */
+    #[DataProvider('coordinatesToDMProvider')]
     public function testToDecimalMinutes($coordinates, $format, $expectedResult)
     {
         $convert = new TestableConvert(new Coordinate($coordinates));
         $converted = $convert->toDecimalMinutes($format);
-
         $this->assertTrue(is_string($converted));
         $this->assertSame($expectedResult, $converted);
     }
-
-    public function coordinatesToDMProvider()
+    public static function coordinatesToDMProvider()
     {
         return array(
             array(
@@ -136,21 +123,15 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-
-    /**
-     * @dataProvider coordinatesToDegreeDecimalMinutesProvider
-     */
+    #[DataProvider('coordinatesToDegreeDecimalMinutesProvider')]
     public function testToDegreeDecimalMinutes($coordinates, $expectedResult)
     {
         $convert = new TestableConvert(new Coordinate($coordinates));
         $converted = $convert->toDegreeDecimalMinutes();
-
         $this->assertTrue(is_string($converted));
         $this->assertSame($expectedResult, $converted);
     }
-
-    public function coordinatesToDegreeDecimalMinutesProvider()
+    public static function coordinatesToDegreeDecimalMinutesProvider()
     {
         return array(
             array(
@@ -171,20 +152,15 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-    /**
-     * @dataProvider coordinatesToUTMProvider
-     */
+    #[DataProvider('coordinatesToUTMProvider')]
     public function testToUniversalTransverseMercator($coordinates, $expectedResult)
     {
         $convert = new TestableConvert(new Coordinate($coordinates));
         $converted = $convert->toUniversalTransverseMercator();
-
         $this->assertTrue(is_string($converted));
         $this->assertSame($expectedResult, $converted);
     }
-
-    public function coordinatesToUTMProvider()
+    public static function coordinatesToUTMProvider()
     {
         return array(
             array(
@@ -248,7 +224,6 @@ class ConvertTest extends \League\Geotools\Tests\TestCase
         );
     }
 }
-
 class TestableConvert extends Convert
 {
     public function getCoordinates()

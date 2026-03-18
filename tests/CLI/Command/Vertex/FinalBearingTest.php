@@ -27,7 +27,7 @@ class FinalBearingTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new FinalBearing);
+        $this->application->addCommand(new FinalBearing);
 
         $this->command = $this->application->find('vertex:final-bearing');
 

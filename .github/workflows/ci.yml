@@ -10,28 +10,24 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4' ]
+        php: [ '8.2', '8.3', '8.4', '8.5' ]
         strategy: [ 'highest' ]
         sf_version: ['']
         include:
-            - php: 7.3
-              sf_version: '4.*'
-            - php: 7.4
-              strategy: 'lowest'
-            - php: 8.0
-              sf_version: '6.*'
-            - php: 8.1
-              sf_version: '6.*'
             - php: 8.2
               sf_version: '6.*'
             - php: 8.3
               sf_version: '7.*'
             - php: 8.4
               sf_version: '7.*'
+            - php: 8.5
+              sf_version: '7.*'
+            - php: 8.5
+              sf_version: '8.*'
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Generate locales
         run: sudo apt-get update && sudo apt-get install tzdata locales -y && sudo locale-gen sv_SE && sudo locale-gen sv_SE.UTF-8 && sudo locale-gen en_US && sudo locale-gen en_US.UTF-8
@@ -43,7 +39,7 @@ jobs:
           coverage: none
 
       - name: Download dependencies
-        uses: ramsey/composer-install@v2
+        uses: ramsey/composer-install@v4
         env:
             SYMFONY_REQUIRE: ${{ matrix.sf_version }}
         with:

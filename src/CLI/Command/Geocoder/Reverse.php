@@ -28,7 +28,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Reverse extends Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('geocoder:reverse')

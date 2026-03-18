@@ -27,7 +27,7 @@ class DecodeTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new Decode);
+        $this->application->addCommand(new Decode);
 
         $this->command = $this->application->find('geohash:decode');
 

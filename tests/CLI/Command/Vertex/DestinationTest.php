@@ -27,7 +27,7 @@ class DestinationTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new Destination);
+        $this->application->addCommand(new Destination);
 
         $this->command = $this->application->find('vertex:destination');
 

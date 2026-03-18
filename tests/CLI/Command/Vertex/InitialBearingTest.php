@@ -27,7 +27,7 @@ class InitialBearingTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new InitialBearing);
+        $this->application->addCommand(new InitialBearing);
 
         $this->command = $this->application->find('vertex:initial-bearing');
 

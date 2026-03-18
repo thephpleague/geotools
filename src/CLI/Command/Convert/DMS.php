@@ -27,7 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DMS extends \Symfony\Component\Console\Command\Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $availableEllipsoids = Ellipsoid::getAvailableEllipsoidNames();
 

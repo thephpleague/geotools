@@ -23,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Decode extends \Symfony\Component\Console\Command\Command
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('geohash:decode')

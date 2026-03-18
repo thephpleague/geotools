@@ -27,7 +27,7 @@ class GreatCircleTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new GreatCircle);
+        $this->application->addCommand(new GreatCircle);
 
         $this->command = $this->application->find('distance:great-circle');
 

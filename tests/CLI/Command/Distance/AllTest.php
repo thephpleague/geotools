@@ -27,7 +27,7 @@ class AllTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new All);
+        $this->application->addCommand(new All);
 
         $this->command = $this->application->find('distance:all');
 
