@@ -7,6 +7,7 @@ use League\Geotools\Coordinate\CoordinateCollection;
 use League\Geotools\Coordinate\Ellipsoid;
 use League\Geotools\GeometryCollection;
 use League\Geotools\Polygon\Polygon;
+use PHPUnit\Framework\Attributes\Test;
 
 class GeometryCollectionTest extends TestCase
 {
@@ -20,9 +21,7 @@ class GeometryCollectionTest extends TestCase
         $this->secondGeometry = new Polygon(new CoordinateCollection([new Coordinate([2, 2])]));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldHaveThePrecisionOfTheLessPreciseGeometryComponent()
     {
         $this->firstGeometry->setPrecision(5);
@@ -34,9 +33,7 @@ class GeometryCollectionTest extends TestCase
         $this->assertEquals(10, $collection->getPrecision());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldReturnNullIfItHasNoGeometry()
     {
         $collection = new SimpleGeometryCollection();
@@ -44,9 +41,7 @@ class GeometryCollectionTest extends TestCase
         $this->assertNull($collection->getCoordinate());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldReturnTheCoordinateOfItsFirstGeometry()
     {
         $array = [$this->firstGeometry, $this->secondGeometry];
@@ -56,9 +51,7 @@ class GeometryCollectionTest extends TestCase
         $this->assertEquals(new Coordinate([1, 1]), $collection->getCoordinate());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldReturnAnArrayOfAllTheCoordinatesOfItsGeometries()
     {
         $array = [$this->firstGeometry, $this->secondGeometry];
@@ -71,9 +64,7 @@ class GeometryCollectionTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldReturnTheMergedBoundingBoxOfAllItsGeometries()
     {
         $array = [$this->firstGeometry, $this->secondGeometry];
@@ -86,9 +77,7 @@ class GeometryCollectionTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldReturnTheEllipsoidOfItsFirstGeometry()
     {
         $array = [$this->firstGeometry];
@@ -98,9 +87,7 @@ class GeometryCollectionTest extends TestCase
         $this->assertEquals($this->firstGeometry->getEllipsoid(), $collection->getEllipsoid());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldBehaveAsAnArrayOfGeometries()
     {
         $array = [$this->firstGeometry];
@@ -117,9 +104,7 @@ class GeometryCollectionTest extends TestCase
         $this->assertFalse(isset($collection['test']));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldThrowAnExceptionWhenNotProvidedAGeometry()
     {
         $array = ['a'];
@@ -129,9 +114,7 @@ class GeometryCollectionTest extends TestCase
         $collection = new SimpleGeometryCollection($array);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldThrowAnExceptionWhenProvidedAnInvalidGeometry()
     {
         $array = [$this->firstGeometry];
@@ -154,9 +137,7 @@ class GeometryCollectionTest extends TestCase
         $collection->add($secondGeometry);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldBeCountable()
     {
         $array = [$this->secondGeometry];
@@ -166,9 +147,7 @@ class GeometryCollectionTest extends TestCase
         $this->assertEquals(1, count($collection));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldOfferAccessToInnerElementsByKey()
     {
         $array = ['foo' => $this->firstGeometry];
@@ -189,9 +168,7 @@ class GeometryCollectionTest extends TestCase
         $this->assertNull($collection->remove('dummy'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldMergeCollections()
     {
         $array1 = ['foo' => $this->firstGeometry];
@@ -215,9 +192,7 @@ class GeometryCollectionTest extends TestCase
         $this->assertEquals(array_merge($array1, $array2), $mergedCollection->toArray());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldThorwAnExceptionWhenMergingDifferentTypesCollections()
     {
         $array1 = ['foo' => $this->firstGeometry];

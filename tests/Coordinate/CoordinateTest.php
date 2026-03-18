@@ -11,25 +11,23 @@
 
 namespace League\Geotools\Tests\Coordinate;
 
-use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
-
+use PHPUnit\Framework\Attributes\DataProvider;
+use League\Geotools\Coordinate\Coordinate;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
 class CoordinateTest extends \League\Geotools\Tests\TestCase
 {
-    /**
-     * @dataProvider invalidCoordinatesProvider
-     */
+    #[DataProvider('invalidCoordinatesProvider')]
     public function testConstructorWithInvalidCoordinatesShouldThrowAnException($coordinates)
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('It should be a string, an array or a class which implements Geocoder\Model\Address !');
         new Coordinate($coordinates);
     }
-
-    public function invalidCoordinatesProvider()
+    public static function invalidCoordinatesProvider()
     {
         return array(
             array(null),
@@ -43,18 +41,14 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-    /**
-     * @dataProvider invalidStringCoordinatesProvider
-     */
+    #[DataProvider('invalidStringCoordinatesProvider')]
     public function testConstructorWithInvalidStringCoordinatesShouldThrowAnException($coordinates)
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('It should be a valid and acceptable ways to write geographic coordinates !');
         new Coordinate($coordinates);
     }
-
-    public function invalidStringCoordinatesProvider()
+    public static function invalidStringCoordinatesProvider()
     {
         return array(
             array(''),
@@ -69,19 +63,14 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
             array('47°01\'36.3888\", 002°18\'26.1590\"'),
         );
     }
-
-    /**
-     * @dataProvider validCoordinatesAndExpectedCoordinatesProvider
-     */
+    #[DataProvider('validCoordinatesAndExpectedCoordinatesProvider')]
     public function testConstructorWithValidCoordinatesShouldBeValid($coordinates, $expectedCoordinates)
     {
         $coordinate = new Coordinate($coordinates);
-
         $this->assertSame($expectedCoordinates[0], $coordinate->getLatitude());
         $this->assertSame($expectedCoordinates[1], $coordinate->getLongitude());
     }
-
-    public function validCoordinatesAndExpectedCoordinatesProvider()
+    public static function validCoordinatesAndExpectedCoordinatesProvider()
     {
         return array(
             array(
@@ -174,28 +163,20 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testConstructorWithAddressArgumentShouldBeValid()
     {
         new Coordinate($this->createEmptyAddress());
     }
-
-    /**
-     * @dataProvider resultsProvider
-     */
+    #[DataProvider('resultsProvider')]
     public function testConstructorShouldReturnsLatitudeAndLongitude($result)
     {
         $geocoded = $this->createAddress($result);
         $coordinate = new Coordinate($geocoded);
-
         $this->assertSame((string) $result['latitude'], $coordinate->getLatitude());
         $this->assertSame((string) $result['longitude'], $coordinate->getLongitude());
     }
-
-    public function resultsProvider()
+    public static function resultsProvider()
     {
         return array(
             array(
@@ -224,18 +205,13 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-    /**
-     * @dataProvider latitudesWithExpectedLatitudesProvider
-     */
+    #[DataProvider('latitudesWithExpectedLatitudesProvider')]
     public function testNormalizeLatitude($latitude, $expectedLatitude)
     {
         $coordinate = new Coordinate($this->createEmptyAddress());
-
         $this->assertSame($expectedLatitude, $coordinate->normalizeLatitude($latitude));
     }
-
-    public function latitudesWithExpectedLatitudesProvider()
+    public static function latitudesWithExpectedLatitudesProvider()
     {
         return array(
             array('-180', '-90.0'),
@@ -243,18 +219,13 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
             array('180', '90.0'),
         );
     }
-
-    /**
-     * @dataProvider longitudesWithExpectedLatitudesProvider
-     */
+    #[DataProvider('longitudesWithExpectedLatitudesProvider')]
     public function testNormalizeLongitude($longitude, $expectedLongitude)
     {
         $coordinate = new Coordinate($this->createEmptyAddress());
-
         $this->assertSame($expectedLongitude, $coordinate->normalizeLongitude($longitude));
     }
-
-    public function longitudesWithExpectedLatitudesProvider()
+    public static function longitudesWithExpectedLatitudesProvider()
     {
         return array(
             array(-500, '-140.0'),
@@ -268,10 +239,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
             array(500, '140.0'),
         );
     }
-
-    /**
-     * @dataProvider latitudesProvider
-     */
+    #[DataProvider('latitudesProvider')]
     public function testSetLatitude($latitude)
     {
         $coordinate = new Coordinate($this->createEmptyAddress());
@@ -280,11 +248,9 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
         if (false === strpos($expected, '.')){
             $expected .= '.0';
         }
-
         $this->assertSame($expected, $coordinate->getLatitude());
     }
-
-    public function latitudesProvider()
+    public static function latitudesProvider()
     {
         return array(
             array(1),
@@ -297,10 +263,7 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
             array('-0.0001'),
         );
     }
-
-    /**
-     * @dataProvider longitudesProvider
-     */
+    #[DataProvider('longitudesProvider')]
     public function testSetLongitude($longitude)
     {
         $coordinate = new Coordinate($this->createEmptyAddress());
@@ -309,11 +272,9 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
         if (false === strpos($expected, '.')){
             $expected .= '.0';
         }
-
         $this->assertSame($expected, $coordinate->getLongitude());
     }
-
-    public function longitudesProvider()
+    public static function longitudesProvider()
     {
         return array(
             array(1),
@@ -326,17 +287,14 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
             array('-0.0001'),
         );
     }
-
     public function testGetEllipsoid()
     {
         $WGS84      = Ellipsoid::createFromName(Ellipsoid::WGS84);
         $coordinate = new Coordinate($this->createEmptyAddress(), $WGS84);
         $ellipsoid  = $coordinate->getEllipsoid();
-
         $this->assertTrue(is_object($ellipsoid));
         $this->assertInstanceOf('League\Geotools\Coordinate\Ellipsoid', $ellipsoid);
     }
-
     public function testCreateFromStringWithoutAString()
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
@@ -344,7 +302,6 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
         $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setFromString(123);
     }
-
     public function testCreateFromStringWithInvalidCoordinateString()
     {
         $this->expectException(\League\Geotools\Exception\InvalidArgumentException::class);
@@ -352,42 +309,38 @@ class CoordinateTest extends \League\Geotools\Tests\TestCase
         $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setFromString('foo');
     }
-
     public function testCreateFromStringWithValidCoordinatesShouldBeValid()
     {
         $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setFromString('40°26′47″N 079°58′36″W');
-
         $this->assertSame('40.4463888888889', $coordinate->getLatitude());
         $this->assertSame('-79.9766666666667', $coordinate->getLongitude());
     }
-
     public function testSetCoordinateWithLocaleThatUsesDecimalPointAsDecimalSeparator()
     {
+        if (setlocale(LC_NUMERIC, 'en_US') === false) {
+            $this->markTestSkipped('Locale en_US is not available on this system.');
+        }
         $this->setLocale(LC_NUMERIC, 'en_US');
-
         $latitude = "59.3293235";
         $longitude = "18.0685808";            
-
         $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setLatitude($latitude);
         $coordinate->setLongitude($longitude);
-
         $this->assertSame($latitude, $coordinate->getLatitude());
         $this->assertSame($longitude, $coordinate->getLongitude());
     }
-
     public function testSetCoordinateWithLocaleThatUsesDecimalCommaAsDecimalSeparator()
     {
+        if (setlocale(LC_NUMERIC, 'sv_SE') === false) {
+            $this->markTestSkipped('Locale sv_SE is not available on this system.');
+        }
         $this->setLocale(LC_NUMERIC, 'sv_SE');
-
         $latitude = "59.3293235";
         $longitude = "18.0685808";            
-
         $coordinate = new Coordinate($this->createEmptyAddress());
         $coordinate->setLatitude($latitude);
         $coordinate->setLongitude($longitude);
-
         $this->assertSame($latitude, $coordinate->getLatitude());
         $this->assertSame($longitude, $coordinate->getLongitude());
     }

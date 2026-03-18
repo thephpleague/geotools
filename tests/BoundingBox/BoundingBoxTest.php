@@ -11,12 +11,14 @@
 
 namespace League\Geotools\Tests\BoundingBox;
 
+use League\Geotools\Polygon\Polygon;
+use PHPUnit\Framework\Attributes\DataProvider;
 use League\Geotools\BoundingBox\BoundingBox;
 use League\Geotools\Coordinate\Coordinate;
 use League\Geotools\Coordinate\Ellipsoid;
 use League\Geotools\Exception\InvalidArgumentException;
-use League\Geotools\Polygon\Polygon;
-
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\Test;
 /**
  * @author Gabriel Bull <me@gabrielbull.com>
  */
@@ -26,13 +28,11 @@ class BoundingBoxTest extends \League\Geotools\Tests\TestCase
      * @var Polygon
      */
     protected $polygon;
-
     protected function setup(): void
     {
         $this->polygon = new Polygon;
     }
-
-    public function polygonAndExpectedNorthWestAndSouthEastCoordinates()
+    public static function polygonAndExpectedNorthWestAndSouthEastCoordinates()
     {
         return array(
             array(
@@ -49,46 +49,27 @@ class BoundingBoxTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testConstructWithPolygon()
     {
         new BoundingBox(new Polygon);
     }
-
-
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testConstructWithCoordinate()
     {
         new BoundingBox(new Coordinate(array(0, 0)));
     }
-
-    /**
-     * @doesNotPerformAssertions
-     */
+    #[DoesNotPerformAssertions]
     public function testConstructWithNull()
     {
         new BoundingBox;
     }
-
     public function testConstructWithInvalidArgument()
     {
         $this->expectException(\InvalidArgumentException::class);
         new BoundingBox('string');
     }
-
-    /**
-     * @dataProvider polygonAndExpectedNorthWestAndSouthEastCoordinates
-     * @param array $polygonCoordinates
-     * @param string $north
-     * @param string $east
-     * @param string $south
-     * @param string $west
-     */
+    #[DataProvider('polygonAndExpectedNorthWestAndSouthEastCoordinates')]
     public function testPolygonBoundingBox($polygonCoordinates, $north, $east, $south, $west)
     {
         foreach ($polygonCoordinates as $coordinate) {
@@ -96,7 +77,6 @@ class BoundingBoxTest extends \League\Geotools\Tests\TestCase
                 $this->getMockCoordinateReturns($coordinate, Ellipsoid::createFromName(Ellipsoid::WGS84))
             );
         }
-
         $this->assertEquals(
             $north,
             $this->polygon->getBoundingBox()->getNorth()
@@ -114,39 +94,28 @@ class BoundingBoxTest extends \League\Geotools\Tests\TestCase
             $this->polygon->getBoundingBox()->getWest()
         );
     }
-
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldThrowAnExceptionWhenEllipsoidsDontMatch()
     {
         $bb = new BoundingBox(
             new Polygon([new Coordinate([-1, -2], Ellipsoid::createFromName(Ellipsoid::AUSTRALIAN_NATIONAL))])
         );
         $polygon = new Polygon([new Coordinate([-1, -2], Ellipsoid::createFromName(Ellipsoid::WGS84))]);
-
         $this->expectException('\InvalidArgumentException');
         $bb->setPolygon($polygon);
     }
-
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldReturnThePolygonRectangleOfTheBoundingBox()
     {
         $bb = new BoundingBox();
-
         $this->assertNull($bb->getAsPolygon());
-
         $bb = new BoundingBox(
             new Polygon([
                 new Coordinate([-1, -2], Ellipsoid::createFromName(Ellipsoid::WGS84)),
                 new Coordinate([1, 2], Ellipsoid::createFromName(Ellipsoid::WGS84))
             ])
         );
-
         $polygon = $bb->getAsPolygon();
-
         $expected = new Polygon([
             new Coordinate([1, -2], Ellipsoid::createFromName(Ellipsoid::WGS84)),
             new Coordinate([1, 2], Ellipsoid::createFromName(Ellipsoid::WGS84)),
@@ -154,13 +123,9 @@ class BoundingBoxTest extends \League\Geotools\Tests\TestCase
             new Coordinate([-1, -2], Ellipsoid::createFromName(Ellipsoid::WGS84)),
             new Coordinate([1, -2], Ellipsoid::createFromName(Ellipsoid::WGS84))
         ]);
-
         $this->assertEquals($expected, $polygon);
     }
-
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldMergeBoundingBoxes()
     {
         $bb = new BoundingBox(
@@ -169,16 +134,13 @@ class BoundingBoxTest extends \League\Geotools\Tests\TestCase
                 new Coordinate([1, 2], Ellipsoid::createFromName(Ellipsoid::WGS84))
             ])
         );
-
         $bb2 = new BoundingBox(
             new Polygon([
                 new Coordinate([0, -3], Ellipsoid::createFromName(Ellipsoid::WGS84)),
                 new Coordinate([2, 0], Ellipsoid::createFromName(Ellipsoid::WGS84))
             ])
         );
-
         $merged = $bb->merge($bb2);
-
         $this->assertEquals(2, $merged->getNorth());
         $this->assertEquals(-1, $merged->getSouth());
         $this->assertEquals(2, $merged->getEast());

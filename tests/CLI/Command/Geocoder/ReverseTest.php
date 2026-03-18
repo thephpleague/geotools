@@ -27,7 +27,7 @@ class ReverseTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new Reverse);
+        $this->application->addCommand(new Reverse);
 
         $this->command = $this->application->find('geocoder:reverse');
 

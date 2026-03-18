@@ -27,7 +27,7 @@ class InitialCardinalTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new InitialCardinal);
+        $this->application->addCommand(new InitialCardinal);
 
         $this->command = $this->application->find('vertex:initial-cardinal');
 

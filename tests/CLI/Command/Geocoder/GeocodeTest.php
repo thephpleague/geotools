@@ -27,7 +27,7 @@ class GeocodeTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new Geocode);
+        $this->application->addCommand(new Geocode);
 
         $this->command = $this->application->find('geocoder:geocode');
 

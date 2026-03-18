@@ -27,7 +27,7 @@ class VincentyTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new Vincenty);
+        $this->application->addCommand(new Vincenty);
 
         $this->command = $this->application->find('distance:vincenty');
 

@@ -27,7 +27,7 @@ class FlatTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new Flat);
+        $this->application->addCommand(new Flat);
 
         $this->command = $this->application->find('distance:flat');
 

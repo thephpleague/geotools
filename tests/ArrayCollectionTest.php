@@ -3,12 +3,11 @@
 namespace League\Geotools\Tests;
 
 use League\Geotools\ArrayCollection;
+use PHPUnit\Framework\Attributes\Test;
 
 class ArrayCollectionTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldBeConvertibleToArray()
     {
         $array = ['foo', 'bar'];
@@ -18,9 +17,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals($array, $collection->toArray());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldSerializeTheInnerElements()
     {
         $array = ['foo', 'bar'];
@@ -30,9 +27,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals(json_encode($array), json_encode($collection));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldBehaveAsAnArray()
     {
         $array = ['foo', 'baz'=>'bar'];
@@ -51,9 +46,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertFalse(isset($collection[99]));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldBeCountable()
     {
         $array = ['foo', 'bar'];
@@ -63,9 +56,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals(2, count($collection));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldOfferAccessToInnerElementsByKey()
     {
         $array = ['foo' => 'bar'];
@@ -86,9 +77,7 @@ class ArrayCollectionTest extends TestCase
         $this->assertNull($collection->remove('dummy'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function itShouldMergeCollections()
     {
         $array1 = ['foo' => 'bar'];

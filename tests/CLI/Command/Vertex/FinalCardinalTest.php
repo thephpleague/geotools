@@ -27,7 +27,7 @@ class FinalCardinalTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new FinalCardinal);
+        $this->application->addCommand(new FinalCardinal);
 
         $this->command = $this->application->find('vertex:final-cardinal');
 

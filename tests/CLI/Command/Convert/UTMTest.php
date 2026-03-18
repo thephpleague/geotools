@@ -27,7 +27,7 @@ class UTMTest extends \League\Geotools\Tests\TestCase
     protected function setup(): void
     {
         $this->application = new GeotoolsApplication();
-        $this->application->add(new UTM);
+        $this->application->addCommand(new UTM);
 
         $this->command = $this->application->find('convert:utm');
 

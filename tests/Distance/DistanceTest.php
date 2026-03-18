@@ -11,9 +11,9 @@
 
 namespace League\Geotools\Tests\Distance;
 
-use League\Geotools\Coordinate\Ellipsoid;
 use League\Geotools\Distance\Distance;
-
+use PHPUnit\Framework\Attributes\DataProvider;
+use League\Geotools\Coordinate\Ellipsoid;
 /**
  * @author Antoine Corcy <contact@sbin.dk>
  */
@@ -24,7 +24,6 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
     protected $to;
     protected $coordA;
     protected $coordB;
-
     protected function setup(): void
     {
         $this->distance = new TestableDistance;
@@ -33,87 +32,66 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
         $this->coordA   = array(48.8234055, 2.3072664);
         $this->coordB   = array(43.296482, 5.36978);
     }
-
     public function testSetFromValueShouldBeACoordinateInterface()
     {
         $this->distance->setFrom($this->from);
         $from = $this->distance->getFrom();
-
         $this->assertTrue(is_object($from));
         $this->assertInstanceOf('League\Geotools\Coordinate\CoordinateInterface', $from);
     }
-
     public function testSetFromShouldReturnTheSameDistanceInstance()
     {
         $distance = $this->distance->setFrom($this->from);
-
         $this->assertTrue(is_object($distance));
         $this->assertInstanceOf('League\Geotools\Distance\Distance', $distance);
         $this->assertInstanceOf('League\Geotools\Distance\DistanceInterface', $distance);
         $this->assertSame($this->distance, $distance);
     }
-
     public function testSetToValueShouldBeACoordinateInterface()
     {
         $this->distance->setTo($this->to);
         $to = $this->distance->getTo();
-
         $this->assertTrue(is_object($to));
         $this->assertInstanceOf('League\Geotools\Coordinate\CoordinateInterface', $to);
     }
-
     public function testSetToShouldReturnTheSameDistanceInstance()
     {
         $distance = $this->distance->setTo($this->to);
-
         $this->assertTrue(is_object($distance));
         $this->assertInstanceOf('League\Geotools\Distance\Distance', $distance);
         $this->assertInstanceOf('League\Geotools\Distance\DistanceInterface', $distance);
         $this->assertSame($this->distance, $distance);
     }
-
     public function testIn()
     {
         $distance = $this->distance->in('foo');
-
         $this->assertSame('foo', $distance->getIn());
     }
-
     public function testInShouldReturnTheSameDistanceInstance()
     {
         $distance = $this->distance->in('foo');
-
         $this->assertTrue(is_object($distance));
         $this->assertInstanceOf('League\Geotools\Distance\Distance', $distance);
         $this->assertInstanceOf('League\Geotools\Distance\DistanceInterface', $distance);
         $this->assertSame($this->distance, $distance);
     }
-
-    /**
-     * @dataProvider ellipsoidInstanceAndExpectedResultProvider
-     */
+    #[DataProvider('ellipsoidInstanceAndExpectedResultProvider')]
     public function testFlatDistance($ellipsoid, $result)
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['flat']['m'], $this->distance->flat(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['flat']['km'], $this->distance->in('km')->flat(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['flat']['mi'], $this->distance->in('mi')->flat(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['flat']['ft'], $this->distance->in('ft')->flat(), 0.00001, '');
     }
-
-    /**
-     * @dataProvider ellipsoidInstanceAndExpectedResultProvider
-     */
+    #[DataProvider('ellipsoidInstanceAndExpectedResultProvider')]
     public function testGreatCircleDistance($ellipsoid, $result)
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
@@ -123,65 +101,49 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['greatCircle']['m'], $this->distance->greatCircle(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['greatCircle']['km'], $this->distance->in('km')->greatCircle(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['greatCircle']['mi'], $this->distance->in('mi')->greatCircle(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['greatCircle']['ft'], $this->distance->in('ft')->greatCircle(), 0.00001, '');
     }
-
-    /**
-     * @dataProvider ellipsoidInstanceAndExpectedResultProvider
-     */
+    #[DataProvider('ellipsoidInstanceAndExpectedResultProvider')]
     public function testHaversineDistance($ellipsoid, $result)
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['haversine']['m'], $this->distance->haversine(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['haversine']['km'], $this->distance->in('km')->haversine(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['haversine']['mi'], $this->distance->in('mi')->haversine(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['haversine']['ft'], $this->distance->in('ft')->haversine(), 0.00001, '');
     }
-
-    /**
-     * @dataProvider ellipsoidInstanceAndExpectedResultProvider
-     */
+    #[DataProvider('ellipsoidInstanceAndExpectedResultProvider')]
     public function testVincentyDistance($ellipsoid, $result)
     {
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['vincenty']['m'], $this->distance->vincenty(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['vincenty']['km'], $this->distance->in('km')->vincenty(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['vincenty']['mi'], $this->distance->in('mi')->vincenty(), 0.00001, '');
-
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordB, $ellipsoid));
         $this->assertEqualsWithDelta($result['vincenty']['ft'], $this->distance->in('ft')->vincenty(), 0.00001, '');
     }
-
-    public function ellipsoidInstanceAndExpectedResultProvider()
+    public static function ellipsoidInstanceAndExpectedResultProvider()
     {
         return array(
             array(
@@ -302,44 +264,35 @@ class DistanceTest extends \League\Geotools\Tests\TestCase
             ),
         );
     }
-
     public function testVincentyDistanceCoIncidentPoint()
     {
         $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
-
         $this->assertSame(0.0, $this->distance->vincenty());
     }
-
     public function testFlatDistanceWithSameCoordinate()
     {
         $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
-
         $this->assertSame(0.0, $this->distance->flat());
     }
-
     public function testGreatCircleDistanceWithSameCoordinate()
     {
         $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
-
         $this->assertSame(0.0, $this->distance->greatCircle());
     }
-
     public function testHaversineDistanceWithSameCoordinate()
     {
         $ellipsoid = Ellipsoid::createFromName(Ellipsoid::WGS84);
         $this->distance->setFrom($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
         $this->distance->setTo($this->getMockCoordinateReturns($this->coordA, $ellipsoid));
-
         $this->assertSame(0.0, $this->distance->haversine());
     }
 }
-
 class TestableDistance extends Distance
 {
     public function getIn()
