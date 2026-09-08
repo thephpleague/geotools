@@ -139,6 +139,20 @@ class PolygonTest extends \League\Geotools\Tests\TestCase
                     array(20.1785607, 2.17803955),
                 ),
             ),
+            array(
+                'polygonCoordinates' => array(
+                    array(0, 0),
+                    array(1, 0.0000002),
+                    array(1, 1),
+                    array(0, 0),
+                ),
+                'pointOnBoundaryCoordinates' => array(
+                    array(0.5, 0.0000001),
+                ),
+                'pointNotOnBoundaryCoordinates' => array(
+                    array(0.5, 0.00000011),
+                ),
+            ),
         );
     }
 
