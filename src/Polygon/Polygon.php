@@ -383,25 +383,27 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
      * Checks the left side of the directed line from start to end (Y increases upward).
      * Returns false for points on the line. Start and end must be distinct.
      * X is longitude, Y is latitude.
+     * @return bool
      */
     private static function isOnLeft(
         CoordinateInterface $point,
         CoordinateInterface $start,
         CoordinateInterface $end,
         int $scale,
-    ): bool {
+    ) {
         return bccomp(self::crossProduct($point, $start, $end, $scale), '0', $scale) === 1;
     }
 
     /**
      * Checks whether the point belongs to the segment from start to end.
+     * @return bool
      */
     private static function isOnLine(
         CoordinateInterface $point,
         CoordinateInterface $start,
         CoordinateInterface $end,
         int $scale,
-    ): bool {
+    ) {
         return bccomp(self::crossProduct($point, $start, $end, $scale), '0', $scale) === 0
             && self::isBetween($point->getLatitude(), $start->getLatitude(), $end->getLatitude(), $scale)
             && self::isBetween($point->getLongitude(), $start->getLongitude(), $end->getLongitude(), $scale);
@@ -410,13 +412,14 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
     /**
      * Returns the signed cross product of the directed segment start-end and start-point.
      * A positive result means that the point is left of the segment.
+     * @return string
      */
     private static function crossProduct(
         CoordinateInterface $point,
         CoordinateInterface $start,
         CoordinateInterface $end,
         int $scale,
-    ): string {
+    ) {
         return bcsub(
             bcmul(
                 bcsub($end->getLongitude(), $start->getLongitude(), $scale),
@@ -434,8 +437,9 @@ class Polygon implements PolygonInterface, \Countable, \IteratorAggregate, \Arra
 
     /**
      * Checks whether a value belongs to the inclusive range between two endpoints.
+     * @return bool
      */
-    private static function isBetween(string $value, string $start, string $end, int $scale): bool
+    private static function isBetween(string $value, string $start, string $end, int $scale)
     {
         $minimum = bccomp($start, $end, $scale) <= 0 ? $start : $end;
         $maximum = bccomp($start, $end, $scale) <= 0 ? $end : $start;
